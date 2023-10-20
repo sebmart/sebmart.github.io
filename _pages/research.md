@@ -4,7 +4,7 @@ permalink: /research/
 author_profile: true
 classes: wide
 ---
-My research is at the interface of optimization, data analytics, transportation and public policy.
+My research is at the interface of optimization, mathematical modeling, transportation, and public policy.
 
 <a href="https://scholar.google.com/citations?user=ffqbs_0AAAAJ&hl=en" class="btn btn--primary"><i class="fas a-graduation-cap" aria-hidden="true"></i> Google Scholar</a>
 
