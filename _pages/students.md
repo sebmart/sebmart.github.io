@@ -10,7 +10,7 @@ I have the pleasure to collaborate with fantastic academics and students!
 
 ### Students
 - **[Audrey Bazerghi](https://kelloggphds.northwestern.edu/audrey-bazerghi/)** (Northwestern Kellogg, 4th year Ph.D. co-advised with Jan Van Mieghem)
-- **Jian Gao** (UCLA, 5th year Ph.D. student, co-advised with Francisco Castro)
+- **[Jian Gao](https://www.jian-gao.com/)** (UCLA, 5th year Ph.D. student, co-advised with Francisco Castro)
 - **Gustavo Grivol** (NYU, 2nd year Ph.D. student, co-advised with Ilan Lobel)
 - **Yudi Huang** (Northwestern Kellogg, 3rd year Ph.D. student I advise) 
 - **Partha S. Mishra** (Kellogg Operations, 5th year PhD student I co-advise with Sunil Chopra and Karen Smilowitz)
