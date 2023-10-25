@@ -16,7 +16,7 @@ My research is at the interface of optimization, mathematical modeling, transpor
 - [Employees versus Contractors: An Operational Perspective](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3878215) with I. Lobel, H. Song. **MSOM Frontier of Operations, Minor Revision (2023)**
     - <i class="fas fa-award" aria-hidden="true"></i> INFORMS RMP (Revenue Management and Pricing) Student Paper Award Honorable Mention, 2021.
 - [Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076) with A. Delarue, Z. Lian. **Management Science, Human-AI Interface Special Issue R&R**.
-- [A better match for everyone: Reinforcement Learning at Lyft](https://drive.google.com/open?id=1gjosaWILvvG3O0v5MHiS8n4ykCMJoIBs&usp=drive_fs) with X. Azagirre, A. Balwally, G. Candeli, N. Chamandy, B. Han, A. King, H. Lee, M. Loncaric, S. Martin, V. Narasiman, T. Qin, B. Richard, S. Smoot, S. Taylor, G. van Ryzin, D. Wu, F. Yu, A. Zamoshchin  **INFORMS Journal on Applied Analytics, Conditionally Accepted**
+- [A better match for everyone: Reinforcement Learning at Lyft](http://arxiv.org/abs/2310.13810) with X. Azagirre, A. Balwally, G. Candeli, N. Chamandy, B. Han, A. King, H. Lee, M. Loncaric, S. Martin, V. Narasiman, T. Qin, B. Richard, S. Smoot, S. Taylor, G. van Ryzin, D. Wu, F. Yu, A. Zamoshchin  **INFORMS Journal on Applied Analytics, Conditionally Accepted**
     - <i class="fas fa-award" aria-hidden="true"></i> Franz Edelman Award Laureate, 2023.
 {: .small}
 
