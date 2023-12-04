@@ -10,17 +10,17 @@ My research is at the interface of optimization, mathematical modeling, transpor
 
 ## Under Review
 - [Human-AI Interactions and Societal Pitfalls](https://arxiv.org/abs/2309.10448) with F. Castro, J. Gao **submitted to Management Science (2023)**
-- [Detours in Shared Rides](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3711072) with I. Lobel. **Management Science, minor revision (2023)**
 - [Trading flexibility for adoption: Dynamic versus static walking in ridesharing](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3984476) with S. Taylor, J. Yan. **Management Science, Major Revision (2023)**
 - [Labor Cost Free-Riding in the Gig Economy](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888) with Z. Lian, G. van Ryzin. **Management Science, Major revision (2023)**
 - [Employees versus Contractors: An Operational Perspective](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3878215) with I. Lobel, H. Song. **MSOM Frontier of Operations, Minor Revision (2023)**
     - <i class="fas fa-award" aria-hidden="true"></i> INFORMS RMP (Revenue Management and Pricing) Student Paper Award Honorable Mention, 2021.
 - [Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076) with A. Delarue, Z. Lian. **Management Science, Human-AI Interface Special Issue R&R**.
-- [A better match for everyone: Reinforcement Learning at Lyft](http://arxiv.org/abs/2310.13810) with X. Azagirre, A. Balwally, G. Candeli, N. Chamandy, B. Han, A. King, H. Lee, M. Loncaric, S. Martin, V. Narasiman, T. Qin, B. Richard, S. Smoot, S. Taylor, G. van Ryzin, D. Wu, F. Yu, A. Zamoshchin  **INFORMS Journal on Applied Analytics, Accepted (2023)**
-    - <i class="fas fa-award" aria-hidden="true"></i> Franz Edelman Award Laureate, 2023.
 {: .small}
 
 ## Published Work
+- [A better match for everyone: Reinforcement Learning at Lyft](http://arxiv.org/abs/2310.13810) with X. Azagirre, A. Balwally, G. Candeli, N. Chamandy, B. Han, A. King, H. Lee, M. Loncaric, S. Martin, V. Narasiman, T. Qin, B. Richard, S. Smoot, S. Taylor, G. van Ryzin, D. Wu, F. Yu, A. Zamoshchin  **INFORMS Journal on Applied Analytics, Accepted (2023)**
+    - <i class="fas fa-award" aria-hidden="true"></i> Franz Edelman Award Laureate, 2023.
+- [Detours in Shared Rides](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3711072) with I. Lobel. **Management Science, accepted (2023)**
 - [Real-Time Rideshare Driver Supply Values using Online Reinforcement Learning](https://dl.acm.org/doi/abs/10.1145/3534678.3539141) with B. Han, H. Lee. **KDD 2022**
 - [Solving the ride-sharing productivity paradox: Priority dispatch and optimal priority sets](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4018653) with V. Krishnan, R. Iglesias, V. Pattabhiraman, S. Wang, G. van Ryzin. **INFORMS Journal on Applied Analytics (2022)**
     - <i class="fas fa-award" aria-hidden="true"></i> INFORMS **Wagner Prize Finalist**, 2021.
