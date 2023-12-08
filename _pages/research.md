@@ -12,8 +12,8 @@ My research is at the interface of optimization, mathematical modeling, transpor
 - [Human-AI Interactions and Societal Pitfalls](https://arxiv.org/abs/2309.10448) with F. Castro, J. Gao **submitted to Management Science (2023)**
 - [Trading flexibility for adoption: Dynamic versus static walking in ridesharing](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3984476) with S. Taylor, J. Yan. **Management Science, Major Revision (2023)**
 - [Labor Cost Free-Riding in the Gig Economy](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888) with Z. Lian, G. van Ryzin. **Management Science, Major revision (2023)**
-- [Employees versus Contractors: An Operational Perspective](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3878215) with I. Lobel, H. Song. **MSOM Frontier of Operations, Minor Revision (2023)**
     - <i class="fas fa-award" aria-hidden="true"></i> INFORMS RMP (Revenue Management and Pricing) Student Paper Award Honorable Mention, 2021.
+- [Employees versus Contractors: An Operational Perspective](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3878215) with I. Lobel, H. Song. **MSOM Frontier of Operations, Minor Revision (2023)**
 - [Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076) with A. Delarue, Z. Lian. **Management Science, Human-AI Interface Special Issue R&R**.
 {: .small}
 
