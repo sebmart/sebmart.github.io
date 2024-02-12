@@ -9,6 +9,7 @@ My research is at the interface of optimization, mathematical modeling, transpor
 <a href="https://scholar.google.com/citations?user=ffqbs_0AAAAJ&hl=en" class="btn btn--primary"><i class="fas a-graduation-cap" aria-hidden="true"></i> Google Scholar</a>
 
 ## Under Review
+- [Value of Sharing in Robots-as-a-Service Operations](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289) with A. Jacquillat, K. Wang **Submitted to Management Science (2024)**
 - [Human-AI Interactions and Societal Pitfalls](https://arxiv.org/abs/2309.10448) with F. Castro, J. Gao **submitted to Management Science (2023)**
 - [Trading flexibility for adoption: Dynamic versus static walking in ridesharing](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3984476) with S. Taylor, J. Yan. **Management Science, Major Revision (2023)**
 - [Labor Cost Free-Riding in the Gig Economy](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888) with Z. Lian, G. van Ryzin. **Management Science, Major revision (2023)**
@@ -17,8 +18,8 @@ My research is at the interface of optimization, mathematical modeling, transpor
 {: .small}
 
 ## Published Work
+- [A better match for everyone: Reinforcement Learning at Lyft](http://arxiv.org/abs/2310.13810) with X. Azagirre, A. Balwally, G. Candeli, N. Chamandy, B. Han, A. King, H. Lee, M. Loncaric, S. Martin, V. Narasiman, T. Qin, B. Richard, S. Smoot, S. Taylor, G. van Ryzin, D. Wu, F. Yu, A. Zamoshchin  **INFORMS Journal on Applied Analytics (2024)**
 - [Employees versus Contractors: An Operational Perspective](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3878215) with I. Lobel, H. Song. **MSOM, Frontier of Operations, Accepted (2024)**
-- [A better match for everyone: Reinforcement Learning at Lyft](http://arxiv.org/abs/2310.13810) with X. Azagirre, A. Balwally, G. Candeli, N. Chamandy, B. Han, A. King, H. Lee, M. Loncaric, S. Martin, V. Narasiman, T. Qin, B. Richard, S. Smoot, S. Taylor, G. van Ryzin, D. Wu, F. Yu, A. Zamoshchin  **INFORMS Journal on Applied Analytics, Accepted (2023)**
     - <i class="fas fa-award" aria-hidden="true"></i> Franz Edelman Award Laureate, 2023.
 - [Detours in Shared Rides](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3711072) with I. Lobel. **Management Science, accepted (2023)**
 - [Real-Time Rideshare Driver Supply Values using Online Reinforcement Learning](https://dl.acm.org/doi/abs/10.1145/3534678.3539141) with B. Han, H. Lee. **KDD 2022**
@@ -36,7 +37,6 @@ My research is at the interface of optimization, mathematical modeling, transpor
 {: .small}
 
 ## Working Papers
-- *Value of Sharing in Robots-as-a-Service Operations* with A. Jacquillat, K. Wang **(2024)**
 - *Two-sided Platform Flexibility* with D. Freund, J. Zhao **(2023)**
 - *Reinforcement Learning with Relative Values* with A. Bazerghi, G. van Ryzin **(2024)**
 - *The Price of Overlooking Experimentation in Experimentation* with Y. Huang, Z. Qin **(2024)**
