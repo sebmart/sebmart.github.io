@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://sebmart.github.io/sitemap.xml
+Sitemap: https://sebastienmartin.info/sitemap.xml
