@@ -2,24 +2,23 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Moto. Etc.
+# subtitle: 
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: sebastienmartin.jpg
   image_circular: false # crops the image to make it circular
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>Email: sebastien.martin
+    @kellogg.northwestern.edu</p>
+    <p>Phone:+1 (510)229-2758</p>
+    <p>Office: KGH-4163</p>
 
 news: true # includes a list of news items
-selected_papers: true # includes a list of papers marked as "selected={true}"
+selected_papers: false # includes a list of papers marked as "selected={true}"
 social: true # includes social icons at the bottom of the page
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](http://reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+I am an assistant professor of Operations at the [Kellogg School of Management](https://www.kellogg.northwestern.edu/), Northwestern University. You can use the menu to explore my work. 
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
-
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+My research focuses on optimization, machine learning, and applied probability to model and tackle real-world problems. Applications include operations management, transportation, public sector and the human-AI interface. For example, I helped [design Lyft's matching algorithm](https://www.youtube.com/watch?v=AUEvoqR3D3M), [redesign Boston's school transportation system](http://online.wsj.com/public/resources/documents/print/WSJ_-A002-20170812.pdf), [change the school schedules of San Francisco](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076). These changes save tens of millions of dollars every year and benefit millions of people.

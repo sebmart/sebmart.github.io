@@ -1,0 +1,53 @@
+---
+layout: default
+---
+<div class="post">
+  <header class="post-header">
+    <h1 class="post-title">
+      {{ page.title }}
+    </h1>
+    {% if page.description %}
+      <p class="post-description">{{ page.description }}</p>
+    {% endif %}
+  </header>
+
+  <article>
+    <div class="cv">
+      {% assign publications = site.data.resume.publications | sort: 'releaseDate' | reverse %}
+      {% for paper in publications%}
+          <div class="card">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-xs-2 cl-sm-2 col-md-2 text-center" style="width: 75px">
+                  {% if paper.releaseDate %} {% assign date = paper.releaseDate | split: '-' | join: '.' %} {% else %} {% assign date = '' %} {% endif %}
+                  <table class="table-cv">
+                    <tbody>
+                      <tr>
+                        <td>
+                          <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 75px">{{ date }}</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="col-xs-10 cl-sm-10 col-md-10 mt-2 mt-md-0">
+                  <h6 class="title font-weight-bold ml-1 ml-md-4">
+                    {% if paper.url and paper.url != '' %} 
+                      <a href="{{ paper.url }}">{{ paper.name }}</a> 
+                    {% else %}
+                      {{ paper.name }}
+                    {% endif %}                  </h6>
+                  <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem">{{ paper.authors }} </h6>
+                  <h6 class="ml-1 ml-md-4 font-weight-bold" style="font-size: 0.95rem">{{ paper.publisher }}</h6>
+                  {% if paper.summary and paper.summary != '' %}
+                    <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; font-style: italic"><i class="fa fa-award"></i> {{ paper.summary }}</h6>
+                  {% endif %}
+                </div>
+              </div>
+            </li>
+            
+          </div>
+      {% endfor %}
+    </div>
+  </article>
+</div>

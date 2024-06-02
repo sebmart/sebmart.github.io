@@ -12,10 +12,7 @@ layout: default
       {% endif %}
     </h1>
     <p class="desc">{{ page.subtitle }}</p>
-  </header>
-
-  <article>
-    {% if page.profile %}
+        {% if page.profile %}
       <div class="profile float-{% if page.profile.align == 'left' %}left{% else %}right{% endif %}">
         {% if page.profile.image %}
           {% assign profile_image_path = page.profile.image | prepend: 'assets/img/' %}
@@ -37,6 +34,10 @@ layout: default
         {% endif %}
       </div>
     {% endif %}
+  </header>
+
+  <article>
+
 
     <div class="clearfix">{{ content }}</div>
 
