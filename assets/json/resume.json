@@ -169,6 +169,14 @@
   ],
   "publications": [
     {
+      "name": "Relative Monte Carlo for Reinforcement Learning",
+      "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
+      "publisher": "Working Paper",
+      "releaseDate": "2024",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
+      "summary": ""
+    },
+    {
       "name": "Trading Flexibility for adoption: Dynamic versus static walking in ridesharing",
       "authors": "J. Yan, S. Martin, S. Taylor,",
       "publisher": "Accepted in Management Science",
