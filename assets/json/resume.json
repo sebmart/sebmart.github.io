@@ -181,6 +181,14 @@
   ],
   "publications": [
     {
+      "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
+      "authors": "A. Delarue, Z. Lian, S. Martin",
+      "publisher": "Minor Revision at Management Science",
+      "releaseDate": "2024",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076",
+      "summary": "Accepted in EC 2024, semi-finalist if the 2024 Wagner Prize."
+    },
+    {
       "name": "Relative Monte Carlo for Reinforcement Learning",
       "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
       "publisher": "Working Paper",
@@ -203,14 +211,6 @@
       "releaseDate": "2024",
       "url": "https://arxiv.org/abs/2404.04709",
       "summary": "MIT ORC Best Student Paper Award, 2024"
-    },
-    {
-      "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
-      "authors": "A. Delarue, Z. Lian, S. Martin",
-      "publisher": "R&R at Management Science",
-      "releaseDate": "2024",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076",
-      "summary": "Accepted in EC 2024."
     },
     {
       "name": "Value of Sharing in Robots-as-a-Service Operations",
