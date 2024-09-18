@@ -101,6 +101,12 @@
   ],
   "awards": [
     {
+      "title": "Transportation Science Meritorious Service Award",
+      "date": "2024",
+      "awarder": "INFORMS TSL Society",
+      "summary": "For my service as a reviewer for the journal Transportation Science."
+    },
+    {
       "title": "Best Student Paper Award",
       "date": "2024",
       "awarder": "MIT ORC",
@@ -247,7 +253,7 @@
     {
       "name": "Autonomous Vehicles in Ride-Hailing and the Threat of Spatial Inequalities",
       "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Submitted to MSOM",
+      "publisher": "Working Paper",
       "releaseDate": "2024",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4332493",
       "summary": ""
