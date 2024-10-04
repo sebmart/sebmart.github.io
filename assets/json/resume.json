@@ -99,7 +99,13 @@
       "courses": []
     }
   ],
-  "awards": [
+  "awards": [    
+    {
+      "title": "Chair Core Course Teaching Award",
+      "date": "2024",
+      "awarder": "Kellogg School of Management, Northwestern University",
+      "summary": "For \"teaching excellence\" in Kellogg's core course Operations Management"
+    },
     {
       "title": "Transportation Science Meritorious Service Award",
       "date": "2024",
@@ -229,7 +235,7 @@
     {
       "name": "Employees versus Contractors: An Operational Perspective.",
       "authors": "I. Lobel, S. Martin, H. Song",
-      "publisher": "Manufacturing & Sercice Operations Management (Frontiers in Operations) ",
+      "publisher": "Manufacturing & Service Operations Management (Frontiers in Operations) ",
       "releaseDate": "2024",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3878215",
       "summary": ""
