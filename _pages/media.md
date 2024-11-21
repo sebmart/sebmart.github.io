@@ -6,6 +6,7 @@ description: Media mentions of my work in reverse chronological order of last up
 nav: true
 nav_order: 3
 ---
+- [Does Generative AI Impose a Creativity Tax?](https://sloanreview.mit.edu/article/does-genai-impose-a-creativity-tax/) - *MIT Sloan Review*, 2024
 - [Podcast: When AI Becomes a TA](https://insight.kellogg.northwestern.edu/article/podcast-when-ai-becomes-a-ta) - *Kellogg Insight*, 2024
 - [If AI Gives You Bad Answers, Tell It to Do Better](https://www.wsj.com/tech/ai/ai-chatbots-feedback-results-fa549914) *Wall Street Journal*, 2024
 - [Human-AI Interactions and Societal Pitfalls](https://montrealethics.ai/human-ai-interactions-and-societal-pitfalls/) - _Montreal AI Ethics Institute_, 2024

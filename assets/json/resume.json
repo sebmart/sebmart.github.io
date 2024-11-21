@@ -1,13 +1,13 @@
 {
   "basics": {
-    "lastUpdated": "2024-06",
+    "lastUpdated": "2024-11",
     "name": "Sébastien Martin",
     "label": "Assistant Professor",
     "image": "",
     "email": "sebastien.martin@kellogg.northwestern.edu",
     "phone": "+1 (510) 229-2758",
     "url": "https://sebastienmartin.info",
-    "summary": "I am an assistant professor of Operations at the Kellogg School of Management, Northwestern University. My research is at the interface optimization, machine learning and AI, with applications to transportation and the gig economy.",
+    "summary": "I am an assistant professor of Operations at the Kellogg School of Management, Northwestern University. My research focuses on the interface of large-scale optimization and operations management, with applications to transportation, the gig economy, public sector operations and AI.",
     "location": {
       "address": "2211 Campus Drive",
       "postalCode": "IL 60208",
@@ -193,6 +193,30 @@
   ],
   "publications": [
     {
+      "name": "Two-Sided Flexibility in Platforms",
+      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
+      "publisher": "Submitted to Operations Research",
+      "releaseDate": "2024",
+      "url": "https://arxiv.org/abs/2404.04709",
+      "summary": "MIT ORC Best Student Paper Award, 2024"
+    },
+    {
+      "name": "Human-AI Interactions and Societal Pitfalls",
+      "authors": "F. Castro, J. Gao, S. Martin",
+      "publisher": "Working Paper (to be submitted to Operations Research)",
+      "releaseDate": "2024",
+      "url": "https://arxiv.org/abs/2309.10448",
+      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
+    },
+    {
+      "name": "Dual-sourcing of capacity",
+      "authors": "S. Chopra, P. Mishra, K. Smilowitz",
+      "publisher": "Submitted to MSOM",
+      "releaseDate": "2024",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4322824",
+      "summary": ""
+    },
+    {
       "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
       "authors": "A. Delarue, Z. Lian, S. Martin",
       "publisher": "Minor Revision at Management Science",
@@ -210,24 +234,16 @@
     },
     {
       "name": "Trading Flexibility for adoption: Dynamic versus static walking in ridesharing",
-      "authors": "J. Yan, S. Martin, S. Taylor,",
-      "publisher": "Accepted in Management Science",
+      "authors": "J. Yan, S. Martin, S. Taylor",
+      "publisher": "Management Science",
       "releaseDate": "2024",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3984476",
       "summary": ""
     },
     {
-      "name": "Two-Sided Flexibility in Platforms",
-      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
-      "publisher": "Working Paper",
-      "releaseDate": "2024",
-      "url": "https://arxiv.org/abs/2404.04709",
-      "summary": "MIT ORC Best Student Paper Award, 2024"
-    },
-    {
       "name": "Value of Sharing in Robots-as-a-Service Operations",
       "authors": "A. Jacquillat, S. Martin, K. Zhang",
-      "publisher": "Working Paper",
+      "publisher": "To be resubmitted to Management Science",
       "releaseDate": "2024",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289",
       "summary": ""
@@ -247,14 +263,6 @@
       "releaseDate": "2024",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3711072",
       "summary": ""
-    },
-    {
-      "name": "Human-AI Interactions and Societal Pitfalls",
-      "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Working Paper",
-      "releaseDate": "2024",
-      "url": "https://arxiv.org/abs/2309.10448",
-      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal."
     },
     {
       "name": "Autonomous Vehicles in Ride-Hailing and the Threat of Spatial Inequalities",
@@ -279,14 +287,6 @@
       "releaseDate": "2023",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888",
       "summary": "INFORMS RMP (Revenue Management and Pricing) Student Paper Award Finalist, 2021"
-    },
-    {
-      "name": "Mobility-on-Demand Meets Shuttles on the Same Mile",
-      "authors": "S. Chopra, P. Mishra, K. Smilowitz",
-      "publisher": "Working Paper",
-      "releaseDate": "2023",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4322824",
-      "summary": ""
     },
     {
       "name": "Supply Prioritization in Hybrid Marketplaces",
