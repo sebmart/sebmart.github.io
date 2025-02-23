@@ -33,14 +33,15 @@
       }
     ]
   },
-  "work": [    {
+  "work": [
+    {
       "name": "Northwestern University - Kellogg",
-      "position": "Associate Professor of Operations (tenure track)",
+      "position": "Assistant Professor of Operations",
       "url": "",
       "location": "Evanston, IL, USA",
       "startDate": "2020",
-      "endDate": "",
-      "summary": "I teach the Operations Management core course in the MBA program.",
+      "endDate": "Current",
+      "summary": "I taught the Operations Management core course in the MBA program.",
       "highlights": []
     },
     {
@@ -49,18 +50,8 @@
       "url": "",
       "location": "North Bethesda, Maryland, U.S.",
       "startDate": "2025",
-      "endDate": "",
+      "endDate": "Current",
       "summary": "ESAB is a global leader in welding and cutting products. I advise the CEO on the use of AI to improve the company's operations.",
-      "highlights": []
-    },
-    {
-      "name": "Northwestern University - Kellogg",
-      "position": "Assistant Professor of Operations",
-      "url": "",
-      "location": "Evanston, IL, USA",
-      "startDate": "2020",
-      "endDate": "2025",
-      "summary": "I taught the Operations Management core course in the MBA program.",
       "highlights": []
     },
     {
