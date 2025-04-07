@@ -111,6 +111,12 @@
   ],
   "awards": [    
     {
+      "title": "Operations Research Distinguished Service Award",
+      "date": "2025",
+      "awarder": "INFORMS",
+      "summary": "For \"extraordinary work as a reviewer for the Operations Research journal.\""
+    }, 
+    {
       "title": "INFORMS Journal on Computing Meritorious Reviewer Award",
       "date": "2025",
       "awarder": "INFORMS",
@@ -384,6 +390,18 @@
       "url": "https://www.sciencedirect.com/science/article/abs/pii/S0191261516303307",
       "summary": ""
     }
+  ],
+  "talks": [
+    {
+      "title": "Two-Sided Flexibility in Platforms",
+      "date": "2024/10/08",
+      "location": "Northwestern IEMS Seminar"
+    },
+    {
+      "title": "Two-Sided Flexibility in Platforms",
+      "date": "2024/10/02",
+      "location": "Duke Fuqua Decision Sciences Seminar"
+    }    
   ],
   "languages": [
     {
