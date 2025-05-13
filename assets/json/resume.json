@@ -180,13 +180,13 @@
       "title": "Doing Good with Good OR award, Second Place",
       "date": "2019",
       "awarder": "INFORMS",
-      "summary": "For my paper \"optimizing schools’ start time and bus routes\"."
+      "summary": "For my paper \"optimizing schools' start time and bus routes\"."
     },
     {
       "title": "Best Student Paper Award",
       "date": "2018",
       "awarder": "MIT ORC",
-      "summary": "For my paper \"optimizing schools’ start time and bus routes\"."
+      "summary": "For my paper \"optimizing schools' start time and bus routes\"."
     },
     {
       "title": "Best Presentation",
@@ -282,9 +282,9 @@
       "name": "Relative Monte Carlo for Reinforcement Learning",
       "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
       "publisher": "Working Paper",
-      "releaseDate": "2024",
+      "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
-      "summary": ""
+      "summary": "Accepted at EC 2025"
     },
     {
       "name": "Value of Sharing in Robots-as-a-Service Operations",
@@ -351,7 +351,7 @@
       "summary": "2019 Franz Edelman Award Laureate"
     },
     {
-      "name": "Optimizing schools’ start time and bus routes",
+      "name": "Optimizing schools' start time and bus routes",
       "authors": "D. Bertsimas, A. Delarue, S. Martin",
       "publisher": "Proceedings of the National Academy of Science",
       "releaseDate": "2019",
