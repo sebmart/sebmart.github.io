@@ -6,6 +6,9 @@ description: Media mentions of my work in reverse chronological order of last up
 nav: true
 nav_order: 3
 ---
+
+- [40 under 40 MBA professors](https://poetsandquants.com/2025/05/21/2025-best-40-under-40-mba-professors-sebastien-martin-kellogg-school-of-management-northwestern-university/?pq-category=2025&pq-category-2=40-under-40) - *Poets & Quants*, 2025
+- [The Hidden Costs of Successful Experiments](https://insight.kellogg.northwestern.edu/article/the-hidden-cost-of-successful-experiments) - *Kellogg Insight*, 2025
 - [Does Generative AI Impose a Creativity Tax?](https://sloanreview.mit.edu/article/does-genai-impose-a-creativity-tax/) - *MIT Sloan Review*, 2024
 - [Podcast: When AI Becomes a TA](https://insight.kellogg.northwestern.edu/article/podcast-when-ai-becomes-a-ta) - *Kellogg Insight*, 2024
 - [If AI Gives You Bad Answers, Tell It to Do Better](https://www.wsj.com/tech/ai/ai-chatbots-feedback-results-fa549914) *Wall Street Journal*, 2024
