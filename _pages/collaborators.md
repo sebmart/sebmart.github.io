@@ -3,7 +3,7 @@ layout: page
 permalink: /collaborators/
 title: collaborators
 description: I have the pleasure of collaborating with fantastic academics and students!
-nav: true
+nav: false
 nav_order: 4
 ---
 ## Current Collaborators
