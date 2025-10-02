@@ -1,0 +1,192 @@
+.aiml901-body {
+  background: #f5f7fb;
+}
+
+.aiml901-page {
+  .aiml901-hero {
+    background: linear-gradient(135deg, rgba(36, 69, 160, 0.12), rgba(67, 230, 180, 0.12));
+    border-radius: 1rem;
+    padding: clamp(2rem, 4vw, 2.5rem) clamp(1.5rem, 5vw, 3rem);
+    margin-bottom: 2.25rem;
+    border: 1px solid rgba(36, 69, 160, 0.12);
+    box-shadow: 0 0.65rem 2rem rgba(15, 23, 42, 0.08);
+
+    &__label {
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(15, 23, 42, 0.65);
+      margin-bottom: 0.9rem;
+    }
+
+    &__title {
+      font-size: clamp(1.9rem, 3.2vw, 2.5rem);
+      font-weight: 700;
+      margin: 0;
+      line-height: 1.2;
+      color: rgba(15, 23, 42, 0.9);
+    }
+
+    &__subtitle {
+      font-size: 1.1rem;
+      margin-top: 0.75rem;
+      margin-bottom: 0;
+      color: rgba(15, 23, 42, 0.7);
+      max-width: 60ch;
+    }
+  }
+
+  .aiml901-content {
+    font-size: 1.02rem;
+
+    h2 {
+      margin-top: 2.5rem;
+    }
+
+    img {
+      display: block;
+      margin: 1.5rem auto;
+      max-width: min(680px, 100%);
+      width: auto;
+      height: auto;
+      border-radius: 0.75rem;
+      box-shadow: 0 0.35rem 1.2rem rgba(15, 23, 42, 0.08);
+    }
+
+    figure.aiml901-video {
+      margin: 2rem auto;
+      max-width: 800px;
+
+      .aiml901-video__wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        overflow: hidden;
+        border-radius: 1rem;
+        box-shadow: 0 0.35rem 1.5rem rgba(15, 23, 42, 0.12);
+
+        iframe {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          border: 0;
+        }
+      }
+
+      figcaption {
+        margin-top: 0.75rem;
+        text-align: center;
+        color: rgba(15, 23, 42, 0.6);
+        font-size: 0.95rem;
+      }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin: 1.5rem 0;
+      font-size: 0.98rem;
+      background: #fff;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      box-shadow: 0 0.25rem 1.2rem rgba(15, 23, 42, 0.05);
+
+      caption {
+        caption-side: top;
+        padding: 0 0 0.75rem;
+        font-weight: 600;
+        color: rgba(15, 23, 42, 0.65);
+      }
+
+      thead {
+        background: rgba(36, 69, 160, 0.06);
+
+        th {
+          font-weight: 600;
+          letter-spacing: 0.02em;
+          color: rgba(15, 23, 42, 0.75);
+        }
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+        padding: 1rem 1.25rem;
+        vertical-align: top;
+      }
+
+      tbody tr:last-child th,
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+    }
+
+    table.no-shadow {
+      box-shadow: none;
+    }
+  }
+}
+
+blockquote.aiml901-callout {
+  --aiml901-callout-accent: rgba(59, 130, 246, 0.6);
+  --aiml901-callout-bg: rgba(59, 130, 246, 0.08);
+
+  margin: 2rem 0;
+  padding: 1.15rem 1.4rem;
+  border-left: 4px solid var(--aiml901-callout-accent);
+  border-radius: 0.6rem;
+  background-color: var(--aiml901-callout-bg);
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.05);
+  font-size: inherit;
+
+  > p:first-child {
+    font-weight: 600;
+    margin-bottom: 0.35rem;
+  }
+
+  > p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+blockquote.aiml901-callout-note {
+  --aiml901-callout-accent: rgba(59, 130, 246, 0.8);
+  --aiml901-callout-bg: rgba(59, 130, 246, 0.1);
+}
+
+blockquote.aiml901-callout-info {
+  --aiml901-callout-accent: rgba(14, 165, 233, 0.75);
+  --aiml901-callout-bg: rgba(14, 165, 233, 0.1);
+}
+
+blockquote.aiml901-callout-tip,
+blockquote.aiml901-callout-success {
+  --aiml901-callout-accent: rgba(16, 185, 129, 0.75);
+  --aiml901-callout-bg: rgba(16, 185, 129, 0.1);
+}
+
+blockquote.aiml901-callout-warning,
+blockquote.aiml901-callout-attention {
+  --aiml901-callout-accent: rgba(251, 191, 36, 0.85);
+  --aiml901-callout-bg: rgba(251, 191, 36, 0.12);
+}
+
+blockquote.aiml901-callout-danger,
+blockquote.aiml901-callout-caution {
+  --aiml901-callout-accent: rgba(248, 113, 113, 0.85);
+  --aiml901-callout-bg: rgba(248, 113, 113, 0.12);
+}
+
+blockquote.aiml901-callout-example {
+  --aiml901-callout-accent: rgba(168, 85, 247, 0.75);
+  --aiml901-callout-bg: rgba(168, 85, 247, 0.1);
+}
+
+blockquote.aiml901-callout-question {
+  --aiml901-callout-accent: rgba(14, 116, 144, 0.8);
+  --aiml901-callout-bg: rgba(14, 116, 144, 0.12);
+}

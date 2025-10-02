@@ -1,0 +1,53 @@
+---
+layout: none
+---
+<!doctype html>
+<html lang="{{ site.lang }}">
+  <head>
+    {% include head.liquid %}
+  </head>
+  <body class="aiml901-body {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+    <div class="aiml901-main container py-5">
+      <div class="post aiml901-page">
+        <header class="aiml901-hero">
+          <p class="aiml901-hero__label">{{ page.banner_title | default: 'AIML 901' }}</p>
+          <h1 class="aiml901-hero__title">{{ page.title }}</h1>
+          {% if page.subtitle %}
+            <p class="aiml901-hero__subtitle">{{ page.subtitle }}</p>
+          {% elsif page.description %}
+            <p class="aiml901-hero__subtitle">{{ page.description }}</p>
+          {% endif %}
+        </header>
+
+        <article class="aiml901-content">
+          {{ content }}
+        </article>
+      </div>
+    </div>
+
+    {% include footer.liquid %}
+
+    {% include scripts/jquery.liquid %}
+    {% include scripts/bootstrap.liquid %}
+    {% include scripts/masonry.liquid %}
+    {% include scripts/mermaid.liquid %}
+    {% include scripts/diff2html.liquid %}
+    {% include scripts/leaflet.liquid %}
+    {% include scripts/chartjs.liquid %}
+    {% include scripts/echarts.liquid %}
+    {% include scripts/vega.liquid %}
+    {% include scripts/tikzjax.liquid %}
+    {% include scripts/typograms.liquid %}
+    {% include scripts/misc.liquid %}
+    {% include scripts/mathjax.liquid %}
+    {% include scripts/pseudocode.liquid %}
+    {% include scripts/analytics.liquid %}
+    {% include scripts/progressBar.liquid %}
+    {% include scripts/wechatModal.liquid %}
+    {% include scripts/imageLayouts.liquid %}
+    {% include scripts/jekyll_tabs.liquid %}
+    {% include scripts/back_to_top.liquid %}
+    {% include scripts/search.liquid %}
+    <script src="{{ '/assets/js/shortcut-key.js' | relative_url }}"></script>
+  </body>
+</html>
