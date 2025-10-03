@@ -10,7 +10,16 @@ layout: none
     <div class="aiml901-main container py-5">
       <div class="post aiml901-page">
         <header class="aiml901-hero">
-          <p class="aiml901-hero__label">{{ page.banner_title | default: 'AIML 901' }}</p>
+          <div class="aiml901-hero__top">
+            <p class="aiml901-hero__label">{{ page.banner_title | default: 'AIML901 - AI Foundations for Managers - Lab' }}</p>
+            {% if site.enable_darkmode %}
+              <button id="light-toggle" class="aiml901-hero__toggle" title="Change theme">
+                <i class="ti ti-sun-moon" id="light-toggle-system"></i>
+                <i class="ti ti-moon-filled" id="light-toggle-dark"></i>
+                <i class="ti ti-sun-filled" id="light-toggle-light"></i>
+              </button>
+            {% endif %}
+          </div>
           <h1 class="aiml901-hero__title">{{ page.title }}</h1>
           {% if page.subtitle %}
             <p class="aiml901-hero__subtitle">{{ page.subtitle }}</p>
