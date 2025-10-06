@@ -26,6 +26,7 @@ AI is advancing at an unprecedented pace. The best way to understand its potenti
 - **Leveraging AI Agents in n8n:** AI agents are the perfect vehicle for this journey—practical enough to build, sophisticated enough to reveal how AI really works, and relevant enough to spark discussions about operations, human collaboration, and organizational transformation. n8n is "high level" enough to be accessible to beginners, yet "low level" enough to allow for deep technical exploration.
 - **Preparing You for the Future:** This course is designed to be a stepping stone in your AI journey, enabling you to stay current as AI continues to evolve.
 - **AI-Powered Learning Support:** This course will heavily leverage AI. This will include AI homework, AI teaching assistants, and AI-powered case studies.
+
 ### Content and Relationship to AIML-901 Courses
 The course is a "Lab" version of AIML-901. Its specific focus is to be *as hands-on as possible*: we will actually build AI products and figure out how to create value with them. We will also *target the latest AI developments*. We will therefore focus mostly on using and leveraging Agentic AI (the latest and most important genAI development).  
 
