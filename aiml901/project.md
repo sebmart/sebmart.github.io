@@ -25,25 +25,25 @@ You will create a **pitch video** addressed to the stakeholders of the organizat
 
 This project is the main deliverable of the course. **It will be due at the same time as the final exam (end of exam week)**. It should include:
 
-- The _8-minute_ pitch video, which should contain:
+- An **8-minute pitch video**, which should contain:
     - An explanation of the problem you want to solve.
     - A description of how you plan to leverage AI for it.
     - A live demonstration of a working prototype (MVP) of your solution, which must include a use of n8n.
     - An evaluation process MVP, with a live demonstration.
     - A convincing explanation of why your process would be useful in practice, with an implementation path and discussion of risks and change management.
-- A working n8n workflow and evaluation pipeline that you presented in the video.
+- **A working n8n workflow and evaluation pipeline** that you presented in the video.
 
 ---
 
 ## Rubric
 
-The project is by a large margin the most important component of your final grade (see [[syllabus]]). Here is how it will be graded:
+The project is by a large margin the most important component of your final grade (see the [[syllabus]] page). Here is how it will be graded:
 
-| **Category**         | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          | **Weight** |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
-| Potential for impact | AI is leveraged to help with a well-defined, meaningful task that you know well and have experience with. The scope is appropriate for the course timeline. You convince us that it's not only about "using AI" but that it would truly be useful. You discuss not only the AI process itself but how it would integrate into the broader organization you are targeting. The originality of the idea is also part of this grade.                                                                                                                                        | 40%        |
-| Prototype            | You are able to showcase and share a working prototype. This prototype should use n8n and an AI API (but not necessarily only that). It should also have a working evaluation pipeline in n8n. Complexity is not needed to get a high grade, but it should show that you seriously thought about it and iterated on it. The fact that the user experience looks nice is a plus. The teaching team should be able to run the n8n part of your prototype. The prototype does not have to be a fully working version of your idea; think of it as a minimal viable product. | 40%        |
-| Presentation         | How engaging and creative your pitch video is.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           | 20%        |
+| **Category**         | **Description**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | **Weight** |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
+| Potential for impact | AI is leveraged to help with a well-defined, meaningful task that you know well and have experience with. The scope is appropriate for the course timeline. You convince us that it's not only about "using AI" but that it would truly be useful. You discuss not only the AI process itself but how it would integrate into the broader organization you are targeting. The originality of the idea is also part of this grade.                                                                                                                                                          | 40%        |
+| Prototype            | You are able to showcase and share a working prototype. **This prototype should use n8n and an AI API** (but not necessarily only that). It should also have a **working evaluation pipeline in n8n**. Complexity is not needed to get a high grade, but it should show that you seriously thought about the approach and iterated on it. The fact that the user experience looks nice is a plus. The teaching team should be able to run the n8n part of your prototype. The prototype does not have to be a fully working version of your idea; think of it as a minimal viable product. | 40%        |
+| Presentation         | How engaging and creative your pitch video is.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             | 20%        |
 
 ---
 
@@ -69,21 +69,21 @@ While the project is individual, there are many ways to get support:
 - The **recitations** will teach you n8n and other tools that could be useful.
 - In-person **office hours** with the professor and TA will be held every Wednesday.
 - Some of the course **homework** will be used as project check-ins.
-- A "**Project Kai**" AI assistant will be here to give you feedback and help you along the way.
+- **Kai** (our AI assistant) is specifically trained to give you feedback and help you along the way if you. have any doubt.
 - **Peer help** is allowed and encouraged -- consider using the course's **Slack** channel for it.
 
 ---
 
-## Advice
+## Advice and Rules
 
 - **Less is more!** A typical bias is to try to build a complex agent or AI workflow. But in practice, the best projects are often the simplest, as they are easier to implement, improve, and evaluate.
 - A consequence is that **finding a great application is more important than creating a great AI system**.
 - **Focus on a problem you deeply know**. It is so much easier to know how AI could be integrated if you've experienced the situation yourself. And your video will be much more convincing and easy to create!
 - Don't hesitate to **aim for an actual implementation** after the course! This is not required at all, but ambition makes things more exciting, and being in touch with actual stakeholders would definitely boost your project and motivation.
 - **Start early!** 5 weeks is very short, as great projects require iterations and sleeping on your ideas several times.
-- **You can work with several people on the same project, with restrictions.** The deliverable should be individual to each student and will be graded separately. Furthermore, participants must present a different part of the prototype that they worked on themselves. For example, if Alice and Bob work together on a project, they could each focus on a different part of the prototype and evaluation system. Both Alice and Bob should make a separate 8-minute video, where they present the project in their own words and focus the demo on the parts that they worked on. The expected total amount of work for their project should be twice that of an individual project.
-
-> [!warning] Make collaboration rules much clearer!! 
-> - Max number of students per project
-> - different submissions/videos
-> - Make the n8n requirements clearer
+- **You can work with several people on the same project, with restrictions.** 
+	- The **deliverable should be individual to each student** and will be graded separately. That is, each member must record their own video.
+	- **No more than 3 participants** per project.
+	- In the video participant must present a different part of the prototype that they worked on themselves. Therefore, each participant should have a different n8n workflow/evaluation MVP.
+	- For example, if Alice and Bob work together on a project, they could each focus on a different part of the prototype and evaluation system. Both Alice and Bob should make a separate 8-minute video, where they present the project in their own words and focus the demo on the parts that they worked on. The expected total amount of work for their project should be twice that of an individual project.
+- The video should last 8 minutes. **For full grade, the video should be in the 7min-8min15s range**. 

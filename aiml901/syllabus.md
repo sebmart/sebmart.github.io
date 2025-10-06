@@ -9,28 +9,21 @@ title: Syllabus
 Instructor: Sébastien Martin  
 *Email:* [sebastien.martin@kellogg.northwestern.edu](mailto:sebastien.martin@kellogg.northwestern.edu)  
 *Website:* [sebastienmartin.info](https://sebastienmartin.info)
+# Course Overview
 
----
+AI is advancing at an unprecedented pace. The best way to understand its potential is not just to study it, but to use it. This immersive course provides Kellogg students with extensive hands-on experience building with generative AI, equipping you with practical skills to immediately apply these technologies in business contexts. In just five weeks, you will go from AI outsider to AI insider, taking your first steps toward building solutions while developing the essential vocabulary and conceptual framework to navigate the rapidly evolving AI landscape. Let's get building!
 
-> **Note:** this syllabus is subject to change until the course starts.
+## Course Features
 
----
-
-## Course Overview
-
-AI is advancing at an unprecedented pace. The best way to understand its potential is not just by studying it, but by using it. This immersive course provides Kellogg students with extensive hands-on experience building with generative AI, equipping you with practical skills to immediately apply these technologies in business contexts. In just five weeks, you will go from AI outsider to AI insider, taking your first steps toward building solutions while developing the essential vocabulary and conceptual framework to navigate the rapidly evolving AI landscape. Let's get building!
-
-### Course Features
 - **State-of-the-Art:** While "AI" has many meanings, the focus of this course is on the *latest* AI developments. We will mostly study generative and agentic AI.
-- **Hands-On:** The best way to understand AI's strengths and limitations is to use it. The main deliverable is a project and each lecture includes hands-on activities.
-- **Leveraging AI Agents in n8n:** AI agents are the perfect vehicle for this journey—practical enough to build, sophisticated enough to reveal how AI really works, and relevant enough to spark discussions about operations, human collaboration, and organizational transformation. n8n is "high level" enough to be accessible to beginners, yet "low level" enough to allow for deep technical exploration.
+- **Hands-On:** The best way to understand AI's strengths and limitations is to use it. The main deliverable is a project and most lectures include hands-on activities.
+- **Leveraging AI Agents in n8n:** AI agents are the perfect vehicle to build expertise in AI. They are practical to build, sophisticated enough to reveal how AI really works, and relevant enough to spark discussions about operations, human collaboration, and organizational transformation. We will use _n8n_,  a leading AI agent and automation platform. n8n is accessible enough without coding background, yet powerful enough to allow for deep technical exploration.
 - **Preparing You for the Future:** This course is designed to be a stepping stone in your AI journey, enabling you to stay current as AI continues to evolve.
-- **AI-Powered Learning Support:** This course will heavily leverage AI. This will include AI homework, AI teaching assistants, and AI-powered case studies.
+- **AI-Powered Learning Support:** This course will heavily leverage AI to support learning. This will include AI homework, AI teaching assistants, and AI-powered case studies.
 
-### Content and Relationship to AIML-901 Courses
-The course is a "Lab" version of AIML-901. Its specific focus is to be *as hands-on as possible*: we will actually build AI products and figure out how to create value with them. We will also *target the latest AI developments*. We will therefore focus mostly on using and leveraging Agentic AI (the latest and most important genAI development).  
+## Specific Content and Other AIML-901 Courses
 
-However, all AIML-901 courses are also a general introduction to AI. Therefore, in this spirit of "learning by doing," we will use this experience to more broadly introduce the AI space, touching on the following general topics:
+There are several versions of AIML-901, each taught by a different department. They all serve as a general introduction to AI for MBAs, and all touch on the following topics:
 
 - AI and Machine Learning history.
 - Machine Learning basics.
@@ -38,34 +31,49 @@ However, all AIML-901 courses are also a general introduction to AI. Therefore, 
 - Accountability, ethics, fairness, governance, and future considerations.
 - AI applications in business and the manager's role.
 
-*Overall, I highly recommend taking other versions of the AIML-901 course.* They all choose very different approaches to introduce AI, and I believe that the more perspectives you get, the better.
-### Requirements
-This course is designed to be accessible to all Kellogg students without prerequisites (no need to know how to code!), regardless of technical background. If you have any doubts, please reach out.
-### Instructor
-Professor Martin is an associate professor of operations, whose research focuses on designing and implementing AI/automation systems that solve real-world business challenges. He designed Lyft's reinforcement learning approach to matching drivers and passengers and also works on a similar project at Waymo. He is passionate about incorporating AI in education: he created Kai, Kellogg's teaching assistant, and introduced the first AI-powered case studies. He was named P&Q 40 under 40 MBA professor in 2025. Outside research and teaching, he also consults with companies on AI strategy and is currently an AI advisor to the CEO of ESAB Corporation.
+However, each course is truly unique and they do not share content! This course is a "Lab" version of AIML-901. Its specific focus is to be *as hands-on as possible*: we will actually build AI products and figure out how to create value with them. We will also *target the latest AI developments*, and therefore focus much more on generative AI than on traditional machine learning and analytics. The "operations" flavor comes from our focus on "agentic AI"—AI systems that actually perform work. AI agents are among the latest and most important developments in generative AI, and leveraging them is a deeply operational question.
+
+With this version of the course, you will learn:
+
+- **how to build agentic AI products** (the best way to know something is to be able to use it)
+- **how the genAI technology actually works** (understanding a technology is key to leveraging it)
+- **how to create AI products that actually add value** (it's not because a technology is amazing that it is useful)
+
+*However, I highly recommend taking other versions of the AIML-901 course.* They all choose very different approaches to introducing AI, and I believe that the more perspectives you get, the better. For the most part, they are complementary rather than interchangeable.
+## Prerequirements
+
+This course is designed to be accessible to all Kellogg students without prerequisites (no need to know how to code!), regardless of technical background. If you have any doubts, please reach out. 
+
+However, the course is also meant to _challenge you_! However, the course is also meant to _challenge you_! Our goal is to catch you up with the latest on the AI front, and doing this in 5 weeks will be real work. But I promise that it will be worth it!. But I promise that it will be worth it!
+## Instructor
+
+Professor Martin is an associate professor of operations, whose research focuses on designing and implementing AI/automation systems that solve real-world business challenges. He designed Lyft's reinforcement learning approach to matching drivers and passengers and also works on a similar project at Waymo. He is passionate about incorporating AI in education: he created Kai, Kellogg's teaching assistant, introduced the first AI-powered case studies, and was named a Poets & Quants ‘40 Under 40’ MBA professor in 2025.. Outside research and teaching, he also consults with companies on AI strategy and is currently an AI advisor to the CEO of ESAB Corporation.
 
 ---
+
+# Deliverables and Expectations
 
 ## Recitations
 
-The course includes five in-person recitations, each lasting 60 minutes. The recitations will be focused on learning how to build AI agents using n8n, which is the main technical knowledge that you will have to learn. The recitations will be hands-on and interactive, each one focused on a specific business use case and gradually introducing more complex agentic workflows.
+The course includes five in-person recitations, each lasting 60 minutes and led by our TA. The recitations will be focused on learning how to build AI agents using n8n, which is the main technical knowledge that you will have to learn. The recitations will be hands-on and interactive, each one focused on a specific business use case and gradually introducing more complex agentic workflows.
 
-Attendance to the recitations is not required but strongly recommended. In particular, the final exam is solely focused on what is covered during recitation as it will evaluate your ability to use n8n.  
-In case you cannot make it, the recitations will be recorded and made available to you.
+Attendance at the recitations is not required but is strongly recommended. In particular, the final exam is solely focused on what is covered during recitation as it will evaluate your ability to use n8n. 
 
----
+Recitations are recorded, and the recording will be available shortly after each recitation. If you cannot attend in person,  please watch the recording and go through the hands-on material as if you had been there. 
 
 ## Individual Project
 
-The main deliverable for this course is an individual project where you will build your own AI agent using n8n. This is by far the most important deliverable of the course. The project's goal is two-fold: showcasing that you can build impressive AI agents, and also showcasing that you can design agentic workflows that actually create value.  
+The main deliverable for this course is an individual project where you will build your own AI agent using n8n. This is by far the most important deliverable of the course. The project's goal is two-fold: demonstrating your ability to build impressive AI agents and design agentic workflows that actually create value.  
 
-In a nutshell, the project (much more than the final exam) is the true evaluation mechanism of the course and can leverage everything we will learn.
+In a nutshell, the project (much more than the final exam) is the true evaluation mechanism of the course and will leverage everything we will learn.
 
 - The goal of the project is to design an AI/agentic workflow that would create value in a business context you are *deeply familiar with*.  
 - The target of the project must be either a previous company/organization you worked for, or a startup/product idea that you have and want to work on.
 
 **Deliverable:**  
-A recorded presentation video (8–10 minutes), together with a working MVP of your AI workflow. The video must include:
+A recorded presentation video (8 minutes), together with a working MVP of your AI workflow using n8n. 
+
+The video must include:
 - An explanation of the business context and the problem you are trying to solve.
 - A live demo of your AI agent in action, featuring n8n.
 - A demo of the evaluation pipeline to measure the performance of your agent.
@@ -76,38 +84,30 @@ A recorded presentation video (8–10 minutes), together with a working MVP of y
 - 40% technical implementation  
 - 20% quality of the presentation
 
----
+For more information, check out the [[project|project page]].
 
 ## Final Exam
 
 The project is really the main deliverable, the final exam is more of a "check-in" to make sure you learned the technical skills.  
 The exam will be virtual and open-book, timed (1.5 hours), and will feature a set of practical exercises where you will have to use n8n to build AI agents.  
 
-If you attended the recitations, practiced them, and did the homework, you should get close to full grade.
-
----
-
+If you attended the recitations, practiced them, and did the homework, you should receive close to a full score.
 ## Homework
 
-Before each class, a "Kai homework" will be assigned. You will have a guided conversation with an AI teaching assistant (Kai) to prepare you for the next class, and you will submit this conversation on Canvas.  
+Before each class, a "Kai homework" will be assigned. You will have a guided conversation with an AI teaching assistant (Kai) to prepare you for the next class, and you will submit your conversation on Canvas.
 
-Homework is designed to be quick (no more than 30 minutes) and will help you get the most out of the class, and they can be quite fun!
+Homework is designed to be quick (typically 30 minutes of work). It will help you get the most out of the class, and they can be quite fun!
 
 - Homework is graded for **effort, not results**.  
-- You will get full credit if you took it seriously and spent the time, regardless of accuracy.  
-
----
-
+- You will get full credit if you took it seriously and spent the time, regardless of accuracy. 
+- The homework will be typically available starting the evening of the previous class, and will be due the evening before the next class. E.g., if the class is Tuesday/Friday, the Friday homework will become available on Tuesday evening, and will be open until Thursday late-evening. This is because we need time to review and incorporate your answers before each class.
 ## Grading Rubric
 
 The final grade will be based on:
 
-- 45% Individual project
+- 50% Individual project
 - 25% Final Exam
 - 25% Participation (attendance, engagement, and homework effort)
-
----
-
 ## Attendance and Participation
 
 Attendance, timeliness, and in-class contributions are extremely important to me, as everyone benefits from a positive learning environment.  
@@ -115,10 +115,9 @@ Attendance, timeliness, and in-class contributions are extremely important to me
 - In-class contributions consist mainly of voluntary participation.  
 - Occasionally, I also use "warm calling," where I give you a heads up and ask you a question about something you already wrote in a class preparation homework.  
 - On-time attendance is required (when feasible).  
-- You have **one free pass** for unexcused absences; more will impact your grade.  
+- You have **one free pass** for unexcused absences. Additional absences will reduce your participation grade proportionally.
+- Only health-related absences are officially excused by Kellogg. If you are in this situation, _reach out to Academic Experience_ as they have a form for you to fill out.
 - Per Kellogg policy, 3 unexcused absences may result in a failing grade.
-
----
 
 ## AI Policy
 
@@ -126,36 +125,87 @@ The use of AI in this course is encouraged and you will be given access to many 
 
 However, AI is a double-edged sword; while it may be tempting, try not to use it as a "black box" that does the work for you without seeking to understand how and why it produces its results.
 
----
-
 ## Classroom Etiquette and Honor Code
 
 We follow the [Kellogg Honor Code](https://www.kellogg.northwestern.edu/the-experience/policies/honor-code/) and the [Code of Classroom Etiquette](https://www.kellogg.northwestern.edu/policies/etiquette.aspx).  
 
 You may not:
 1. Engage in cross-talking.  
-2. Engage in disruptive movement (e.g., arriving late or leaving class for a coffee or snack).  
+2. Engage in disruptive movement (e.g., arriving late or leaving class unnecessarily).  
 3. Use a smartphone, laptop, or other device outside of designated times.  
    - Tablets are allowed for note-taking, but only if used flat on the table.  
-   - Laptops only with prior approval.  
-   - Laptops required during designated hands-on times.  
+   - Laptops required during designated hands-on times, but should be closed otherwise.  
 4. Engage in any other inappropriate or disruptive behavior.  
-
----
 
 ## Software, Tools and Costs
 
 I've done my best to keep costs low. Expected costs/resources:
 
-- ChatGPT/Claude/Gemini subscription recommended but not required.  
-- **n8n**: free (course sponsored by n8n).  
+- ChatGPT/Claude/Gemini subscription recommended but not required. If you don't know what to choose, I recommend ChatGPT Plus.
+- **n8n**: free (the course is sponsored by n8n).  
 - **Lovable**: free (1 month sponsored access).  
 - **Kai (AI TA)** and AI-powered case studies: free (covered by Kellogg).  
-- **Required cost**: OpenAI (or Anthropic) API usage for your AI agents.  
-  - Expect less than **$5–$10** for the whole course.  
+- **Required cost**: OpenAI API usage for your AI agents.
+  - Expect total API costs of about **$10** for the entire course.
 
 ---
 
-## Class and Recitation Content
+# Class Overview
 
-See Canvas for the most up-to-date class-by-class content description.
+There are 10 classes—two per week—organized into three modules. There is also one recitation per week. The precise content of each class is subject to modifications. 
+
+## Module 1: How AI Works  
+*Build a deep understanding of genAI and how AI companies go from raw web data to ChatGPT and powerful AI agents.*
+
+- **Class 1: Let's Get Building**  
+  Dive straight into action by creating your first AI agent while exploring course deliverables and expectations.  
+
+- **Class 2: Pretraining a Large Language Model**  
+  Train your own LLM from scratch to demystify how these powerful models actually learn from data.  
+
+- **Class 3: Post-training, Making AI Useful**  
+  Discover the crucial steps that transform a raw LLM into a helpful, safe, and reliable AI assistant.  
+
+- **Class 4: AI Agents**  
+  How AI agents work (we finally understand n8n fully!), how to give them tools (RAG, etc.), and how to use them.  
+
+## Module 2: What AI Can Do  
+*Explore cutting-edge AI tools and companies while mastering techniques to leverage AI for maximum productivity.*
+
+- **Class 5: Prompting and Leveraging AI**  
+  Do not underestimate ChatGPT! We will explore prompting techniques and how AI can make you more productive.  
+
+- **Class 6: The AI Landscape**  
+  Navigate the ecosystem of state-of-the-art AI tools and companies shaping the future.  
+
+## Module 3: From AI to Impact  
+*Bridge the gap between powerful AI tools and measurable business impact through evaluation, strategy, and change management.*
+
+- **Class 7: Evaluation**  
+  Learn why evaluation pipelines are often more critical than the agents themselves for successful AI deployment.  
+
+- **Class 8: AI Strategy & Risk Management**  
+  Why so many AI projects fail to deliver on their promised value, and how to avoid these pitfalls. 
+
+- **Class 9: Change Management**  
+  Navigate the human side of AI implementation using an "AI case", a case study where you can directly talk to characters.  
+
+- **Class 10: Project Showcase & Farewell**  
+  The bittersweet last class! We will go over the final exam and the project deliverables, and Kai will be the judge of a project competition! We will give you tips on how to stay up to date with the field.
+
+## Recitations
+
+- **Recitation 1: Let's Build a Google Calendar Agent (First n8n Agent)**  
+  Master the fundamentals of n8n, your go-to platform for creating and testing intelligent agents.  
+
+- **Recitation 2: Let’s Build an Email Triage Agent (n8n Deep Dive)**  
+  Level up your n8n skills with advanced features that will empower your course project.  
+
+- **Recitation 3: Let's Build a Bilingual Communications Agent (Advanced n8n Usage)**  
+  Expand your project’s capabilities with advanced n8n functionalities to explore on your own.  
+
+- **Recitation 4: Let's Build an Expense Categorization Agent (Agent Evaluation)**  
+  Build a robust evaluation pipeline in n8n, a critical requirement for your project's success.  
+
+- **Recitation 5: Creating End-to-End Products with AI**  
+  Transform your agent backends into polished products using Lovable and other tools to create beautiful apps and websites.  
