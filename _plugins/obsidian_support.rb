@@ -60,10 +60,17 @@ module AIML901
           title_text ||= match[:type].capitalize
 
           callout_lines = []
-          callout_lines << "> **#{title_text}**" if title_text
+          if title_text
+            callout_lines << "> **#{title_text}**"
+            callout_lines << ">" if body_lines.any?
+          end
 
           body_lines.each do |body_line|
-            callout_lines << "> #{body_line}"
+            if body_line.nil? || body_line.empty?
+              callout_lines << ">"
+            else
+              callout_lines << "> #{body_line}"
+            end
           end
 
           callout_lines << "{: .aiml901-callout .aiml901-callout-#{type_slug} }"
