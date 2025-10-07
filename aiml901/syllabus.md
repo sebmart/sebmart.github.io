@@ -101,6 +101,8 @@ Homework is designed to be quick (typically 30 minutes of work). It will help yo
 - Homework is graded for **effort, not results**.  
 - You will get full credit if you took it seriously and spent the time, regardless of accuracy. 
 - The homework will be typically available starting the evening of the previous class, and will be due the evening before the next class. E.g., if the class is Tuesday/Friday, the Friday homework will become available on Tuesday evening, and will be open until Thursday late-evening. This is because we need time to review and incorporate your answers before each class.
+
+More information is available in [[kai_instructions|the Kai instructions]].
 ## Grading Rubric
 
 The final grade will be based on:
