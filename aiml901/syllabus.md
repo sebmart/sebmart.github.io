@@ -44,7 +44,8 @@ With this version of the course, you will learn:
 
 This course is designed to be accessible to all Kellogg students without prerequisites (no need to know how to code!), regardless of technical background. If you have any doubts, please reach out. 
 
-However, the course is also meant to _challenge you_! However, the course is also meant to _challenge you_! Our goal is to catch you up with the latest on the AI front, and doing this in 5 weeks will be real work. But I promise that it will be worth it!. But I promise that it will be worth it!
+However, the course is also meant to _challenge you_! Our goal is to catch you up with the latest on the AI front, and doing this in 5 weeks will be real work. But I promise that it will be worth it!.
+
 ## Instructor
 
 Professor Martin is an associate professor of operations, whose research focuses on designing and implementing AI/automation systems that solve real-world business challenges. He designed Lyft's reinforcement learning approach to matching drivers and passengers and also works on a similar project at Waymo. He is passionate about incorporating AI in education: he created Kai, Kellogg's teaching assistant, introduced the first AI-powered case studies, and was named a Poets & Quants ‘40 Under 40’ MBA professor in 2025.. Outside research and teaching, he also consults with companies on AI strategy and is currently an AI advisor to the CEO of ESAB Corporation.
@@ -92,6 +93,7 @@ The project is really the main deliverable, the final exam is more of a "check-i
 The exam will be virtual and open-book, timed (1.5 hours), and will feature a set of practical exercises where you will have to use n8n to build AI agents.  
 
 If you attended the recitations, practiced them, and did the homework, you should receive close to a full score.
+
 ## Homework
 
 Before each class, a "Kai homework" will be assigned. You will have a guided conversation with an AI teaching assistant (Kai) to prepare you for the next class, and you will submit your conversation on Canvas.
@@ -103,6 +105,7 @@ Homework is designed to be quick (typically 30 minutes of work). It will help yo
 - The homework will be typically available starting the evening of the previous class, and will be due the evening before the next class. E.g., if the class is Tuesday/Friday, the Friday homework will become available on Tuesday evening, and will be open until Thursday late-evening. This is because we need time to review and incorporate your answers before each class.
 
 More information is available in [[kai_instructions|the Kai instructions]].
+
 ## Grading Rubric
 
 The final grade will be based on:
@@ -110,6 +113,7 @@ The final grade will be based on:
 - 50% Individual project
 - 25% Final Exam
 - 25% Participation (attendance, engagement, and homework effort)
+
 ## Attendance and Participation
 
 Attendance, timeliness, and in-class contributions are extremely important to me, as everyone benefits from a positive learning environment.  
