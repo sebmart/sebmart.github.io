@@ -227,6 +227,22 @@
   ],
   "publications": [
     {
+      "name": "AI homework increases student satisfaction. A field experiment at the Kellogg School of Management",
+      "authors": "R. Bray, S. Martin",
+      "publisher": "Submitted to INFORMS Transactions on Education",
+      "releaseDate": "2025",
+      "url": "",
+      "summary": ""
+    },
+    {
+      "name": "Value of Sharing in Robots-as-a-Service Operations",
+      "authors": "A. Jacquillat, S. Martin, K. Zhang",
+      "publisher": "Major revision, Management Science",
+      "releaseDate": "2025",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289",
+      "summary": ""
+    },
+    {
       "name": "Relative Monte Carlo for Reinforcement Learning",
       "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
       "publisher": "Submitted to Management Science",
@@ -257,14 +273,6 @@
       "releaseDate": "2025",
       "url": "https://arxiv.org/abs/2309.10448",
       "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
-    },
-    {
-      "name": "Value of Sharing in Robots-as-a-Service Operations",
-      "authors": "A. Jacquillat, S. Martin, K. Zhang",
-      "publisher": "Resubmitted to Management Science",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289",
-      "summary": ""
     },
     {
       "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
