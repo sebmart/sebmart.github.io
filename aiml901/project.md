@@ -11,11 +11,12 @@ For this class's individual project, you will design a process that uses agentic
 
 Your goal is to propose a use of agentic AI that would positively impact a company/organization you are _deeply familiar with_, or support a startup/project idea you have. Here are a few examples of topics:
 
-1. An agent that creates daily interactive summaries of news coverage that are tailor-made to be relevant to an investment company's portfolio, helping them with investment decisions.
+1. Daily interactive summaries of news coverage that are tailor-made to be relevant to an investment company's portfolio, helping them with investment decisions.
 2. The automation of editing a hospital's patient medical records based on recordings of doctor/patient interactions.
 3. A personal email agent that can summarize your emails for the day. It also decides which emails it will write draft responses for, ignoring things like subscriptions and blogs. This agent makes a list of "to-do" items for you and follows up after _n_ days if something is not completed.
-4. An AI agent that helps students choose courses to bid for at Kellogg given their career goals.
-5. An agent that facilitates the coordination of consultant expenses on a large consulting project.
+4. Helping students choose courses to bid for at Kellogg given their career goals, as well as ratings of classes.
+5. Coordinating consultant expenses on a large consulting project, including consolidating receipts and credit card charges, categorizing expenses, flagging over-budget and non-compliant items, and updating internal budget trackers.
+6. Using medical records and police reports to write formal letters of demand for an insurance company.
 
 ---
 
