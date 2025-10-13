@@ -53,3 +53,20 @@ codeBlocks.forEach(function (codeBlock) {
     wrapper.append(copyButton);
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  var collapsibleBlocks = document.querySelectorAll("details.aiml901-code-collapse");
+  collapsibleBlocks.forEach(function (block) {
+    var summary = block.querySelector("summary.aiml901-code-collapse__summary");
+    if (!summary) return;
+
+    var showLabel = summary.getAttribute("data-show-label") || summary.textContent;
+    var hideLabel = summary.getAttribute("data-hide-label") || "Hide code";
+
+    summary.textContent = block.open ? hideLabel : showLabel;
+
+    block.addEventListener("toggle", function () {
+      summary.textContent = block.open ? hideLabel : showLabel;
+    });
+  });
+});

@@ -2,17 +2,19 @@
 
 require 'cgi'
 require 'uri'
+require 'nokogiri'
 
 module AIML901
   module ObsidianSupport
     PATH_PREFIX = 'aiml901/'.freeze
+    MAX_COLLAPSIBLE_LINES = 10
     WIKI_LINK_PATTERN = /(?<embed>!)?\[\[(?<target>[^\]|]+)(?:\|(?<alias>[^\]]+))?\]\]/.freeze
     CALL_OUT_PATTERN = /^\s*>\s*\[!(?<type>[A-Za-z0-9_-]+)\s*(?:[+-])?\](?:\s*(?<title>.*))?$/i.freeze
 
     module_function
 
     def apply(page)
-      return unless page.path.start_with?(PATH_PREFIX)
+      return unless aiml901_page?(page)
 
       page.data['layout'] ||= 'aiml901'
       page.data['banner_title'] ||= 'AIML 901'
@@ -23,6 +25,18 @@ module AIML901
       transformed = convert_youtube_embeds(transformed)
       transformed = protect_code_fences_from_liquid(transformed)
       page.content = transformed
+    end
+
+    def enhance_output(page)
+      return unless aiml901_page?(page)
+      return unless page.output_ext == '.html'
+
+      updated = wrap_long_code_blocks(page)
+      updated
+    end
+
+    def aiml901_page?(page)
+      page.path.start_with?(PATH_PREFIX)
     end
 
     def build_permalink(page)
@@ -320,9 +334,69 @@ module AIML901
 
       result.join("\n")
     end
+
+    def wrap_long_code_blocks(page)
+      html = page.output
+      doc = Nokogiri::HTML.parse(html)
+      body = doc.at('body')
+      return false unless body
+
+      updated = false
+
+      body.css('pre').each do |pre|
+        next if pre.ancestors('details').any? { |d| d['class'].to_s.split.include?('aiml901-code-collapse') }
+
+        code_node = pre.at('code')
+        text = (code_node ? code_node.text : pre.text).to_s
+        line_count = text.lines.count
+        next unless line_count > MAX_COLLAPSIBLE_LINES
+
+        promote_pre_to_collapsible(pre, line_count)
+        updated = true
+      end
+
+      if updated
+        page.output = doc.to_html
+      end
+
+      updated
+    end
+
+    def promote_pre_to_collapsible(pre, line_count)
+      doc = pre.document
+      details = Nokogiri::XML::Node.new('details', doc)
+      classes = ['aiml901-code-collapse']
+      details['class'] = classes.join(' ')
+      details['data-line-count'] = line_count.to_s
+
+      summary = Nokogiri::XML::Node.new('summary', doc)
+      summary['class'] = 'aiml901-code-collapse__summary'
+      show_label = collapse_label(line_count)
+      summary['data-show-label'] = show_label
+      summary['data-hide-label'] = 'Hide code'
+      summary['data-line-count'] = line_count.to_s
+      summary.content = show_label
+      details.add_child(summary)
+
+      body = Nokogiri::XML::Node.new('div', doc)
+      body['class'] = 'aiml901-code-collapse__body'
+      details.add_child(body)
+
+      pre.replace(details)
+      body.add_child(pre)
+    end
+
+    def collapse_label(line_count)
+      unit = line_count == 1 ? 'line' : 'lines'
+      "Show code (#{line_count} #{unit})"
+    end
   end
 end
 
 Jekyll::Hooks.register :pages, :pre_render do |page, _payload|
   AIML901::ObsidianSupport.apply(page)
+end
+
+Jekyll::Hooks.register :pages, :post_render do |page, _payload|
+  AIML901::ObsidianSupport.enhance_output(page)
 end

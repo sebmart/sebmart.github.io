@@ -978,6 +978,53 @@ progress::-moz-progress-bar {
   }
 }
 
+details.aiml901-code-collapse {
+  margin: 1.75rem 0;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 0.75rem;
+  background: var(--global-card-bg-color);
+  box-shadow: 0 0.35rem 1.5rem rgba(15, 23, 42, 0.1);
+  overflow: hidden;
+
+  > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  > summary.aiml901-code-collapse__summary {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    color: var(--global-hover-color);
+    background: rgba(0, 0, 0, 0.015);
+    position: relative;
+
+    &::after {
+      content: '\25BC';
+      font-size: 0.75rem;
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &[open] > summary.aiml901-code-collapse__summary {
+    border-bottom: 1px solid var(--global-divider-color);
+
+    &::after {
+      transform: rotate(180deg);
+    }
+  }
+
+  .aiml901-code-collapse__body {
+    padding: 1rem;
+
+    pre {
+      margin: 0;
+    }
+  }
+}
+
 .btn-group.dropdown {
   .btn {
     box-shadow: none;
