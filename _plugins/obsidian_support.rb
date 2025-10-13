@@ -21,6 +21,7 @@ module AIML901
       transformed = convert_callouts(page.content)
       transformed = convert_wikilinks(transformed, page)
       transformed = convert_youtube_embeds(transformed)
+      transformed = protect_code_fences_from_liquid(transformed)
       page.content = transformed
     end
 
@@ -279,6 +280,45 @@ module AIML901
           #{alt.empty? ? '' : "<figcaption>#{title}</figcaption>"}
         </figure>
       HTML
+    end
+
+    def protect_code_fences_from_liquid(content)
+      lines = content.split("\n", -1)
+      in_fence = false
+      fence_marker = nil
+      indent_stack = []
+      result = []
+
+      lines.each do |line|
+        if line =~ /^(\s*)(```|~~~)/
+          indent = Regexp.last_match(1)
+          marker = Regexp.last_match(2)
+
+          if in_fence && marker == fence_marker
+            result << line
+            raw_indent = indent_stack.pop || ''
+            result << "#{raw_indent}{% endraw %}"
+            in_fence = false
+            fence_marker = nil
+          else
+            in_fence = true
+            fence_marker = marker
+            indent_stack.push(indent)
+            result << "#{indent}{% raw %}"
+            result << line
+          end
+        else
+          result << line
+        end
+      end
+
+      while in_fence && !indent_stack.empty?
+        raw_indent = indent_stack.pop
+        result << "#{raw_indent}{% endraw %}"
+        in_fence = false
+      end
+
+      result.join("\n")
     end
   end
 end

@@ -1,5 +1,7 @@
 ---
 title: "Individual Project: Design and Showcase an Impactful AI Agent"
+author:
+  - Sébastien Martin, Alex Jensen
 ---
 ## Project Overview
 

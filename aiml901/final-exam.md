@@ -1,5 +1,6 @@
 ---
 title: Final Exam
+author:
 ---
 
 This document contains information about the final exam, including topics, credentials that will be needed, and the general structure.

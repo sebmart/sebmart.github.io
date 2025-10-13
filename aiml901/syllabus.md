@@ -1,5 +1,7 @@
 ---
 title: Syllabus
+author:
+  - Sébastien Martin
 ---
 
 # AIML-901OP-5 AI Foundations for Managers - Lab
@@ -176,13 +178,13 @@ There are 10 classes—two per week—organized into three modules. There is als
   How AI agents work (we finally understand n8n fully!), how to give them tools (RAG, etc.), and how to use them.  
 
 ## Module 2: What AI Can Do  
-*Explore cutting-edge AI tools and companies while mastering techniques to leverage AI for maximum productivity.*
+*While you ramp up with your project, this module will explore cutting-edge AI tools and discuss how to leverage them*.
 
-- **Class 5: Prompting and Leveraging AI**  
-  Do not underestimate ChatGPT! We will explore prompting techniques and how AI can make you more productive.  
+- **Class 5: Leveraging AI**  
+  Deep-dive in the "ChatGPT" product, and prompting techniques.
 
-- **Class 6: The AI Landscape**  
-  Navigate the ecosystem of state-of-the-art AI tools and companies shaping the future.  
+- **Class 6: The AI Frontier**  
+  An exploration of the state-of-the-art AI technologies and where all of this might be going. Hands-on with the Lovable agent.  
 
 ## Module 3: From AI to Impact  
 *Bridge the gap between powerful AI tools and measurable business impact through evaluation, strategy, and change management.*

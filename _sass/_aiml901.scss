@@ -123,6 +123,14 @@ html[data-theme="dark"] {
       color: var(--aiml901-hero-title);
     }
 
+    &__meta {
+      margin-top: 0.5rem;
+      margin-bottom: 0;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--aiml901-hero-label);
+    }
+
     &__subtitle {
       font-size: 1.1rem;
       margin-top: 0.75rem;

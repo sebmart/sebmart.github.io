@@ -14,13 +14,15 @@ layout: none
             <p class="aiml901-hero__label">{{ page.banner_title | default: 'AIML901 - AI Foundations for Managers - Lab' }}</p>
             {% if site.enable_darkmode %}
               <button id="light-toggle" class="aiml901-hero__toggle" title="Change theme">
-                <i class="ti ti-sun-moon" id="light-toggle-system"></i>
                 <i class="ti ti-moon-filled" id="light-toggle-dark"></i>
                 <i class="ti ti-sun-filled" id="light-toggle-light"></i>
               </button>
             {% endif %}
           </div>
           <h1 class="aiml901-hero__title">{{ page.title }}</h1>
+          {% if page.author %}
+            <p class="aiml901-hero__meta">{{ page.author }}</p>
+          {% endif %}
           {% if page.subtitle %}
             <p class="aiml901-hero__subtitle">{{ page.subtitle }}</p>
           {% elsif page.description %}

@@ -3,12 +3,13 @@
 // Toggle through light, dark, and system theme settings.
 let toggleThemeSetting = () => {
   let themeSetting = determineThemeSetting();
-  if (themeSetting == "system") {
-    setThemeSetting("light");
-  } else if (themeSetting == "light") {
+  if (themeSetting == "light") {
     setThemeSetting("dark");
+  } else if (themeSetting == "dark") {
+    setThemeSetting("light");
   } else {
-    setThemeSetting("system");
+    let computedTheme = determineComputedTheme();
+    setThemeSetting(computedTheme == "dark" ? "light" : "dark");
   }
 };
 
@@ -240,9 +241,11 @@ let initTheme = () => {
   document.addEventListener("DOMContentLoaded", function () {
     const mode_toggle = document.getElementById("light-toggle");
 
-    mode_toggle.addEventListener("click", function () {
-      toggleThemeSetting();
-    });
+    if (mode_toggle) {
+      mode_toggle.addEventListener("click", function () {
+        toggleThemeSetting();
+      });
+    }
   });
 
   // Add event listener to the system theme preference change.

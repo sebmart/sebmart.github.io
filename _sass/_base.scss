@@ -828,6 +828,8 @@ pre {
   background-color: var(--global-code-bg-color);
   border-radius: 6px;
   padding: 6px 12px;
+  white-space: pre-wrap;
+  word-break: break-word;
 
   pre,
   code {
@@ -843,6 +845,7 @@ code {
   background-color: var(--global-code-bg-color);
   border-radius: 3px;
   padding: 3px 3px;
+  white-space: inherit;
 }
 
 // Transitioning Themes
@@ -940,22 +943,38 @@ progress::-moz-progress-bar {
 
   .copy {
     background: var(--global-card-bg-color);
-    border-color: var(--global-bg-color);
-    border-radius: 0.3rem;
-    border-style: none;
+    border: 1px solid var(--global-divider-color);
+    border-radius: 0.4rem;
     color: var(--global-text-color);
-    font-size: medium;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.85rem;
+    font-weight: 600;
     opacity: 0;
+    padding: 0.25rem 0.6rem;
     position: absolute;
     right: 0.2rem;
     top: 0.2rem;
+    transition: opacity 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    pointer-events: none;
+    transform: translateY(-0.2rem);
+
+    .copy__label {
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
   }
 
-  &:active .copy,
-  &:focus .copy,
-  &:hover .copy {
+  &:hover .copy,
+  &:focus-within .copy {
     color: var(--global-hover-color);
+    border-color: var(--global-hover-color);
+    box-shadow: 0 0 0 0.15rem rgba(0, 0, 0, 0.05);
     opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
   }
 }
 
