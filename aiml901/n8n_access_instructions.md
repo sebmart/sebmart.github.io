@@ -1,5 +1,5 @@
 ---
-title: Access Instructions
+title: n8n Access Instructions
 author: Alex Jensen
 ---
 # Getting Started with n8n
