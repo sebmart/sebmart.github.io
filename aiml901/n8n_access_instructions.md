@@ -67,7 +67,9 @@ We will show you how to get set up with Google Calendar, but the same idea holds
 ---
 ### Getting Connected to Telegram
 
-Another easy option is Telegram, which has a great interface for connecting chatbots. 
+We will use Telegram to message n8n since it has a great interface for connecting chatbots. 
+
+Download the Telegram app on your phone to get started.
 
 1. In Telegram, open a new chat with BotFather and type `/newbot`. It will then prompt you to name your bot. Follow the prompts until your bot is created.
 2. When successfully created, a message will appear that says `Use this token to access the HTTP API`. Copy the string of letters and numbers.
