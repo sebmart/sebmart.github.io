@@ -23,7 +23,7 @@ AI is advancing at an unprecedented pace. The best way to understand its potenti
 - **Preparing You for the Future:** This course is designed to be a stepping stone in your AI journey, enabling you to stay current as AI continues to evolve.
 - **AI-Powered Learning Support:** This course will heavily leverage AI to support learning. This will include AI homework, AI teaching assistants, and AI-powered case studies.
 
-## Specific Content and Other AIML-901 Courses
+## Content
 
 There are several versions of AIML-901, each taught by a different department. They all serve as a general introduction to AI for MBAs, and all touch on the following topics:
 
@@ -33,7 +33,7 @@ There are several versions of AIML-901, each taught by a different department. T
 - Accountability, ethics, fairness, governance, and future considerations.
 - AI applications in business and the manager's role.
 
-However, each course is truly unique and they do not share content! This course is a "Lab" version of AIML-901. Its specific focus is to be *as hands-on as possible*: we will actually build AI products and figure out how to create value with them. We will also *target the latest AI developments*, and therefore focus much more on generative AI than on traditional machine learning and analytics. The "operations" flavor comes from our focus on "agentic AI"—AI systems that actually perform work. AI agents are among the latest and most important developments in generative AI, and leveraging them is a deeply operational question.
+However, each course is truly unique! This course focuses on agent AIML-901 and is taught in a lab format. Its focus is to be *as hands-on as possible*: we will actually build AI products and figure out how to create value with them. We will also *target the latest AI developments*, and therefore focus much more on generative AI than on traditional machine learning and analytics. The "operations" flavor comes from our focus on "agentic AI"—AI systems that actually perform work. AI agents are among the latest and most important developments in generative AI, and leveraging them is a deeply operational question.
 
 With this version of the course, you will learn:
 
@@ -41,7 +41,7 @@ With this version of the course, you will learn:
 - **how the genAI technology actually works** (understanding a technology is key to leveraging it)
 - **how to create AI products that actually add value** (it's not because a technology is amazing that it is useful)
 
-*However, I highly recommend taking other versions of the AIML-901 course.* They all choose very different approaches to introducing AI, and I believe that the more perspectives you get, the better. For the most part, they are complementary rather than interchangeable.
+*I highly recommend taking other versions of the AIML-901 course.* They all choose very different approaches to introducing AI, and I believe that the more perspectives you get, the better. For the most part, they are complementary rather than interchangeable.
 ## Prerequirements
 
 This course is designed to be accessible to all Kellogg students without prerequisites (no need to know how to code!), regardless of technical background. If you have any doubts, please reach out. 
