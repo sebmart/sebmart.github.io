@@ -3,7 +3,7 @@ title: How to use Kai
 author:
   - Sébastien Martin
 ---
-Kai is the AI teaching assistant for the _AIML-901 Lab_ class. Its name, chosen by MBA students, stands for "Kellogg AI." Kai is a specialized version of ChatGPT that also has access to private information about the class. It was specifically designed to assist you. It will be used for:
+Kai is the AI teaching assistant for the _AIML-901 AgentOps_ class. Its name, chosen by MBA students, stands for "Kellogg AI." Kai is a specialized version of ChatGPT that also has access to private information about the class. It was specifically designed to assist you. It will be used for:
 
 - **Answering questions:** Kai can handle most questions you have about the course and its content. It can also redirect you to the right staff member and share useful links or resources.  
 - **Proctoring homework:** Before each class, a “Kai homework” will be due (see details below).  

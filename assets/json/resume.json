@@ -1,6 +1,6 @@
 {
   "basics": {
-    "lastUpdated": "2025-02",
+    "lastUpdated": "2025-10",
     "name": "Sébastien Martin",
     "label": "Associate Professor",
     "image": "",
@@ -227,6 +227,14 @@
   ],
   "publications": [
     {
+      "name": "Human-AI Interactions and Societal Pitfalls",
+      "authors": "F. Castro, J. Gao, S. Martin",
+      "publisher": "Major revision, MSOM",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/abs/2309.10448",
+      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
+    },
+    {
       "name": "AI homework increases student satisfaction. A field experiment at the Kellogg School of Management",
       "authors": "R. Bray, S. Martin",
       "publisher": "Submitted to INFORMS Transactions on Education",
@@ -265,14 +273,6 @@
       "releaseDate": "2025",
       "url": "https://arxiv.org/abs/2404.04709",
       "summary": "MIT ORC Best Student Paper Award, 2024"
-    },
-    {
-      "name": "Human-AI Interactions and Societal Pitfalls",
-      "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Submitted to MSOM",
-      "releaseDate": "2025",
-      "url": "https://arxiv.org/abs/2309.10448",
-      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
     },
     {
       "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",

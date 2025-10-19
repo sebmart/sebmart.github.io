@@ -4,7 +4,7 @@ author:
   - Sébastien Martin
 ---
 
-# AIML-901OP-5 AI Foundations for Managers - Lab
+# AIML-901OP-5 AI Foundations for Managers - AgentOps
 
 ![[course_canvas_vignette.png|400]]
 **Kellogg School of Management**  
@@ -18,7 +18,7 @@ AI is advancing at an unprecedented pace. The best way to understand its potenti
 ## Course Features
 
 - **State-of-the-Art:** While "AI" has many meanings, the focus of this course is on the *latest* AI developments. We will mostly study generative and agentic AI.
-- **Hands-On:** The best way to understand AI's strengths and limitations is to use it. The main deliverable is a project and most lectures include hands-on activities.
+- **Lab format:** The best way to understand AI's strengths and limitations is to use it. The main deliverable is a project; weekly recitations are focused on building with AI, and most lectures include hands-on activities.
 - **Leveraging AI Agents in n8n:** AI agents are the perfect vehicle to build expertise in AI. They are practical to build, sophisticated enough to reveal how AI really works, and relevant enough to spark discussions about operations, human collaboration, and organizational transformation. We will use _n8n_,  a leading AI agent and automation platform. n8n is accessible enough without coding background, yet powerful enough to allow for deep technical exploration.
 - **Preparing You for the Future:** This course is designed to be a stepping stone in your AI journey, enabling you to stay current as AI continues to evolve.
 - **AI-Powered Learning Support:** This course will heavily leverage AI to support learning. This will include AI homework, AI teaching assistants, and AI-powered case studies.
@@ -42,11 +42,11 @@ With this version of the course, you will learn:
 - **how to create AI products that actually add value** (it's not because a technology is amazing that it is useful)
 
 *I highly recommend taking other versions of the AIML-901 course.* They all choose very different approaches to introducing AI, and I believe that the more perspectives you get, the better. For the most part, they are complementary rather than interchangeable.
-## Prerequirements
+## Pre-requirements
 
 This course is designed to be accessible to all Kellogg students without prerequisites (no need to know how to code!), regardless of technical background. If you have any doubts, please reach out. 
 
-However, the course is also meant to _challenge you_! Our goal is to catch you up with the latest on the AI front, and doing this in 5 weeks will be real work. But I promise that it will be worth it!.
+However, the course is also meant to _challenge you_! Our goal is to bring you up to speed on the latest AI developments, and achieving this in just 5 weeks will be a significant challenge. But I promise that it will be worth it!.
 
 ## Instructor
 
@@ -60,7 +60,7 @@ Professor Martin is an associate professor of operations, whose research focuses
 
 The course includes five in-person recitations, each lasting 60 minutes and led by our TA. The recitations will be focused on learning how to build AI agents using n8n, which is the main technical knowledge that you will have to learn. The recitations will be hands-on and interactive, each one focused on a specific business use case and gradually introducing more complex agentic workflows.
 
-Attendance at the recitations is not required but is strongly recommended. In particular, the final exam is solely focused on what is covered during recitation as it will evaluate your ability to use n8n. 
+Attendance at the recitations is not required but is strongly recommended. In particular, the final exam is solely focused on what is covered during recitation, as it will evaluate your ability to use n8n. 
 
 Recitations are recorded, and the recording will be available shortly after each recitation. If you cannot attend in person,  please watch the recording and go through the hands-on material as if you had been there. 
 
