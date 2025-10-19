@@ -1,5 +1,6 @@
 ---
 title: Recitation 1
+author: Alex Jensen
 ---
 ## You’ll Need…
 
@@ -27,7 +28,7 @@ In this recitation, we will build two projects using [n8n](https://aiml901-marti
 # Part 1: Nodes and Triggers
 
 Let's get logged in to [n8n](https://aiml901-martin.app.n8n.cloud/home/workflows). Once you do so, watch this brief video that introduces some basic terminology and shows you the n8n interface:
-![[n8n terminology 3.mov|n8n terminology]]
+https://youtu.be/LktPqqbnbRM
 In n8n, we will be making workflows.
 - A **workflow** is a series of connected tasks that can automate a process. 
 	- Workflows consist of **triggers, nodes, and connections**
