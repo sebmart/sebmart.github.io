@@ -33,6 +33,8 @@ In the recitations, all examples will use OpenAI's GPT-5, since this is a state-
 
 1. Log into https://platform.openai.com or make an account to get started. Even if you've used ChatGPT before, this interface might look slightly different.
 2. In the top right corner, click on `Settings` (a gear icon) and then navigate to `Billing`. 
+	1. If the gear icon doesn't appear, you'll see a button that says `Start building`. Click on this and your organization name should be something like `Personal`. Once you create an organization, skip the next step to invite your team, make your first API call, and add API credits. (Even though we'll do those steps next, steps 3–6 will be repeatable if you want to add more credit or make more API keys)
+	2. Once you do these steps, the gear icon should appear in the top right. Click on this and then navigate to `Billing`.
 3. Add a payment method and then add $5-10 to your credit balance. This will allow you to make calls to OpenAI from n8n and should be enough for the whole course.
 4. In the top left, press the search button and search for API keys or navigate to https://platform.openai.com/settings/organization/api-keys
 5.  Press `+ Create new secret key` and give it a name like "n8n connection".
