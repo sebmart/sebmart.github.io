@@ -1,4 +1,4 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Class 1: Let's get building! | Sébastien Martin </title> <meta name="author" content="Sébastien Martin"> <meta name="description" content="The academic personal website of Sébastien Martin. "> <meta name="keywords" content="academic-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/favicon.ico?85942da95a6a13aaf15248a426551986"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://sebastienmartin.info/aiml901/class_1.html"> <script src="/assets/js/theme.js?04381d0b351f8b7d59e7eca563b4c15e"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>initTheme();</script> </head> <body class="aiml901-body sticky-bottom-footer"> <div class="aiml901-main container py-5"> <div class="post aiml901-page"> <header class="aiml901-hero"> <div class="aiml901-hero__top"> <p class="aiml901-hero__label">AIML 901</p> <button id="light-toggle" class="aiml901-hero__toggle" title="Change theme"> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </div> <h1 class="aiml901-hero__title">Class 1: Let's get building!</h1> <p class="aiml901-hero__meta">Sébastien Martin</p> </header> <article class="aiml901-content"> <h2 id="what-you-already-prepared">What you already prepared</h2> <ul> <li>An OpenAI API key (it’s like a password for your OpenAI account).</li> <li>A Google Account.</li> <li>Having signed up to <a href="https://aiml901-martin.app.n8n.cloud/" rel="external nofollow noopener" target="_blank">the course’s n8n account</a>.</li> </ul> <p>If you’ve not done it yet, <a href="https://sebastienmartin.info/aiml901/n8n_access_instructions.html">instructions are available here</a>.</p> <hr> <h2 id="whats-needed-for-today">What’s needed for today</h2> <ul> <li>Copy the following code below into a new n8n workflow:</li> </ul> <div class="language-json highlighter-rouge"><div class="highlight"><details class="aiml901-code-collapse" data-line-count="417"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (417 lines)" data-hide-label="Hide code" data-line-count="417">Show code (417 lines)</summary><div class="aiml901-code-collapse__body"><pre class="highlight"><code><span class="p">{</span><span class="w">
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Class 1: Let's get building! | Sébastien Martin </title> <meta name="author" content="Sébastien Martin"> <meta name="description" content="The academic personal website of Sébastien Martin. "> <meta name="keywords" content="academic-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/favicon.ico?85942da95a6a13aaf15248a426551986"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://sebastienmartin.info/aiml901/class_1.html"> <script src="/assets/js/theme.js?04381d0b351f8b7d59e7eca563b4c15e"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>initTheme();</script> </head> <body class="aiml901-body sticky-bottom-footer"> <div class="aiml901-main container py-5"> <div class="post aiml901-page"> <header class="aiml901-hero"> <div class="aiml901-hero__top"> <p class="aiml901-hero__label">AIML 901</p> <button id="light-toggle" class="aiml901-hero__toggle" title="Change theme"> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </div> <h1 class="aiml901-hero__title">Class 1: Let's get building!</h1> <p class="aiml901-hero__meta">Sébastien Martin</p> </header> <article class="aiml901-content"> <h2 id="what-you-already-prepared">What you already prepared</h2> <ul> <li>An OpenAI API key (it’s like a password for your OpenAI account).</li> <li>A Google Account.</li> <li>Having signed up to <a href="https://aiml901-martin.app.n8n.cloud/" rel="external nofollow noopener" target="_blank">the course’s n8n account</a>.</li> </ul> <p>If you’ve not done it yet, <a href="https://sebastienmartin.info/aiml901/n8n_access_instructions.html">instructions are available here</a>.</p> <hr> <h2 id="whats-needed-for-today">What’s needed for today</h2> <ul> <li>Copy the following code below into a new n8n workflow:</li> </ul> <div class="language-json highlighter-rouge"><div class="highlight"><details class="aiml901-code-collapse" data-line-count="389"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (389 lines)" data-hide-label="Hide code" data-line-count="389">Show code (389 lines)</summary><div class="aiml901-code-collapse__body"><pre class="highlight"><code><span class="p">{</span><span class="w">
   </span><span class="nl">"nodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -20,14 +20,8 @@
         </span><span class="mi">816</span><span class="p">,</span><span class="w">
         </span><span class="mi">672</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"86962a3a-4c2d-4c03-9880-4119df056fb0"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"When receiving an email"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"gmailOAuth2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"06JM4io9KZSonBii"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sebastien Gmail account"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">}</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"edd26635-315b-4345-8d7e-070f248039e1"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"When receiving an email"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -46,15 +40,9 @@
         </span><span class="mi">1392</span><span class="p">,</span><span class="w">
         </span><span class="mi">576</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"0b6cfedb-0aab-4415-9fff-952fb1a2eaa5"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"cf4a44d8-4e5d-431f-b47b-deb338cf5337"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"reply to the email"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"webhookId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9694af38-894a-4c7b-9e1e-bb465bdce757"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"gmailOAuth2"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"06JM4io9KZSonBii"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sebastien Gmail account"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">}</span><span class="w">
+      </span><span class="nl">"webhookId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9694af38-894a-4c7b-9e1e-bb465bdce757"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -67,7 +55,7 @@
         </span><span class="mi">1216</span><span class="p">,</span><span class="w">
         </span><span class="mi">896</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3465e80f-9e32-4dda-9eea-ed2e70370952"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3be36cf2-b8d9-443f-b30f-3ad7c8a1282a"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"agent decision format"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -75,17 +63,17 @@
         </span><span class="nl">"operation"</span><span class="p">:</span><span class="w"> </span><span class="s2">"append"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"documentId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"__rl"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1BeeYkXAQIPQaXLFmK6RAG2x5u7d9VT-PkFKL9lfQ--Y"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"193WT2rdO1QxUzxMV1RBs0oYcnwsAJmdfym5Gk7bLn7Y"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"cachedResultName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email agent tickets"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"cachedResultUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.google.com/spreadsheets/d/1BeeYkXAQIPQaXLFmK6RAG2x5u7d9VT-PkFKL9lfQ--Y/edit?usp=drivesdk"</span><span class="w">
+          </span><span class="nl">"cachedResultName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Email tickets"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"cachedResultUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.google.com/spreadsheets/d/193WT2rdO1QxUzxMV1RBs0oYcnwsAJmdfym5Gk7bLn7Y/edit?usp=drivesdk"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nl">"sheetName"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"__rl"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
           </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gid=0"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span><span class="w">
           </span><span class="nl">"cachedResultName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sheet1"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"cachedResultUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.google.com/spreadsheets/d/1BeeYkXAQIPQaXLFmK6RAG2x5u7d9VT-PkFKL9lfQ--Y/edit#gid=0"</span><span class="w">
+          </span><span class="nl">"cachedResultUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://docs.google.com/spreadsheets/d/193WT2rdO1QxUzxMV1RBs0oYcnwsAJmdfym5Gk7bLn7Y/edit#gid=0"</span><span class="w">
         </span><span class="p">},</span><span class="w">
         </span><span class="nl">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
           </span><span class="nl">"mappingMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"autoMapInputData"</span><span class="p">,</span><span class="w">
@@ -99,8 +87,7 @@
               </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
               </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
               </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="p">{</span><span class="w">
               </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticket_owner"</span><span class="p">,</span><span class="w">
@@ -109,18 +96,16 @@
               </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
               </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
               </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="p">{</span><span class="w">
-              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"category"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"displayName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"category"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticket_category"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"displayName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticket_category"</span><span class="p">,</span><span class="w">
               </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
               </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
               </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
               </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
             </span><span class="p">},</span><span class="w">
             </span><span class="p">{</span><span class="w">
               </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticket_description"</span><span class="p">,</span><span class="w">
@@ -129,8 +114,7 @@
               </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
               </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
               </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+              </span><span class="nl">"canBeUsedToMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
             </span><span class="p">}</span><span class="w">
           </span><span class="p">],</span><span class="w">
           </span><span class="nl">"attemptToConvertTypes"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
@@ -144,14 +128,8 @@
         </span><span class="mi">1616</span><span class="p">,</span><span class="w">
         </span><span class="mi">768</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"847bd974-9f46-41de-af39-b0a21f14b2d6"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Add ticket to table"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"googleSheetsOAuth2Api"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"QenbZDq6kD37ecmM"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AIML Google Sheet"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">}</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53cb4298-6c2c-4dcf-88bd-e879344823c6"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Add ticket to table"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -165,7 +143,7 @@
         </span><span class="mi">272</span><span class="p">,</span><span class="w">
         </span><span class="mi">592</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b859ae65-7eec-422d-85ac-1ad4fb607d7c"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"64fd7f37-65b7-40a1-ae2d-f7f6fb2bc911"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky Note"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -180,12 +158,12 @@
         </span><span class="mi">1600</span><span class="p">,</span><span class="w">
         </span><span class="mi">528</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"739e837c-b1ba-48cd-8caf-eb39f5bbb688"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"4760228d-b0c9-4e16-8e9b-539f82d74453"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky Note1"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"### Setup (3/4): the agent can add tickets to a Google Sheet</span><span class="se">\n\n</span><span class="s2">Give the agent the ability to edit a Google Spreadsheet.</span><span class="se">\n\n</span><span class="s2">1. Do the same thing as step 1/4 with the node `Add ticket to table` to the left. That is, create a new **Google Sheet credential** using the same Google Account (repeat the Google login/verification process).</span><span class="se">\n</span><span class="s2">2. Once you have set `Credential to connect with`, we will now guide the agent to the correct spreadsheet.</span><span class="se">\n</span><span class="s2">3. Follow [the instructions](https://sebastienmartin.info/aiml901/class_1.html) (at the end of the page) to create a spreadsheet in your google account.</span><span class="se">\n</span><span class="s2">4. Going back to the node, click on the dropdown next to `Document`. Your copy of the spreadsheet should appear there. Select it.</span><span class="se">\n</span><span class="s2">5. In the following dropdown (`Sheet`), select the only sheet available.</span><span class="se">\n</span><span class="s2">6. That's it! The agent can now edit the ticket list :tada:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"### Setup (3/4): the agent can add tickets to a Google Sheet</span><span class="se">\n\n</span><span class="s2">Give the agent the ability to edit a Google Spreadsheet.</span><span class="se">\n\n</span><span class="s2">1. Do the same thing as step 1/4 with the node `Add ticket to table` to the left. That is, create a new **Google Sheet credential** using the same Google Account (repeat the Google login/verification process).</span><span class="se">\n</span><span class="s2">2. Once you have set `Credential to connect with`, we will now guide the agent to the correct spreadsheet.</span><span class="se">\n</span><span class="s2">3. Follow [the instructions](https://sebastienmartin.info/aiml901/class_1.html) (at the end of the page) to create a spreadsheet in your google account.</span><span class="se">\n</span><span class="s2">4. Going back to the node, click on the dropdown next to `Document`. Your copy of the spreadsheet should appear there. Select it.</span><span class="se">\n</span><span class="s2">5. In the following dropdown (`Sheet`), select the only sheet available.</span><span class="se">\n</span><span class="s2">6. In </span><span class="se">\"</span><span class="s2">Mapping Column Mode</span><span class="se">\"</span><span class="s2">, set </span><span class="se">\"</span><span class="s2">mapping automatically</span><span class="se">\"\n</span><span class="s2">7. That's it! The agent can now edit the ticket list :tada:</span><span class="se">\n</span><span class="s2">"</span><span class="p">,</span><span class="w">
         </span><span class="nl">"height"</span><span class="p">:</span><span class="w"> </span><span class="mi">432</span><span class="p">,</span><span class="w">
         </span><span class="nl">"width"</span><span class="p">:</span><span class="w"> </span><span class="mi">432</span><span class="w">
       </span><span class="p">},</span><span class="w">
@@ -195,7 +173,7 @@
         </span><span class="mi">1808</span><span class="p">,</span><span class="w">
         </span><span class="mi">800</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"a5970bef-0970-4a52-97a6-0655f70d2b30"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1886ac00-eebb-45d6-89a6-380fa65c2bc7"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky Note2"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -211,7 +189,7 @@
         </span><span class="mi">672</span><span class="p">,</span><span class="w">
         </span><span class="mi">0</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"518ad6f8-8e6c-4d94-94fb-16ea33ef40c2"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2510897a-2bc5-42d7-864e-19860cbed3a4"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky Note3"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -227,7 +205,7 @@
         </span><span class="mi">1136</span><span class="p">,</span><span class="w">
         </span><span class="mi">0</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5e8b03b1-4d5a-4a39-94c6-5aa74ea55bbc"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"879b6652-99e8-403e-b646-5626a22fd955"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky Note4"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -242,7 +220,7 @@
         </span><span class="mi">832</span><span class="p">,</span><span class="w">
         </span><span class="mi">1120</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d4537371-b6f0-4dc6-9849-caafd219433e"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"82053ba4-e772-4c50-82bd-04233e312d41"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky Note5"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -263,14 +241,8 @@
         </span><span class="mi">992</span><span class="p">,</span><span class="w">
         </span><span class="mi">896</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"86429704-c4c7-4493-ba7b-07545fece824"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OpenAI LLM"</span><span class="p">,</span><span class="w">
-      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="nl">"openAiApi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ng8YPN3U1fTEiF8P"</span><span class="p">,</span><span class="w">
-          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AIML901 OpenAI account"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-      </span><span class="p">}</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9215e28c-01ad-4455-8d1b-951f443bad4a"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OpenAI LLM"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
       </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -284,7 +256,7 @@
         </span><span class="mi">0</span><span class="p">,</span><span class="w">
         </span><span class="mi">0</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b3e3d4c4-dbdb-40e5-bfef-3b2c9698f93f"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b89385d0-beaf-4f8f-a9a8-44ba57db0e55"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Sticky Note6"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -311,7 +283,7 @@
             </span><span class="p">},</span><span class="w">
             </span><span class="p">{</span><span class="w">
               </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"522060d6-38cb-4aa5-ac3c-dec394ef4876"</span><span class="p">,</span><span class="w">
-              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"category"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticket_category"</span><span class="p">,</span><span class="w">
               </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $json.output.ticket_category }}"</span><span class="p">,</span><span class="w">
               </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="w">
             </span><span class="p">}</span><span class="w">
@@ -325,7 +297,7 @@
         </span><span class="mi">1392</span><span class="p">,</span><span class="w">
         </span><span class="mi">768</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7182b143-7df0-4d53-b19a-3962a6ec937b"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"d1d3479b-bd9f-4684-ac72-e7e61b27a429"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ticket content"</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="p">{</span><span class="w">
@@ -343,7 +315,7 @@
         </span><span class="mi">1040</span><span class="p">,</span><span class="w">
         </span><span class="mi">672</span><span class="w">
       </span><span class="p">],</span><span class="w">
-      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"94d2e8fd-57fc-41b4-8cb5-a13bf135ae91"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3241930c-1e42-4007-b56d-d852d9008e2b"</span><span class="p">,</span><span class="w">
       </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI Agent"</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">],</span><span class="w">
