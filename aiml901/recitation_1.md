@@ -1,6 +1,7 @@
 ---
 title: Recitation 1
-author: Alex Jensen
+author:
+  - Alex Jensen
 ---
 ## You’ll Need…
 

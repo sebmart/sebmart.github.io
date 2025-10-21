@@ -203,7 +203,7 @@ There are 10 classes—two per week—organized into three modules. There is als
 
 ## Recitations
 
-- **Recitation 1: Let's Build a Google Calendar Agent (First n8n Agent)**  
+- **Recitation 1: Let's Build a Google Calendar Agent (Getting Started with n8n)**  
   Master the fundamentals of n8n, your go-to platform for creating and testing intelligent agents.  
 
 - **Recitation 2: Let’s Build an Email Triage Agent (n8n Deep Dive)**  
