@@ -48,9 +48,7 @@ If you've not done it yet, [instructions are available here](https://sebastienma
         "threadId": "={{ $('When receiving an email').item.json.threadId }}",
         "messageId": "={{ $('When receiving an email').item.json.threadId }}",
         "message": "={{ $json.output.response_content }}",
-        "options": {
-          "ccList": "={{ $json.output.response_cc }}"
-        }
+        "options": {}
       },
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
@@ -60,7 +58,13 @@ If you've not done it yet, [instructions are available here](https://sebastienma
       ],
       "id": "cf4a44d8-4e5d-431f-b47b-deb338cf5337",
       "name": "reply to the email",
-      "webhookId": "9694af38-894a-4c7b-9e1e-bb465bdce757"
+      "webhookId": "9694af38-894a-4c7b-9e1e-bb465bdce757",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "06JM4io9KZSonBii",
+          "name": "Sebastien Gmail account"
+        }
+      }
     },
     {
       "parameters": {
@@ -147,7 +151,13 @@ If you've not done it yet, [instructions are available here](https://sebastienma
         768
       ],
       "id": "53cb4298-6c2c-4dcf-88bd-e879344823c6",
-      "name": "Add ticket to table"
+      "name": "Add ticket to table",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "shJALxJGn2GrowJT",
+          "name": "Alex Google Sheets"
+        }
+      }
     },
     {
       "parameters": {
