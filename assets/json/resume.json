@@ -1,13 +1,13 @@
 {
   "basics": {
-    "lastUpdated": "2025-10",
+    "lastUpdated": "2025-02",
     "name": "Sébastien Martin",
-    "label": "Associate Professor",
+    "label": "Assistant Professor",
     "image": "",
     "email": "sebastien.martin@kellogg.northwestern.edu",
     "phone": "+1 (510) 229-2758",
     "url": "https://sebastienmartin.info",
-    "summary": "I am an associate professor of operations at the Kellogg School of Management, Northwestern University. My research focuses on the interface of algorithms and operations management, with applications to AI, public sector operations, and transportation.",
+    "summary": "I am an assistant professor of Operations at the Kellogg School of Management, Northwestern University. My research focuses on the interface of large-scale optimization and operations management, with applications to transportation, the gig economy, public sector operations and AI.",
     "location": {
       "address": "2211 Campus Drive",
       "postalCode": "IL 60208",
@@ -41,7 +41,7 @@
       "location": "Evanston, IL, USA",
       "startDate": "2020",
       "endDate": "Current",
-      "summary": "I taught the Operations Management core course in the MBA program, and I am now teaching a new course: _Generative AI for Managers_.",
+      "summary": "I taught the Operations Management core course in the MBA program.",
       "highlights": []
     },
     {
@@ -51,7 +51,7 @@
       "location": "North Bethesda, Maryland, U.S.",
       "startDate": "2025",
       "endDate": "Current",
-      "summary": "ESAB is a global leader in welding and cutting products. I advise the CEO on the company's AI strategy.",
+      "summary": "ESAB is a global leader in welding and cutting products. I advise the CEO on the use of AI to improve the company's operations.",
       "highlights": []
     },
     {
@@ -114,25 +114,7 @@
       "title": "INFORMS Journal on Computing Meritorious Reviewer Award",
       "date": "2025",
       "awarder": "INFORMS",
-      "summary": "For my service as a reviewer for INFORMS Journal on Computing in the year 2024-5."
-    },
-    {
-      "title": "40 under 40 MBA professor",
-      "date": "2025",
-      "awarder": "Poets & Quants",
-      "summary": "I was selected as one of the 40 under 40 MBA professors in the world by Poets & Quants, with a focus on my work on AI in the classroom."
-    }, 
-    {
-      "title": "Operations Research Distinguished Service Award",
-      "date": "2024",
-      "awarder": "INFORMS",
-      "summary": "I've received the [2024 Distinguished Service Award](https://pubsonline.informs.org/page/opre/meritorious-service-awards) for my reviewing work for the _Operations Research_ academic journal."
-    },
-    {
-      "title": "INFORMS Journal on Computing Meritorious Reviewer Award",
-      "date": "2024",
-      "awarder": "INFORMS",
-      "summary": "For my service as a reviewer for INFORMS Journal on Computing in the year 2023-4."
+      "summary": "For my service as a reviewer for INFORMS Journal on Computing."
     },
     {
       "title": "Chair Core Course Teaching Award",
@@ -150,7 +132,7 @@
       "title": "Best Student Paper Award",
       "date": "2024",
       "awarder": "MIT ORC",
-      "summary": "For the paper \"Two-Sided Flexibility in Platforms\", for my student co-author Kamessi Zhao."
+      "summary": "For my paper \"Two-Sided Flexibility in Platforms\", the student is my co-author Kamessi Zhao."
     },
     {
       "title": "Franz Edelman Award Laureate (with Lyft)",
@@ -192,13 +174,13 @@
       "title": "Doing Good with Good OR award, Second Place",
       "date": "2019",
       "awarder": "INFORMS",
-      "summary": "For my paper \"optimizing schools' start time and bus routes\"."
+      "summary": "For my paper \"optimizing schools’ start time and bus routes\"."
     },
     {
       "title": "Best Student Paper Award",
       "date": "2018",
       "awarder": "MIT ORC",
-      "summary": "For my paper \"optimizing schools' start time and bus routes\"."
+      "summary": "For my paper \"optimizing schools’ start time and bus routes\"."
     },
     {
       "title": "Best Presentation",
@@ -227,60 +209,12 @@
   ],
   "publications": [
     {
-      "name": "Human-AI Interactions and Societal Pitfalls",
-      "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Major revision, MSOM",
-      "releaseDate": "2025",
-      "url": "https://arxiv.org/abs/2309.10448",
-      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
-    },
-    {
-      "name": "AI homework increases student satisfaction. A field experiment at the Kellogg School of Management",
-      "authors": "R. Bray, S. Martin",
-      "publisher": "Submitted to INFORMS Transactions on Education",
-      "releaseDate": "2025",
-      "url": "",
-      "summary": ""
-    },
-    {
-      "name": "Value of Sharing in Robots-as-a-Service Operations",
-      "authors": "A. Jacquillat, S. Martin, K. Zhang",
-      "publisher": "Major revision, Management Science",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289",
-      "summary": ""
-    },
-    {
-      "name": "Relative Monte Carlo for Reinforcement Learning",
-      "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
-      "publisher": "Submitted to Management Science",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
-      "summary": "Also accepted and presented at EC 2025"
-    },
-    {
-      "name": "Labor Cost Free-Riding in the Gig Economy",
-      "authors": "Z. Lian, S. Martin, G. van Ryzin",
-      "publisher": "Major revision, Management Science",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888",
-      "summary": "INFORMS RMP (Revenue Management and Pricing) Student Paper Award Finalist, 2021"
-    },
-    {
-      "name": "Two-Sided Flexibility in Platforms",
-      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
-      "publisher": "Major revision, Operations Research",
-      "releaseDate": "2025",
-      "url": "https://arxiv.org/abs/2404.04709",
-      "summary": "MIT ORC Best Student Paper Award, 2024"
-    },
-    {
       "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
       "authors": "A. Delarue, Z. Lian, S. Martin",
       "publisher": "Accepted at Management Science",
       "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076",
-      "summary": "Accepted in EC 2024, semi-finalist for the 2024 Wagner Prize."
+      "summary": "Accepted in EC 2024, semi-finalist if the 2024 Wagner Prize."
     },
     {
       "name": "The Trap of Complexity in Experimentation",
@@ -291,12 +225,12 @@
       "summary": ""
     },
     {
-      "name": "Dual-sourcing of capacity",
-      "authors": "S. Chopra, P. Mishra, K. Smilowitz",
-      "publisher": "Working Paper",
+      "name": "Labor Cost Free-Riding in the Gig Economy",
+      "authors": "Z. Lian, S. Martin, G. van Ryzin",
+      "publisher": "Major revision, Management Science",
       "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4322824",
-      "summary": ""
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888",
+      "summary": "INFORMS RMP (Revenue Management and Pricing) Student Paper Award Finalist, 2021"
     },
     {
       "name": "Trading Flexibility for adoption: Dynamic versus static walking in ridesharing",
@@ -312,6 +246,46 @@
       "publisher": "Management Science",
       "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3711072",
+      "summary": ""
+    },
+    {
+      "name": "Two-Sided Flexibility in Platforms",
+      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
+      "publisher": "Submitted to Operations Research",
+      "releaseDate": "2024",
+      "url": "https://arxiv.org/abs/2404.04709",
+      "summary": "MIT ORC Best Student Paper Award, 2024"
+    },
+    {
+      "name": "Human-AI Interactions and Societal Pitfalls",
+      "authors": "F. Castro, J. Gao, S. Martin",
+      "publisher": "Working Paper (to be submitted to Operations Research)",
+      "releaseDate": "2024",
+      "url": "https://arxiv.org/abs/2309.10448",
+      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
+    },
+    {
+      "name": "Dual-sourcing of capacity",
+      "authors": "S. Chopra, P. Mishra, K. Smilowitz",
+      "publisher": "Submitted to MSOM",
+      "releaseDate": "2024",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4322824",
+      "summary": ""
+    },
+    {
+      "name": "Relative Monte Carlo for Reinforcement Learning",
+      "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
+      "publisher": "Working Paper",
+      "releaseDate": "2024",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
+      "summary": ""
+    },
+    {
+      "name": "Value of Sharing in Robots-as-a-Service Operations",
+      "authors": "A. Jacquillat, S. Martin, K. Zhang",
+      "publisher": "To be resubmitted to Management Science",
+      "releaseDate": "2024",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289",
       "summary": ""
     },
     {
@@ -371,7 +345,7 @@
       "summary": "2019 Franz Edelman Award Laureate"
     },
     {
-      "name": "Optimizing schools' start time and bus routes",
+      "name": "Optimizing schools’ start time and bus routes",
       "authors": "D. Bertsimas, A. Delarue, S. Martin",
       "publisher": "Proceedings of the National Academy of Science",
       "releaseDate": "2019",
@@ -410,18 +384,6 @@
       "url": "https://www.sciencedirect.com/science/article/abs/pii/S0191261516303307",
       "summary": ""
     }
-  ],
-  "talks": [
-    {
-      "title": "Two-Sided Flexibility in Platforms",
-      "date": "2024/10/08",
-      "location": "Northwestern IEMS Seminar"
-    },
-    {
-      "title": "Two-Sided Flexibility in Platforms",
-      "date": "2024/10/02",
-      "location": "Duke Fuqua Decision Sciences Seminar"
-    }    
   ],
   "languages": [
     {
