@@ -22,11 +22,11 @@ In this recitation, we will build two projects using [n8n](https://aiml901-marti
 
 - Learn the basics of **nodes** and **connections** in n8n.
 - See the power of **system prompting** (controlling the “voice” of an AI).
-- Understand the difference between a simple **LLM chain** and a full **AI Agent** with tools.
+- Understand how to use an **AI Agent** with tools.
 - See an example of how we can create value using AI.
 
 ---
-# Part 1: Nodes and Triggers
+# Nodes and Triggers
 
 Let's get logged in to [n8n](https://aiml901-martin.app.n8n.cloud/home/workflows). Once you do so, watch this brief video that introduces some basic terminology and shows you the n8n interface:
 ![n8n YouTube video](https://youtu.be/LktPqqbnbRM)
@@ -37,11 +37,16 @@ In n8n, we will be making workflows.
 - **Triggers** (or trigger nodes) tell us when the workflow should start. This can occur when we hit execute workflow, send a message, receive an email, or more.
 - **Nodes** each perform a specific task, such as manipulating data, sending an email, or reading a calendar.
 - **Connections** tell n8n in what order we want these operations to occur and how our information should flow through the workflow. Think of it like a process flow chart, with our unit of flow being our information.
+- **Credentials** let us connect n8n to other services, such as OpenAI and Google products
 
 ---
-# Part 2: Customizable Chatbot
+# Part 1: Core Content (Google Calendar Agent)
  
-Now, we will show you an introductory workflow and build a chatbot.
+Now we build a **Calendar assistant**. This shows how to go beyond a single LLM response, giving the AI the ability to actually take actions.
+
+We are using Google Calendar because it is easy to implement, but what we are doing here can be extended to other calendars. Microsoft Outlook's calendar also works but has slightly fewer options, so we need to dive a bit deeper in order to have as much functionality as we would like.
+
+Start a new workspace and let’s get started!
 
 ---
 ### Step 1. Trigger: Listening for Chat Message
@@ -54,27 +59,39 @@ Now, we will show you an introductory workflow and build a chatbot.
 Try sending a chat message and see how it executes. Clicking into the node, you will see a sessionId, the action "sendMessage," and your message (called chatInput).
 
 ---
-### Step 2. Processing: ChatGPT Response
+### Step 2. Core Brain: AI Agent
 
-Next, we want to send our message to an LLM.
+- **Add node:** `AI Agent`
+	- **Source for Prompt (User Message):** Connected Chat Trigger Node
+- **What it does:** The agent can **plan** and **choose tools.** It receives as an input the message that we sent in the chat.
+- We will add a system message to clarify its instructions in the exercises, which allows us to customize it farther.
 
-- **Add node:** `Basic LLM Chain` (Chat GPT Response)
-	- **Prompt (User Message):** 
-```JSON
-{{ $json.chatInput }}
-```
- - **Add node:** under the Basic LLM Chain, click the `+` for the model and choose `OpenAI Chat Model`
-	- This tells us what model we are going to call, the "brains" of our LLM. For now, let's just use `gpt-5`.
-	- Set the credential to connect with to be your OpenAI account.
-	
- Connect our chat trigger to the Basic LLM Chain and send a message. This returns something that is pretty clearly just ChatGPT. However, we have much more control in n8n!
- 
 ---
-### Step 3.  Customizing the Response
- 
- We will add a **system prompt** that allows us to personalize our GPT. A system prompt is a set of instructions that is also sent to the LLM every time that we send a message.
+### Step 3. Connection to OpenAI
 
-Click into the Basic LLM Chain node. Under `Chat Messages (if Using a Chat Model)`, click `Add prompt` and for `Type Name or ID`, choose `System`. Then, copy in this prompt:
+- **Add node:** under the AI Agent, click the `+` for the chat model and choose `OpenAI Chat Model`. For the model, select `gpt-5`.
+- If you want to make it run slightly faster, click `Add Option → Reasoning Effort` and choose low. This makes the model spend less time thinking through its response. If you use a different model, Reasoning Effort might not appear as an option.
+
+---
+### Step 4. Give the Agent a Memory
+
+Currently, if we were to send a message to the chat, it would be able to respond, but unlike regular ChatGPT, this model has no memory of the previous messages it has received. You can actually test this yourself: send a chat message asking what the previous message said.
+
+We will add a way for the agent to view past messages. With memory, it can follow up on previous things that you said (“delete that soccer event I just made”).
+
+- **Add node:** under the AI Agent, click the `+` for the memory and choose`Simple Memory`
+	- **Session ID:** Connected Chat Trigger Node
+	- **Context Window Length:** The number of messages that the AI agent should "remember." I usually choose 20 messages, since this is enough for the AI agent to remember what previously happened in the conversation, but fewer messages is more efficient.
+
+---
+### Step 5. System Prompt
+
+Now, we customize the directions for our agent. Currently, it is acting just like GPT5; the way that it responds might seem familiar! However, we can change this. 
+
+A **system message** is a set of directions for our LLM to follow. If you have made a custom GPT before, this is exactly what you supplied to customize it.
+
+- Click into the `AI Agent` node. Then, click `Add Option → System Message`.
+- As an example, add this prompt:
 ``` text
 You are a cowboy philosopher who teaches using the Socratic method. Always respond in a folksy, cowboy-like manner, with colloquial Western language, metaphors, and imagery (horses, trails, saloons, dusty roads, ranch life, etc.). Your role is not to give direct answers, but to ask probing, thoughtful questions that guide the other person toward realizin’ the truth for themselves. Stay curious, never condescending. Keep the tone friendly, rustic, and wise, as if you’re sittin’ ‘round a campfire under the stars.
 	
@@ -90,10 +107,10 @@ You are a cowboy philosopher who teaches using the Socratic method. Always respo
     Instead of saying "The answer is X", say "Suppose ya took the north trail instead of the south—what do ya figure might happen then?"
 ```
 
-Send a chat message asking for the difference between correlation and causation.
+Now, send a chat message asking for the difference between correlation and causation. See how it responds.
 
 ---
-## Part 2 Exercises:
+### Exercises:
 
 1. **Tone:** Change the system prompt so the bot acts like a pirate. What types of words should it use?
 2. **Wording:** Try to make the bot limit its answer to 3 words. What happens if you push it and ask multiple questions?
@@ -101,101 +118,86 @@ Send a chat message asking for the difference between correlation and causation.
 4. **Limitations:** What happens if you ask the bot something that it doesn't know, like your middle name?
 
 ---
-# Part 3: Google Calendar Agent
+### Step 6. System Prompting for Google Calendar Agent
 
-Now we build something more advanced: a **Calendar assistant**. This shows how to go beyond a single LLM response, giving the AI the ability to actually take actions.
+Now, we have seen that we are able to change the agent's behavior. _This is extremely powerful_— with a well-thought-out system prompt, you can change GPT5's default behavior into something like interview practice, a storyteller, or more.
 
-We are using Google Calendar because it is easy to implement, but what we are doing here can be extended to other calendars. Microsoft Outlook's calendar also works but has slightly fewer options, so we need to dive a bit deeper in order to have as much functionality as we would like.
+In our case, we want it to behave as a calendar agent that can update our schedule. There are some tricks to this that are covered in the exercises below. For now, begin to think about what you want the agent's behavior to be like. If you say, "create an event tonight," should it clarify the specific timing or perhaps assume that the event is from 6–9 p.m.? If you don't specify the day, should it assume that you mean today?
 
-Start a new workspace and let’s get started!
-
----
-### Step 1. Trigger: Telegram
-
-- **Add node:** `On App Event → Telegram → On message`
-	- Connect with your Telegram credential
-	- Click `Additional Fields → Restrict to User IDs` and put your Telegram user ID. You can find this by messaging `/start` to userinfobot on Telegram or going to `https://api.telegram.org/bot<yourtoken>/getUpdates`, replacing `<yourtoken>` with the bot token. This prevents other Telegram users from accessing your n8n workflow through your chatbot.
-- **What it does:** This lets you receive messages from Telegram, which will ultimately make adding events to your calendar much quicker.
-
---- 
-### Step 2. Core Brain: AI Agent
-
-- **Add node:** `AI Agent`
-	- **Prompt (User Message**):
-	```JSON
-	{{ $json.chatInput }}
-	```
-- **What it does:** This is different from the “LLM Chain.” The Agent can **plan** and **choose tools.**
-- We will add a system message to clarify its instructions in the exercises.
+For now, make the system prompt something like "You are a calendar agent." Feel free to add more instructions; we just cannot leave that box empty, as it otherwise causes an error. 
 
 ---
-### Step 3. Connection to OpenAI
+### Step 7. First Tool: Create Event
 
-- **Add node:** under the AI Agent, click the `+` for the chat model and choose `OpenAI Chat Model`. For the model, select `gpt-5`.
+Now, our agent has a model chosen (in our case, GPT5), memory, and a short system prompt. We now need it to connect to our calendar.
 
----
-### Step 4. Give the Agent a Memory
-
-- **Add node:** `Simple Memory`
-	- **Session ID:** Define below
-	- **Session Key from Previous Node:** 
-```JSON
-{{ $('Telegram Trigger').item.json.message.chat.id }}
-```
-- Connect it to the AI Agent.
-- **What it does:** Stores recent conversation history.
-- **Why this matters:** Without memory, the agent forgets everything after each turn. With memory, it can follow up (“delete that soccer event I just made”).
-
----
-### Step 5. First Tool: Create Event
-
-- **Add node:** Click the `+` for Tool under the AI Agent node and choose `Google Calendar → Create Event`
-- Choose to connect with your Google Calendar credential and decide calendar you want to add to.
+- **Add node:** Click the `+` for Tool under the AI Agent node and choose `Google Calendar`
+- Create a credential for your Google Calendar.
+- `Tool Description` gives the agent more information on how to use this tool. In our case, we can leave it as `Set Automatically`, but we could also choose to describe it in-depth if we want the tool to be used for a specific case.
+- `Resource`: We will choose `Event`. However, we can also use the tool to manipulate full calendars, but we are focused on individual events.
+- `Operation`: Choose `Create`, since we want to make events.
 - Press the stars next to the `Start` and `End` options to let our agent decide when the event starts and ends.
 - In the additional fields, add the `Summary` option and also let the agent decide this. The `Summary`is the title of the event in your calendar.
 - **Why this matters:** This is the _first power_ we give the agent—the ability to create new events.
 
----
-### Step 6. Responding in Telegram
+Now, send a chat message adding an event to your calendar. Check that the event was actually created.
 
-- **Add node:** `Telegram → Send a text message`
-	- Chat ID: your Telegram user ID
-	- Text:
-		```JSON
-		{{ $json.output }}
-	  ```
-
-We can make the workflow active by toggling the button in the top toolbar from Inactive to Active. This means that the workflow will actively "listen" for events; in our case, this means that it will respond each time that we send a message.
+> [!info] Event Timing
+> The event may have been created, but it's possible that it was put in your calendar at the wrong time or on the wrong day. This is because LLMs do not have a good sense of what the current time is. However, there's an easy way to counteract this: return to the system prompt for the AI agent. Make sure that you choose `Expression` instead of `Fixed` in the top right of the system message and then add the following text, which tells the LLM what the current time is and anchors it:
+```text
+       Current time: {{ $now }}
+```
 
 ---
-## Part 3 Exercises:
+### Exercises:
 
 These exercises help walk through how we should prompt our agent and then also let us add other tools that we might want to use.
 
-1. Explain in words what happens when you send a message to the agent. What does it do?
-2. Ask your agent to add an event tomorrow at 2 PM. What happens?
-3. Check what happens when you schedule an event for “tonight” or “tomorrow morning”. What time ranges are used for these events?
-4. We should give a default amount of time for our event. Add this to your system prompt and try Exercise 3.1 again.
-5. Now, add the following to the system prompt for the `AI Agent` and try Exercise 3.1 again:
-   ```text
-       Current time: {{ $now }}
-    ```
-6. While our agent “knows” what tools are available to it (which we will discuss later), it is helpful in the system prompt to provide a description of the tools available. Update the system prompt to describe the `Create Event` tool.
-7. Currently, our agent only lets us add events, but we can’t delete or update this event. In order to do so, we need to get the ID of the event. Add another Google Calendar tool and choose the operation `Get Many`.
-    1. We can set a limit on how many events we retrieve, if your calendar is particularly full. We can also set a time frame in which to search; this can be automatically determined by our agent, as well.
-    2. Update the system prompt to describe this new tool.
-8. Now, on your own, add `Update Event` and `Delete Event` tools and update the system prompt to describe them. Note that you can choose what to update, such as the timing, the name of the event, and many other options.
-    1. Add a **clarifying question rule**: if the agent isn’t sure which event to delete, it should ask you first.
+1. Ask your agent to add an event tomorrow at 2 PM. What happens? Does it execute correctly?
+2. Check what happens when you schedule an event for “tonight” or “tomorrow morning”. What time ranges are used for these events?
+3. We should give a default amount of time for our event. Add this to your system prompt and try Exercise 1 again.
+
+---
+### Step 8. Delete Events Tool
+
+Now, we want to be able to remove events from our calendar.
+
+- **Add node:** Click the `+` for Tool under the AI Agent node and choose `Google Calendar`
+- `Operation`: choose `Delete`
+- Choose which calendar you wish to delete events from
+- `Event ID`: press the stars to let the agent decide this value.
+
+Google Calendar events are stored by an `Event ID`. However, our agent currently has no way of knowing by default what the ID of an event is. To see this, try to delete an event that you just made. This is why we introduce the `Get Many Events` tool.
+
+---
+### Step 9. Get Many Events Tool
+
+This tool has multiple uses. Firstly, it allows us to retrieve events from our calendar, which is useful if we want to know our schedule for a given day. Additionally, when events are retrieved, our agent is able to gain valuable information about them, including timing, attendees, and crucially, the event ID.
+
+ **Add node:** Click the `+` for Tool under the AI Agent node and choose `Google Calendar`
+- `Operation`: choose `Get Many`
+- Choose which calendar you want to use
+- `Return All` will return all events that match the specification. I leave this off for now and leave the limit at 50. Imagine that you ask about your schedule for the next month; this could be a lot of events! 
+- `Before` and `After` let the agent search for events that occur in a specific time period. To do so, press the stars to let the agent automatically choose these.
+- We might want to let the agent come up with its own ways to search for events (for example, by title, attendees, etc.). To do so, click `Add option → Query` and then press the stars to let the agent choose this value.
+
+Now, try to delete an event. It should work!
+
+---
+### Exercises:
+
+1. Now, try to add an `Update Event` tool. What information do you want it to be able to update in events?
+2. While our agent “knows” what tools are available to it (which we will discuss later), it is helpful in the system prompt to provide a description of the tools that it has available. Update the system prompt to describe the tools. This can help make it more accurate, especially for more complicated questions.
+3. Add a **clarifying question rule**: if the agent isn’t sure which event to delete or update, it should ask you first. For example, if I have two events called "Pottery" and want to delete one, we probably want it to know which one it is.
 
 ### Challenges:
 
-1. It's nice to be able to send a voice message in Telegram and for it to process this. Think about what steps you would need to add so that n8n can process both text and voice messages.
-2. Try to give your agent a multi-step command. For example, “delete the Marketing meeting today and then create a new one at 4 PM for one hour.”
+1. Try to give your agent a multi-step command. For example, “delete the Marketing meeting today and then create a new one at 4 PM for one hour.”
     1. What steps are needed? Does it complete these steps?
     2. If not, add instructions as necessary to make this more consistent. What works? What does not?
-3. When we try to implement new tools, things don't always work perfectly. For example, Google Calendar's API handles calls to create events with and without attendees slightly differently. 
-	1. In the `Create Event` node, under `Additional Fields`, click `Add Field` and then `Attendees` and let the model automatically define it. Now, create an event without any attendees. What happens? How can we deal with this?
-	2. We also want to be able to update events to have attendees. How would we do this?
+2. When we try to implement new tools, things don't always work perfectly. For example, Google Calendar's API handles calls to create events with and without attendees slightly differently. 
+	1. In the `Create Event` node, under `Additional Fields`, click `Add Field` and then `Attendees` and let the model automatically define it. Now, create an event without any attendees. You will see that it fails; it expects there to be attendees. Create two separate `Create Event` tools, one that includes attendees and one which does not, and provide a description for the AI agent, as well as when it should use each node.
+	2. Now, try to do the same thing for the `Update Event` tool.
 
 ---
 ## For the Final:
@@ -205,9 +207,58 @@ The following topics may appear on the final exam:
 - System prompting
     - Changing the tone of an LLM
     - Providing instructions on using tools efficiently
-- Use of the `Basic LLM Chain` and `AI Agent` nodes, along with tools
-- n8n triggers 
-	- `Trigger manually`
-	- `On chat message`
-	- `Telegram → On message`
-- Use of the Google Calendar tools
+- Use of the `AI Agent` node
+- `On chat message` trigger
+- Use of the Google Calendar tool `Add Event` tool.
+
+---
+# Part 2: Exploratory Content (Connecting to Telegram)
+
+Any content in this section will not be covered on the final exam. However, it is designed to show interesting ways we can expand what we do in n8n and hopefully encourage you to explore further on your own!
+
+For now, we will show how to connect to Telegram, a mobile messaging app. You can also connect services like Slack and WhatsApp, but Telegram is easier to get set up. We will use this to replace our `Chat Trigger` node.
+
+To begin, follow the directions under the `Telegram` section [here.](https://sebastienmartin.info/aiml901/n8n_access_instructions.html)
+
+---
+### Step 1. Trigger: Telegram
+
+- **Add node:** `On App Event → Telegram → On message`
+	- Connect with your Telegram credential
+	- By default, Telegram bots are public. We don't want everyone to be able to access our workflow (and by extent, our calendar). Click `Additional Fields → Restrict to User IDs` and put your Telegram user ID. You can find this by messaging `/start` to @userinfobot on Telegram and copying the user ID from there. This prevents other Telegram users from accessing your n8n workflow through your chatbot.
+- **What it does:** This lets you receive messages from Telegram, which will ultimately make adding events to your calendar much quicker.
+
+Test this by clicking `Execute Workflow` and then sending a message in Telegram to your bot. You should see it appear in n8n.
+
+---
+### Step 2. Modifying the AI Agent Node and Memory
+
+The format of the message from the Telegram trigger and the chat trigger are slightly different, so we need to modify several things. First, connect the `+` from the Telegram trigger to the left side of the AI Agent node, where the chat trigger is also connected.
+
+- Click into the `AI Agent` node.
+- `Source for Prompt (User Message)`: Define below
+- `Prompt (User Message)`:  Put in `{{ $json.message.text }}`. This is just the text from our Telegram message. If you successfully received a message from Telegram, you can also see this text in the inputs on the left side of the screen; you can drag and drop this text into the box (see the video for a demonstration of this).
+
+We also need to modify the memory, since it was previously formatted for the chat trigger:
+
+- Click into the `Simple Memory` node.
+- `Session ID`: Define below
+- `Key`: Each message that we send gets stored in the memory with an associated key. When we provide a key here, the AI agent then will read the last (in our case) 20 messages with that key. For now, this does not affect us, but if we have multiple workflows that are using simple memory, giving them the same key would mean that those messages would be "stored in the same place," which could mean that the AI agent then is reading messages from the wrong workflow. The easiest way to deal with this is to just give each workflow a unique key, which is just a string of letters, numbers, and characters. 
+	- Personally, I just like to use my Telegram user ID. However, if I had many workflows using Telegram and using this same user ID, this would cause problems like I mentioned above. To do this, copy and paste the following: `{{ $('Telegram Trigger').item.json.message.from.id }}`
+
+---
+### Step 3. Responding in Telegram
+
+- **Add node:** `Telegram → Send a text message`
+	- Chat ID: your Telegram user ID
+	- Text:
+		```JSON
+		{{ $json.output }}
+	  ```
+
+- Next, take the `+` on the right side of the AI Agent node and attach it to the left side of this Telegram node. Congratulations, it is now able to take the output of the agent and send it back to you in Telegram!
+
+---
+### Exercises:
+
+ 1. It's nice to be able to send a voice message in Telegram and for it to process this. Think about what steps you would need to add so that n8n can process both text and voice messages. Explore in n8n to see if you can get this up and running!
