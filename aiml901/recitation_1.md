@@ -12,10 +12,10 @@ author:
 You can get connected [here](access_instructions).
 
 ---
-In this recitation, we will build two projects using [n8n](https://aiml901-martin.app.n8n.cloud/):
+In this recitation, we will use [n8n](https://aiml901-martin.app.n8n.cloud/) to build a **Google Calendar assistant** that can add, update, and delete events by sending a text message through Telegram
 
-1. A **customizable chatbot** powered by ChatGPT.
-2. A **Google Calendar assistant** that can add, update, and delete events by sending a text message through Telegram
+You can watch a video recording of the recitation here:
+![Recitation 1 Recording](https://youtu.be/zn9OrCbJEdY)
 
 ---
 ## Learning Objectives

@@ -4,6 +4,7 @@ author:
   - Sébastien Martin
 ---
 
+
 # AIML-901OP-5 AI Foundations for Managers - AgentOps
 
 ![[course_canvas_vignette.png|400]]
@@ -50,7 +51,7 @@ However, the course is also meant to _challenge you_! Our goal is to bring you u
 
 ## Instructor
 
-Professor Martin is an associate professor of operations, whose research focuses on designing and implementing AI/automation systems that solve real-world business challenges. He designed Lyft's reinforcement learning approach to matching drivers and passengers and also works on a similar project at Waymo. He is passionate about incorporating AI in education: he created Kai, Kellogg's teaching assistant, introduced the first AI-powered case studies, and was named a Poets & Quants ‘40 Under 40’ MBA professor in 2025.. Outside research and teaching, he also consults with companies on AI strategy and is currently an AI advisor to the CEO of ESAB Corporation.
+Professor Martin is an associate professor of operations, whose research focuses on designing and implementing AI/automation systems that solve real-world business challenges. He designed Lyft's reinforcement learning approach to matching drivers and passengers and also works on a similar project at Waymo. He is passionate about incorporating AI in education: he created Kai, Kellogg's teaching assistant, introduced the first AI-powered case studies, and was named a Poets & Quants ‘40 Under 40’ MBA professor in 2025. Outside research and teaching, he also consults with companies on AI strategy and is currently an AI advisor to the CEO of ESAB Corporation.
 
 ---
 
@@ -59,6 +60,10 @@ Professor Martin is an associate professor of operations, whose research focuses
 ## Recitations
 
 The course includes five in-person recitations, each lasting 60 minutes and led by our TA. The recitations will be focused on learning how to build AI agents using n8n, which is the main technical knowledge that you will have to learn. The recitations will be hands-on and interactive, each one focused on a specific business use case and gradually introducing more complex agentic workflows.
+
+Recitations will be divided into two sections. 
+- **Core content**: We will begin by developing skills that you are expected to understand and be able to use independently. During this section, you will be given time to explore and expand upon these tools. _Only this content will be tested on the final exam._
+- **Exploratory content**: The latter portion of the recitation will focus on broader, inspirational demos to showcase what is possible with n8n. You won't be expected to master the skills immediately; this is mostly to give you ideas on what to explore on your own. Additionally, we encourage you to explore n8n templates (pre-made projects by others), YouTube tutorials, and other resources.
 
 Attendance at the recitations is not required but is strongly recommended. In particular, the final exam is solely focused on what is covered during recitation, as it will evaluate your ability to use n8n. 
 
@@ -92,7 +97,7 @@ For more information, check out the [[project|project page]].
 ## Final Exam
 
 The project is really the main deliverable, the final exam is more of a "check-in" to make sure you learned the technical skills.  
-The exam will be virtual and open-book, timed (1.5 hours), and will feature a set of practical exercises where you will have to use n8n to build AI agents.  
+The exam will be virtual and open-book, timed (1.5 hours), and will feature a set of practical exercises where you will have to use n8n to build AI agents. It will only cover the core content from the recitations.
 
 If you attended the recitations, practiced them, and did the homework, you should receive close to a full score.
 
