@@ -1,0 +1,406 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Recitation 2 | Sébastien Martin </title> <meta name="author" content="Sébastien Martin"> <meta name="description" content="The academic personal website of Sébastien Martin. "> <meta name="keywords" content="academic-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/favicon.ico?85942da95a6a13aaf15248a426551986"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://sebastienmartin.info/aiml901/recitation_2.html"> <script src="/assets/js/theme.js?04381d0b351f8b7d59e7eca563b4c15e"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>initTheme();</script> </head> <body class="aiml901-body sticky-bottom-footer"> <div class="aiml901-main container py-5"> <div class="post aiml901-page"> <header class="aiml901-hero"> <div class="aiml901-hero__top"> <p class="aiml901-hero__label">AIML 901</p> <button id="light-toggle" class="aiml901-hero__toggle" title="Change theme"> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </div> <h1 class="aiml901-hero__title">Recitation 2</h1> <p class="aiml901-hero__meta">Alex Jensen</p> </header> <article class="aiml901-content"> <blockquote class="aiml901-callout aiml901-callout-info"> <p><strong>Note</strong></p> <p>This recitation has more core content than recitations 3, 4, and 5. We really focus on a deep understanding on n8n, finding nodes that you need, and troubleshooting errors. As a result, this may take slightly longer to process, but will be extremely helpful going forward. Plus, the following recitations will be slightly lighter.</p> </blockquote> <p>An important use case for agents is in responding to large quantities of emails. This is particularly important in a setting such as customer service, where you might want to respond to some types of emails automatically but route others to human representatives for more complex, sensitive, or urgent topics.</p> <p>In Lecture 1, you saw a small example of this with class emails with questions about a variety of topics. We expand on this today to make it slightly more robust and also introduce many different types of n8n nodes and functionalities.</p> <p>While a professor might want to be more accessible than this, we can imagine many scenarios where the head of a team does not need to receive all requests unless absolutely necessary. We simply use this scenario since it is one we know best!</p> <hr> <h2 id="youll-need">You’ll Need…</h2> <ol> <li>Google Sheets connection</li> <li>Gmail connection</li> <li>OpenAI connection</li> </ol> <hr> <h2 id="learning-objectives">Learning Objectives</h2> <ul> <li>A deeper understanding of n8n and node input and output with JSON expressions.</li> <li>Learn about branching and build routing with <code class="language-plaintext highlighter-rouge">If</code>, <code class="language-plaintext highlighter-rouge">Wait</code>, and Gmail/Google Sheets nodes.</li> </ul> <hr> <h1 id="part-1-core-content">Part 1: Core Content</h1> <h2 id="json">JSON</h2> <p>As we begin to dig deeper, we need to understand how n8n passes information from node to node.</p> <h3 id="what-is-json">What is JSON?</h3> <p>JSON (JavaScript Object Notation) is a simple way to structure data so that both humans and computers can read it. Think of it like a digital filing cabinet where you store information as <strong>key–value pairs</strong>. The <em>key</em> is the label (like “Name”), and the <em>value</em> is the content (like “Albert Einstein”).</p> <h3 id="the-basics">The Basics</h3> <ol> <li> <strong>Objects</strong> (curly braces <code class="language-plaintext highlighter-rouge">{ }</code>): hold sets of key–value pairs.<br> Example:</li> </ol> <pre><code class="language-JSON">{
+  "name": "Albert Einstein",
+  "age": 76
+}
+</code></pre> <p>In this case, the keys are <code class="language-plaintext highlighter-rouge">name</code> and <code class="language-plaintext highlighter-rouge">age</code>, while <code class="language-plaintext highlighter-rouge">"Albert Einstein"</code> and <code class="language-plaintext highlighter-rouge">76</code> are the values. Note that we need to include quotation marks for values that are not just numbers.</p> <ol> <li> <strong>Arrays</strong> (square brackets <code class="language-plaintext highlighter-rouge">[ ]</code>): hold lists of items.<br> Example:</li> </ol> <pre><code class="language-JSON">{
+  "students": ["Maya", "John", "Priya"]
+}
+</code></pre> <ol> <li> <strong>Referencing values</strong>: You get values by following the keys. <ul> <li>In the first example, <code class="language-plaintext highlighter-rouge">name</code> → <code class="language-plaintext highlighter-rouge">"Albert Einstein"</code>.</li> <li>In the second example, we can refer to the second element of the array “students” (which is “John”) with the expression <code class="language-plaintext highlighter-rouge">students[1]</code>. For the third element, we would choose <code class="language-plaintext highlighter-rouge">students[2]</code>. This may seem counterintuitive, but arrays are numbered starting from 0. <h3 id="putting-it-together">Putting It Together</h3> </li> </ul> </li> </ol> <p>If you wanted to describe a course with students, it might look like:</p> <pre><code class="language-JSON">{
+  "course": "AgentOps",
+  "instructor": "Prof. Martin",
+  "students": [
+    {"name": "Maya", "year": "MBA1"},
+    {"name": "John", "year": "MBA2"}
+  ]
+}
+</code></pre> <p>Here:</p> <ul> <li> <code class="language-plaintext highlighter-rouge">course</code> is a string (formal way of saying a set of letters/words),</li> <li> <code class="language-plaintext highlighter-rouge">students</code> is an array of objects,</li> <li>each student object has its own keys (<code class="language-plaintext highlighter-rouge">name</code>, <code class="language-plaintext highlighter-rouge">year</code>).</li> </ul> <h3 id="referring-to-values-in-n8n">Referring to Values in n8n</h3> <p>In n8n, we can write expressions that let us refer to the values in a JSON structure. You’ve actually already seen this before; in Recitation 1, we saw the prompt for the AI Agent node ``. This is how we let n8n reference whatever value is stored under the key <code class="language-plaintext highlighter-rouge">chatInput</code>.</p> <p>Let’s think about the previous example.</p> <ul> <li>If we wrote ``, this would give us the value <code class="language-plaintext highlighter-rouge">"AgentOps"</code>.</li> <li>If we wrote ``, we would get</li> </ul> <pre><code class="language-JSON">[
+    {"name": "Maya", "year": "MBA1"},
+    {"name": "John", "year": "MBA2"}
+]
+</code></pre> <ul> <li>To get the first student, we would write ``.</li> <li>To get the first student’s name, we would write ``</li> </ul> <p>In other words, to reference values that are within other objects (like how <code class="language-plaintext highlighter-rouge">name</code> is within the array <code class="language-plaintext highlighter-rouge">students</code>), we just need to use periods and string together the names of the keys.</p> <blockquote class="aiml901-callout aiml901-callout-info"> <p><strong>Disclaimer</strong></p> <p>There is slightly more nuance to this that we will discuss in the next section. Specifically, this structure works if we are referring to a JSON object that comes from a node directly before the node where we want to reference the object. We will show you an example very shortly on how to generalize this even more.</p> </blockquote> <h2 id="inputs-and-outputs">Inputs and Outputs</h2> <p>Each node in n8n is part of a data pipeline.</p> <ul> <li> <strong>Input:</strong> What the node receives, which is usually a JSON object from the previous node(s).</li> <li> <strong>Output:</strong> What the node returns, which is usually one or more JSON objects that can be used by the following nodes.</li> </ul> <p>We can visualize this as</p> <div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Input (JSON items) → Process (defined by node logic) → Output (JSON items)
+</code></pre></div></div> <p>In the case of triggers (nodes that start workflows), the input may or may not be JSON. For example, add a <code class="language-plaintext highlighter-rouge">Chat Trigger</code> node and then send a message in the chat. Click into the trigger and you will see under Output something that looks like</p> <pre><code class="language-JSON">[
+	{
+		"sessionId": "5ac9fc059d414fe0b1942e98c232c98c",
+		"action": "sendMessage",
+		"chatInput": "Hello"
+	}
+]
+</code></pre> <p>In this case, our input came from our message, which was then processed into JSON and assigned a <code class="language-plaintext highlighter-rouge">sessionId</code> and <code class="language-plaintext highlighter-rouge">action</code>.</p> <p>Now, add an <code class="language-plaintext highlighter-rouge">AI Agent</code> node and give it a model (if you are unsure how to do this, make sure to refer to <a href="https://sebastienmartin.info/aiml901/recitation_1.html">Recitation 1</a>). If you click into that node and don’t change any settings, you will see an interface that looks like this: <img src="/aiml901/attachments/input_output_interface.png" alt="input_output_interface" class="aiml901-embed-image" style="max-width: 100%"></p> <p>We can see the input coming from the chat trigger node. Looking at the <code class="language-plaintext highlighter-rouge">Prompt (User Message)</code> value, we see the expression ``. This is how we refer to</p> <h2 id="running-nodes-individually-and-pinning">Running Nodes Individually and Pinning</h2> <p>So far, we have focused on executing entire workflows, but n8n actually gives us the option of executing nodes individually. This can be extremely helpful to not rerun the same nodes again and again, especially if we know that they are working. This is something that we will explore later in the recitation, but note that <strong>we need to have executed the previous nodes in order to run a node</strong>. This is because we need to have its inputs available!</p> <p>One way to make sure that the inputs are available is by <em>pinning data</em>. This fixes the input so if we rerun the workflow, the input does not change and that node doesn’t need to run again. Why would we do this? This guarantees that we have the data available if we need to run the next step to troubleshoot.</p> <p>This may seem pretty abstract at the moment. Once you have sent a message in the chat and your <code class="language-plaintext highlighter-rouge">Chat Trigger</code> has a green checkmark, click into it. In the top right, you will see a little pin icon: <img src="/aiml901/attachments/pinning_data.png" alt="pinning_data" class="aiml901-embed-image" style="max-width: 100%"></p> <p>Click on it and it will turn purple. If you try to send a different chat message, you may get a message asking if you want to unpin to send the new message. This is because <strong>the output of this node is locked when you pin it</strong>. Save your workflow and refresh the page. You’ll see that we keep the data, which is extremely useful for testing!</p> <p>To see the use of this further, look at the AI Agent node after the chat trigger. If you hit the <code class="language-plaintext highlighter-rouge">Execute Workflow</code> button and do not unpin the chat trigger, it will receive the same input each time. We can also execute the node by itself; click into it and press <code class="language-plaintext highlighter-rouge">Execute step</code>. Note that this only works when the input is available, which you will see on the lefthand side of the screen when you click into the node. We will practice this as we make our agent.</p> <hr> <h3 id="exercise">Exercise</h3> <p>You will be given a workflow and you should use your JSON skills to find the error and fix it. Copy and paste in this workflow:</p> <details class="aiml901-code-collapse" data-line-count="158"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (158 lines)" data-hide-label="Hide code" data-line-count="158">Show code (158 lines)</summary><div class="aiml901-code-collapse__body"><pre><code class="language-JSON">{
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -304,
+        0
+      ],
+      "id": "bd9a4ec0-1e97-47ea-9a97-1889a390f1a9",
+      "name": "When chat message received",
+      "webhookId": "0a6de3a1-29f0-481d-97ce-9e55298d7bd7"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"message\": \"{{ $json.chatInput }}\",\n  \"students\": [\n    {\"name\": \"Romeo\"},\n    {\"name\": \"Juliet\"},\n    {\"name\": \"Mercutio\"}\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -96,
+        0
+      ],
+      "id": "c6005c6a-e7ba-44db-b197-e34b575300cd",
+      "name": "Build profile"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $json.email }}",
+        "subject": "Class Roster",
+        "emailType": "text",
+        "message": "=The students in your class are {{ $json.students[0].name }}, {{ $json.students[1].name }}, and {{ $json.students[2].name }}.\n\nThe message you sent them is:\n\n{{ $json.message }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        112,
+        0
+      ],
+      "id": "1104fbf2-41c0-45e4-9c55-d975d0f40f86",
+      "name": "Send a message",
+      "webhookId": "aba873ec-57da-4766-acfc-86beebc5acf5",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "06JM4io9KZSonBii",
+          "name": "Sebastien Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 2 - n8n Deep Dive",
+        "height": 464,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -544
+      ],
+      "id": "1624390a-2e72-4777-9301-a895d43e1feb",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "## Questions\n\n1. What node do we see an error in?\n2. Try to fix the error. What needs to change? Try to do it yourself, but remember that the AI Assistant can help you as well!\n",
+        "height": 192,
+        "width": 528,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        48,
+        -272
+      ],
+      "id": "c0024e2d-f4f6-4a84-ba90-c5985bcea201",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"message\": \"Email sent!\",\n  \"message2\": \"Just showing off that this is not being sent\",\n  \"message_for_students\": \"{{ $('Build profile').item.json.message }}\"\n}\n ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        304,
+        0
+      ],
+      "id": "6e6780ce-7fdb-4a1b-9f8c-b8b6eb6116bf",
+      "name": "Response Message"
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Build profile",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build profile": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message": {
+      "main": [
+        [
+          {
+            "node": "Response Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Response Message": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "pinData": {
+    "When chat message received": [
+      {
+        "sessionId": "fec14fd0c4184413a1ad74a95daef98f",
+        "action": "sendMessage",
+        "chatInput": "Glad to see you at the recitation!"
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+</code></pre></div></details> <p>Note that I have pinned a chat message, but you are free to unpin it.</p> <ol> <li>What node is causing the error? What is the error?</li> <li>Try to fix the error. What needs to change? Remember, you can use the AI Assistant to help you.</li> </ol> <p>One small note: the <code class="language-plaintext highlighter-rouge">Chat Trigger</code> has some hidden behavior. If we look at the last node, we see that it has three key-value pairs:</p> <pre><code class="language-JSON">{
+  "message": "Email sent!",
+  "message2": "Just showing off that this is not being sent",
+  "message_for_students": "{{ $('Build profile').item.json.message }}"
+}
+</code></pre> <p>The chat trigger has several response modes. Up to this point, we have only used <code class="language-plaintext highlighter-rouge">When Last Node Finishes</code>. In this case, it looks for the output of the last node and if there is a key called “message”, it will return that value. Otherwise, it will return the whole object.</p> <p>To see this, change the key “message” to anything else. If you run the entire workflow again, you’ll see that in the chat, you actually receive the entire JSON object!</p> <p>To make it extremely clear what you are returning, you can change the response mode to <code class="language-plaintext highlighter-rouge">Using Response Nodes</code> and then add a node at the end called <code class="language-plaintext highlighter-rouge">Respond to Chat</code>. Just make sure to put in the correct message there!</p> <p>A last note: as shown in the JSON clip from the last node above, the <code class="language-plaintext highlighter-rouge">message_for_students</code> is actually referencing a node that is not directly connected to it. As a result, we can’t just reference that message as ``; we instead have to use the name of the node followed by <code class="language-plaintext highlighter-rouge">.item</code>. You are not expected to know all of JSON, but it’s important to note this difference.</p> <hr> <h2 id="creating-our-email-triage-agent">Creating our Email Triage Agent</h2> <p>Now, we begin to build our agent. We first want to lay out exactly what we want our workflow to do. It should:</p> <ol> <li>Receive emails,</li> <li>Use an AI agent to assign a category (administrative, class content, n8n, etc.), assign a specific teaching team member to the email, draft a response, and assign an urgency level to the email,</li> <li>CCs the appropriate member of the teaching team for high-urgency items,</li> <li>Responds to all emails, and</li> <li>Logs every ticket to Google Sheets.</li> </ol> <p>Note that we could definitely still critique this workflow. Perhaps we always should CC the teaching team or only have the agent respond to a specific set of emails. This structure is quite flexible and we encourage you to explore and optimize it yourself.</p> <p>Start a new workflow and let’s get started!</p> <hr> <h3 id="step-1-gmail-trigger">Step 1: Gmail Trigger</h3> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">On App Event → Gmail → On message received</code> <ul> <li>Connect with your Gmail connection. Ideally, use an email that’s not your personal one so that it does not respond to those ones.</li> <li> <code class="language-plaintext highlighter-rouge">Poll Times</code>: By default, we can’t let n8n listen constantly for emails. A “poll time” just tells us how often it checks if there is a new email. In this case, if this was just an email waiting for student emails, we could assume that we won’t receive more than 1 email per minute, but we could adapt this accordingly.</li> </ul> </li> </ul> <p>Click <code class="language-plaintext highlighter-rouge">Execute Workflow</code> and send an email to the Gmail that you used for this node. You should see a large JSON object with many fields. Now, you are better able to parse this!</p> <p>Once you have done this step, pin the data in this node. This means we don’t need to keep sending emails to ourselves.</p> <hr> <h3 id="step-2-extract-first-name">Step 2: Extract First Name</h3> <p>To be able to respond more personably, we will extract the first name of the user. Note that this is perhaps not the best use case; for the sake of simplicity, we assume that people sending the email have one word first names, but we know that this doesn’t hold in practice. It’s easier (and more accurate) to simply give the AI Agent the full name of the user and let it determine what their first name is. However, this node is extremely useful.</p> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">Edit Fields (Set)</code> <ul> <li>Now that you know the basics of JSON, you can choose either mode! We will stick with <code class="language-plaintext highlighter-rouge">Manual Mapping</code> for this recitation.</li> <li> <code class="language-plaintext highlighter-rouge">Fields to Set</code>: Click <code class="language-plaintext highlighter-rouge">Add Field</code>. <ul> <li>For name, put <code class="language-plaintext highlighter-rouge">firstName</code> </li> <li>Next to the equality sign, put ``. This finds the name of the person sending the email and takes the first word as the first name.</li> </ul> </li> <li> <code class="language-plaintext highlighter-rouge">Input Fields to Include</code>: If we want, we can pass the inputs directly to the output. This makes it easy to keep passing data through the nodes, even if we don’t directly use it. For now, we choose <code class="language-plaintext highlighter-rouge">All</code>/</li> </ul> </li> <li> <strong>What it does:</strong> The <code class="language-plaintext highlighter-rouge">Set</code> node lets us transform JSON objects.</li> </ul> <p>Now, when you are in the node, click <code class="language-plaintext highlighter-rouge">Execute Step</code>. This will only execute this node. In the output, you will see a lot of the key-value pairs from the input, as well as a new one called <code class="language-plaintext highlighter-rouge">firstName</code>.</p> <hr> <h3 id="step-3-categorization-agent">Step 3: Categorization Agent</h3> <p>We now add our AI agent, which has several responsibilities. Given an email, it needs to assign it a <strong>category, corresponding teaching staff (professor, TA, IPCM),</strong> and <strong>urgency level.</strong></p> <p>Feel free to create this yourself, but we also will provide you with some code that you can copy and paste to get this node. This includes:</p> <ul> <li>The <code class="language-plaintext highlighter-rouge">AI Agent</code> node;</li> <li>The model (in our case, OpenAI);</li> <li> <code class="language-plaintext highlighter-rouge">Prompt (User Message)</code>, including the student’s first name, the subject of the email, and the email itself;</li> <li>A <code class="language-plaintext highlighter-rouge">System Message</code> that explains the behavior of the agent and some general rules;</li> <li>An <code class="language-plaintext highlighter-rouge">Output Parser</code>, which we will not discuss in depth yet. This is a tool that says that the output of the AI Agent needs to have a specific format. In our case, this ensures that we always have the output structure that we want.</li> </ul> <details class="aiml901-code-collapse" data-line-count="96"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (96 lines)" data-hide-label="Hide code" data-line-count="96">Show code (96 lines)</summary><div class="aiml901-code-collapse__body"><pre><code class="language-JSON">{
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1152,
+        96
+      ],
+      "id": "709145a8-493c-4f86-89bf-02874dcfd591",
+      "name": "GPT-5 mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Sender: {{ $json.firstName }}\nSubject: {{ $json.subject }}\nContent: {{ $json.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You will receive an email sent from a student to the AIML901 teaching team at Kellogg. You are an AI agent named \"Kai Support\" that will help them and connect them to the team.\n\nYour goal is to:\n- Reply to the email (choose title and content)\n- CC the correct team member to the email\n- Create a corresponding ticket in the teaching team's spreadsheet.\n\n# Categories\n\n- *administrative*: administrative question(s) or information  (e.g., when is the final exam; I cannot attend next class, etc..)\n- *content*: course content question(s) (e.g., what's an LLM?)\n- *n8n*: technical questions about n8n\n- *project*: question about the individual class project.\n- *other*: anything that is hard to relate to the other categories.\n\n# Behavior\n\n- Use the name \"Kai support\" to sign the email.\n- Adopt the tone of a cheerful PhD student TA\n- In addition to the information provided here, use the AIML-901 Docs tool to reference other information about the class.\n- You do not necessarily have enough information to help the student. When in doubt, always prefer to be sincere about what you know and what you don't. And if you don't, mention that the person you CCed will help. If you have the information necessary to respond to all of the student's questions, set confidence to TRUE and otherwise, set it to FALSE.\n\n# Teaching Team:\n- Sebastien Martin\n  - main instructor\n  - aiml901sebastienmartin+prof@gmail.com\n  - role: anything important or that cannot be directed to another team member, such as personal situations and complex questions\n- Alex Jensen\n  - TA\n  - aiml901sebastienmartin+ta@gmail.com\n  - role: anything relating to n8n, the final exam, and quick content questions\n- Jillian Law\n  - In-person class moderator\n  - JillianLaw2024@u.northwestern.edu\n  - role: anything relating to attendance, seating, and classroom rules\n\n# Background information\n\n**Location:** KGH 1130  \n- **Lectures:** Tue/Fri  \n  - Sec. 31: 10:30–12  \n  - Sec. 32: 1:30–3  \n- **Recitations:** Wed  \n  - Sec. 31: 1:30–2:30  \n  - Sec. 32: 3:30–4:30  \n- **Office Hours:** Wed  \n  - Sec. 31 &amp; 32: 2:30–3:30, 4:30–5  \n\n**Policy:** [Kellogg Honor Code](http://www.kellogg.northwestern.edu/policies/honor-code.aspx)\n\n---\n\n## Module 1: How AI Works\n*Build a deep understanding of genAI, from pretraining to agents.*\n\n- **Class 1 (Oct 21):** Build your first AI agent; intro to deliverables  \n- **Recitation 1 (Oct 22):** Build a Google Calendar agent (first n8n agent)  \n- **Class 2 (Oct 24):** Pretraining a large language model  \n- **Class 3 (Oct 28):** Post-training, alignment, and safety  \n- **Recitation 2 (Oct 29):** Build a customer service agent (n8n deep dive)  \n- **Class 4 (Oct 31):** AI agents, tools (RAG, etc.), usage  \n\n---\n\n## Module 2: What AI Can Do\n*AI tools, prompting, productivity, ecosystem.*\n\n- **Class 5 (Nov 4):** Prompting and leveraging AI  \n- **Recitation 3 (Nov 4–5, evening):** Build a personal assistant agent (advanced n8n)  \n- **Class 6 (Nov 5):** AI landscape and state-of-the-art companies  \n\n---\n\n## Module 3: From AI to Impact\n*Connecting AI to business outcomes.*\n\n- **Class 7 (Nov 7):** Evaluation pipelines  \n- **Class 8 (Nov 11):** AI strategy &amp; risk management  \n- **Recitation 4 (Nov 12):** Build an evaluation mechanism (agent evaluation)  \n- **Class 9 (Nov 14):** Change management with AI case study  \n- **Class 10 (Nov 18):** Project showcase, final exam review, staying current  \n- **Recitation 5 (Nov 19):** End-to-end product creation (Lovable, apps/websites)  \n\n---\n\n## Deliverables\n- **Weekly Homework:** AI-powered, delivered by *Kai* (&lt;30 min each)  \n- **Project:** Individual, due Nov 25 (early submissions allowed)  \n- **Final Exam:** Online, self-serve (Nov 21–25), 1h30, focused on n8n recitations"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -1152,
+        -112
+      ],
+      "id": "dd8dc66f-6b4e-4b6e-9340-7faf0dbf647f",
+      "name": "Category Agent"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"response_content\",\n    \"response_cc\",\n    \"ticket_description\",\n    \"ticket_category\",\n    \"ticket_cc\",\n    \"ticket_priority\",\n    \"ticket_name\",\n    \"confidence\"\n  ],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"response_content\": {\n      \"type\": \"string\",\n      \"description\": \"Formatted like a complete email content (e.g., starts with hi and ends with signature).\"\n    },\n    \"response_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The email address of the person to CC. Nothing else.\"\n    },\n    \"ticket_description\": {\n      \"type\": \"string\",\n      \"description\": \"Just one sentence, to the point.\"\n    },\n    \"ticket_category\": {\n      \"type\": \"string\",\n      \"enum\": [\"administrative\", \"content\", \"n8n\", \"project\", \"other\"],\n      \"description\": \"One of the allowed categories.\"\n    },\n    \"ticket_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The full name of the person corresponding to the CCed email address.\"\n    },\n    \"ticket_name\": {\n      \"type\": \"string\",\n      \"description\": \"Name of the student; if unknown, their email.\"\n    },\n    \"ticket_priority\": {\n      \"type\": \"string\",\n      \"description\": \"Priority label (e.g., low/medium/high).\"\n    },\n    \"confidence\": {\n      \"type\": \"boolean\",\n      \"description\": \"Model's confidence in the category/route; true if the answer to all of the questions is known and false otherwise.\"\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -976,
+        80
+      ],
+      "id": "9b8cb8a7-d9f9-4de2-92ce-056137835154",
+      "name": "agent decision format"
+    }
+  ],
+  "connections": {
+    "GPT-5 mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Category Agent": {
+      "main": [
+        []
+      ]
+    },
+    "agent decision format": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+
+</code></pre></div></details> <p>If you click on the <code class="language-plaintext highlighter-rouge">Output Parser</code>, you’ll be able to see that this is just JSON. Try running the AI agent. Looking at the key called <code class="language-plaintext highlighter-rouge">required</code>, you will see a list of words (response_content, response_cc, etc.) that are exactly the keys in the output.</p> <p>Run this node and for now, let’s pin the output. This means that we don’t have to send another call to the OpenAI API. Note that we see the keys from the output parser, but they are an object called <code class="language-plaintext highlighter-rouge">output</code>. Therefore, if we want to retrieve the <code class="language-plaintext highlighter-rouge">response_content</code>, we would need to write ``.</p> <hr> <h3 id="step-4-routing">Step 4: Routing</h3> <p>We now need to decide whether a member of the teaching team needs to be CCed or if this can be handled by the agent’s response. The Category Agent gives us a <strong>priority level</strong> (ticket_priority), indicating how urgent the message is. If the message is high priority, we want to CC the teaching team.</p> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">If</code> <ul> <li>For value1, input the priority assigned by the Category Agent:</li> </ul> <pre><code class="language-JSON">  {{ $json.output.ticket_priority }}
+</code></pre> <ul> <li>Click the dropdown next to “is equal to”. Choose <code class="language-plaintext highlighter-rouge">#Number</code> and then “is greater than or equal to”</li> <li>For value2, put <code class="language-plaintext highlighter-rouge">high</code>. This means that our condition is True if the message is high priority and False otherwise.</li> </ul> </li> <li> <strong>What it does:</strong> If the ticket is high priority, then we will take the True branch. Otherwise, we take the False branch.</li> <li> <strong>Why this matters:</strong> This allows us to execute different paths depending on the priority of the ticket. In our case, we only want to CC the teaching team if deemed necessary, and this lets us distinguish between the two cases.</li> </ul> <hr> <h3 id="exercises">Exercises</h3> <ol> <li>Run the <code class="language-plaintext highlighter-rouge">If</code> node. Was the previous email considered high priority?</li> <li>If you click on <code class="language-plaintext highlighter-rouge">Add condition</code>, we can add other conditions to help determine which path should be taken. Add a condition saying that if the <code class="language-plaintext highlighter-rouge">ticket_category</code> is “other”, the teaching team should be CCed, regardless of the priority level.</li> <li>Looking back at the AI agent, we can see that one of the outputs (and one of the inputs to the <code class="language-plaintext highlighter-rouge">If</code> node) was <code class="language-plaintext highlighter-rouge">confidence</code>. This will be either “True” or “False” and indicates whether the AI thinks it is able to accurately respond to the email. Add a condition that if confidence is False, the teaching team should be CCed, regardless of the priority level. (Note: you will need to click on the box that says “Is equal to” and choose <code class="language-plaintext highlighter-rouge">Boolean → Is True</code>)</li> <li>Add your own custom condition! Note that we have other information available from the AI agent.</li> </ol> <hr> <h3 id="step-5-email-response">Step 5: Email Response</h3> <p>Now, we respond using the output from the agent. We first consider the case when the ticket is not high priority. In this case, we do not need to CC the teaching team.</p> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">Gmail → Thread Actions → Reply to a message</code> <code class="language-plaintext highlighter-rouge">Thread ID</code>:</li> </ul> <pre><code class="language-JSON">{{ $('When receiving an email').item.json.threadId }}
+</code></pre> <p><code class="language-plaintext highlighter-rouge">Message Snippet or ID</code>:</p> <pre><code class="language-JSON">{{ $('When receiving an email').item.json.threadId }}
+</code></pre> <p><code class="language-plaintext highlighter-rouge">Message</code>:</p> <pre><code class="language-JSON">{{ $json.output.response_content }}
+</code></pre> <ul> <li>Connect this to the <code class="language-plaintext highlighter-rouge">true</code> output from the If node.</li> <li> <strong>What it does:</strong> This sends a message to respond to the email that the student sent. A “thread” is a chain of emails and replies, so using the Thread ID allows us to respond directly to the email instead of just sending them a separate email.</li> </ul> <hr> <h3 id="step-6-ccing-the-teaching-team">Step 6: CCing the Teaching Team</h3> <p>The steps here are identical as the previous step, but now we want to CC the teaching team.</p> <ul> <li>Copy the node from Step 7 and connect it to the <code class="language-plaintext highlighter-rouge">false</code> output from the If node.</li> <li>Click into the node. Click <code class="language-plaintext highlighter-rouge">Add option</code> and then <code class="language-plaintext highlighter-rouge">CC</code>. In the field, we will input</li> </ul> <pre><code class="language-JSON">{{ $json.output.response_cc }}
+</code></pre> <hr> <h3 id="step-7-logging-tickets">Step 7: Logging Tickets</h3> <p>Finally, we want to log each ticket in a Google Sheet. First, make a Google Sheet with the following column titles:</p> <table> <thead> <tr> <th>Student</th> <th>Assigned Teaching Staff</th> <th>Category</th> <th>Email Description</th> </tr> </thead> <tbody> <tr> <td> </td> <td> </td> <td> </td> <td> </td> </tr> </tbody> </table> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">Google Sheets → Append row in sheet</code> <ul> <li>Document: whatever you call the Google Sheets file</li> <li>Sheet: the correct sheet within the document</li> <li>Mapping Column Mode: Map Each Column Manually</li> <li>We then need to drag and drop the correct information from our fields.</li> </ul> </li> <li>Connect this to both the <code class="language-plaintext highlighter-rouge">true</code> and <code class="language-plaintext highlighter-rouge">false</code> outputs of the If node, since we want to log the tickets regardless of whether the teaching team is CCed.</li> </ul> <hr> <h3 id="exercises-1">Exercises:</h3> <ol> <li>Let’s say we only want to add tickets to the sheet if the teaching team is not CCed. What would we change?</li> <li>We would like to know if the ticket is handled by a human or AI. Add a column to your Google Sheets called Handled By and have it fill in as “Human” if the teaching team was CCed and “AI” if it was not. <ul> <li> <em>Hint</em>: Use the <code class="language-plaintext highlighter-rouge">Edit Fields (Set)</code> node to map this to a value.</li> </ul> </li> <li>For transparency, maybe we want Professor Martin to be CCed on any email where other members of the teaching team are also CCed. However, there can also be emails where just Professor Martin is CCed. What would we need to change here?</li> <li> <p>We do not give the Category Agent much information about how it should decide how confident it is in its response. In fact, it is possible that it could decide that it should never (or always) CC the teaching team. Try sending several emails with different issues to see how it handles this. Are there any guidelines we can add to ensure how well we do this?</p> <p><strong>Challenge:</strong> Try changing the content of the output parser so instead of giving True or False for the confidence parameter, it gives a number between 1 and 5. The easiest way to do this is to give the JSON in the output parser to ChatGPT and ask it to modify it; it is generally quite good at this. What else needs to change in the workflow?</p> </li> </ol> <hr> <h3 id="for-the-final">For the Final:</h3> <ul> <li>JSON structure in n8n</li> <li>Node inputs and outputs</li> <li> <code class="language-plaintext highlighter-rouge">Edit Fields (Set)</code> and <code class="language-plaintext highlighter-rouge">If</code> node</li> <li> <code class="language-plaintext highlighter-rouge">Gmail</code> and <code class="language-plaintext highlighter-rouge">Google Sheets</code> nodes</li> </ul> <hr> <h1 id="exploratory-content">Exploratory Content</h1> <p>Note that our agent (specifically, the model that it uses) is trained on past data and does not contain by itself specific knowledge about the class. We need to give our agent enough information to be able to respond to student emails. There are two ways that we can do this: adding information to the system message or giving it access to files. We currently have focused on adding information to the system message; look at it and you will see information about class times, the teaching team, and topics covered. Now, we focus on letting our agent access information beyond this.</p> <p>Copy and paste the following into your workflow. Do not worry about connecting it up just yet.</p> <details class="aiml901-code-collapse" data-line-count="114"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (114 lines)" data-hide-label="Hide code" data-line-count="114">Show code (114 lines)</summary><div class="aiml901-code-collapse__body"><pre><code class="language-JSON">
+{
+  "nodes": [
+    {
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -1568,
+        304
+      ],
+      "id": "37282b22-6d56-47ff-af9b-129b35e3486c",
+      "name": "Simple Vector Store"
+    },
+    {
+      "parameters": {
+        "dataType": "binary",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        -1520,
+        512
+      ],
+      "id": "4c2ef9b2-f5b2-4458-b9c8-6658f99575d7",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1312,
+        512
+      ],
+      "id": "4f948be1-b6cd-460f-aacc-1f86f1bd327c",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Retrieve information about NimbusSoft, your company. Use this to answer specific queries from the users.",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "list",
+          "value": "vector_store_key"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        -1136,
+        304
+      ],
+      "id": "5397980f-2cd3-4bc8-baab-abad43dbc2d1",
+      "name": "AIML 901 Docs"
+    }
+  ],
+  "connections": {
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Simple Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          },
+          {
+            "node": "AIML 901 Docs",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AIML 901 Docs": {
+      "ai_tool": [
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+</code></pre></div></details> <h2 id="retrieval-augmented-generation-rag">Retrieval-Augmented Generation (RAG)</h2> <p>To improve our agent, we want to give it a tool that allows it to search through documents before it creates its response. This is known as <strong>Retrieval-Augmented Generation, or RAG</strong>. However, it would be extremely inefficient for our agent to have to read through entire documents each time. As a result, we want to consolidate this text into a more accessible format. Specifically, we want the following process:</p> <ol> <li>A student asks a question</li> <li>The AI agent searches a knowledge base for the most relevant chunks of text.</li> <li>These chunks of text are passed to the LLM.</li> <li>The LLM uses these to compose its response.</li> </ol> <p>Here, we walk through the parts that you were given above. For more information, ask the AI Assistant or read through the documentation for the nodes. This is simply a minimal example to get you started.</p> <hr> <h3 id="simple-vector-store">Simple Vector Store</h3> <p>We will build a way to insert the documents into what is known as a <strong>vector store</strong>. A vector is a string of numbers. We will take our data and transform it into vectors, where similar vectors refer to similar sequences of data.</p> <p>Note that you might need to make a <code class="language-plaintext highlighter-rouge">Memory Key</code>, which is like your key for the <code class="language-plaintext highlighter-rouge">Simple Memory</code> subnode.</p> <hr> <h3 id="default-data-loader">Default Data Loader</h3> <p>This node decides how to load data into the vector store. Specifically, we need to split the data from the documents into chunks, which are each stored as a separate vector. This is responsible for determining what type of data is being loaded in and how it is split, but we still need to determine how to make the vectors from this chunked data.</p> <hr> <h3 id="embeddings-openai">Embeddings OpenAI</h3> <p>There are many ways to create these vectors, also known as <strong>embedding the text.</strong> OpenAI provides different embedding schema, which create the vectors that we store. This also can be used to determine the meanings of the vectors, which we need when we retrieve the data in the next step.</p> <hr> <h3 id="aiml-901-docs">AIML 901 Docs</h3> <p>The simple vector store, default data loader, and embeddings are what we use to load the data into the vector store. However, we now need a way to retrieve vectors and decode them. This node uses the embeddings to retrieve the data that we store so that an AI agent can access this information.</p> <p>From the <code class="language-plaintext highlighter-rouge">Category Agent</code>, connect the <code class="language-plaintext highlighter-rouge">+</code> sign where it says <code class="language-plaintext highlighter-rouge">Tool</code> to this node. Now, the AI agent is able to reference any documents within the vector store.</p> <hr> <h3 id="preparing-rag-input">Preparing RAG Input</h3> <p>At this point, we do not have a way for the important class documents to be added to the vector store.</p> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">Add another trigger → On form submission</code> <ul> <li> <strong>Form Title:</strong> Something along the lines of AIML 901 Information Database</li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li> <strong>Field Name:</strong> File</li> <li> <strong>Element Type:</strong> File</li> <li> <strong>Accepted File Types:</strong> We can choose what types of files to add in. For now, write <code class="language-plaintext highlighter-rouge">.pdf, .docx</code> </li> </ul> </li> </ul> </li> <li>Connect the output of this node to the Simple Vector Store.</li> <li> <strong>What it does:</strong> Last week, we saw some different types of trigger nodes. This is an alternative that starts the workflow when a user fills out the form. In our specific case, when we fill out the form and submit a file, it then embeds the data from the file as vectors, which we can then retrieve later.</li> </ul> <hr> <h3 id="exercises-2">Exercises</h3> <ol> <li>Create a document with a random fact about the class that the AI agent does not already know and add it to the vector store. Try to send an email and get the AI agent to reference this!</li> <li>Change the setting of the agent completely. What if this was for a company instead of a class? What needs to change?</li> </ol> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2025 Sébastien Martin. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: October 29, 2025. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?b7816bd189846d29eded8745f9c4cf77"></script> <script defer src="/assets/js/copy_code.js?5a6977fbcd9d77bc24edac6a6d7614af" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.min.js" integrity="sha256-rjmgmaB99riUNcdlrDtcAiwtLIojSxNyUFdl+Qh+rB4=" crossorigin="anonymous"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX350FZQ6X"></script> <script>function gtag(){window.dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-TX350FZQ6X");</script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>addBackToTop();</script> <script src="/assets/js/shortcut-key.js"></script> </body> </html>
