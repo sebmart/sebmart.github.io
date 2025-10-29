@@ -82,16 +82,30 @@ In n8n, we can write expressions that let us refer to the values in a JSON struc
 This is how we let n8n reference whatever value is stored under the key `chatInput`.
 
 Let's think about the previous example. 
-- If we wrote {{ $json.course }}, this would give us the value `"AgentOps"`.
-- If we wrote {{ $json.students }}, we would get 
+- If we wrote
+```JSON
+{{ $json.course }}
+```
+this would give us the value `"AgentOps"`.
+- If we wrote
+```JSON
+{{ $json.students }}
+```
+we would get 
 ```JSON
 [
     {"name": "Maya", "year": "MBA1"},
     {"name": "John", "year": "MBA2"}
 ]
 ```
-- To get the first student, we would write {{ $json.students[0] }}.
-- To get the first student's name, we would write {{ $json.students[0].name }}
+- To get the first student, we would write 
+```JSON
+{{ $json.students[0] }}
+```
+- To get the first student's name, we would write 
+```JSON
+{{ $json.students[0].name }}
+```
 
 In other words, to reference values that are within other objects (like how `name` is within the array `students`), we just need to use periods and string together the names of the keys. 
 
@@ -123,7 +137,11 @@ In this case, our input came from our message, which was then processed into JSO
 Now, add an `AI Agent` node and give it a model (if you are unsure how to do this, make sure to refer to [Recitation 1](https://sebastienmartin.info/aiml901/recitation_1.html)). If you click into that node and don't change any settings, you will see an interface that looks like this:
 ![[input_output_interface.png]]
 
-We can see the input coming from the chat trigger node. Looking at the `Prompt (User Message)` value, we see the expression {{ $json.chatInput }}. This is how we refer to 
+We can see the input coming from the chat trigger node. Looking at the `Prompt (User Message)` value, we see the expression 
+```JSON
+{{ $json.chatInput }}
+```
+This is how we refer to the `chatInput` value from the chat trigger.
 
 ## Running Nodes Individually and Pinning
 
@@ -325,7 +343,11 @@ To see this, change the key "message" to anything else. If you run the entire wo
 
 To make it extremely clear what you are returning, you can change the response mode to `Using Response Nodes` and then add a node at the end called `Respond to Chat`. Just make sure to put in the correct message there!
 
-A last note: as shown in the JSON clip from the last node above, the `message_for_students` is actually referencing a node that is not directly connected to it. As a result, we can't just reference that message as {{ $json.message }}; we instead have to use the name of the node followed by `.item`. You are not expected to know all of JSON, but it's important to note this difference.
+A last note: as shown in the JSON clip from the last node above, the `message_for_students` is actually referencing a node that is not directly connected to it. As a result, we can't just reference that message as 
+```JSON
+{{ $json.message }}
+```
+We instead have to use the name of the node followed by `.item`. You are not expected to know all of JSON, but it's important to note this difference.
 
 ---
 ## Creating our Email Triage Agent
@@ -487,7 +509,11 @@ Feel free to create this yourself, but we also will provide you with some code t
 
 If you click on the `Output Parser`, you'll be able to see that this is just JSON. Try running the AI agent. Looking at the key called `required`, you will see a list of words (response_content, response_cc, etc.) that are exactly the keys in the output.
 
-Run this node and for now, let's pin the output. This means that we don't have to send another call to the OpenAI API. Note that we see the keys from the output parser, but they are an object called `output`. Therefore, if we want to retrieve the `response_content`, we would need to write `{{ $json.output.response_content }}`.
+Run this node and for now, let's pin the output. This means that we don't have to send another call to the OpenAI API. Note that we see the keys from the output parser, but they are an object called `output`. Therefore, if we want to retrieve the `response_content`, we would need to write
+
+```JSON
+{{ $json.output.response_content }}
+```
 
 ---
 ### Step 4: Routing
