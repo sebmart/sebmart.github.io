@@ -26,7 +26,7 @@ You can watch a video recording of the recitation here:
 - See an example of how we can create value using AI.
 
 ---
-# Nodes and Triggers
+# n8n Terminology
 
 Let's get logged in to [n8n](https://aiml901-martin.app.n8n.cloud/home/workflows). Once you do so, watch this brief video that introduces some basic terminology and shows you the n8n interface:
 ![n8n YouTube video](https://youtu.be/LktPqqbnbRM)
@@ -237,14 +237,22 @@ The format of the message from the Telegram trigger and the chat trigger are sli
 
 - Click into the `AI Agent` node.
 - `Source for Prompt (User Message)`: Define below
-- `Prompt (User Message)`:  Put in `{{ $json.message.text }}`. This is just the text from our Telegram message. If you successfully received a message from Telegram, you can also see this text in the inputs on the left side of the screen; you can drag and drop this text into the box (see the video for a demonstration of this).
+- `Prompt (User Message)`:  Put in 
+```JSON
+{{ $json.message.text }}
+```
+This is just the text from our Telegram message. If you successfully received a message from Telegram, you can also see this text in the inputs on the left side of the screen; you can drag and drop this text into the box (see the video for a demonstration of this).
 
 We also need to modify the memory, since it was previously formatted for the chat trigger:
 
 - Click into the `Simple Memory` node.
 - `Session ID`: Define below
 - `Key`: Each message that we send gets stored in the memory with an associated key. When we provide a key here, the AI agent then will read the last (in our case) 20 messages with that key. For now, this does not affect us, but if we have multiple workflows that are using simple memory, giving them the same key would mean that those messages would be "stored in the same place," which could mean that the AI agent then is reading messages from the wrong workflow. The easiest way to deal with this is to just give each workflow a unique key, which is just a string of letters, numbers, and characters. 
-	- Personally, I just like to use my Telegram user ID. However, if I had many workflows using Telegram and using this same user ID, this would cause problems like I mentioned above. To do this, copy and paste the following: `{{ $('Telegram Trigger').item.json.message.from.id }}`
+	- Personally, I just like to use my Telegram user ID. However, if I had many workflows using Telegram and using this same user ID, this would cause problems like I mentioned above. To do this, copy and paste the following: 
+```JSON
+{{ $('Telegram Trigger').item.json.message.from.id }}
+```
+
 
 ---
 ### Step 3. Responding in Telegram

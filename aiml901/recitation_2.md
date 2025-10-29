@@ -53,9 +53,10 @@ Example:
   "students": ["Maya", "John", "Priya"]
 }
 ```
-2. **Referencing values**: You get values by following the keys.
+3. **Referencing values**: You get values by following the keys.
 - In the first example, `name` → `"Albert Einstein"`.
 - In the second example, we can refer to the second element of the array "students" (which is "John") with the expression `students[1]`. For the third element, we would choose `students[2]`. This may seem counterintuitive, but arrays are numbered starting from 0.
+
 ### Putting It Together
 
 If you wanted to describe a course with students, it might look like:
@@ -76,19 +77,21 @@ Here:
 
 ### Referring to Values in n8n
 
-In n8n, we can write expressions that let us refer to the values in a JSON structure. You've actually already seen this before; in Recitation 1, we saw the prompt for the AI Agent node `{{ $json.chatInput }}`. This is how we let n8n reference whatever value is stored under the key `chatInput`.
+In n8n, we can write expressions that let us refer to the values in a JSON structure. You've actually already seen this before; in Recitation 1, we saw the prompt for the AI Agent node {{ $json.chatInput }}.
+
+This is how we let n8n reference whatever value is stored under the key `chatInput`.
 
 Let's think about the previous example. 
-- If we wrote `{{ $json.course }}`, this would give us the value `"AgentOps"`.
-- If we wrote `{{ $json.students }}`, we would get 
+- If we wrote {{ $json.course }}, this would give us the value `"AgentOps"`.
+- If we wrote {{ $json.students }}, we would get 
 ```JSON
 [
     {"name": "Maya", "year": "MBA1"},
     {"name": "John", "year": "MBA2"}
 ]
 ```
-- To get the first student, we would write `{{ $json.students[0] }}`.
-- To get the first student's name, we would write `{{ $json.students[0].name }}`
+- To get the first student, we would write {{ $json.students[0] }}.
+- To get the first student's name, we would write {{ $json.students[0].name }}
 
 In other words, to reference values that are within other objects (like how `name` is within the array `students`), we just need to use periods and string together the names of the keys. 
 
@@ -120,7 +123,7 @@ In this case, our input came from our message, which was then processed into JSO
 Now, add an `AI Agent` node and give it a model (if you are unsure how to do this, make sure to refer to [Recitation 1](https://sebastienmartin.info/aiml901/recitation_1.html)). If you click into that node and don't change any settings, you will see an interface that looks like this:
 ![[input_output_interface.png]]
 
-We can see the input coming from the chat trigger node. Looking at the `Prompt (User Message)` value, we see the expression `{{ $json.chatInput }}`. This is how we refer to 
+We can see the input coming from the chat trigger node. Looking at the `Prompt (User Message)` value, we see the expression {{ $json.chatInput }}. This is how we refer to 
 
 ## Running Nodes Individually and Pinning
 
@@ -322,7 +325,7 @@ To see this, change the key "message" to anything else. If you run the entire wo
 
 To make it extremely clear what you are returning, you can change the response mode to `Using Response Nodes` and then add a node at the end called `Respond to Chat`. Just make sure to put in the correct message there!
 
-A last note: as shown in the JSON clip from the last node above, the `message_for_students` is actually referencing a node that is not directly connected to it. As a result, we can't just reference that message as `{{ $json.message }}`; we instead have to use the name of the node followed by `.item`. You are not expected to know all of JSON, but it's important to note this difference.
+A last note: as shown in the JSON clip from the last node above, the `message_for_students` is actually referencing a node that is not directly connected to it. As a result, we can't just reference that message as {{ $json.message }}; we instead have to use the name of the node followed by `.item`. You are not expected to know all of JSON, but it's important to note this difference.
 
 ---
 ## Creating our Email Triage Agent
@@ -357,10 +360,15 @@ To be able to respond more personably, we will extract the first name of the use
 
 - **Add node:** `Edit Fields (Set)`
 	- Now that you know the basics of JSON, you can choose either mode! We will stick with `Manual Mapping` for this recitation.
-	- `Fields to Set`: Click `Add Field`. 
-		- For name, put `firstName`
-		- Next to the equality sign, put `{{ $json.from.value[0].name.trim().split(' ')[0] }}`. This finds the name of the person sending the email and takes the first word as the first name.
-	- `Input Fields to Include`: If we want, we can pass the inputs directly to the output. This makes it easy to keep passing data through the nodes, even if we don't directly use it. For now, we choose `All`/
+- `Fields to Set`: Click `Add Field`. 
+	- For name, put `firstName`
+	- Next to the equality sign, put 
+```JSON
+	{{ $json.from.value[0].name.trim().split(' ')[0] }}
+```
+		
+    - This finds the name of the person sending the email and takes the first word as the first name.
+	- `Input Fields to Include`: If we want, we can pass the inputs directly to the output. This makes it easy to keep passing data through the nodes, even if we don't directly use it. For now, we choose `All`.
 - **What it does:** The `Set` node lets us transform JSON objects. 
 
 Now, when you are in the node, click `Execute Step`. This will only execute this node. In the output, you will see a lot of the key-value pairs from the input, as well as a new one called `firstName`.
@@ -714,17 +722,14 @@ We will build a way to insert the documents into what is known as a **vector sto
 
 Note that you might need to make a `Memory Key`, which is like your key for the `Simple Memory` subnode.
 
----
 ### Default Data Loader
 
 This node decides how to load data into the vector store. Specifically, we need to split the data from the documents into chunks, which are each stored as a separate vector. This is responsible for determining what type of data is being loaded in and how it is split, but we still need to determine how to make the vectors from this chunked data.
 
----
 ### Embeddings OpenAI
 
 There are many ways to create these vectors, also known as **embedding the text.** OpenAI provides different embedding schema, which create the vectors that we store. This also can be used to determine the meanings of the vectors, which we need when we retrieve the data in the next step.
 
----
 ### AIML 901 Docs
 
 The simple vector store, default data loader, and embeddings are what we use to load the data into the vector store. However, we now need a way to retrieve vectors and decode them. This node uses the embeddings to retrieve the data that we store so that an AI agent can access this information. 
