@@ -362,7 +362,460 @@ Now, we begin to build our agent. We first want to lay out exactly what we want 
 
 Note that we could definitely still critique this workflow. Perhaps we always should CC the teaching team or only have the agent respond to a specific set of emails. This structure is quite flexible and we encourage you to explore and optimize it yourself.
 
-Start a new workflow and let's get started!
+Start a new workflow and let's get started! You will be provided with instructions on how to work creating every node yourself, but for the video, you will be provided with the workflow (which you can copy and paste from directly below) and then we will discuss each step.
+
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-5-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -656,
+        432
+      ],
+      "id": "0efc3509-bc91-4c35-8fb5-c40e0af0e6fd",
+      "name": "GPT-5 mini",
+      "credentials": {
+        "openAiApi": {
+          "id": "uvUQw4I0j1mG2TKg",
+          "name": "Alex Jensen Student OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1120,
+        224
+      ],
+      "id": "2ed9041a-4219-4a36-9922-8ece1666d7e2",
+      "name": "When receiving an email",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9tmoAeGxRcPZeGwf",
+          "name": "Alex Jensen Student Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Sender: {{ $json.firstName }}\nSubject: {{ $json.subject }}\nContent: {{ $json.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You will receive an email sent from a student to the AIML901 teaching team at Kellogg. You are an AI agent named \"Kai Support\" that will help them and connect them to the team.\n\nYour goal is to:\n- Reply to the email (choose title and content)\n- CC the correct team member to the email\n- Create a corresponding ticket in the teaching team's spreadsheet.\n\n# Categories\n\n- *administrative*: administrative question(s) or information  (e.g., when is the final exam; I cannot attend next class, etc..)\n- *content*: course content question(s) (e.g., what's an LLM?)\n- *n8n*: technical questions about n8n\n- *project*: question about the individual class project.\n- *other*: anything that is hard to relate to the other categories.\n\n# Behavior\n\n- Use the name \"Kai support\" to sign the email.\n- Adopt the tone of a cheerful PhD student TA\n- In addition to the information provided here, use the AIML-901 Docs tool to reference other information about the class.\n- You do not necessarily have enough information to help the student. When in doubt, always prefer to be sincere about what you know and what you don't. And if you don't, mention that the person you CCed will help. If you have the information necessary to respond to all of the student's questions, set confidence to TRUE and otherwise, set it to FALSE.\n\n# Teaching Team:\n- Sebastien Martin\n  - main instructor\n  - aiml901sebastienmartin+prof@gmail.com\n  - role: anything important or that cannot be directed to another team member, such as personal situations and complex questions\n- Alex Jensen\n  - TA\n  - aiml901sebastienmartin+ta@gmail.com\n  - role: anything relating to n8n, the final exam, and quick content questions\n- Jillian Law\n  - In-person class moderator\n  - JillianLaw2024@u.northwestern.edu\n  - role: anything relating to attendance, seating, and classroom rules\n\n# Background information\n\n**Location:** KGH 1130  \n- **Lectures:** Tue/Fri  \n  - Sec. 31: 10:30–12  \n  - Sec. 32: 1:30–3  \n- **Recitations:** Wed  \n  - Sec. 31: 1:30–2:30  \n  - Sec. 32: 3:30–4:30  \n- **Office Hours:** Wed  \n  - Sec. 31 & 32: 2:30–3:30, 4:30–5  \n\n**Policy:** [Kellogg Honor Code](http://www.kellogg.northwestern.edu/policies/honor-code.aspx)\n\n---\n\n## Module 1: How AI Works\n*Build a deep understanding of genAI, from pretraining to agents.*\n\n- **Class 1 (Oct 21):** Build your first AI agent; intro to deliverables  \n- **Recitation 1 (Oct 22):** Build a Google Calendar agent (first n8n agent)  \n- **Class 2 (Oct 24):** Pretraining a large language model  \n- **Class 3 (Oct 28):** Post-training, alignment, and safety  \n- **Recitation 2 (Oct 29):** Build a customer service agent (n8n deep dive)  \n- **Class 4 (Oct 31):** AI agents, tools (RAG, etc.), usage  \n\n---\n\n## Module 2: What AI Can Do\n*AI tools, prompting, productivity, ecosystem.*\n\n- **Class 5 (Nov 4):** Prompting and leveraging AI  \n- **Recitation 3 (Nov 4–5, evening):** Build a personal assistant agent (advanced n8n)  \n- **Class 6 (Nov 5):** AI landscape and state-of-the-art companies  \n\n---\n\n## Module 3: From AI to Impact\n*Connecting AI to business outcomes.*\n\n- **Class 7 (Nov 7):** Evaluation pipelines  \n- **Class 8 (Nov 11):** AI strategy & risk management  \n- **Recitation 4 (Nov 12):** Build an evaluation mechanism (agent evaluation)  \n- **Class 9 (Nov 14):** Change management with AI case study  \n- **Class 10 (Nov 18):** Project showcase, final exam review, staying current  \n- **Recitation 5 (Nov 19):** End-to-end product creation (Lovable, apps/websites)  \n\n---\n\n## Deliverables\n- **Weekly Homework:** AI-powered, delivered by *Kai* (<30 min each)  \n- **Project:** Individual, due Nov 25 (early submissions allowed)  \n- **Final Exam:** Online, self-serve (Nov 21–25), 1h30, focused on n8n recitations"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -656,
+        224
+      ],
+      "id": "77d53275-bfdb-4ea6-8629-7865b95e748d",
+      "name": "Category Agent"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5cb9f2b0-bcfd-4839-8db8-ae80bef2e4d7",
+              "leftValue": "={{ $json.output.ticket_priority }}",
+              "rightValue": "high",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -304,
+        224
+      ],
+      "id": "1e7020ec-b1f8-4f90-ab59-c66b2c88cb01",
+      "name": "If confident in response..."
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "reply",
+        "threadId": "={{ $('When receiving an email').item.json.threadId }}",
+        "messageId": "={{ $('When receiving an email').item.json.threadId }}",
+        "message": "={{ $json.output.response_content }}",
+        "options": {
+          "ccList": "={{ $json.output.response_cc }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        80
+      ],
+      "id": "d6983087-c773-41e9-b122-59e89629f615",
+      "name": "reply to the query (with CC)",
+      "webhookId": "9694af38-894a-4c7b-9e1e-bb465bdce757",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9tmoAeGxRcPZeGwf",
+          "name": "Alex Jensen Student Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ffb8b510-9924-4a6c-a164-a5a57f6ab9c7",
+              "name": "firstName",
+              "value": "={{ $json.from.value[0].name.trim().split(' ')[0] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -896,
+        224
+      ],
+      "id": "aea404a8-48f2-4311-b5de-0074c2152dee",
+      "name": "Set First Name"
+    },
+    {
+      "parameters": {
+        "resource": "thread",
+        "operation": "reply",
+        "threadId": "={{ $('When receiving an email').item.json.threadId }}",
+        "messageId": "={{ $('When receiving an email').item.json.threadId }}",
+        "message": "={{ $json.output.response_content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        432
+      ],
+      "id": "68dcde3a-5e59-4e17-a11b-cfee67f2c40d",
+      "name": "reply to the query (no CC)",
+      "webhookId": "9694af38-894a-4c7b-9e1e-bb465bdce757",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9tmoAeGxRcPZeGwf",
+          "name": "Alex Jensen Student Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1wihBsfwaC8bLMhqnyoy5aIx7DGq-RRihR8NRrjtNDu8",
+          "mode": "list",
+          "cachedResultName": "Class 1 - student email tickets",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wihBsfwaC8bLMhqnyoy5aIx7DGq-RRihR8NRrjtNDu8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "ticket list",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wihBsfwaC8bLMhqnyoy5aIx7DGq-RRihR8NRrjtNDu8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Student ": "={{ $json.output.ticket_name }}",
+            "Assigned Teaching Staff": "={{ $json.output.ticket_cc }}",
+            "Category": "={{ $json.output.ticket_category }}",
+            "Email Description": "={{ $json.output.ticket_description }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Student ",
+              "displayName": "Student ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Assigned Teaching Staff",
+              "displayName": "Assigned Teaching Staff",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Category",
+              "displayName": "Category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Email Description",
+              "displayName": "Email Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        32,
+        272
+      ],
+      "id": "98af70fe-0d07-4f3f-bfd6-7218af05e963",
+      "name": "Add ticket to table",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "27QZYZYoFChPQNfR",
+          "name": "Alex Jensen Student Google Sheets"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"response_content\",\n    \"response_cc\",\n    \"ticket_description\",\n    \"ticket_category\",\n    \"ticket_cc\",\n    \"ticket_priority\",\n    \"ticket_name\",\n    \"confidence\"\n  ],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"response_content\": {\n      \"type\": \"string\",\n      \"description\": \"Formatted like a complete email content (e.g., starts with hi and ends with signature).\"\n    },\n    \"response_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The email address of the person to CC. Nothing else.\"\n    },\n    \"ticket_description\": {\n      \"type\": \"string\",\n      \"description\": \"Just one sentence, to the point.\"\n    },\n    \"ticket_category\": {\n      \"type\": \"string\",\n      \"enum\": [\"administrative\", \"content\", \"n8n\", \"project\", \"other\"],\n      \"description\": \"One of the allowed categories.\"\n    },\n    \"ticket_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The full name of the person corresponding to the CCed email address.\"\n    },\n    \"ticket_name\": {\n      \"type\": \"string\",\n      \"description\": \"Name of the student; if unknown, their email.\"\n    },\n    \"ticket_priority\": {\n      \"type\": \"string\",\n      \"description\": \"Priority label (e.g., low/medium/high).\"\n    },\n    \"confidence\": {\n      \"type\": \"boolean\",\n      \"description\": \"Model's confidence in the category/route; true if the answer to all of the questions is known and false otherwise.\"\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        -480,
+        416
+      ],
+      "id": "00d730db-fb34-44d3-b60f-c8d524da007d",
+      "name": "agent decision format"
+    }
+  ],
+  "connections": {
+    "GPT-5 mini": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When receiving an email": {
+      "main": [
+        [
+          {
+            "node": "Set First Name",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Category Agent": {
+      "main": [
+        [
+          {
+            "node": "If confident in response...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If confident in response...": {
+      "main": [
+        [
+          {
+            "node": "Add ticket to table",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "reply to the query (with CC)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Add ticket to table",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "reply to the query (no CC)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set First Name": {
+      "main": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "agent decision format": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "When receiving an email": [
+      {
+        "id": "19a2da9df6d3a570",
+        "threadId": "19a2da9df6d3a570",
+        "labelIds": [
+          "UNREAD",
+          "CATEGORY_PERSONAL",
+          "INBOX"
+        ],
+        "sizeEstimate": 5713,
+        "headers": {
+          "delivered-to": "Delivered-To: alexjensenaiml901@gmail.com",
+          "received": "Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])\r\n        by mx.google.com with SMTPS id 00721157ae682-785ee7eab7fsor53076807b3.15.2025.10.28.18.51.38\r\n        for <alexjensenaiml901@gmail.com>\r\n        (Google Transport Security);\r\n        Tue, 28 Oct 2025 18:51:38 -0700 (PDT)",
+          "x-received": "X-Received: by 2002:a05:690c:6c8b:b0:780:f8b7:c177 with SMTP id\r\n 00721157ae682-78628e42c72mr13656317b3.16.1761702697933; Tue, 28 Oct 2025\r\n 18:51:37 -0700 (PDT)",
+          "arc-seal": "ARC-Seal: i=1; a=rsa-sha256; t=1761702698; cv=none;\r\n        d=google.com; s=arc-20240605;\r\n        b=ApKtx5aaepHrx2Fbid7dWKuQhNmQpOrt4EHC02g/JIJwbCJ+DDA/eC9R6RlpLCLLFS\r\n         y0FUQbEdpSizcxy/oVR4hhBREP/EuegkP7Ygw37uYgHLT+BV9BhMRcTeL/LJw4zrJqkw\r\n         DQdrXacn3BXkznQ9+TC2zItTZzrXevpj+lS5pmHOKPU5KDM+PfX0c5DDjUkA//sovrje\r\n         UaBK4EcsFJEzTumM6aS9hNVzm+Af6tMbJkjoR715xRHG6uhGoGCFNnj2z7nRXf0U6lyv\r\n         p2NtYp6ZKgLMij5+ivL3g1r7Hp01rj9s1cRnPj5VZxLLNIkiZAzDmQHyoqBSwzxKm3jv\r\n         UXww==",
+          "arc-message-signature": "ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;\r\n        h=to:subject:message-id:date:from:mime-version:dkim-signature;\r\n        bh=3mNQnCTl+2/2wbu3epPWWVDtVhwjmOVJbGhHmdSs19c=;\r\n        fh=YGgIeuaRT9BUUuXIgCukArD9hT974fm5xTrzKRcztlI=;\r\n        b=gzoTZJFpYJgX3FdLT49oPtfr41uTM7BiQEGa9J/Q2rpgTLxL+LwCYY1FLyvrJFDIhy\r\n         WeMTxPS7XjZzPbS7fysHFaMbhDw+CcNcf3Y1yogx3OlXO0wU/kYdD8+ZeGkGZ4G945OH\r\n         vqQapxb/ftbg+q0V+ElmfUsFhZI+lkcNsKTseIRw8rUH7KjqRYlb2N3TIjKxX/+1z4l4\r\n         DyWT20rjYCwrHrAqtJBIGDGPturHhP2loILnyIGyylw7T9xN/+tZtasqYkyujriiG0X+\r\n         nsS4eccK/b7p1wxG6mL1Y5HOK+mFtQLS08mBKvLUMLHJeoVK741BY59LuEOcZhwMe9du\r\n         Mo5w==;\r\n        dara=google.com",
+          "arc-authentication-results": "ARC-Authentication-Results: i=1; mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=\"Lxj/fEq0\";\r\n       spf=pass (google.com: domain of alex.e.jensen@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=alex.e.jensen@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
+          "return-path": "Return-Path: <alex.e.jensen@gmail.com>",
+          "received-spf": "Received-SPF: pass (google.com: domain of alex.e.jensen@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;",
+          "authentication-results": "Authentication-Results: mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=\"Lxj/fEq0\";\r\n       spf=pass (google.com: domain of alex.e.jensen@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=alex.e.jensen@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
+          "dkim-signature": "DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=gmail.com; s=20230601; t=1761702698; x=1762307498; dara=google.com;\r\n        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject\r\n         :date:message-id:reply-to;\r\n        bh=3mNQnCTl+2/2wbu3epPWWVDtVhwjmOVJbGhHmdSs19c=;\r\n        b=Lxj/fEq0cJ2J7Yag8EjtXKcQyw8YbCvOXbQs2VHvReJgvlLbaTOIKaLhBmnrYBWQoN\r\n         TspNRmzgRrKH186TcOxIvNksIde4C7Q/l2Nzouz+4o996Vu3y+MB0010466JRYtkT/sn\r\n         tYc2Sf0vyYCyXt0GiLyNcoLXUfZQzJFUWxfkUy25j7V7Rok/LMBeE1QVMn+Tz6TLxSjt\r\n         lLeFcHZdSLxY5zyP6d4OQZPk1vzLGro/z4kRAlP7r/IwVtCACmOsOuAK/K4A8KK3YCI7\r\n         4BxLZghzpUdI+ENYuoSdZcYgEYvngcWO85olCfotlt01LTt/IUIwtlxiMJe+FgkrmlUv\r\n         l3yg==",
+          "x-google-dkim-signature": "X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=1e100.net; s=20230601; t=1761702698; x=1762307498;\r\n        h=to:subject:message-id:date:from:mime-version:x-gm-message-state\r\n         :from:to:cc:subject:date:message-id:reply-to;\r\n        bh=3mNQnCTl+2/2wbu3epPWWVDtVhwjmOVJbGhHmdSs19c=;\r\n        b=EKmJ7DMmSKJp3GhY6v60HoarQTTs4BXH+yaf5zVhsSqQBY2qhzd64jWYUmgfye9b1X\r\n         xZnOegGIY5kxAuoO/em9hA9YGf1//LI3W0S5gPBZCIxmIlnTjgbmRfo7ZzMmgSDvC/Oy\r\n         dnIT6JBZs/+j+b86MSP5sBjZUi7XNRKCCPOrooc4ew6+e0Ybfj7FQCXcz56Fo4IjBwkl\r\n         ybyVi7EJe2rKvo4tqNdZ61jNkLe9fqdUtnCN93ZHgLSeOWEhjJ0cHj+EwQ0H7nGbFTob\r\n         DKnfdPEONm+NDTy6toBq8elAPRNumbY41u4mGqM+gvoREpnHGWpaDGRVF8TNpVqPHSpN\r\n         WZCw==",
+          "x-gm-message-state": "X-Gm-Message-State: AOJu0YyGIvR6+F/1JA+SLamiKT5FwPsQ0zUd6DzPCmAk3k5YeB4QnUnM\r\n\tWpR/J3mQzVLkaI2L8hhigzR3zcDjLz/xWrN0407cVT3DTUbEo/PLU1FnRUyoIKpXmGrjS5qyf6e\r\n\tO3af+0ssiEgjIrGPnHZinP7WiKfoBEJkzuJhn",
+          "x-gm-gg": "X-Gm-Gg: ASbGnctvpW3PXEcAyIxShX41tuzksalrNjhs6fz7X8kXIvfzhHejoqUG9VmUrxcmAIg\r\n\tgKcS7dcgHHaNC/zxy1sPVhgrVcxKwN4+vutZzMChcJv0tOCF2e+2d9fNdSqmyyCqfJsyIIw3k3n\r\n\taLlC5GU21qTB0n3opG03IBrKmuGqdufkVsQ2OPh5np+wPKNiOPh2ghHvdr82DPV8xortCrfygpR\r\n\t4KU8aJbu6lsAqCniHXmp8+Y4EMbfwo1hFMaG5D2U/g/eNF+h9NiMlh/LGOICz9kUfcdWJ2cH7ej\r\n\t9bVF/RSvllegbfcg",
+          "x-google-smtp-source": "X-Google-Smtp-Source: AGHT+IFvjfCDhZUViJjnDe/IyxODI9/hiUUffVBgd+5zWk6uGAxepJULB8mQCiJddEyO4iExOs8/mMnA20Z9qzELVaM=",
+          "mime-version": "MIME-Version: 1.0",
+          "from": "From: Alex Jensen <alex.e.jensen@gmail.com>",
+          "date": "Date: Tue, 28 Oct 2025 20:51:26 -0500",
+          "x-gm-features": "X-Gm-Features: AWmQ_bn-InfUdBUcTlJz9s8vDgiPHCn5Sgw9lJviORDBv1g4b3jlcMSH9FWRpoo",
+          "message-id": "Message-ID: <CANoqi6o=2bP78DE8K_oXxWa8agJMx55OsSHwaYOtaKPGa-zkbQ@mail.gmail.com>",
+          "subject": "Subject: Test",
+          "to": "To: \"alexjensenaiml901@gmail.com\" <alexjensenaiml901@gmail.com>",
+          "content-type": "Content-Type: multipart/alternative; boundary=\"000000000000829f360642425ff1\""
+        },
+        "html": "<div dir=\"ltr\">Hello</div>\n",
+        "text": "Hello\n",
+        "textAsHtml": "<p>Hello</p>",
+        "subject": "Test",
+        "date": "2025-10-29T01:51:26.000Z",
+        "to": {
+          "value": [
+            {
+              "address": "alexjensenaiml901@gmail.com",
+              "name": ""
+            }
+          ],
+          "html": "<span class=\"mp_address_group\"><a href=\"mailto:alexjensenaiml901@gmail.com\" class=\"mp_address_email\">alexjensenaiml901@gmail.com</a></span>",
+          "text": "alexjensenaiml901@gmail.com"
+        },
+        "from": {
+          "value": [
+            {
+              "address": "alex.e.jensen@gmail.com",
+              "name": "Alex Jensen"
+            }
+          ],
+          "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Alex Jensen</span> &lt;<a href=\"mailto:alex.e.jensen@gmail.com\" class=\"mp_address_email\">alex.e.jensen@gmail.com</a>&gt;</span>",
+          "text": "\"Alex Jensen\" <alex.e.jensen@gmail.com>"
+        },
+        "messageId": "<CANoqi6o=2bP78DE8K_oXxWa8agJMx55OsSHwaYOtaKPGa-zkbQ@mail.gmail.com>"
+      }
+    ],
+    "Category Agent": [
+      {
+        "output": {
+          "response_content": "Hi Alex,\n\nThanks — I received your test message (“Hello”). Your email to the AIML-901 teaching team came through fine. If you were just checking connectivity, you’re all set. If you meant to ask a question or need anything (class logistics, content, or project help), reply to this email with details and we’ll get you the right support.\n\nBest,\nKai support",
+          "response_cc": "aiml901sebastienmartin+ta@gmail.com",
+          "ticket_description": "Student sent a test email saying 'Hello' to confirm contact; no follow-up needed unless they intended to ask something.",
+          "ticket_category": "other",
+          "ticket_cc": "Alex Jensen",
+          "ticket_name": "Alex",
+          "ticket_priority": "low",
+          "confidence": true
+        }
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
 
 ---
 ### Step 1: Gmail Trigger
