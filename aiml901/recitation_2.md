@@ -13,6 +13,10 @@ In Lecture 1, you saw a small example of this with class emails with questions a
 While a professor might want to be more accessible than this, we can imagine many scenarios where the head of a team does not need to receive all requests unless absolutely necessary. We simply use this scenario since it is one we know best!
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 1 Recording](https://www.youtube.com/watch?v=rqAwlg62Utw)
+
+---
 ## You'll Need...
 
 1. Google Sheets connection
@@ -732,84 +736,7 @@ Start a new workflow and let's get started! You will be provided with instructio
       ]
     }
   },
-  "pinData": {
-    "When receiving an email": [
-      {
-        "id": "19a2da9df6d3a570",
-        "threadId": "19a2da9df6d3a570",
-        "labelIds": [
-          "UNREAD",
-          "CATEGORY_PERSONAL",
-          "INBOX"
-        ],
-        "sizeEstimate": 5713,
-        "headers": {
-          "delivered-to": "Delivered-To: alexjensenaiml901@gmail.com",
-          "received": "Received: from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41])\r\n        by mx.google.com with SMTPS id 00721157ae682-785ee7eab7fsor53076807b3.15.2025.10.28.18.51.38\r\n        for <alexjensenaiml901@gmail.com>\r\n        (Google Transport Security);\r\n        Tue, 28 Oct 2025 18:51:38 -0700 (PDT)",
-          "x-received": "X-Received: by 2002:a05:690c:6c8b:b0:780:f8b7:c177 with SMTP id\r\n 00721157ae682-78628e42c72mr13656317b3.16.1761702697933; Tue, 28 Oct 2025\r\n 18:51:37 -0700 (PDT)",
-          "arc-seal": "ARC-Seal: i=1; a=rsa-sha256; t=1761702698; cv=none;\r\n        d=google.com; s=arc-20240605;\r\n        b=ApKtx5aaepHrx2Fbid7dWKuQhNmQpOrt4EHC02g/JIJwbCJ+DDA/eC9R6RlpLCLLFS\r\n         y0FUQbEdpSizcxy/oVR4hhBREP/EuegkP7Ygw37uYgHLT+BV9BhMRcTeL/LJw4zrJqkw\r\n         DQdrXacn3BXkznQ9+TC2zItTZzrXevpj+lS5pmHOKPU5KDM+PfX0c5DDjUkA//sovrje\r\n         UaBK4EcsFJEzTumM6aS9hNVzm+Af6tMbJkjoR715xRHG6uhGoGCFNnj2z7nRXf0U6lyv\r\n         p2NtYp6ZKgLMij5+ivL3g1r7Hp01rj9s1cRnPj5VZxLLNIkiZAzDmQHyoqBSwzxKm3jv\r\n         UXww==",
-          "arc-message-signature": "ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;\r\n        h=to:subject:message-id:date:from:mime-version:dkim-signature;\r\n        bh=3mNQnCTl+2/2wbu3epPWWVDtVhwjmOVJbGhHmdSs19c=;\r\n        fh=YGgIeuaRT9BUUuXIgCukArD9hT974fm5xTrzKRcztlI=;\r\n        b=gzoTZJFpYJgX3FdLT49oPtfr41uTM7BiQEGa9J/Q2rpgTLxL+LwCYY1FLyvrJFDIhy\r\n         WeMTxPS7XjZzPbS7fysHFaMbhDw+CcNcf3Y1yogx3OlXO0wU/kYdD8+ZeGkGZ4G945OH\r\n         vqQapxb/ftbg+q0V+ElmfUsFhZI+lkcNsKTseIRw8rUH7KjqRYlb2N3TIjKxX/+1z4l4\r\n         DyWT20rjYCwrHrAqtJBIGDGPturHhP2loILnyIGyylw7T9xN/+tZtasqYkyujriiG0X+\r\n         nsS4eccK/b7p1wxG6mL1Y5HOK+mFtQLS08mBKvLUMLHJeoVK741BY59LuEOcZhwMe9du\r\n         Mo5w==;\r\n        dara=google.com",
-          "arc-authentication-results": "ARC-Authentication-Results: i=1; mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=\"Lxj/fEq0\";\r\n       spf=pass (google.com: domain of alex.e.jensen@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=alex.e.jensen@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
-          "return-path": "Return-Path: <alex.e.jensen@gmail.com>",
-          "received-spf": "Received-SPF: pass (google.com: domain of alex.e.jensen@gmail.com designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;",
-          "authentication-results": "Authentication-Results: mx.google.com;\r\n       dkim=pass header.i=@gmail.com header.s=20230601 header.b=\"Lxj/fEq0\";\r\n       spf=pass (google.com: domain of alex.e.jensen@gmail.com designates 209.85.220.41 as permitted sender) smtp.mailfrom=alex.e.jensen@gmail.com;\r\n       dmarc=pass (p=NONE sp=QUARANTINE dis=NONE) header.from=gmail.com;\r\n       dara=pass header.i=@gmail.com",
-          "dkim-signature": "DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=gmail.com; s=20230601; t=1761702698; x=1762307498; dara=google.com;\r\n        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject\r\n         :date:message-id:reply-to;\r\n        bh=3mNQnCTl+2/2wbu3epPWWVDtVhwjmOVJbGhHmdSs19c=;\r\n        b=Lxj/fEq0cJ2J7Yag8EjtXKcQyw8YbCvOXbQs2VHvReJgvlLbaTOIKaLhBmnrYBWQoN\r\n         TspNRmzgRrKH186TcOxIvNksIde4C7Q/l2Nzouz+4o996Vu3y+MB0010466JRYtkT/sn\r\n         tYc2Sf0vyYCyXt0GiLyNcoLXUfZQzJFUWxfkUy25j7V7Rok/LMBeE1QVMn+Tz6TLxSjt\r\n         lLeFcHZdSLxY5zyP6d4OQZPk1vzLGro/z4kRAlP7r/IwVtCACmOsOuAK/K4A8KK3YCI7\r\n         4BxLZghzpUdI+ENYuoSdZcYgEYvngcWO85olCfotlt01LTt/IUIwtlxiMJe+FgkrmlUv\r\n         l3yg==",
-          "x-google-dkim-signature": "X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;\r\n        d=1e100.net; s=20230601; t=1761702698; x=1762307498;\r\n        h=to:subject:message-id:date:from:mime-version:x-gm-message-state\r\n         :from:to:cc:subject:date:message-id:reply-to;\r\n        bh=3mNQnCTl+2/2wbu3epPWWVDtVhwjmOVJbGhHmdSs19c=;\r\n        b=EKmJ7DMmSKJp3GhY6v60HoarQTTs4BXH+yaf5zVhsSqQBY2qhzd64jWYUmgfye9b1X\r\n         xZnOegGIY5kxAuoO/em9hA9YGf1//LI3W0S5gPBZCIxmIlnTjgbmRfo7ZzMmgSDvC/Oy\r\n         dnIT6JBZs/+j+b86MSP5sBjZUi7XNRKCCPOrooc4ew6+e0Ybfj7FQCXcz56Fo4IjBwkl\r\n         ybyVi7EJe2rKvo4tqNdZ61jNkLe9fqdUtnCN93ZHgLSeOWEhjJ0cHj+EwQ0H7nGbFTob\r\n         DKnfdPEONm+NDTy6toBq8elAPRNumbY41u4mGqM+gvoREpnHGWpaDGRVF8TNpVqPHSpN\r\n         WZCw==",
-          "x-gm-message-state": "X-Gm-Message-State: AOJu0YyGIvR6+F/1JA+SLamiKT5FwPsQ0zUd6DzPCmAk3k5YeB4QnUnM\r\n\tWpR/J3mQzVLkaI2L8hhigzR3zcDjLz/xWrN0407cVT3DTUbEo/PLU1FnRUyoIKpXmGrjS5qyf6e\r\n\tO3af+0ssiEgjIrGPnHZinP7WiKfoBEJkzuJhn",
-          "x-gm-gg": "X-Gm-Gg: ASbGnctvpW3PXEcAyIxShX41tuzksalrNjhs6fz7X8kXIvfzhHejoqUG9VmUrxcmAIg\r\n\tgKcS7dcgHHaNC/zxy1sPVhgrVcxKwN4+vutZzMChcJv0tOCF2e+2d9fNdSqmyyCqfJsyIIw3k3n\r\n\taLlC5GU21qTB0n3opG03IBrKmuGqdufkVsQ2OPh5np+wPKNiOPh2ghHvdr82DPV8xortCrfygpR\r\n\t4KU8aJbu6lsAqCniHXmp8+Y4EMbfwo1hFMaG5D2U/g/eNF+h9NiMlh/LGOICz9kUfcdWJ2cH7ej\r\n\t9bVF/RSvllegbfcg",
-          "x-google-smtp-source": "X-Google-Smtp-Source: AGHT+IFvjfCDhZUViJjnDe/IyxODI9/hiUUffVBgd+5zWk6uGAxepJULB8mQCiJddEyO4iExOs8/mMnA20Z9qzELVaM=",
-          "mime-version": "MIME-Version: 1.0",
-          "from": "From: Alex Jensen <alex.e.jensen@gmail.com>",
-          "date": "Date: Tue, 28 Oct 2025 20:51:26 -0500",
-          "x-gm-features": "X-Gm-Features: AWmQ_bn-InfUdBUcTlJz9s8vDgiPHCn5Sgw9lJviORDBv1g4b3jlcMSH9FWRpoo",
-          "message-id": "Message-ID: <CANoqi6o=2bP78DE8K_oXxWa8agJMx55OsSHwaYOtaKPGa-zkbQ@mail.gmail.com>",
-          "subject": "Subject: Test",
-          "to": "To: \"alexjensenaiml901@gmail.com\" <alexjensenaiml901@gmail.com>",
-          "content-type": "Content-Type: multipart/alternative; boundary=\"000000000000829f360642425ff1\""
-        },
-        "html": "<div dir=\"ltr\">Hello</div>\n",
-        "text": "Hello\n",
-        "textAsHtml": "<p>Hello</p>",
-        "subject": "Test",
-        "date": "2025-10-29T01:51:26.000Z",
-        "to": {
-          "value": [
-            {
-              "address": "alexjensenaiml901@gmail.com",
-              "name": ""
-            }
-          ],
-          "html": "<span class=\"mp_address_group\"><a href=\"mailto:alexjensenaiml901@gmail.com\" class=\"mp_address_email\">alexjensenaiml901@gmail.com</a></span>",
-          "text": "alexjensenaiml901@gmail.com"
-        },
-        "from": {
-          "value": [
-            {
-              "address": "alex.e.jensen@gmail.com",
-              "name": "Alex Jensen"
-            }
-          ],
-          "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Alex Jensen</span> &lt;<a href=\"mailto:alex.e.jensen@gmail.com\" class=\"mp_address_email\">alex.e.jensen@gmail.com</a>&gt;</span>",
-          "text": "\"Alex Jensen\" <alex.e.jensen@gmail.com>"
-        },
-        "messageId": "<CANoqi6o=2bP78DE8K_oXxWa8agJMx55OsSHwaYOtaKPGa-zkbQ@mail.gmail.com>"
-      }
-    ],
-    "Category Agent": [
-      {
-        "output": {
-          "response_content": "Hi Alex,\n\nThanks — I received your test message (“Hello”). Your email to the AIML-901 teaching team came through fine. If you were just checking connectivity, you’re all set. If you meant to ask a question or need anything (class logistics, content, or project help), reply to this email with details and we’ll get you the right support.\n\nBest,\nKai support",
-          "response_cc": "aiml901sebastienmartin+ta@gmail.com",
-          "ticket_description": "Student sent a test email saying 'Hello' to confirm contact; no follow-up needed unless they intended to ask something.",
-          "ticket_category": "other",
-          "ticket_cc": "Alex Jensen",
-          "ticket_name": "Alex",
-          "ticket_priority": "low",
-          "confidence": true
-        }
-      }
-    ]
-  },
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
