@@ -1,0 +1,285 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> <meta charset="utf-8"> <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> <meta http-equiv="X-UA-Compatible" content="IE=edge"> <title> Class 4: AI Agents | Sébastien Martin </title> <meta name="author" content="Sébastien Martin"> <meta name="description" content="The academic personal website of Sébastien Martin. "> <meta name="keywords" content="academic-website"> <link rel="stylesheet" href="/assets/css/bootstrap.min.css?a4b3f509e79c54a512b890d73235ef04"> <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/css/mdb.min.css" integrity="sha256-jpjYvU3G3N6nrrBwXJoVEYI/0zw8htfFnhT9ljN3JJw=" crossorigin="anonymous"> <link defer rel="stylesheet" href="/assets/css/academicons.min.css?f0b7046b84e425c55f3463ac249818f5"> <link defer rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&amp;display=swap"> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-github.css?591dab5a4e56573bf4ef7fd332894c99" media="" id="highlight_theme_light"> <link rel="shortcut icon" href="/assets/img/favicon.ico?85942da95a6a13aaf15248a426551986"> <link rel="stylesheet" href="/assets/css/main.css?d41d8cd98f00b204e9800998ecf8427e"> <link rel="canonical" href="https://sebastienmartin.info/aiml901/class_4.html"> <script src="/assets/js/theme.js?04381d0b351f8b7d59e7eca563b4c15e"></script> <link defer rel="stylesheet" href="/assets/css/jekyll-pygments-themes-native.css?5847e5ed4a4568527aa6cfab446049ca" media="none" id="highlight_theme_dark"> <script>initTheme();</script> </head> <body class="aiml901-body sticky-bottom-footer"> <div class="aiml901-main container py-5"> <div class="post aiml901-page"> <header class="aiml901-hero"> <div class="aiml901-hero__top"> <p class="aiml901-hero__label">AIML 901</p> <button id="light-toggle" class="aiml901-hero__toggle" title="Change theme"> <i class="ti ti-moon-filled" id="light-toggle-dark"></i> <i class="ti ti-sun-filled" id="light-toggle-light"></i> </button> </div> <h1 class="aiml901-hero__title">Class 4: AI Agents</h1> <p class="aiml901-hero__meta">Sébastien Martin</p> </header> <article class="aiml901-content"> <h2 id="the-n8n-workflow-of-wiki-kai">The n8n workflow of “Wiki Kai”</h2> <p>If you’d like to try it on your own, copy this into a new n8n workflow:</p> <div class="language-json highlighter-rouge"><div class="highlight"><details class="aiml901-code-collapse" data-line-count="284"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (284 lines)" data-hide-label="Hide code" data-line-count="284">Show code (284 lines)</summary><div class="aiml901-code-collapse__body"><pre class="highlight"><code><span class="p">{</span><span class="w">
+  </span><span class="nl">"nodes"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"promptType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"define"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"=User name: {{ $json.message.chat.first_name }} {{ $json.message.chat.last_name }}</span><span class="se">\n\n</span><span class="s2">Telegram message: </span><span class="se">\n</span><span class="s2">{{ $json.message.text }}"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"hasOutputParser"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"systemMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"=You are </span><span class="se">\"</span><span class="s2">Wiki Kai</span><span class="se">\"</span><span class="s2">, a helpful AI bot on Telegram that replies to user requests and uses Wikipedia searches to back its answers with a clickable wiki link.</span><span class="se">\n</span><span class="s2">You will be part of a conversation on Telegram. You have a tool that allows you to get information on Wikipedia, and you must use it to back your answers: never share information without a link (formatted in markdown).</span><span class="se">\n\n</span><span class="s2">You will output both the reply to the user on Telegram and the Wikipedia search terms you used."</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@n8n/n8n-nodes-langchain.agent"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mf">2.2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">112</span><span class="p">,</span><span class="w">
+        </span><span class="mi">32</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"1f2aa831-a636-42ef-9762-7c0c7df9ef19"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI Agent"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"sessionIdType"</span><span class="p">:</span><span class="w"> </span><span class="s2">"customKey"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"sessionKey"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $json.message.from.id }}"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@n8n/n8n-nodes-langchain.memoryBufferWindow"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">112</span><span class="p">,</span><span class="w">
+        </span><span class="mi">256</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"3ff69c3e-02ed-4540-9b2e-26e22d756ddc"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Simple Memory"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@n8n/n8n-nodes-langchain.toolWikipedia"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">256</span><span class="p">,</span><span class="w">
+        </span><span class="mi">256</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"9ae73666-d0a5-4f79-9d4d-701de0f8776f"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wikipedia"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"model"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"__rl"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gpt-5-mini"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"cachedResultName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gpt-5-mini"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@n8n/n8n-nodes-langchain.lmChatOpenAi"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">-32</span><span class="p">,</span><span class="w">
+        </span><span class="mi">256</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"e8284a85-4201-4599-aad0-59e200fe675b"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"OpenAI Chat Model"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"openAiApi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ng8YPN3U1fTEiF8P"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AIML901 OpenAI account"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"chatId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $('Receive Telegram message').item.json.message.chat.id }}"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $json.output.user_reply }}"</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"additionalFields"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"appendAttribution"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"n8n-nodes-base.telegram"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">640</span><span class="p">,</span><span class="w">
+        </span><span class="mi">-80</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dac85d0f-4966-4203-8a34-0bd8a6a9d068"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reply to Telegram message"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"webhookId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2dd8c9be-8a69-4f0f-9a6e-094b2274f41f"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"telegramApi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gkXMftcDBSNuF8fg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wiki Kai Telegram"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"dataTableId"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"__rl"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="s2">"mNqdOJYsd2xUkijR"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"mode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"list"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"cachedResultName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wiki Kai log"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"cachedResultUrl"</span><span class="p">:</span><span class="w"> </span><span class="s2">"/projects/8RXE7aQqHFIRCmJF/datatables/mNqdOJYsd2xUkijR"</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"columns"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"mappingMode"</span><span class="p">:</span><span class="w"> </span><span class="s2">"defineBelow"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"value"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"kaiMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $json.output.user_reply }}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"userMessage"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $('Receive Telegram message').item.json.message.text }}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"userName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $('Receive Telegram message').item.json.message.chat.first_name }} {{ $('Receive Telegram message').item.json.message.from.last_name }}"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"wikiSearch"</span><span class="p">:</span><span class="w"> </span><span class="s2">"={{ $json.output.wiki_search }}"</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="nl">"matchingColumns"</span><span class="p">:</span><span class="w"> </span><span class="p">[],</span><span class="w">
+          </span><span class="nl">"schema"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"userName"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"displayName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"userName"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"readOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"userMessage"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"displayName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"userMessage"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"readOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kaiMessage"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"displayName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kaiMessage"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"readOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">},</span><span class="w">
+            </span><span class="p">{</span><span class="w">
+              </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wikiSearch"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"displayName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"wikiSearch"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"required"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"defaultMatch"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"display"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"readOnly"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+              </span><span class="nl">"removed"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+          </span><span class="p">],</span><span class="w">
+          </span><span class="nl">"attemptToConvertTypes"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"convertFieldsToString"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="w">
+        </span><span class="p">},</span><span class="w">
+        </span><span class="nl">"options"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"n8n-nodes-base.dataTable"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">640</span><span class="p">,</span><span class="w">
+        </span><span class="mi">160</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"f6e9910a-6a2f-4d6a-b715-5656a9e410bd"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Log Conversation to table"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"jsonSchemaExample"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{</span><span class="se">\n\t\"</span><span class="s2">user_reply</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">hello user</span><span class="se">\"</span><span class="s2">,</span><span class="se">\n\t\"</span><span class="s2">wiki_search</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">LLM</span><span class="se">\"\n</span><span class="s2">}"</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"@n8n/n8n-nodes-langchain.outputParserStructured"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.3</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">384</span><span class="p">,</span><span class="w">
+        </span><span class="mi">256</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"b3821de8-8a94-4984-a6c4-a262471a8ce9"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Structured Output Parser"</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"updates"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+          </span><span class="s2">"message"</span><span class="w">
+        </span><span class="p">],</span><span class="w">
+        </span><span class="nl">"additionalFields"</span><span class="p">:</span><span class="w"> </span><span class="p">{}</span><span class="w">
+      </span><span class="p">},</span><span class="w">
+      </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"n8n-nodes-base.telegramTrigger"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"typeVersion"</span><span class="p">:</span><span class="w"> </span><span class="mf">1.2</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"position"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="mi">-160</span><span class="p">,</span><span class="w">
+        </span><span class="mi">32</span><span class="w">
+      </span><span class="p">],</span><span class="w">
+      </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"649716b7-2d33-4559-a9fd-9a6011a0d722"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Receive Telegram message"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"webhookId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"67589cad-8352-4646-b5f8-bd5997c659e3"</span><span class="p">,</span><span class="w">
+      </span><span class="nl">"credentials"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"telegramApi"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+          </span><span class="nl">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"gkXMftcDBSNuF8fg"</span><span class="p">,</span><span class="w">
+          </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Wiki Kai Telegram"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">],</span><span class="w">
+  </span><span class="nl">"connections"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"AI Agent"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Reply to Telegram message"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">},</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Log Conversation to table"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Simple Memory"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ai_memory"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI Agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai_memory"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Wikipedia"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ai_tool"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI Agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai_tool"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"OpenAI Chat Model"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ai_languageModel"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI Agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai_languageModel"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Structured Output Parser"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"ai_outputParser"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI Agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ai_outputParser"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">},</span><span class="w">
+    </span><span class="nl">"Receive Telegram message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"main"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+        </span><span class="p">[</span><span class="w">
+          </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"node"</span><span class="p">:</span><span class="w"> </span><span class="s2">"AI Agent"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"main"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"index"</span><span class="p">:</span><span class="w"> </span><span class="mi">0</span><span class="w">
+          </span><span class="p">}</span><span class="w">
+        </span><span class="p">]</span><span class="w">
+      </span><span class="p">]</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"pinData"</span><span class="p">:</span><span class="w"> </span><span class="p">{},</span><span class="w">
+  </span><span class="nl">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"templateCredsSetupCompleted"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="nl">"instanceId"</span><span class="p">:</span><span class="w"> </span><span class="s2">"dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></details></div></div> </article> </div> </div> <footer class="sticky-bottom mt-5" role="contentinfo"> <div class="container"> © Copyright 2025 Sébastien Martin. Powered by <a href="https://jekyllrb.com/" target="_blank" rel="external nofollow noopener">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio" rel="external nofollow noopener" target="_blank">al-folio</a> theme. Hosted by <a href="https://pages.github.com/" target="_blank" rel="external nofollow noopener">GitHub Pages</a>. Last updated: October 31, 2025. </div> </footer> <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> <script src="/assets/js/bootstrap.bundle.min.js"></script> <script src="https://cdn.jsdelivr.net/npm/mdbootstrap@4.20.0/js/mdb.min.js" integrity="sha256-NdbiivsvWt7VYCt6hYNT3h/th9vSTL4EDWeGs5SN3DA=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script> <script defer src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script> <script defer src="/assets/js/masonry.js" type="text/javascript"></script> <script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/dist/medium-zoom.min.js" integrity="sha256-ZgMyDAIYDYGxbcpJcfUnYwNevG/xi9OHKaR/8GK+jWc=" crossorigin="anonymous"></script> <script defer src="/assets/js/zoom.js?85ddb88934d28b74e78031fd54cf8308"></script> <script src="/assets/js/no_defer.js?2781658a0a2b13ed609542042a859126"></script> <script defer src="/assets/js/common.js?b7816bd189846d29eded8745f9c4cf77"></script> <script defer src="/assets/js/copy_code.js?5a6977fbcd9d77bc24edac6a6d7614af" type="text/javascript"></script> <script defer src="/assets/js/jupyter_new_tab.js?d9f17b6adc2311cbabd747f4538bb15f"></script> <script type="text/javascript">window.MathJax={tex:{tags:"ams"}};</script> <script defer type="text/javascript" id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3.2.0/es5/tex-mml-chtml.min.js" integrity="sha256-rjmgmaB99riUNcdlrDtcAiwtLIojSxNyUFdl+Qh+rB4=" crossorigin="anonymous"></script> <script defer src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6" crossorigin="anonymous"></script> <script async src="https://www.googletagmanager.com/gtag/js?id=G-TX350FZQ6X"></script> <script>function gtag(){window.dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],gtag("js",new Date),gtag("config","G-TX350FZQ6X");</script> <script type="text/javascript">function progressBarSetup(){"max"in document.createElement("progress")?(initializeProgressElement(),$(document).on("scroll",function(){progressBar.attr({value:getCurrentScrollPosition()})}),$(window).on("resize",initializeProgressElement)):(resizeProgressBar(),$(document).on("scroll",resizeProgressBar),$(window).on("resize",resizeProgressBar))}function getCurrentScrollPosition(){return $(window).scrollTop()}function initializeProgressElement(){let e=$("#navbar").outerHeight(!0);$("body").css({"padding-top":e}),$("progress-container").css({"padding-top":e}),progressBar.css({top:e}),progressBar.attr({max:getDistanceToScroll(),value:getCurrentScrollPosition()})}function getDistanceToScroll(){return $(document).height()-$(window).height()}function resizeProgressBar(){progressBar.css({width:getWidthPercentage()+"%"})}function getWidthPercentage(){return getCurrentScrollPosition()/getDistanceToScroll()*100}const progressBar=$("#progress");window.onload=function(){setTimeout(progressBarSetup,50)};</script> <script src="/assets/js/vanilla-back-to-top.min.js?f40d453793ff4f64e238e420181a1d17"></script> <script>addBackToTop();</script> <script src="/assets/js/shortcut-key.js"></script> </body> </html>
