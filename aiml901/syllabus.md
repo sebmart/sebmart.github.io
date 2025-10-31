@@ -4,7 +4,6 @@ author:
   - Sébastien Martin
 ---
 
-
 # AIML-901OP-5 AI Foundations for Managers - AgentOps
 
 ![[course_canvas_vignette.png|400]]
@@ -176,7 +175,7 @@ There are 10 classes—two per week—organized into three modules. There is als
 - **Class 2: Pretraining a Large Language Model**  
   Train your own LLM from scratch to demystify how these powerful models actually learn from data.  
 
-- **Class 3: Post-training, Making AI Useful**  
+- **Class 3: Post-training and Alignment**  
   Discover the crucial steps that transform a raw LLM into a helpful, safe, and reliable AI assistant.  
 
 - **Class 4: AI Agents**  

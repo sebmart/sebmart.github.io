@@ -2,7 +2,6 @@
 title: Recitation 2
 author: Alex Jensen
 ---
-
 > [!info] Note
 > This recitation has more core content than recitations 3, 4, and 5. We really focus on a deep understanding on n8n, finding nodes that you need, and troubleshooting errors. As a result, this may take slightly longer to process, but will be extremely helpful going forward. Plus, the following recitations will be slightly lighter.
 

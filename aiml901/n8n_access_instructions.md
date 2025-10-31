@@ -52,7 +52,7 @@ In the recitations, all examples will use OpenAI's GPT-5, since this is a state-
 1. Sign in to https://aiml901-martin.app.n8n.cloud/signin. Next to the `Create Workflow` button, press the small arrow and choose `Create Credential`.
 ![[create_credential.png]]
 2. Choose `OpenAI` and then hit `Continue`
-3. For the API Key, put in the key from step 3.
+3. For the API Key, put in the key that you previously made.
 4. Hit `Save`. You should get a green box that says that the connection was tested successfully.
 
 When you use an OpenAI node, you can now use this credential to access OpenAI models!
