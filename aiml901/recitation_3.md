@@ -225,10 +225,10 @@ Social Media Agent:
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -32,
+        0,
         0
       ],
-      "id": "6d525ff5-d37a-4b4b-8495-773bd6ea386f",
+      "id": "696f05a8-7a70-4b0c-b71f-a8c3ad1ecbdc",
       "name": "When Executed by Another Workflow"
     },
     {
@@ -239,10 +239,10 @@ Social Media Agent:
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        336,
+        368,
         208
       ],
-      "id": "0a561fa0-096e-4766-b4ba-1999385b2cd9",
+      "id": "3354b318-7ee6-41a2-90b5-783e7b460a0b",
       "name": "Structured Output Parser"
     },
     {
@@ -258,15 +258,15 @@ Social Media Agent:
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        160,
+        192,
         208
       ],
-      "id": "0381858a-b4bb-4197-aee6-ac7b01e563bb",
+      "id": "ea1a237b-bbe2-4854-8a91-1a875e8ec17d",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
+          "id": "uvUQw4I0j1mG2TKg",
+          "name": "Alex Jensen Student OpenAI"
         }
       }
     },
@@ -282,17 +282,23 @@ Social Media Agent:
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        176,
+        208,
         0
       ],
-      "id": "4d7d2f8c-2985-4137-b3c3-13089889a962",
+      "id": "c917db3f-a7fa-4926-a7f5-a02a3df0f843",
       "name": "AI Agent"
     }
   ],
   "connections": {
     "When Executed by Another Workflow": {
       "main": [
-        []
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
       ]
     },
     "Structured Output Parser": {
@@ -320,6 +326,7 @@ Social Media Agent:
   },
   "pinData": {},
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
