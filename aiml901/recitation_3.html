@@ -278,7 +278,7 @@
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
-</code></pre></div></details> <p>Make sure to select your credentials for the OpenAI model.</p> <p>You should recognize all of the nodes besides the <code class="language-plaintext highlighter-rouge">When Executed by Another Workflow</code> trigger. This allows us to call the workflow from another one. Click into one of these nodes. While we can let all data be accepted, we choose the <code class="language-plaintext highlighter-rouge">Input data mode</code> as <code class="language-plaintext highlighter-rouge">Define using fields below</code> to ensure that our data arrives the way that we want it.</p> <p>Within n8n, there are two ways in which we can call these sub-workflows that start with the <code class="language-plaintext highlighter-rouge">When Executed by Another Workflow</code> trigger.</p> <ol> <li>Within a workflow using the <code class="language-plaintext highlighter-rouge">Execute Sub-workflow</code> node. This is helpful if we have many workflows that have one part of the workflow that is exactly the same. Instead of rebuilding it from scratch, we can just build it once as a separate workflow and then use the <code class="language-plaintext highlighter-rouge">Execute Sub-workflow</code> node in each other workflow that needs that process.</li> <li>As a tool using the <code class="language-plaintext highlighter-rouge">Call n8n Workflow Tool</code>. This lets us build custom tools for our agents to use and then call when they deem necessary.</li> </ol> <hr> <h2 id="building-the-comms-agent-part-1-first-draft">Building the Comms Agent Part 1: First Draft</h2> <p>We will build our agent, following the steps shown before.</p> <h3 id="step-1-n8n-form">Step 1: n8n Form</h3> <p>We need a way to start the workflow. In this case, we want members of the team to be able to give raw information about posts. Specifically, we need a <strong>post name</strong> (for internal tracking), <strong>post description</strong> (any relevant details, such as date and time), and <strong>medium</strong> (social media post, press release, or both).</p> <ul> <li> <strong>Add node</strong>: <code class="language-plaintext highlighter-rouge">n8n Form → On new n8n Form event</code> <ul> <li>Add a <code class="language-plaintext highlighter-rouge">Form Title</code> (what the form is called)</li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Title</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Text</code> </li> <li>Make this a required field</li> </ul> </li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Content</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Text</code> </li> <li>Make this a required field</li> </ul> </li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Format</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Checkboxes</code> </li> <li>Make two checkboxes, <code class="language-plaintext highlighter-rouge">Press Release</code> and <code class="language-plaintext highlighter-rouge">Social Media Post</code> </li> <li>Limit Selection: <code class="language-plaintext highlighter-rouge">Unlimited</code> (since we want users to be able to draft social media posts and press releases simultaneously)</li> <li>Make this a required field</li> </ul> </li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Your name</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Text</code> </li> <li>Make this a required field</li> <li>If we wanted, we could attach a Google Sheet to track tickets and this would let us see who was requesting what. This would be useful if people outside of the comms team are requesting posts and we need to talk to them about any details.</li> </ul> </li> </ul> </li> </ul> <blockquote class="aiml901-callout aiml901-callout-info"> <p><strong>Alternative: Google Form</strong></p> <p>We use the n8n Form due to its simplicity. Remember: for your project, you only need an MVP, and we want you to focus on the importance of AI rather than connecting to other services, which can be tricky.</p> <p>However, it is fairly straightforward to connect this to a Google Form. To do so, make a Google Form and then under <code class="language-plaintext highlighter-rouge">Responses</code>, click <code class="language-plaintext highlighter-rouge">Link to Sheets</code>. Now, you have a Google Sheet such that if someone responds to the Google Form, it will appear in the Google Sheet. We can then use the Google Sheet trigger in n8n to start the workflow!</p> </blockquote> <hr> <h3 id="step-2-first-draft-agent">Step 2: First Draft Agent</h3> <p>We will use a <strong>hierarchical agent</strong> approach to get the first draft of our posts/press releases. Specifically, the First Draft Agent serves as a supervisor/commander and then delegates responsibility to create these posts to the Press Release Agent and the Social Media Agent.</p> <p>There are steps walking through each part below, but you can also copy this code:</p> <details class="aiml901-code-collapse" data-line-count="120"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (120 lines)" data-hide-label="Hide code" data-line-count="120">Show code (120 lines)</summary><div class="aiml901-code-collapse__body"><pre><code class="language-JSON">{
+</code></pre></div></details> <p>Make sure to select your credentials for the OpenAI model.</p> <p>You should recognize all of the nodes besides the <code class="language-plaintext highlighter-rouge">When Executed by Another Workflow</code> trigger. This allows us to call the workflow from another one. Click into one of these nodes. While we can let all data be accepted, we choose the <code class="language-plaintext highlighter-rouge">Input data mode</code> as <code class="language-plaintext highlighter-rouge">Define using fields below</code> to ensure that our data arrives the way that we want it.</p> <p>Within n8n, there are two ways in which we can call these sub-workflows that start with the <code class="language-plaintext highlighter-rouge">When Executed by Another Workflow</code> trigger.</p> <ol> <li>Within a workflow using the <code class="language-plaintext highlighter-rouge">Execute Sub-workflow</code> node. This is helpful if we have many workflows that have one part of the workflow that is exactly the same. Instead of rebuilding it from scratch, we can just build it once as a separate workflow and then use the <code class="language-plaintext highlighter-rouge">Execute Sub-workflow</code> node in each other workflow that needs that process.</li> <li>As a tool using the <code class="language-plaintext highlighter-rouge">Call n8n Workflow Tool</code>. This lets us build custom tools for our agents to use and then call when they deem necessary.</li> </ol> <hr> <h2 id="building-the-comms-agent-part-1-first-draft">Building the Comms Agent Part 1: First Draft</h2> <p>We will build our agent, following the steps shown before. There are steps walking through each part below, but you can also copy this code:</p> <details class="aiml901-code-collapse" data-line-count="296"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (296 lines)" data-hide-label="Hide code" data-line-count="296">Show code (296 lines)</summary><div class="aiml901-code-collapse__body"><pre><code class="language-JSON">{
   "nodes": [
     {
       "parameters": {
@@ -288,10 +288,10 @@
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        480,
-        16
+        720,
+        912
       ],
-      "id": "207279e4-f8af-4568-8fbb-9238f8dae2eb",
+      "id": "cc3dff7d-3a20-4162-8489-47b0cac126cd",
       "name": "Structured Output Parser"
     },
     {
@@ -307,17 +307,114 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -32,
-        16
+        208,
+        912
       ],
-      "id": "781a7c16-c37f-44d0-b67e-34ec61fd601c",
+      "id": "36a08a96-ec5e-45b0-8202-f2f3573665bb",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
+          "id": "uvUQw4I0j1mG2TKg",
+          "name": "Alex Jensen Student OpenAI"
         }
       }
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to write English-language press releases.",
+        "workflowId": {
+          "__rl": true,
+          "value": "5Os35ha1b6CBLvL5",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/5Os35ha1b6CBLvL5",
+          "cachedResultName": "Press Release Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('text', ``, 'string') }}",
+            "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "text"
+          ],
+          "schema": [
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        1056
+      ],
+      "id": "ad77909b-9edc-4fae-8216-df0a5748bc2a",
+      "name": "Press Release"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to write English-language social media posts.",
+        "workflowId": {
+          "__rl": true,
+          "value": "8CsMXZr7diykgdrL",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/8CsMXZr7diykgdrL",
+          "cachedResultName": "Social Media Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('text', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "text"
+          ],
+          "schema": [
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        608,
+        1056
+      ],
+      "id": "eafa83ae-9bbb-40b6-a766-1a83d41dd984",
+      "name": "Social Media"
     },
     {
       "parameters": {
@@ -331,10 +428,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        208,
-        -224
+        448,
+        672
       ],
-      "id": "6739e709-e4b9-4a59-af52-64b3f0a9b5d2",
+      "id": "a86f0fbb-bfc0-4322-8538-0d940021a829",
       "name": "First Draft Agent"
     },
     {
@@ -345,11 +442,57 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        112,
-        16
+        352,
+        912
       ],
-      "id": "c36585ba-a76d-446e-8e20-26f301397af9",
+      "id": "8716ae83-8155-4061-84ee-5a89ddd88230",
       "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "formTitle": "Communications Posts",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Title",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Content",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Format",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Press Release"
+                  },
+                  {
+                    "option": "Social Media Post"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your name",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        192,
+        672
+      ],
+      "id": "04f3a35a-d9cf-44cd-9875-d7a7a10e2837",
+      "name": "On form submission",
+      "webhookId": "b020cfdb-1b8d-45a1-a02a-838a27a95d04"
     }
   ],
   "connections": {
@@ -375,6 +518,28 @@
         ]
       ]
     },
+    "Press Release": {
+      "ai_tool": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Social Media": {
+      "ai_tool": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "First Draft Agent": {
       "main": [
         []
@@ -390,6 +555,17 @@
           }
         ]
       ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "pinData": {},
@@ -398,7 +574,7 @@
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
-</code></pre></div></details> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">AI Agent</code> <ul> <li>Add an appropriate chat model and <code class="language-plaintext highlighter-rouge">Simple Memory</code>. For <code class="language-plaintext highlighter-rouge">Session ID</code>, choose <code class="language-plaintext highlighter-rouge">Define below</code>. We want the model to remember what it has just done for the given execution in case it makes an error and needs to retry, so for the <code class="language-plaintext highlighter-rouge">Key</code>, an easy choice would be ``. Assuming that two responses are not received in the same second, this will mean that only messages sent for the given execution will be stored in the memory for the current execution.</li> <li> <code class="language-plaintext highlighter-rouge">Prompt</code>:</li> </ul> <pre><code class="language-JSON">Title:  {{ $json.Title }}
+</code></pre></div></details> <h3 id="step-1-n8n-form">Step 1: n8n Form</h3> <p>We need a way to start the workflow. In this case, we want members of the team to be able to give raw information about posts. Specifically, we need a <strong>post name</strong> (for internal tracking), <strong>post description</strong> (any relevant details, such as date and time), and <strong>medium</strong> (social media post, press release, or both).</p> <ul> <li> <strong>Add node</strong>: <code class="language-plaintext highlighter-rouge">n8n Form → On new n8n Form event</code> <ul> <li>Add a <code class="language-plaintext highlighter-rouge">Form Title</code> (what the form is called)</li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Title</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Text</code> </li> <li>Make this a required field</li> </ul> </li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Content</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Text</code> </li> <li>Make this a required field</li> </ul> </li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Format</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Checkboxes</code> </li> <li>Make two checkboxes, <code class="language-plaintext highlighter-rouge">Press Release</code> and <code class="language-plaintext highlighter-rouge">Social Media Post</code> </li> <li>Limit Selection: <code class="language-plaintext highlighter-rouge">Unlimited</code> (since we want users to be able to draft social media posts and press releases simultaneously)</li> <li>Make this a required field</li> </ul> </li> <li>Click <code class="language-plaintext highlighter-rouge">Add Form Element</code> <ul> <li>Field Name: <code class="language-plaintext highlighter-rouge">Your name</code> </li> <li>Element Type: <code class="language-plaintext highlighter-rouge">Text</code> </li> <li>Make this a required field</li> <li>If we wanted, we could attach a Google Sheet to track tickets and this would let us see who was requesting what. This would be useful if people outside of the comms team are requesting posts and we need to talk to them about any details.</li> </ul> </li> </ul> </li> </ul> <blockquote class="aiml901-callout aiml901-callout-info"> <p><strong>Alternative: Google Form</strong></p> <p>We use the n8n Form due to its simplicity. Remember: for your project, you only need an MVP, and we want you to focus on the importance of AI rather than connecting to other services, which can be tricky.</p> <p>However, it is fairly straightforward to connect this to a Google Form. To do so, make a Google Form and then under <code class="language-plaintext highlighter-rouge">Responses</code>, click <code class="language-plaintext highlighter-rouge">Link to Sheets</code>. Now, you have a Google Sheet such that if someone responds to the Google Form, it will appear in the Google Sheet. We can then use the Google Sheet trigger in n8n to start the workflow!</p> </blockquote> <hr> <h3 id="step-2-first-draft-agent">Step 2: First Draft Agent</h3> <p>We will use a <strong>hierarchical agent</strong> approach to get the first draft of our posts/press releases. Specifically, the First Draft Agent serves as a supervisor/commander and then delegates responsibility to create these posts to the Press Release Agent and the Social Media Agent.</p> <ul> <li> <strong>Add node:</strong> <code class="language-plaintext highlighter-rouge">AI Agent</code> <ul> <li>Add an appropriate chat model and <code class="language-plaintext highlighter-rouge">Simple Memory</code>. For <code class="language-plaintext highlighter-rouge">Session ID</code>, choose <code class="language-plaintext highlighter-rouge">Define below</code>. We want the model to remember what it has just done for the given execution in case it makes an error and needs to retry, so for the <code class="language-plaintext highlighter-rouge">Key</code>, an easy choice would be ``. Assuming that two responses are not received in the same second, this will mean that only messages sent for the given execution will be stored in the memory for the current execution.</li> <li> <code class="language-plaintext highlighter-rouge">Prompt</code>:</li> </ul> <pre><code class="language-JSON">Title:  {{ $json.Title }}
 Content: {{ $json.Content }}
 Format(s): {{ $json.Format }}
 </code></pre> <ul> <li> <code class="language-plaintext highlighter-rouge">System Message</code>:</li> </ul> </li> </ul> <pre><code class="language-Text">Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants.
@@ -683,7 +859,7 @@ Edits: {{ $json.Edits }}
 
 You will be given messages as well as edits that are wanted. Using this, your role is to edit the messages given to reflect these changes and return them to the user. These will be press releases and social media posts associated with community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants throughout Evanston and the broader Chicago area.
 
-</code></pre> <ul> <li> <strong>What it does:</strong> This takes the posts and the edits and incorporates them. Note that in the system message, we still want to provide some information about the context so it does not stray too far from the original message.</li> </ul> <p>Finally, connect the output to <code class="language-plaintext highlighter-rouge">Input 2</code> of the <code class="language-plaintext highlighter-rouge">Merge</code> node.</p> <hr> <h3 id="exercises-1">Exercises</h3> <ol> <li>What happens if the reviewer rejects the post but does not provide any edits?</li> <li>We used the Wait node, but n8n has many human-in-the-loop options. Try to set this up with Gmail instead. What needs to change?</li> <li>It’s possible that if we were to reject a post many times that the tone of the message would stray from our original attempt. While this might be what we want, this could also result in the message sounding worse and more generic AI-generated content. What steps could we take at this point to counteract this?</li> <li>Press releases often have character limits. Try to change the workflow to enforce a limit of 500 characters.</li> <li> <strong>Challenge:</strong> Right now, a reviewer cannot approve a press release but reject a social media post, for example. Try to change the workflow so that press releases and social media posts are routed separately.</li> </ol> <hr> <h2 id="building-the-comms-agent-part-3-translation-and-sending">Building the Comms Agent Part 3: Translation and Sending</h2> <p>For this recitation, we will make the simplifying assumption that for our organization, all social media posts should be bilingual, while press releases will be in English. However, we’ll expand upon this in the exercises.</p> <p>Below is the code that you can copy for this portion. Connect the <code class="language-plaintext highlighter-rouge">true</code> output of the <code class="language-plaintext highlighter-rouge">Approved?</code> node to the input of the <code class="language-plaintext highlighter-rouge">Needs Spanish Translation?</code> node.</p> <details class="aiml901-code-collapse" data-line-count="182"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (182 lines)" data-hide-label="Hide code" data-line-count="182">Show code (182 lines)</summary><div class="aiml901-code-collapse__body"><pre><code class="language-JSON">{
+</code></pre> <ul> <li> <strong>What it does:</strong> This takes the posts and the edits and incorporates them. Note that in the system message, we still want to provide some information about the context so it does not stray too far from the original message.</li> </ul> <p>Finally, connect the output to <code class="language-plaintext highlighter-rouge">Input 2</code> of the <code class="language-plaintext highlighter-rouge">Merge</code> node.</p> <hr> <h3 id="exercises-1">Exercises</h3> <ol> <li>What happens if the reviewer rejects the post but does not provide any edits?</li> <li>We used the Wait node, but n8n has many human-in-the-loop options. Try to set this up with Gmail instead. What needs to change?</li> <li>It’s possible that if we were to reject a post many times that the tone of the message would stray from our original attempt. While this might be what we want, this could also result in the message sounding worse and more generic AI-generated content. What steps could we take at this point to counteract this?</li> <li>Press releases often have character limits. Try to change the workflow to enforce a limit of 500 characters.</li> <li> <strong>Challenge:</strong> Right now, a reviewer cannot approve a press release but reject a social media post, for example. Try to change the workflow so that press releases and social media posts are routed separately.</li> </ol> <hr> <h2 id="building-the-comms-agent-part-3-translation-and-sending">Building the Comms Agent Part 3: Translation and Sending</h2> <p>For this recitation, we will make the simplifying assumption that for our organization, all social media posts should be bilingual, while press releases will be in English. However, we’ll expand upon this in the exercises.</p> <p>Below is the code that you can copy for this portion. Connect the <code class="language-plaintext highlighter-rouge">true</code> output of the <code class="language-plaintext highlighter-rouge">Approved?</code> node to the input of the <code class="language-plaintext highlighter-rouge">Needs Spanish Translation?</code> node.</p> <details class="aiml901-code-collapse" data-line-count="177"><summary class="aiml901-code-collapse__summary" data-show-label="Show code (177 lines)" data-hide-label="Hide code" data-line-count="177">Show code (177 lines)</summary><div class="aiml901-code-collapse__body"><pre><code class="language-JSON">{
   "nodes": [
     {
       "parameters": {
@@ -698,7 +874,7 @@ You will be given messages as well as edits that are wanted. Using this, your ro
             {
               "id": "4ceb4881-fe73-4b14-933c-644d65201a7d",
               "leftValue": "={{ $('On form submission').item.json.Format }}",
-              "rightValue": "Social Media",
+              "rightValue": "Social Media Post",
               "operator": {
                 "type": "array",
                 "operation": "contains",
@@ -713,10 +889,10 @@ You will be given messages as well as edits that are wanted. Using this, your ro
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2064,
-        -240
+        2048,
+        672
       ],
-      "id": "0ffa4cb4-d36c-4a62-bdc2-cfe1ef600090",
+      "id": "62fb3963-b615-4ed4-983f-95695ae9099f",
       "name": "Needs Spanish translation?"
     },
     {
@@ -730,10 +906,10 @@ You will be given messages as well as edits that are wanted. Using this, your ro
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        2480,
-        -352
+        2464,
+        560
       ],
-      "id": "91c6aef2-a249-43ec-95e1-531be8d96850",
+      "id": "85b6ccec-1794-4944-87f0-2c3cf83b66c5",
       "name": "Translator"
     },
     {
@@ -751,15 +927,15 @@ You will be given messages as well as edits that are wanted. Using this, your ro
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        2448,
-        -208
+        2432,
+        704
       ],
-      "id": "ccd61236-6356-4833-8cd8-5e0b55274587",
+      "id": "63b739a0-8581-417a-a1bf-df0bf58816af",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
+          "id": "uvUQw4I0j1mG2TKg",
+          "name": "Alex Jensen Student OpenAI"
         }
       }
     },
@@ -774,16 +950,16 @@ You will be given messages as well as edits that are wanted. Using this, your ro
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2544,
-        -80
+        2528,
+        832
       ],
-      "id": "b386eeab-2d98-4c7a-85af-836b28570cdf",
+      "id": "ad1fdd37-5614-4af4-8fa8-9aa79ddfa13d",
       "name": "Send a message (no Spanish)",
       "webhookId": "5541a481-a428-46b1-891b-967e41f8c545",
       "credentials": {
         "gmailOAuth2": {
-          "id": "9Rpb3KSeY5jaPu26",
-          "name": "Alex Student Gmail"
+          "id": "9tmoAeGxRcPZeGwf",
+          "name": "Alex Jensen Student Gmail"
         }
       }
     },
@@ -798,16 +974,16 @@ You will be given messages as well as edits that are wanted. Using this, your ro
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2800,
-        -352
+        2784,
+        560
       ],
-      "id": "147b7770-4b26-4b5f-88d2-d4fa8eafcf41",
+      "id": "a5b15f52-fb23-4fca-a429-0b2bcfeb559e",
       "name": "Send a message (with Spanish)",
       "webhookId": "5541a481-a428-46b1-891b-967e41f8c545",
       "credentials": {
         "gmailOAuth2": {
-          "id": "9Rpb3KSeY5jaPu26",
-          "name": "Alex Student Gmail"
+          "id": "9tmoAeGxRcPZeGwf",
+          "name": "Alex Jensen Student Gmail"
         }
       }
     }
@@ -851,11 +1027,6 @@ You will be given messages as well as edits that are wanted. Using this, your ro
             "index": 0
           }
         ]
-      ]
-    },
-    "Send a message (no Spanish)": {
-      "main": [
-        []
       ]
     }
   },
