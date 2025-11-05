@@ -344,7 +344,305 @@ Within n8n, there are two ways in which we can call these sub-workflows that sta
 ---
 ## Building the Comms Agent Part 1: First Draft
 
-We will build our agent, following the steps shown before.
+We will build our agent, following the steps shown before. There are steps walking through each part below, but you can also copy this code:
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"social_media_body\", \"press_release_title\", \"press_release_body\"],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"social_media_body\": { \"type\": \"string\", \"description\": \"One-paragraph social post. May be empty.\" },\n    \"press_release_title\": { \"type\": \"string\", \"description\": \"Short headline. May be empty.\" },\n    \"press_release_body\": { \"type\": \"string\", \"description\": \"Press release body text (headline NOT duplicated). May be empty.\" }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        720,
+        912
+      ],
+      "id": "cc3dff7d-3a20-4162-8489-47b0cac126cd",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "gpt-4.1-nano"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        208,
+        912
+      ],
+      "id": "36a08a96-ec5e-45b0-8202-f2f3573665bb",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "uvUQw4I0j1mG2TKg",
+          "name": "Alex Jensen Student OpenAI"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to write English-language press releases.",
+        "workflowId": {
+          "__rl": true,
+          "value": "5Os35ha1b6CBLvL5",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/5Os35ha1b6CBLvL5",
+          "cachedResultName": "Press Release Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('text', ``, 'string') }}",
+            "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "text"
+          ],
+          "schema": [
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        464,
+        1056
+      ],
+      "id": "ad77909b-9edc-4fae-8216-df0a5748bc2a",
+      "name": "Press Release"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to write English-language social media posts.",
+        "workflowId": {
+          "__rl": true,
+          "value": "8CsMXZr7diykgdrL",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/8CsMXZr7diykgdrL",
+          "cachedResultName": "Social Media Agent"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('text', ``, 'string') }}"
+          },
+          "matchingColumns": [
+            "text"
+          ],
+          "schema": [
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        608,
+        1056
+      ],
+      "id": "eafa83ae-9bbb-40b6-a766-1a83d41dd984",
+      "name": "Social Media"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Title:  {{ $json.Title }}\nContent: {{ $json.Content }}\nFormat(s): {{ $json.Format }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants.\n\nUsing the content provided, your role is to use your tools to create English-language social media posts and/or press releases (based on the formats) that are both accessible and engaging. \n\nWhen the format includes social media, use the Social Media tool to write posts. Similarly, use the Press Release tool to write press releases. Do not write these posts/press releases yourself; always use the tools to do so."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        672
+      ],
+      "id": "a86f0fbb-bfc0-4322-8538-0d940021a829",
+      "name": "First Draft Agent"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.submittedAt }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        352,
+        912
+      ],
+      "id": "8716ae83-8155-4061-84ee-5a89ddd88230",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "formTitle": "Communications Posts",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Title",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Content",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Format",
+              "fieldType": "checkbox",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Press Release"
+                  },
+                  {
+                    "option": "Social Media Post"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your name",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        192,
+        672
+      ],
+      "id": "04f3a35a-d9cf-44cd-9875-d7a7a10e2837",
+      "name": "On form submission",
+      "webhookId": "b020cfdb-1b8d-45a1-a02a-838a27a95d04"
+    }
+  ],
+  "connections": {
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Press Release": {
+      "ai_tool": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Social Media": {
+      "ai_tool": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "First Draft Agent": {
+      "main": [
+        []
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "First Draft Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
 ### Step 1: n8n Form
 
 We need a way to start the workflow. In this case, we want members of the team to be able to give raw information about posts. Specifically, we need a **post name** (for internal tracking), **post description** (any relevant details, such as date and time), and **medium** (social media post, press release, or both).
@@ -380,130 +678,6 @@ We need a way to start the workflow. In this case, we want members of the team t
 ### Step 2: First Draft Agent
 
 We will use a **hierarchical agent** approach to get the first draft of our posts/press releases. Specifically, the First Draft Agent serves as a supervisor/commander and then delegates responsibility to create these posts to the Press Release Agent and the Social Media Agent.
-
-There are steps walking through each part below, but you can also copy this code:
-```JSON
-{
-  "nodes": [
-    {
-      "parameters": {
-        "schemaType": "manual",
-        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\"social_media_body\", \"press_release_title\", \"press_release_body\"],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"social_media_body\": { \"type\": \"string\", \"description\": \"One-paragraph social post. May be empty.\" },\n    \"press_release_title\": { \"type\": \"string\", \"description\": \"Short headline. May be empty.\" },\n    \"press_release_body\": { \"type\": \"string\", \"description\": \"Press release body text (headline NOT duplicated). May be empty.\" }\n  }\n}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
-      "position": [
-        480,
-        16
-      ],
-      "id": "207279e4-f8af-4568-8fbb-9238f8dae2eb",
-      "name": "Structured Output Parser"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-4.1-nano",
-          "mode": "list",
-          "cachedResultName": "gpt-4.1-nano"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        -32,
-        16
-      ],
-      "id": "781a7c16-c37f-44d0-b67e-34ec61fd601c",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Title:  {{ $json.Title }}\nContent: {{ $json.Content }}\nFormat(s): {{ $json.Format }}",
-        "hasOutputParser": true,
-        "options": {
-          "systemMessage": "Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants.\n\nUsing the content provided, your role is to use your tools to create English-language social media posts and/or press releases (based on the formats) that are both accessible and engaging. \n\nWhen the format includes social media, use the Social Media tool to write posts. Similarly, use the Press Release tool to write press releases. Do not write these posts/press releases yourself; always use the tools to do so."
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
-      "position": [
-        208,
-        -224
-      ],
-      "id": "6739e709-e4b9-4a59-af52-64b3f0a9b5d2",
-      "name": "First Draft Agent"
-    },
-    {
-      "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $json.submittedAt }}"
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        112,
-        16
-      ],
-      "id": "c36585ba-a76d-446e-8e20-26f301397af9",
-      "name": "Simple Memory"
-    }
-  ],
-  "connections": {
-    "Structured Output Parser": {
-      "ai_outputParser": [
-        [
-          {
-            "node": "First Draft Agent",
-            "type": "ai_outputParser",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "First Draft Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "First Draft Agent": {
-      "main": [
-        []
-      ]
-    },
-    "Simple Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "First Draft Agent",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    }
-  },
-  "pinData": {},
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
-  }
-}
-```
 
 - **Add node:** `AI Agent`
 	- Add an appropriate chat model and `Simple Memory`. For `Session ID`, choose `Define below`. We want the model to remember what it has just done for the given execution in case it makes an error and needs to retry, so for the `Key`, an easy choice would be `{{ $json.submittedAt }}`. Assuming that two responses are not received in the same second, this will mean that only messages sent for the given execution will be stored in the memory for the current execution.
@@ -904,7 +1078,7 @@ Below is the code that you can copy for this portion. Connect the `true` output 
             {
               "id": "4ceb4881-fe73-4b14-933c-644d65201a7d",
               "leftValue": "={{ $('On form submission').item.json.Format }}",
-              "rightValue": "Social Media",
+              "rightValue": "Social Media Post",
               "operator": {
                 "type": "array",
                 "operation": "contains",
@@ -919,10 +1093,10 @@ Below is the code that you can copy for this portion. Connect the `true` output 
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        2064,
-        -240
+        2048,
+        672
       ],
-      "id": "0ffa4cb4-d36c-4a62-bdc2-cfe1ef600090",
+      "id": "62fb3963-b615-4ed4-983f-95695ae9099f",
       "name": "Needs Spanish translation?"
     },
     {
@@ -936,10 +1110,10 @@ Below is the code that you can copy for this portion. Connect the `true` output 
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        2480,
-        -352
+        2464,
+        560
       ],
-      "id": "91c6aef2-a249-43ec-95e1-531be8d96850",
+      "id": "85b6ccec-1794-4944-87f0-2c3cf83b66c5",
       "name": "Translator"
     },
     {
@@ -957,15 +1131,15 @@ Below is the code that you can copy for this portion. Connect the `true` output 
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        2448,
-        -208
+        2432,
+        704
       ],
-      "id": "ccd61236-6356-4833-8cd8-5e0b55274587",
+      "id": "63b739a0-8581-417a-a1bf-df0bf58816af",
       "name": "OpenAI Chat Model1",
       "credentials": {
         "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
+          "id": "uvUQw4I0j1mG2TKg",
+          "name": "Alex Jensen Student OpenAI"
         }
       }
     },
@@ -980,16 +1154,16 @@ Below is the code that you can copy for this portion. Connect the `true` output 
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2544,
-        -80
+        2528,
+        832
       ],
-      "id": "b386eeab-2d98-4c7a-85af-836b28570cdf",
+      "id": "ad1fdd37-5614-4af4-8fa8-9aa79ddfa13d",
       "name": "Send a message (no Spanish)",
       "webhookId": "5541a481-a428-46b1-891b-967e41f8c545",
       "credentials": {
         "gmailOAuth2": {
-          "id": "9Rpb3KSeY5jaPu26",
-          "name": "Alex Student Gmail"
+          "id": "9tmoAeGxRcPZeGwf",
+          "name": "Alex Jensen Student Gmail"
         }
       }
     },
@@ -1004,16 +1178,16 @@ Below is the code that you can copy for this portion. Connect the `true` output 
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
       "position": [
-        2800,
-        -352
+        2784,
+        560
       ],
-      "id": "147b7770-4b26-4b5f-88d2-d4fa8eafcf41",
+      "id": "a5b15f52-fb23-4fca-a429-0b2bcfeb559e",
       "name": "Send a message (with Spanish)",
       "webhookId": "5541a481-a428-46b1-891b-967e41f8c545",
       "credentials": {
         "gmailOAuth2": {
-          "id": "9Rpb3KSeY5jaPu26",
-          "name": "Alex Student Gmail"
+          "id": "9tmoAeGxRcPZeGwf",
+          "name": "Alex Jensen Student Gmail"
         }
       }
     }
@@ -1057,11 +1231,6 @@ Below is the code that you can copy for this portion. Connect the `true` output 
             "index": 0
           }
         ]
-      ]
-    },
-    "Send a message (no Spanish)": {
-      "main": [
-        []
       ]
     }
   },
