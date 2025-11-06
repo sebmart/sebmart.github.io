@@ -9,6 +9,10 @@ Additionally, sub-workflows let us make our system more modular and allow us to 
 To demonstrate this, we consider a communications team at a nonprofit in Evanston that needs to create social media posts and send out press releases. Because the nonprofit works with many Spanish-speaking people, it is important that the social media posts are bilingual. They are hoping to utilize AI to be able to create high-quality content that engages with their community.
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 1 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
+
+---
 ## You'll Need...
 
 - OpenAI connection
@@ -1314,6 +1318,7 @@ These are all ideas on how to make this workflow more robust and better. Try to 
 - `n8n Form` trigger
 - Constructing sub-workflows to make custom tools
 	- `When Executed by Another Workflow` trigger
+	- `Call n8n Workflow Tool`
 - Human-in-the-loop architecture
 	- `Wait` and `Merge` nodes
 - Hierarchical agent architecture

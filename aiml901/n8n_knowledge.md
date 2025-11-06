@@ -30,6 +30,8 @@ You can watch a video recording of the recitation here:
 
 If you would like to work through the steps of the recitation, you can find them at [this link.](https://sebastienmartin.info/aiml901/recitation_3.html)
 
+You can watch a video recording of the recitation here:
+![Recitation 1 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
 ---
 ## Recitation 4: Forthcoming
 
@@ -73,6 +75,7 @@ There are many YouTube tutorials on building different workflows. While many of 
 - `n8n Form` trigger
 - Constructing sub-workflows to make custom tools
 	- `When Executed by Another Workflow` trigger
+	- `Call n8n Workflow Tool`
 - Human-in-the-loop architecture
 	- `Wait` and `Merge` nodes
 - Hierarchical agent architecture
