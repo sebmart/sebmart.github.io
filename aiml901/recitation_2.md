@@ -13,7 +13,7 @@ While a professor might want to be more accessible than this, we can imagine man
 
 ---
 You can watch a video recording of the recitation here:
-![Recitation 1 Recording](https://www.youtube.com/watch?v=rqAwlg62Utw)
+![Recitation 2 Recording](https://www.youtube.com/watch?v=rqAwlg62Utw)
 
 ---
 ## You'll Need...

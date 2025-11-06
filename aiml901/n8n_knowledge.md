@@ -23,7 +23,7 @@ You can watch a video recording of the recitation here:
 If you would like to work through the steps of the recitation, you can find them at [this link.](https://sebastienmartin.info/aiml901/recitation_2.html)
 
 You can watch a video recording of the recitation here:
-![Recitation 1 Recording](https://www.youtube.com/watch?v=rqAwlg62Utw)
+![Recitation 2 Recording](https://www.youtube.com/watch?v=rqAwlg62Utw)
 
 ---
 ## Recitation 3: Let's Build a Bilingual Communications Agent (Advanced n8n Usage)
@@ -31,7 +31,7 @@ You can watch a video recording of the recitation here:
 If you would like to work through the steps of the recitation, you can find them at [this link.](https://sebastienmartin.info/aiml901/recitation_3.html)
 
 You can watch a video recording of the recitation here:
-![Recitation 1 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
+![Recitation 3 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
 ---
 ## Recitation 4: Forthcoming
 

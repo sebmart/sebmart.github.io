@@ -10,7 +10,7 @@ To demonstrate this, we consider a communications team at a nonprofit in Evansto
 
 ---
 You can watch a video recording of the recitation here:
-![Recitation 1 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
+![Recitation 3 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
 
 ---
 ## You'll Need...
