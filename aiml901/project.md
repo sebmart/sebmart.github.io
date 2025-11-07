@@ -95,7 +95,14 @@ While the project is individual, there are many ways to get support:
 
 ## Minimal Project
 
-For the project, you are able to create large-scale n8n workflows. However, this is not necessary for the project; we want you to think about **what value AI brings to your project.** In this section, we detail the minimum expectations for the project, which involve
+For the project, you are able to create large-scale n8n workflows. However, this is not necessary for the project; we want you to think about **what value AI brings to your project.** In this section, we detail the minimum expectations for the project.
+### Video Explanation
+The following video explains the information about the project:
+![Getting Started with the Project Recording](https://youtu.be/xEo6tp-uypg)
+
+Most importantly: **enjoy creating with AI!** This is an exciting skill that you are building and these are just the first steps of your journey. 
+
+For your project, we expect:
 - A use of AI with n8n, such as the `AI Agent` node. **This node must be runnable to demonstrate the value of the project.**
 - Further parts of the workflow, either in n8n or other products such as Lovable. These may or may not run; it is okay for it to still include errors, as long as the process is clear.
 - A mechanism for evaluating the workflow. This does not necessarily need to be implemented in n8n, but it can be.
@@ -201,9 +208,3 @@ It is completely acceptable if there are errors in your workflow and it does not
 
 ### Evaluation
 For evaluation, there are specific nodes in n8n that you can use to automate this process (which will be covered in Recitation 4), but **this is not necessary for your project**. You can also manually determine if your agent is doing "well" by giving it some example data and comparing its output to what you think it _should_ be doing. The video below shows an example of this and it will be discussed more in Recitation 4.
-
-### Video Explanation
-The following video explains the above information:
-![Getting Started with the Project Recording](https://youtu.be/xEo6tp-uypg)
-
-Most importantly: **enjoy creating with AI!** This is an exciting skill that you are building and these are just the first steps of your journey. 
