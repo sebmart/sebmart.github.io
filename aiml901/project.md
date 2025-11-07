@@ -93,7 +93,7 @@ While the project is individual, there are many ways to get support:
 
 ---
 
-## Minimal Project
+## Getting Started with the Project/Minimal Expectations
 
 For the project, you are able to create large-scale n8n workflows. However, this is not necessary for the project; we want you to think about **what value AI brings to your project.** In this section, we detail the minimum expectations for the project.
 ### Video Explanation
