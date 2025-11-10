@@ -185,15 +185,13 @@ include: ["_pages"]
 exclude:
   - bin/
   - CONTRIBUTING.md
-  - CUSTOMIZE.md
   - Dockerfile
   - docker-compose.yml
   - docker-compose-slim.yml
-  - FAQ.md
   - Gemfile
   - Gemfile.lock
-  - INSTALL.md
   - LICENSE
+  - AGENTS.md
   - lighthouse_results/
   - package.json
   - package-lock.json

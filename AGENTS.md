@@ -8,5 +8,6 @@
   * normalizes Obsidian callouts.
 - AIML styling is in `_sass/_aiml901.scss` (hero, tables, callouts, images, video wrapper). Imported from `assets/css/main.scss`.
 - Main site keeps only About, Publications, CV, Press (news); blog/projects/bibliography tooling removed.
+- Bio/publications/CV data is sourced from `assets/json/resume.json`; treat that resume JSON as the single source of truth.
 - Build with Ruby 3.x (`bundle install`, `bundle exec jekyll serve --livereload`).
 - Obsidian exports: drop markdown + assets into `aiml901/attachments/`; front matter `title` only is required.

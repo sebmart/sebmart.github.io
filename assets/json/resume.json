@@ -2,12 +2,12 @@
   "basics": {
     "lastUpdated": "2025-02",
     "name": "Sébastien Martin",
-    "label": "Assistant Professor",
+    "label": "Associate Professor",
     "image": "",
     "email": "sebastien.martin@kellogg.northwestern.edu",
     "phone": "+1 (510) 229-2758",
     "url": "https://sebastienmartin.info",
-    "summary": "I am an assistant professor of Operations at the Kellogg School of Management, Northwestern University. My research focuses on the interface of large-scale optimization and operations management, with applications to transportation, the gig economy, public sector operations and AI.",
+    "summary": "I am an associate professor of Operations at the Kellogg School of Management, Northwestern University. My research focuses on the interface of large-scale optimization and operations management, with applications to transportation, the gig economy, public sector operations and AI.",
     "location": {
       "address": "2211 Campus Drive",
       "postalCode": "IL 60208",
@@ -40,8 +40,18 @@
       "url": "",
       "location": "Evanston, IL, USA",
       "startDate": "2020",
-      "endDate": "Current",
+      "endDate": "2025-09",
       "summary": "I taught the Operations Management core course in the MBA program.",
+      "highlights": []
+    },
+    {
+      "name": "Northwestern University - Kellogg",
+      "position": "Associate Professor of Operations",
+      "url": "",
+      "location": "Evanston, IL, USA",
+      "startDate": "2025-09",
+      "endDate": "Current",
+      "summary": "I teach the Operations Management core course in the MBA program.",
       "highlights": []
     },
     {
@@ -211,7 +221,7 @@
     {
       "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
       "authors": "A. Delarue, Z. Lian, S. Martin",
-      "publisher": "Accepted at Management Science",
+      "publisher": "Management Science",
       "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076",
       "summary": "Accepted in EC 2024, semi-finalist if the 2024 Wagner Prize."
