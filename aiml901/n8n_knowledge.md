@@ -31,10 +31,11 @@ You can watch a video recording of the recitation here:
 If you would like to work through the steps of the recitation, you can find them at [this link.](https://sebastienmartin.info/aiml901/recitation_3.html)
 
 You can watch a video recording of the recitation here:
-![Recitation 3 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
+![Recitation 2 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
 ---
-## Recitation 4: Forthcoming
+## Recitation 4: Let's Build an Expense Categorization Agent (Agent Evaluation)
 
+If you would like to work through the steps of the recitation, you can find them at [this link.](https://sebastienmartin.info/aiml901/recitation_4.html)
 
 ---
 ## Recitation 5: Forthcoming
@@ -79,3 +80,5 @@ There are many YouTube tutorials on building different workflows. While many of 
 - Human-in-the-loop architecture
 	- `Wait` and `Merge` nodes
 - Hierarchical agent architecture
+- Creating evaluation pipelines for your agents
+	- Use of the nodes `Set Outputs, Set Metrics,` and `Check if Evaluating` and the evaluation trigger `On new Evaluation event`
