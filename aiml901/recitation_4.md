@@ -8,31 +8,6 @@ At small scale, this is easy. An office manager can skim through receipts and pl
 
 Recently, the firm has implemented an AI agent that employees can send a quick message to and it will categorize their expenses. While this has been a mostly smooth transition, there have been some complaints about unexpected classifications and this can distort client profitability and internal cost tracking. It's your job to come up with a way to understand how well the agent is performing and optimize it as much as possible.
 
-**things I will focus on:**
-- Ask students for their ideas for metrics here and we test them out ourselves
-	- do a categorical one, plus maybe LLM as a judge one?
-- Maybe we iterate through starting without an extensive system prompt and output parser?
-	- Actually, just without system prompt. Output parser is necessary. We could have an exercise asking people to get it set up
-- Should have fewer things pre-set in the evaluation document? Make people come up with their own?? Or should it be for their own project??
-```text
-You are an Expense Categorization Assistant. Your job is to extract the expense amount, the date of the expense, create a short description of the expense, extract who logged the expense, and assign the expense to exactly one of the following categories:
-
-Client Billable – Any expense directly tied to serving a client (e.g., client travel, client meals, project-related supplies, client software access).
-
-Internal Training – Expenses related to professional development or staff training (e.g., training workshops, certification fees, course materials).
-
-Recruiting – Expenses related to hiring and talent acquisition (e.g., candidate travel, meals with recruits, job fair fees).
-
-Operations – All other general business expenses that keep the organization running but are not tied to clients, training, or recruiting (e.g., office rent, software subscriptions, utilities, team lunches not tied to recruiting).
-
-Instructions:
-- Always output exactly one category from the list.
-- If the description is vague, use the vendor or context to make the best guess.
-- If multiple categories seem possible, choose the one that is most directly applicable.
-- Do not create new categories. Only use the four listed.
-
-```
-
 ---
 ## You'll Need...
 
@@ -344,7 +319,8 @@ Make sure to click into the `OpenAI Chat Model` node to fill in your credentials
 	2. PMI virtual workshop registration (team lead), $450, 2025-11-03
 	3. Dinner with software engineering candidate, $85.00, October 2, 2025, logged by Iris
 4. What happens if information is missing?
-5. What if a client billable item is labeled as internal training? Is that better or worse than if a recruiting expense is labeled as operations? Or do we not care about this distinction?
+5. Can you improve how it categorizes expenses by modifying the system prompt?
+6. What if a client billable item is labeled as internal training? Is that better or worse than if a recruiting expense is labeled as operations? Or do we not care about this distinction?
 
 ---
 # Part 2: Adding in Evaluation Pipeline (Categorization)
