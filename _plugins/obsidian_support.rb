@@ -24,6 +24,7 @@ module AIML901
       transformed = convert_wikilinks(transformed, page)
       transformed = convert_youtube_embeds(transformed)
       transformed = protect_code_fences_from_liquid(transformed)
+      transformed = protect_dollar_liquid_expressions(transformed)
       page.content = transformed
     end
 
@@ -333,6 +334,26 @@ module AIML901
       end
 
       result.join("\n")
+    end
+
+    def protect_dollar_liquid_expressions(content)
+      segments = content.split(/({%\s*raw\s*%}|{%\s*endraw\s*%})/)
+      in_raw = false
+      segments.map do |segment|
+        case segment
+        when /\A{%\s*raw\s*%}\z/
+          in_raw = true
+          segment
+        when /\A{%\s*endraw\s*%}\z/
+          in_raw = false
+          segment
+        else
+          next segment if in_raw
+          segment.gsub(/{{\s*\$[^}]+}}/) do |match|
+            "{% raw %}#{match}{% endraw %}"
+          end
+        end
+      end.join
     end
 
     def wrap_long_code_blocks(page)
