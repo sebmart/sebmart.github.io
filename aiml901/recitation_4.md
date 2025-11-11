@@ -555,7 +555,7 @@ Now, connect the `Normal` output from this node to the Google Sheet node. If we 
 ```JSON
 {{ $('AI Agent').item.json.output.category }}
 ```
-	- Connect to the `Evaluation` output of the evaluation check in Step 3.
+- Connect to the `Evaluation` output of the evaluation check in Step 3.
 - We choose the name `Assigned Category` so that it matches the column name in the Google Sheet and writes its output in the correct place.
 - **What it does**: We want to log what our AI Agent categorizes the prompt. This lets it write to the column in the Google Sheet so we have a clear record of what the assigned category was.
 
@@ -913,14 +913,14 @@ It then generates a rating from 1-5 (called `score`) and an explanation about th
 
 Now, we want to record both the score and the reasoning so we can easily view this. This will be helpful if we want to determine if the judge is performing well. 
 
-**Add node**: `Action in an app → Evaluation → Set Outputs`
+- **Add node**: `Action in an app → Evaluation → Set Outputs`
 	- Source: `Google Sheets`
 	- Document: `Expenses Evaluation`
 	- Choose `Add Output` and give it the name `Explanation` with value
 ```JSON
 {{ $json.output.reasoning }}
 ```
-	- Choose `Add Output` and give it the name `Rating` with the value
+- Choose `Add Output` and give it the name `Rating` with the value
 ```JSON
 {{ $json.output.score }}
 ```

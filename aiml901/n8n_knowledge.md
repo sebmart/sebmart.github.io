@@ -68,7 +68,7 @@ There are many YouTube tutorials on building different workflows. While many of 
     - Providing instructions on using tools efficiently
 - Use of the `AI Agent` node
 - `On chat message` trigger
-- Use of the Google Calendar tool `Add Event` tool.
+- Use of the Google Calendar `Add Event` tool.
 - JSON structure in n8n
 - Node inputs and outputs
 - `Edit Fields (Set)` and `If` node

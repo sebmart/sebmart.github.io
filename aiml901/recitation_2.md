@@ -762,14 +762,14 @@ To be able to respond more personably, we will extract the first name of the use
 - **Add node:** `Edit Fields (Set)`
 	- Now that you know the basics of JSON, you can choose either mode! We will stick with `Manual Mapping` for this recitation.
 - `Fields to Set`: Click `Add Field`. 
+	- This will find the name of the person sending the email and takes the first word as the first name.
 	- For name, put `firstName`
 	- Next to the equality sign, put 
 ```JSON
 	{{ $json.from.value[0].name.trim().split(' ')[0] }}
 ```
 		
-    - This finds the name of the person sending the email and takes the first word as the first name.
-	- `Input Fields to Include`: If we want, we can pass the inputs directly to the output. This makes it easy to keep passing data through the nodes, even if we don't directly use it. For now, we choose `All`.
+- `Input Fields to Include`: If we want, we can pass the inputs directly to the output. This makes it easy to keep passing data through the nodes, even if we don't directly use it. For now, we choose `All`.
 - **What it does:** The `Set` node lets us transform JSON objects. 
 
 Now, when you are in the node, click `Execute Step`. This will only execute this node. In the output, you will see a lot of the key-value pairs from the input, as well as a new one called `firstName`.
@@ -883,7 +883,6 @@ Feel free to create this yourself, but we also will provide you with some code t
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
-
 ```
 
 If you click on the `Output Parser`, you'll be able to see that this is just JSON. Try running the AI agent. Looking at the key called `required`, you will see a list of words (response_content, response_cc, etc.) that are exactly the keys in the output.
@@ -904,7 +903,6 @@ We now need to decide whether a member of the teaching team needs to be CCed or 
     ```JSON
     {{ $json.output.ticket_priority }}
     ```
-    
     - Click the dropdown next to “is equal to”. Choose `#Number` and then “is greater than or equal to”
     - For value2, put `high`. This means that our condition is True if the message is high priority and False otherwise.
  - **What it does:** If the ticket is high priority, then we will take the True branch. Otherwise, we take the False branch.
@@ -993,7 +991,6 @@ Note that our agent (specifically, the model that it uses) is trained on past da
 Copy and paste the following into your workflow. Do not worry about connecting it up just yet.
 
 ```JSON
-
 {
   "nodes": [
     {

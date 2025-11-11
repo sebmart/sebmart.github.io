@@ -1032,14 +1032,14 @@ Social Media Body: {{ $json.output.social_media_body }}
   }
 }
 ```
-	- `Prompt (User Message)`: 
+- `Prompt (User Message)`: 
 ```JSON
 Title: {{ $('Merge').item.json.output.press_release_title }}
 Press Release body:{{ $('Merge').item.json.output.press_release_body }}
 Social Media body: {{ $('Merge').item.json.output.social_media_body }}
 Edits: {{ $json.Edits }}
 ```
-	- `System Message`:
+- `System Message`:
 ```Text
 Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants throughout Minnesota.
 
@@ -1264,7 +1264,7 @@ Below is the code that you can copy for this portion. Connect the `true` output 
 ```Text
 Text: {{ $('Merge').item.json.output.social_media_body }}
 ```
-	- Set `System Message`:
+- Set `System Message`:
 ```Text
 Act as a professional English-Spanish translator and communications specialist with expertise in community organizing and Latine public engagement. You will be provided with English-language text that needs to be translated to Spanish. Use Latin American Spanish, targeting a diverse audience of Latine immigrants throughout Evanston and the broader Chicago area. Use an approachable tone for social media outreach but be sure to use “usted” instead of “tú” unless told otherwise. Use terminology widely understood by Spanish-speaking immigrants from a range of Latin American countries including Mexico, El Salvador, Ecuador, and beyond.
 ```
