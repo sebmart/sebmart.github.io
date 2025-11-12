@@ -181,6 +181,8 @@ exclude:
   - README.md
   - readme_preview/
   - vendor
+  - resume-builder/
+  - resume.json
 keep_files:
   - CNAME
   - .nojekyll
@@ -321,11 +323,5 @@ jsonresume:
   - education
   - work
   - publications
-  - projects
-  - volunteer
   - awards
-  - certificates
-  - skills
   - languages
-  - interests
-  - references
