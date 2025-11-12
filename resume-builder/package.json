@@ -1,0 +1,13 @@
+{
+  "name": "resume-builder",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Generates Sebastien Martin's PDF CV from assets/json/resume.json",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "dependencies": {
+    "handlebars": "^4.7.8",
+    "puppeteer": "^23.7.1"
+  }
+}

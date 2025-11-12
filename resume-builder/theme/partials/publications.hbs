@@ -1,0 +1,28 @@
+{{#if resume.publications.length}}
+<div class='sectionLine'></div>
+<div id='publications' class="sectionBlock">
+	<div class='sectionName'>
+		<span>PUBLICATIONS</span>
+	</div>
+	<div class='sectionContent'>
+		<em>Only publicly available papers, in decreasing order of latest update. The current publication status is highlighted in <strong>bold</strong>.</em>
+		{{#each resume.publications}}
+		<div class='blockHeader'>
+			<span>
+				[{{subtract ../resume.publications.length @index}}] <a href="{{url}}">{{name}}</a> <span class='divider'>|</span> {{#if authors}}{{authors}}{{/if}}
+				<br/><strong>{{#if publisher}}{{publisher}}{{/if}}</strong>
+			</span>
+			{{#if releaseDate}}
+			<span class='date'>
+				<span class='releaseDate'>{{formatDate releaseDate}}</span>
+			</span>
+			{{/if}}
+		</div>
+		<em class="summary">
+			{{#if summary}}	{{summary}} {{/if}}
+		</em>
+		{{#unless @last}}<div class='separator'></div>{{/unless}}
+		{{/each}}
+	</div>
+</div>
+{{/if}}
