@@ -22,6 +22,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install resume builder dependencies
+        working-directory: resume-builder
+        run: npm ci
+
+      - name: Generate PDF CV
+        working-directory: resume-builder
+        run: npm run build
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
