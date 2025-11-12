@@ -3,7 +3,7 @@
 ## Purpose & Structure
 - Personal academic site for Sébastien Martin (hosted at `sebastienmartin.info`) built on the al-folio Jekyll theme.
 - Public navigation is intentionally small: Home (`_pages/about.md`), Publications, CV, Press, and News (collection in `_news/`); anything not reachable from the home page is removed unless it belongs to AIML 901.
-- Resume-style data (bio, publications, CV entries, etc.) comes from `assets/json/resume.json` and powers both the `/cv` and `/publications` pages—treat the JSON file as the single source of truth.
+- Resume-style data (bio, publications, CV entries, etc.) comes from `resume.json` (also loaded into Jekyll via `jekyll-get-json`) and powers both the `/cv` and `/publications` pages—treat the JSON file as the single source of truth.
 
 ## Build & Tooling
 - Project requires Ruby 3.x. On this Mac use the Homebrew toolchain by running `export PATH="/opt/homebrew/opt/ruby/bin:$PATH"` before `bundle install` or `bundle exec jekyll …` (the system Ruby 2.6 can’t run Bundler). Front-end assets rely on CDN links defined in `_config.yml` (`third_party_libraries`); ensure those URLs stay hardcoded so jQuery/Bootstrap load for the mobile nav.

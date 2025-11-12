@@ -1,6 +1,6 @@
 # Resume Builder
 
-Generates the PDF version of my CV directly from `assets/json/resume.json` so the web and PDF versions always share the same source of truth.
+Generates the PDF version of my CV directly from `resume.json` at the repo root so the web and PDF versions always share the same source of truth. Jekyll ingests the same file via `jekyll-get-json`.
 
 ## Usage
 

@@ -5,7 +5,7 @@ const Handlebars = require('handlebars');
 const puppeteer = require('puppeteer');
 
 const repoRoot = path.resolve(__dirname, '..');
-const resumePath = path.join(repoRoot, 'assets/json/resume.json');
+const resumePath = path.join(repoRoot, 'resume.json');
 const outputPdf = path.join(repoRoot, 'assets/pdf/sebastien-martin-cv.pdf');
 const distDir = path.join(__dirname, 'dist');
 const htmlOutput = path.join(distDir, 'resume.html');
