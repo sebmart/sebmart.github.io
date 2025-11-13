@@ -32,10 +32,14 @@ If you would like to work through the steps of the recitation, you can find them
 
 You can watch a video recording of the recitation here:
 ![Recitation 2 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
+
 ---
 ## Recitation 4: Let's Build an Expense Categorization Agent (Agent Evaluation)
 
 If you would like to work through the steps of the recitation, you can find them at [this link.](https://sebastienmartin.info/aiml901/recitation_4.html)
+
+You can watch a video recording of the recitation here:
+![Recitation 4 Recording](https://youtu.be/q2JfRhAsp5A)
 
 ---
 ## Recitation 5: Forthcoming

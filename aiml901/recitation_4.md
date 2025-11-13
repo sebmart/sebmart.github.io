@@ -9,6 +9,10 @@ At small scale, this is easy. An office manager can skim through receipts and pl
 Recently, the firm has implemented an AI agent that employees can send a quick message to and it will categorize their expenses. While this has been a mostly smooth transition, there have been some complaints about unexpected classifications and this can distort client profitability and internal cost tracking. It's your job to come up with a way to understand how well the agent is performing and optimize it as much as possible.
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 4 Recording](https://youtu.be/q2JfRhAsp5A)
+
+---
 ## You'll Need...
 
 - Google Sheets connection
