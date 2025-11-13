@@ -2,6 +2,8 @@
  * CV shared styles
  *****************************/
 
+$cv-date-column-width: 220px;
+
 div.container-link-button {
   margin-right: 0.5rem;
 }
@@ -9,6 +11,25 @@ div.container-link-button {
 table.table-cv {
   background-color: transparent !important;
   text-align: left;
+  width: 100%;
+}
+
+@media (min-width: 576px) {
+  .cv .list-group-item .row {
+    flex-wrap: nowrap;
+    align-items: flex-start;
+  }
+
+  .cv .date-column {
+    flex: 0 0 $cv-date-column-width;
+    max-width: $cv-date-column-width;
+    text-align: left !important;
+  }
+
+  .cv .details-column {
+    flex: 1 1 0%;
+    max-width: 100%;
+  }
 }
 
 a.btncv {
