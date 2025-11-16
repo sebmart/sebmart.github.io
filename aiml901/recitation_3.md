@@ -1259,7 +1259,7 @@ Below is the code that you can copy for this portion. Connect the `true` output 
 - **What it does:** The n8n Form provides the choices of Social Media and/or Press Release as potential formats. The `Format` field is therefore "Social Media," "Press Release," or "Social Media, Press Release". If Format contains the words "Social Media," we need to provide translation.
 
 - **Add node:** `AI Agent`. Connect this to the `true` branch of the If node.
-	- Add a chat model
+	- Add a chat model. For the Reasoning Effort, we will choose `Low`, but you 
 	- `Prompt (User Message)`: 
 ```Text
 Text: {{ $('Merge').item.json.output.social_media_body }}

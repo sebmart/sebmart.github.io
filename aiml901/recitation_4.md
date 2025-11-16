@@ -16,6 +16,7 @@ You can watch a video recording of the recitation here:
 ## You'll Need...
 
 - Google Sheets connection
+- OpenAI connection
 - Expense spreadsheet with columns **Date, Category, Description, Amount,** and **Filed By**. You can make a copy of it [here](https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/copy).
 - Expense evaluation spreadsheet that you can [copy from here](https://docs.google.com/spreadsheets/d/1OluWbAdB2_TqU7AoTxdOy2lJUW6-4elQb8Jfgu94m7M/copy).
 

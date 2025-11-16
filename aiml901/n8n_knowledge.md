@@ -67,6 +67,25 @@ There are many YouTube tutorials on building different workflows. While many of 
 ---
 # Final Exam
 
+## Structure
+
+The exam will be posted on Canvas and will be available during finals week. **You will have an hour and a half to complete the exam**, though you can choose when during finals week you take it.
+
+This course has covered a huge amount of content for its length. In designing the final assessment, our goal is to reflect that shared commitment: if you have successfully gone through the Core Content in each recitation and can run the corresponding workflows, you should perform well.
+
+**This exam will be entirely screenshot-based.** You will run several workflows and then screenshot specific node outputs to verify correct operation.
+
+On macOS:
+- Press `Shift + Command + 4`
+- Drag to select the area to capture  
+- Release to take the screenshot (saved to Desktop)
+- Tip: Press `Space` after the shortcut to capture a specific window
+
+On Windows (Win 10/11):
+- Press `Windows + Shift + S`
+- Screen dims → choose Rectangular Snip → drag to select 
+- The screenshot is copied to the clipboard; paste or save from the notification
+## Topics
 - System prompting
     - Changing the tone of an LLM
     - Providing instructions on using tools efficiently
