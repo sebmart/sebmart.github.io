@@ -7,7 +7,7 @@ author:
 
 1. OpenAI connection
 2. Google account for the class; we will use Google Calendar.
-3. Telegram account
+3. Telegram account (for exploratory content)
 
 You can get connected [here](access_instructions).
 
