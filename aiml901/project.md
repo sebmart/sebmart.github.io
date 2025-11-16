@@ -220,26 +220,21 @@ In particular:
 
 > [!check] Before Submitting Your Project, Make Sure You Have…
 > 
-> ### **Your Pitch Video**
+> ### Your Pitch Video
 > - [ ] A clear explanation of the problem, context, and stakeholders.  
-> - [ ] A value-focused story using Module 3 ideas (what kind of value, for whom, and in which process).  
-> - [ ] A description of the AI-powered solution that ties technical elements to the impact story.  
+> - [ ] A value-focused story answering the question: why would your project be useful? Get inspiration from what we did with the Proxima case.   
 > - [ ] A **live demonstration** of your workflow, showing the AI component running in real time.  
-> - [ ] A demonstration and explanation of your **evaluation process**, with concrete examples.  
+> - [ ] A demonstration and explanation of how you **evaluated** your process.  
 > - [ ] A discussion of implementation, risks, and change management.  
 > - [ ] Your face visible at least part of the time and your screen visible during the demo.  
 > - [ ] Clear, understandable audio.  
 > - [ ] A total length between **7:00 and 8:15**.  
-> 
-> ### **Your Workflow Files**
-> - [ ] At least one n8n workflow containing a runnable AI component.  
-> - [ ] All relevant workflows exported via **three dots → Download**.  
-> - [ ] Any evaluation workflow exported and uploaded if you created one.  
-> 
-> ### **Your Canvas Submission**
 > - [ ] Your video uploaded in a standard format (for example, `.mp4` or `.mov`).  
-> - [ ] All workflow `.json` files uploaded.  
-> - [ ] Any optional supporting files (slides, screenshots, documentation) uploaded if they help tell your story.  
+> 
+> ### Other files
+> - [ ] At least one n8n workflow (`.json` file) containing a runnable AI component (the entire workflow does not necessarily have to "work").  
+> - [ ] Optional: Any other thing you want to attach if they help tell your story.
+
 
 ---
 
