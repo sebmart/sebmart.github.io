@@ -40,17 +40,17 @@ These examples illustrate the range of acceptable projects: internal tools, pers
 
 Your submission on Canvas will include the following components.
 
-### **Deliverable 1: A pitch video (7:00–8:15)**
+### Deliverable 1: A pitch video (7:00–8:15)
 
 You will create a self-contained video that feels like a professional pitch to decision-makers in your chosen context. The video must explain the problem, the AI-enhanced solution, the value and impact using ideas from **Module 3**, a live demonstration of your workflow, your evaluation approach, and a realistic path to implementation.
 
-### **Deliverable 2: Your n8n workflow(s)**
+### Deliverable 2: Your n8n workflow(s)
 
 You will submit at least one exported workflow file (usually a `.json` file) that corresponds to the workflow demonstrated in your video. If you have multiple workflows—for example, a main workflow and a separate evaluation workflow—you are encouraged to submit them all.
 
-### **Optional Deliverable 3: Additional supporting artifacts**
+### Optional Deliverable 3: Additional supporting artifacts
 
-If you created slides, a small interface mock-up, or any other materials that help communicate your idea, you may upload them as well. Slides are **not required**, but you may include them if you find them helpful.
+If you created slides, an interface (e.g., with Lovable), or any other materials that help communicate your idea, you may upload them as well. Slides are **not required**, but you may include them if you find them helpful.
 
 ---
 
@@ -217,9 +217,8 @@ In particular:
 ---
 
 # 11. Submission Checklist  
-_(Obsidian Callout Format)_
 
-> [!check] **Before Submitting Your Project, Make Sure You Have…**
+> [!check] Before Submitting Your Project, Make Sure You Have…
 > 
 > ### **Your Pitch Video**
 > - [ ] A clear explanation of the problem, context, and stakeholders.  
@@ -250,7 +249,7 @@ _(Obsidian Callout Format)_
 
 If you would like to revisit the minimum expectations or see a guided overview of how a simple n8n workflow can be constructed and evaluated, you may refer to the following recording:
 
-**[Project Getting Started Video](https://youtu.be/xEo6tp-uypg)**
+![Project Getting Started Video](https://youtu.be/xEo6tp-uypg)
 
 This video provides a helpful example of what a minimal but complete project could look like.
 
