@@ -96,7 +96,7 @@ For more information, check out the [[project|project page]].
 ## Final Exam
 
 The project is really the main deliverable, the final exam is more of a "check-in" to make sure you learned the technical skills.  
-The exam will be virtual and open-book, timed (1.5 hours), and will feature a set of practical exercises where you will have to use n8n to build AI agents. It will only cover the core content from the recitations.
+The exam will be virtual, open-book, without a time limit, and will feature a set of practical exercises where you will have to use n8n to build AI agents. It will only cover the core content from the recitations.
 
 If you attended the recitations, practiced them, and did the homework, you should receive close to a full score.
 

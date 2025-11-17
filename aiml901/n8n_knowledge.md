@@ -69,7 +69,7 @@ There are many YouTube tutorials on building different workflows. While many of 
 
 ## Structure
 
-The exam will be posted on Canvas and will be available during finals week. **You will have an hour and a half to complete the exam**, though you can choose when during finals week you take it.
+The exam will be posted on Canvas and will be available during finals week. **The exam will be untimed, though you should expect to take between 30 minutes and 1 hour on it if you have previously completed all of the recitations.**
 
 This course has covered a huge amount of content for its length. In designing the final assessment, our goal is to reflect that shared commitment: if you have successfully gone through the Core Content in each recitation and can run the corresponding workflows, you should perform well.
 
