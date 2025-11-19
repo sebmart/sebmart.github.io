@@ -19,7 +19,7 @@ Here is the workflow we will build:
     {
       "parameters": {
         "options": {
-          "systemMessage": "=You are a calendar assistant. Your job is to reliably execute the user’s intent with Google Calendar tools.\n\nCurrent date/time: {{ $now }}\n\nDefaults:\n- If no duration: 1 hour.\n- If no start time: 9:00 AM local.\n- If the user mentions guests, use “Create Event (with Attendees)” or “Update Event (with Attendees)”. Otherwise use the Solo variants.\n- Do NOT include an attendees field for solo events.\n\nExecution Rules (always follow, in order):\n1) Parse intents in sequence (delete → update → create). Execute each fully before the next.\n2) For Delete or Update: NEVER assume an event ID. First run “Get Events” with the smallest plausible window and summary filter, pick the best match, then pass its ID to the action.\n3) If multiple matches exist, ask one clarifying question.\n4) When replacing attendees, use sendUpdates=\"none\" unless the user asks to notify.\n5) If both a deletion and a creation are requested in one message, DELETE first, then CREATE.\n\nHeuristics:\n- “tonight”, “this evening” → 17:00–23:59 today for search.\n- “this event” after we just created/returned an event → use the most recently returned event’s ID.\n- If user asks “delete this” without a time, search today ± 1 day for events with that summary.\n\nExample:\nUser: “Delete the ‘Soccer’ event tonight, then create ‘Soccer (NEW)’ at 8:45 pm and invite alex.e.jensen@gmail.com”\nPlan:\n  a) Get Events(timeMin=today 17:00, timeMax=today 23:59, summary contains “Soccer”)\n  b) Delete Event(eventId=<best match>)\n  c) Create Event (with Attendees)(summary=\"Soccer (NEW)\", start=today 20:45, end=today 21:45, attendees=[{email:\"alex.e.jensen@gmail.com\"}])\nExecute the plan."
+          "systemMessage": "=You are a calendar assistant. Your job is to reliably execute the user’s intent with Google Calendar tools.\n\nCurrent date/time: {{ $now }}\n\nDefaults:\n- If no duration: 1 hour.\n- If no start time: 9:00 AM local.\n\nExecution Rules (always follow, in order):\n1) Parse intents in sequence (delete → update → create). Execute each fully before the next.\n2) For Delete or Update: NEVER assume an event ID. First run “Get Events” with the smallest plausible window and summary filter, pick the best match, then pass its ID to the action.\n3) If multiple matches exist, ask one clarifying question.\n4) When replacing attendees, use sendUpdates=\"none\" unless the user asks to notify.\n5) If both a deletion and a creation are requested in one message, DELETE first, then CREATE.\n\nHeuristics:\n- “tonight”, “this evening” → 17:00–23:59 today for search.\n- “this event” after we just created/returned an event → use the most recently returned event’s ID.\n- If user asks “delete this” without a time, search today ± 1 day for events with that summary.\n\nExample:\nUser: “Delete the ‘Soccer’ event tonight, then create ‘Pottery’ at 8:45 pm.\nPlan:\n  a) Get Events(timeMin=today 17:00, timeMax=today 23:59, summary contains “Soccer”)\n  b) Delete Event(eventId=<best match>)\n  c) Create Event (summary=\"Pottery\", start=today 20:45, end=today 21:45)\nExecute the plan."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -65,9 +65,9 @@ Here is the workflow we will build:
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "value": "alex.e.jensen@gmail.com",
+          "value": "alexjensenaiml901@gmail.com",
           "mode": "list",
-          "cachedResultName": "alex.e.jensen@gmail.com"
+          "cachedResultName": "alexjensenaiml901@gmail.com"
         },
         "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
         "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
@@ -97,9 +97,9 @@ Here is the workflow we will build:
         "operation": "delete",
         "calendar": {
           "__rl": true,
-          "value": "alex.e.jensen@gmail.com",
+          "value": "alexjensenaiml901@gmail.com",
           "mode": "list",
-          "cachedResultName": "alex.e.jensen@gmail.com"
+          "cachedResultName": "alexjensenaiml901@gmail.com"
         },
         "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
         "options": {}
@@ -112,69 +112,6 @@ Here is the workflow we will build:
       ],
       "id": "956c3de2-d6ca-4a3e-85c8-d6991202b684",
       "name": "Delete Event",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "4bIt680K4WRhrm6s",
-          "name": "Alex Student Google Calendar"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Update an event without attendees by eventId. You must run Get Events to obtain eventId first.",
-        "operation": "update",
-        "calendar": {
-          "__rl": true,
-          "value": "alex.e.jensen@gmail.com",
-          "mode": "list",
-          "cachedResultName": "alex.e.jensen@gmail.com"
-        },
-        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
-        "updateFields": {
-          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
-        }
-      },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
-      "position": [
-        608,
-        752
-      ],
-      "id": "4adfbeab-63c0-425b-b5ed-ced0c10ff0f4",
-      "name": "Update Event (Solo)",
-      "credentials": {
-        "googleCalendarOAuth2Api": {
-          "id": "4bIt680K4WRhrm6s",
-          "name": "Alex Student Google Calendar"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "descriptionType": "manual",
-        "toolDescription": "Create an event without attendees.",
-        "calendar": {
-          "__rl": true,
-          "value": "alex.e.jensen@gmail.com",
-          "mode": "list",
-          "cachedResultName": "alex.e.jensen@gmail.com"
-        },
-        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
-        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
-        "additionalFields": {
-          "attendees": [],
-          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
-        }
-      },
-      "type": "n8n-nodes-base.googleCalendarTool",
-      "typeVersion": 1.3,
-      "position": [
-        640,
-        592
-      ],
-      "id": "69c90015-e7be-437d-9caa-7c41cdf7a10f",
-      "name": "Create Event (Solo)",
       "credentials": {
         "googleCalendarOAuth2Api": {
           "id": "4bIt680K4WRhrm6s",
@@ -245,6 +182,22 @@ Here is the workflow we will build:
     },
     {
       "parameters": {
+        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 1 - Getting Started with n8n",
+        "height": 512,
+        "width": 576,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        512
+      ],
+      "id": "428c56e5-bd38-4404-a321-ad0ab082a2d9",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
@@ -256,6 +209,69 @@ Here is the workflow we will build:
       "id": "6461bf4e-6360-4abf-8398-dea7083b6dfa",
       "name": "When chat message received",
       "webhookId": "18f36ad0-60d3-4c86-85ad-8cf88bbecade"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create an event.",
+        "calendar": {
+          "__rl": true,
+          "value": "alexjensenaiml901@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alexjensenaiml901@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "attendees": [],
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        592
+      ],
+      "id": "69c90015-e7be-437d-9caa-7c41cdf7a10f",
+      "name": "Create Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Update an event by eventId. You must run Get Events to obtain eventId first.",
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "alexjensenaiml901@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alexjensenaiml901@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        752
+      ],
+      "id": "4adfbeab-63c0-425b-b5ed-ced0c10ff0f4",
+      "name": "Update Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
     }
   ],
   "connections": {
@@ -297,28 +313,6 @@ Here is the workflow we will build:
         ]
       ]
     },
-    "Update Event (Solo)": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Event (Solo)": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Simple Memory": {
       "ai_memory": [
         [
@@ -336,6 +330,28 @@ Here is the workflow we will build:
           {
             "node": "AI Agent",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
             "index": 0
           }
         ]
