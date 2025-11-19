@@ -1,5 +1,5 @@
 ---
-Author: Alex Jensen
+author: Alex Jensen
 title: Recitation 5
 ---
 
@@ -15,7 +15,9 @@ title: Recitation 5
 - Google Sheet with the following column names:
 
 | email | session_id | text | type | company | jobTitle | jobDescription |
-|-------|------------|------|------|---------|----------|----------------|
+| ----- | ---------- | ---- | ---- | ------- | -------- | -------------- |
+|       |            |      |      |         |          |                |
+
 - **Optional:** SerpAPI account
 
 ---
