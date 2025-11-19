@@ -11,6 +11,345 @@ author:
 
 You can get connected [here](access_instructions).
 
+Here is the workflow we will build:
+
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=You are a calendar assistant. Your job is to reliably execute the user’s intent with Google Calendar tools.\n\nCurrent date/time: {{ $now }}\n\nDefaults:\n- If no duration: 1 hour.\n- If no start time: 9:00 AM local.\n- If the user mentions guests, use “Create Event (with Attendees)” or “Update Event (with Attendees)”. Otherwise use the Solo variants.\n- Do NOT include an attendees field for solo events.\n\nExecution Rules (always follow, in order):\n1) Parse intents in sequence (delete → update → create). Execute each fully before the next.\n2) For Delete or Update: NEVER assume an event ID. First run “Get Events” with the smallest plausible window and summary filter, pick the best match, then pass its ID to the action.\n3) If multiple matches exist, ask one clarifying question.\n4) When replacing attendees, use sendUpdates=\"none\" unless the user asks to notify.\n5) If both a deletion and a creation are requested in one message, DELETE first, then CREATE.\n\nHeuristics:\n- “tonight”, “this evening” → 17:00–23:59 today for search.\n- “this event” after we just created/returned an event → use the most recently returned event’s ID.\n- If user asks “delete this” without a time, search today ± 1 day for events with that summary.\n\nExample:\nUser: “Delete the ‘Soccer’ event tonight, then create ‘Soccer (NEW)’ at 8:45 pm and invite alex.e.jensen@gmail.com”\nPlan:\n  a) Get Events(timeMin=today 17:00, timeMax=today 23:59, summary contains “Soccer”)\n  b) Delete Event(eventId=<best match>)\n  c) Create Event (with Attendees)(summary=\"Soccer (NEW)\", start=today 20:45, end=today 21:45, attendees=[{email:\"alex.e.jensen@gmail.com\"}])\nExecute the plan."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        80,
+        336
+      ],
+      "id": "eb16a397-3583-4edf-ad30-459f25690deb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "options": {
+          "reasoningEffort": "low"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        64,
+        576
+      ],
+      "id": "38288631-9752-49ba-af38-f3589e474246",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Find events by time window; you may also filter by summary text. The default period should be starting today, for a week. \n\nUse this before any Delete/Update to retrieve the correct eventId.",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "alex.e.jensen@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alex.e.jensen@gmail.com"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {
+          "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        800,
+        592
+      ],
+      "id": "0151bd69-7335-4d52-ad13-5f7b0e918b90",
+      "name": "Get Events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Deletes an event by eventId. You must run Get Events to obtain eventId first.",
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "alex.e.jensen@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alex.e.jensen@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        960,
+        592
+      ],
+      "id": "956c3de2-d6ca-4a3e-85c8-d6991202b684",
+      "name": "Delete Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Update an event without attendees by eventId. You must run Get Events to obtain eventId first.",
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "alex.e.jensen@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alex.e.jensen@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        752
+      ],
+      "id": "4adfbeab-63c0-425b-b5ed-ced0c10ff0f4",
+      "name": "Update Event (Solo)",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create an event without attendees.",
+        "calendar": {
+          "__rl": true,
+          "value": "alex.e.jensen@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alex.e.jensen@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "attendees": [],
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        640,
+        592
+      ],
+      "id": "69c90015-e7be-437d-9caa-7c41cdf7a10f",
+      "name": "Create Event (Solo)",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        576
+      ],
+      "id": "6543709c-49b3-49a4-868a-ea32ea6e7911",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "content": "## Step 2: Calendar agent, memory, and system prompt\n\n",
+        "height": 512,
+        "width": 336,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        16,
+        192
+      ],
+      "id": "7b9c1fc3-285c-4e84-a567-69d374e3c738",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## Step 3: Agent Tools\n\nThese are the functions that the agent can call",
+        "height": 432,
+        "width": 736,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        368,
+        480
+      ],
+      "id": "f522ad3b-4e58-4675-993f-20393a2904f0",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Step 1: Chat Trigger",
+        "height": 224,
+        "width": 272,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        272
+      ],
+      "id": "97cab3f9-5edb-4116-9c63-88a8ee979c79",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -192,
+        336
+      ],
+      "id": "6461bf4e-6360-4abf-8398-dea7083b6dfa",
+      "name": "When chat message received",
+      "webhookId": "18f36ad0-60d3-4c86-85ad-8cf88bbecade"
+    }
+  ],
+  "connections": {
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Events": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event (Solo)": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event (Solo)": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
+
 ---
 In this recitation, we will use [n8n](https://aiml901-martin.app.n8n.cloud/) to build a **Google Calendar assistant** that can add, update, and delete events by sending a text message through Telegram
 
