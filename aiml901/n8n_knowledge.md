@@ -42,8 +42,12 @@ You can watch a video recording of the recitation here:
 ![Recitation 4 Recording](https://youtu.be/q2JfRhAsp5A)
 
 ---
-## Recitation 5: Forthcoming
+## Recitation 5: Building End-to-End Products with AI/Final Exam Prep
 
+If you would like to work through the steps of the recitation, you can find them at [this link.](https://sebastienmartin.info/aiml901/recitation_5.html)
+
+You can watch a video recording of the recitation here:
+![Recitation 5 Recording](https://youtu.be/JeFV-Bu8Qeg)
 
 ---
 # Other Resources

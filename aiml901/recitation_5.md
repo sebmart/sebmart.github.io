@@ -1,10 +1,13 @@
 ---
-author: Alex Jensen
+Author: Alex Jensen
 title: Recitation 5
 ---
-
 > [!info] **Important: No Core Content**  
 > This recitation contains **no core content**, though we will explore some practice questions for the final exam. However, all new n8n content in this document is **exploratory only** and will **not be directly tested** on the final exam.  
+
+---
+You can watch a video recording of the recitation here:
+![Recitation 5 Recording](https://youtu.be/JeFV-Bu8Qeg)
 
 ---
 ## You'll Need...
@@ -1280,7 +1283,7 @@ Here are some questions to help you understand what to expect from this format, 
 Add an event to my calendar called Pottery tonight at 6 p.m.
 ```
 5. Now, use the workflow to delete that event from your calendar. Attach a screenshot showing that the entire workflow has run.
-6. Update the event to be from 8-10 p.m.. 
+6. Update the event to be from 8–10 p.m.. 
 	1. Attach a screenshot showing the output of the agent.
 	2. Attach a screenshot of the whole workflow after it has run.
 7. Take a screenshot of the node that lets the LLM refer to past answers.
