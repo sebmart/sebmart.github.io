@@ -219,6 +219,14 @@
   ],
   "publications": [
     {
+      "name": "AI homework increases student satisfaction: A field experiment at the Kellogg School of Management",
+      "authors":"R. Bray, S. Martin",
+      "publisher": "Submitted to INFORMS Transactions on Education",
+      "releaseDate": "2025",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5627650",
+      "summary" : ""
+    },
+    {
       "name": "Human-AI Interactions and Societal Pitfalls",
       "authors": "F. Castro, J. Gao, S. Martin",
       "publisher": "Major revision, MSOM",
