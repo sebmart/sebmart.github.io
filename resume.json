@@ -119,7 +119,13 @@
       "courses": []
     }
   ],
-  "awards": [    
+  "awards": [ 
+    {
+      "title": "Poets and Quants Best 40 Under 40 MBA Professors",
+      "date": "2025",
+      "awarder": "Poets and Quants",
+      "summary": "Awarded to 40 best business school professors under 40 years old every year"
+    },
     {
       "title": "INFORMS Journal on Computing Meritorious Reviewer Award",
       "date": "2025",
@@ -137,6 +143,11 @@
       "date": "2024",
       "awarder": "INFORMS TSL Society",
       "summary": "For my service as a reviewer for the journal Transportation Science."
+    },
+    { "title": "Distinguished Service Award, Operations Research",
+      "date": "2024",
+      "awarder": "INFORMS, Operations Research Journal",
+      "summary": "For \"extraordinary reviewer work for the journal\"."
     },
     {
       "title": "Best Student Paper Award",
