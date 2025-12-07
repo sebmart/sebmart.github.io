@@ -54,6 +54,10 @@ a {
     width: 100%;
 }
 
+.sectionBlock .sectionContent > .separator {
+    height: 18px;
+}
+
 .sectionName {
     width: 18%;
     vertical-align: top;
@@ -82,6 +86,16 @@ a {
 
 .sectionContent .separator {
     height: 14px;
+}
+
+.sectionSubheader {
+    font-weight: bold;
+    margin-top: 6px;
+    margin-bottom: 6px;
+}
+
+.sectionSubheader + .separator {
+    height: 10px;
 }
 
 .sectionLine {

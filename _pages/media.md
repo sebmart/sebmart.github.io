@@ -9,6 +9,7 @@ nav_order: 3
 
 | Year | Outlet | Coverage | Notes |
 | --- | --- | --- | --- |
+| 2025 | *ESAB Corporation* | [ESAB Appoints Dr. Sébastien Martin to Board; Announces Retirement of Director Patrick Allender](https://investors.esabcorporation.com/news/news-details/2025/ESAB-Appoints-Dr--Sbastien-Martin-to-Board-Announces-Retirement-of-Director-Patrick-Allender/default.aspx) | Press release announcing my appointment to ESAB's Board and Audit Committee. |
 | 2025 | *Wall Street Journal* | [AI Is Teaching the Next Generation of M.B.A.s the Classic Case Study](https://www.wsj.com/tech/ai/ai-is-teaching-the-next-generation-of-m-b-a-s-the-classic-case-study-a4eb4227?st=vKvaWA&reflink=desktopwebshare_permalink) | Coverage of the first AI case I created for Kellogg. |
 | 2025 | *Kellogg Insight* | [Sure, AI Can Automate. But How Can You Use It to Innovate?](https://insight.kellogg.northwestern.edu/article/ai-innovation-vs-automation) | On using domain expertise and experimentation to build AI case studies. |
 | 2025 | *Poets & Quants* | [2025 Best 40 Under 40 MBA Professors: Sébastien Martin, Kellogg School of Management, Northwestern University](https://poetsandquants.com/2025/05/21/2025-best-40-under-40-mba-professors-sebastien-martin-kellogg-school-of-management-northwestern-university/?pq-category=2025&pq-category-2=40-under-40) | Recognized among Poets & Quants' 40 Under 40 MBA professors. |

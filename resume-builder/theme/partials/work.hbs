@@ -1,11 +1,11 @@
-{{#if resume.work.length}}
+{{#if items.length}}
 <div class='sectionLine'></div>
-<div id='workBlock' class="sectionBlock">
+<div class="sectionBlock">
 	<div class='sectionName'>
-		<span>WORK</span>
+		<span>{{title}}</span>
 	</div>
 	<div class='sectionContent'>
-		{{#each resume.work}}
+		{{#each items}}
 		<div class="jobBlock">
 			<div class='blockHeader'>
 				<span class='title'>{{#if name}}{{name}}{{/if}}</span>

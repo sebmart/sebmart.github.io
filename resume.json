@@ -1,6 +1,6 @@
 {
   "basics": {
-    "lastUpdated": "2025-11",
+    "lastUpdated": "2025-12",
     "name": "Sébastien Martin",
     "label": "Associate Professor",
     "image": "",
@@ -33,7 +33,7 @@
       }
     ]
   },
-  "work": [
+  "academic_appointments": [
     {
       "name": "Northwestern University - Kellogg",
       "position": "Associate Professor of Operations",
@@ -44,16 +44,6 @@
       "summary": "I teach the MBA course \"AI Foundations for Managers, AgentOps\".",
       "highlights": []
     },
-    {
-      "name": "ESAB Corporation",
-      "position": "AI advisor to the CEO",
-      "url": "",
-      "location": "North Bethesda, Maryland, U.S.",
-      "startDate": "2025",
-      "endDate": "Current",
-      "summary": "ESAB is a global leader in welding and cutting products. I advise the CEO on the use of AI to improve the company's operations.",
-      "highlights": []
-    },    
     {
       "name": "Northwestern University - Kellogg",
       "position": "Assistant Professor of Operations",
@@ -75,16 +65,6 @@
       "highlights": []
     },
     {
-      "name": "Google",
-      "position": "Software Engineering Intern",
-      "location": "Mountain View, CA, USA",
-      "url": "",
-      "startDate": "2016-06",
-      "endDate": "2016-08",
-      "summary": "Successfully passed the Google Software Engineer coding interviews. Worked for Google Maps. Researched, experimented and implemented novel algorithms to improve maps and navigation data using large geolocation datasets (> 100Gb).",
-      "highlights": []
-    },
-    {
       "name": "UC Berkeley",
       "position": "Visiting Researcher",
       "location": "Berkeley, CA, USA",
@@ -92,6 +72,38 @@
       "startDate": "2014-04",
       "endDate": "2014-08",
       "summary": "",
+      "highlights": []
+    }
+  ],
+  "industry_and_advisory": [
+    {
+      "name": "ESAB Corporation",
+      "position": "Board Member",
+      "url": "",
+      "location": "North Bethesda, Maryland, U.S.",
+      "startDate": "2026-01",
+      "endDate": "Current",
+      "summary": "Member of the Board of Directors, providing strategic oversight with a focus on innovation, AI adoption, and operational excellence.",
+      "highlights": []
+    },
+    {
+      "name": "ESAB Corporation",
+      "position": "AI advisor to the CEO",
+      "url": "",
+      "location": "North Bethesda, Maryland, U.S.",
+      "startDate": "2025",
+      "endDate": "2025-12",
+      "summary": "I served as a strategic advisor to ESAB, working with executive leadership to develop the company's AI strategy, establish its AI steering committee, and train the workforce on leveraging AI agents for innovation and productivity.",
+      "highlights": []
+    },
+    {
+      "name": "Google",
+      "position": "Software Engineering Intern",
+      "location": "Mountain View, CA, USA",
+      "url": "",
+      "startDate": "2016-06",
+      "endDate": "2016-08",
+      "summary": "Successfully passed the Google Software Engineer coding interviews. Worked for Google Maps. Researched, experimented and implemented novel algorithms to improve maps and navigation data using large geolocation datasets (> 100Gb).",
       "highlights": []
     }
   ],
