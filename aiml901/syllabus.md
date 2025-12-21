@@ -58,13 +58,13 @@ Professor Martin is an associate professor of operations, whose research focuses
 
 ## Recitations: learning how to build an agent
 
-The course includes five in-person recitations, each lasting 60 minutes and led by our expert TA. The recitations will focus on learning how to build AI agents using n8n, which is the main technical knowledge you will need. The recitations will be hands-on and interactive, each one focused on a specific business use case and gradually introducing more complex agentic workflows.
+The course includes five recitations, each lasting 60 minutes and led by our expert TA (in-person for Full Time, live on Zoom for E/W). The recitations will focus on learning how to build AI agents using n8n, which is the main technical knowledge you will need. The recitations will be hands-on and interactive, each one focused on a specific business use case and gradually introducing more complex agentic workflows.
 
 Recitations will be divided into two sections. 
 - **Core content**: We will begin by developing skills that you are expected to understand and be able to use independently. During this section, you will be given time to explore and expand upon these tools. 
 - **Exploratory content**: The latter portion of the recitation will focus on broader, inspirational demos to showcase what is possible with n8n. You won't be expected to master the skills immediately; this is mostly to give you ideas on what to explore on your own. Additionally, we encourage you to explore n8n templates (pre-made projects by others), YouTube tutorials, and other resources.
 
-Attendance at the recitations is not required but is strongly recommended. If you cannot attend in person, a recording will also be available after each recitation. If you cannot attend in person,  please watch the recording and go through the hands-on material as if you had been there. 
+Attendance at the recitations is not required but strongly recommended—live sessions (whether in-person or on Zoom) are interactive and let you ask questions in real-time. Recordings are also available after each recitation. 
 
 Each recitation is associated with a graded homework. Together, they will count for 25% of the final grade.
 
