@@ -154,7 +154,10 @@ I've done my best to keep costs low. Expected costs/resources:
 
 # Class Overview
 
-There are 10 classes—two per week—organized into three modules. **E/W section:** Classes are combined into five 3-hour sessions (Session 1 = Classes 1–2, Session 2 = Classes 3–4, etc.). There is also one recitation per week. The precise content of each class is subject to modifications, as we are updating the content constantly to match the speed of AI improvement
+There are 10 classes—two per week—organized into three modules. There is also one recitation per week. The precise content of each class is subject to modifications, as we are updating the content constantly to match the speed of AI improvement.
+
+> [!note] E/W Section
+> Classes are combined into five 3-hour sessions (Session 1 = Classes 1–2, Session 2 = Classes 3–4, etc.). Recitations are held live on Zoom.
 
 ## Module 1: How AI Works  
 *Build a deep understanding of genAI and how AI companies go from raw web data to ChatGPT and powerful AI agents.*
