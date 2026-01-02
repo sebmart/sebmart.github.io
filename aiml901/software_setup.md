@@ -1,14 +1,14 @@
 ---
-title: n8n Access Instructions
+title: Software Setup
 author: Alex Jensen
 ---
 # Overview
 
-Even though we are using n8n, we will be utilizing other services, such as OpenAI, Slack, Google Sheets, and Outlook Calendar. If we want to access an LLM like GPT-5 through n8n, we can't just use the ChatGPT interface online. Instead, we make a call to an API. An API (Application Programming Interface) is a way for different software systems to communicate with one another. 
+This course uses several software tools: n8n for building AI agents, OpenAI for LLM access, Lovable for creating apps, and various Google services. This document helps you set up everything you need.
 
-For each service, we will make an API key. This is a form of authorization that lets a program prove that it's allowed to access the API. For example, if we want to call the OpenAI API to use an LLM, the API key tells OpenAI that the program calling it should have access.
+For each service that requires API access, we will create an API key. This is a form of authorization that lets a program prove that it's allowed to access the API.
 
-This document is organized into two main sections: 
+This document is organized into two main sections:
 - **Before the Class** gives information on setting up accounts _before the class starts_ so that you are ready when we begin.
 - **Connecting During the Class** explains how to connect these products _within n8n_. This will be done during the lectures and recitations but you are free to get this set up earlier.
 
@@ -16,11 +16,12 @@ This document is organized into two main sections:
 
 # Before the Class
 
-You need to complete **three tasks** before our first class:
+You need to complete **four tasks** before our first class:
 
 1. **Create your n8n account** (you should have received an invite)
 2. **Choose a Google account** to use with n8n
 3. **Set up your OpenAI API access** (including verification and adding credit)
+4. **Activate your Lovable coupon** (3-month free Pro access for Kellogg students)
 
 ---
 
@@ -71,6 +72,25 @@ If you are not comfortable with the verification step, please reach out to us—
 3. **Save your key somewhere secure and copy it**—you will not be able to access this key again beyond this screen. You will need to input it into n8n later. If you lose it, you can always make another API key.
 
 ---
+
+## 4. Lovable Setup
+
+Lovable is a tool that lets you create apps and websites using AI. Kellogg students get **3 months of free Pro access**.
+
+### How to Activate Your Coupon
+
+1. Go to [lovable.dev](https://lovable.dev)
+2. If you don't have an account, click "Get started" and create an account
+3. If you already have an account, go to **Settings → Plans & Credits**
+4. Select **Pro Plan 1** (100 credits). Make sure to choose the **monthly plan**
+5. At checkout, enter discount code: **Kellogg**
+
+> [!info] Payment Details
+> You may be asked to enter payment details, but you can **cancel immediately after activating** and still keep your 3 months of free access. We recommend doing this right away so you don't forget!
+
+If you already have a paid Lovable account, you'll need to create a new workspace to redeem the code.
+
+---
 # Connecting During the Class
 
 ### OpenAI
@@ -95,7 +115,7 @@ We will show you how to get set up with Google Calendar, but the same idea holds
 ---
 ### Getting Connected to Telegram
 
-We will use Telegram to message n8n since it has a great interface for connecting chatbots. 
+We will use Telegram to message n8n since it has a great interface for connecting chatbots.
 
 Download the Telegram app on your phone to get started.
 

@@ -9,7 +9,7 @@ author:
 2. Google account for the class; we will use Google Calendar.
 3. Telegram account (for exploratory content)
 
-You can get connected [here](https://sebastienmartin.info/aiml901/n8n_access_instructions.html).
+You can get connected [here](https://sebastienmartin.info/aiml901/software_setup.html).
 
 In this recitation, we will use [n8n](https://aiml901-martin.app.n8n.cloud/) to build a **Google Calendar assistant** that can add, update, and delete events by sending a chat message. Here is the workflow that we will build:
 
@@ -572,7 +572,7 @@ Any content in this section will not be covered on the final exam. However, it i
 
 For now, we will show how to connect to Telegram, a mobile messaging app. You can also connect services like Slack and WhatsApp, but Telegram is easier to get set up. We will use this to replace our `Chat Trigger` node.
 
-To begin, follow the directions under the `Telegram` section [here.](https://sebastienmartin.info/aiml901/n8n_access_instructions.html)
+To begin, follow the directions under the `Telegram` section [here.](https://sebastienmartin.info/aiml901/software_setup.html)
 
 The entire workflow, configured for Telegram, can be found here:
 

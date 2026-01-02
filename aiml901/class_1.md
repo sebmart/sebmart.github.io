@@ -9,7 +9,7 @@ author:
 - A Google Account.
 - Having signed up to [the course's n8n account](https://aiml901-martin.app.n8n.cloud/). 
 
-If you've not done it yet, [instructions are available here](https://sebastienmartin.info/aiml901/n8n_access_instructions.html).
+If you've not done it yet, [instructions are available here](https://sebastienmartin.info/aiml901/software_setup.html).
 
 ---
 ## What's needed for today

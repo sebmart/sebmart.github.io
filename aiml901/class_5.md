@@ -1049,7 +1049,7 @@ Recitations follow two parts:
 - System prompting
 - Google Calendar Add Event tool
 #### 6. Exploratory Content: Telegram
-- Following [setup instructions](https://sebastienmartin.info/aiml901/n8n_access_instructions.html), students created a Telegram bot and an n8n Telegram trigger for incoming messages.
+- Following [setup instructions](https://sebastienmartin.info/aiml901/software_setup.html), students created a Telegram bot and an n8n Telegram trigger for incoming messages.
 - Updated the AI Agent and Simple Memory nodes to align message and memory keys.
 - Added a Telegram response node so the agent could reply to users directly.
 
@@ -1145,7 +1145,7 @@ Canvas is mostly used to handle homework submission and the calendar. We use the
 - [Syllabus](https://sebastienmartin.info/aiml901/syllabus.html/) : Full syllabus of the course, containing the course description and agenda, requirements, grading rules... The information it contains is the same as what you have, but it serves as the source of truth.
 - [Project](https://sebastienmartin.info/aiml901/project.html): detailed reference for the individual projects. Has more information than the syllabus and some advice. The information it contains is the same as what you have, but it serves as the source of truth.
 - [n8n knowledge](https://sebastienmartin.info/aiml901/n8n_knowledge.html): the go-to reference to the n8n content covered in the recitations. It details all the skills that were covered and will be evaluated in the final exam and contains links to other n8n-related references.
-- [n8n access instructions](https://sebastienmartin.info/aiml901/n8n_access_instructions.html): a reference document for accessing and using n8n. Contains advice on how to set up various authentications (e.g., OpenAI key, Google account, Telegram...). 
+- [n8n access instructions](https://sebastienmartin.info/aiml901/software_setup.html): a reference document for accessing and using n8n. Contains advice on how to set up various authentications (e.g., OpenAI key, Google account, Telegram...). 
 - [kai instructions](https://sebastienmartin.info/aiml901/kai_instructions.html): instructions on how to access and use Kai (should not be useful if they made it here)
 
 
