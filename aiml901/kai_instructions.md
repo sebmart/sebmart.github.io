@@ -6,7 +6,7 @@ author:
 Kai is the AI teaching assistant for the _AIML-901 AgentOps_ class. Its name, chosen by MBA students, stands for "Kellogg AI." Kai is a specialized version of ChatGPT that also has access to private information about the class. It was specifically designed to assist you. It will be used for:
 
 - **Answering questions:** Kai can handle most questions you have about the course and its content. It can also redirect you to the right staff member and share useful links or resources.  
-- **Proctoring homework:** Before each class, a “Kai homework” will be due (see details below).  
+- **Proctoring homework:** Typically once per week, a "Kai homework" will be due (see details below).  
 - **Project help:** Don’t hesitate to ask Kai about your project if you have questions or want guidance!
 
 > [!info] Kai & Privacy
@@ -32,15 +32,14 @@ If you don't see it, double-check that you used your official Kellogg email (and
 
 ## Kai Homework
 
-Before each class, a _Kai homework_ will be assigned. You’ll have a guided conversation with Kai to prepare for the next class, and you’ll submit your conversation on Canvas.
+Typically once per week, a _Kai homework_ will be assigned. You'll have a guided conversation with Kai to prepare for the upcoming class, and you'll submit your conversation on Canvas.
 
-Homework is designed to be quick (around 1 hour) and engaging. It helps you get the most out of class—and can even be fun!
+Homework is designed to be engaging (expect around 1 hour). It helps you get the most out of class—and can even be fun!
 
-- Homework is graded for **effort, not results.** You just need to engage with Kai and the material! You’ll receive full credit if you engage seriously and spend the time, regardless of accuracy.  
-- Homework is typically **available starting the evening of the previous class and due the evening before the next one.**  
-- For example, if classes are on Tuesday and Friday, the Friday homework becomes available Tuesday evening and remains open until late Thursday evening. This schedule allows us to review and incorporate your responses before class.
+- Homework is graded for **effort, not results.** You just need to engage with Kai and the material! You'll receive full credit if you engage seriously and spend the time, regardless of accuracy.
+- Homework is typically due **before class** to allow us to review and incorporate your responses.
 
-To begin, simply **ask Kai to start the homework.**  
-The session is interactive and usually takes about 1 hour. Kai will let you know when the homework ends. You can pause at any time and return later, as long as you don’t delete the chat.
+To begin, simply **ask Kai to start the homework.**
+The session is interactive and usually takes about 1 hour. Kai will let you know when the homework ends. You can pause at any time and return later, as long as you don't delete the chat.
 
 
