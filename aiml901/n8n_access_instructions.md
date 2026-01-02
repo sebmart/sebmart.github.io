@@ -15,34 +15,60 @@ This document is organized into two main sections:
 ---
 
 # Before the Class
-## Getting Started with n8n
+
+You need to complete **three tasks** before our first class:
+
+1. **Create your n8n account** (you should have received an invite)
+2. **Choose a Google account** to use with n8n
+3. **Set up your OpenAI API access** (including verification and adding credit)
+
+---
+
+## 1. Getting Started with n8n
 
 You should have received an email that looks like this:
 ![[email_screenshot.png]]
-Create an n8n account using this email and you will be able to access our workspace. 
+Create an n8n account using this email and you will be able to access our workspace.
 
 ---
-## Google Products
 
-For the class, you can either use a personal Google account or create a new one specifically for this class. If you already have an account that you are willing to use, there is no action item here. Note that n8n will have access to your files in this account.
+## 2. Google Account
+
+For the class, you can either use a personal Google account or create a new one specifically for this class. If you already have an account that you are willing to use, there is no action item here. Note that n8n will have access to your files in this account (Gmail, Calendar, Sheets, etc.).
 
 ---
-### OpenAI
 
-In the recitations, all examples will use OpenAI's GPT-5, since this is a state-of-the-art model. However, to use this via the API, you need to complete an identity verification that requires submitting personal information; the steps to do this are shown below. **We strongly recommend that you do this.** GPT-5 is (currently) one of the best models available. However, n8n also works with other LLMs, so you are able to use alternative models. If you are not comfortable completing this step, please reach out to us.
+## 3. OpenAI API Setup
+
+In the recitations, all examples will use OpenAI's **GPT-5.2**, one of the best models currently available. To use this model via the API, you need to:
+1. Create an OpenAI platform account
+2. **Complete identity verification** (required for GPT-5.2 access)
+3. Add credit to your account
+4. Create an API key
+
+If you are not comfortable with the verification step, please reach out to us—n8n also works with alternative LLMs.
+
+### Step A: Create Account & Add Credit
 
 1. Log into https://platform.openai.com or make an account to get started. Even if you've used ChatGPT before, this interface might look slightly different.
-2. In the top right corner, click on `Settings` (a gear icon) and then navigate to `Billing`. 
-	1. If the gear icon doesn't appear, you'll see a button that says `Start building`. Click on this and your organization name should be something like `Personal`. Once you create an organization, skip the next step to invite your team, make your first API call, and add API credits. (Even though we'll do those steps next, steps 3–6 will be repeatable if you want to add more credit or make more API keys)
-	2. Once you do these steps, the gear icon should appear in the top right. Click on this and then navigate to `Billing`.
-3. Add a payment method and then add $5-10 to your credit balance. This will allow you to make calls to OpenAI from n8n and should be enough for the whole course.
-4. In the top left, press the search button and search for API keys or navigate to https://platform.openai.com/settings/organization/api-keys
-5.  Press `+ Create new secret key` and give it a name like "n8n connection".
-6. **Save your key somewhere secure and copy it**; you will not be able to access this key again beyond this screen and you will need to input it into n8n later. If you lose it, you can always make another API key.
+2. In the top right corner, click on `Settings` (a gear icon) and then navigate to `Billing`.
+	- If the gear icon doesn't appear, you'll see a button that says `Start building`. Click on this and your organization name should be something like `Personal`. Once you create an organization, skip the next step to invite your team, make your first API call, and add API credits.
+	- Once you do these steps, the gear icon should appear in the top right. Click on this and then navigate to `Billing`.
+3. Add a payment method and then **add $10 to your credit balance**. This should be enough for the entire course. You can add more later if needed.
 
-**Verification:**
+### Step B: Complete Verification (Required for GPT-5.2)
+
+**This step is required to access GPT-5.2.** Without verification, you will only have access to older models.
+
 1. Log into https://platform.openai.com. Click on `Settings` and then navigate to `General`.
-2. You should see within the settings an option called `Verification`. Click the `Verify Organization` button and follow the steps to complete the process.
+2. You should see an option called `Verification`. Click the `Verify Organization` button and follow the steps to complete the process.
+3. **Confirm verification is complete** before proceeding—this can take a few minutes.
+
+### Step C: Create Your API Key
+
+1. In the top left, press the search button and search for "API keys" or navigate to https://platform.openai.com/settings/organization/api-keys
+2. Press `+ Create new secret key` and give it a name like "n8n connection".
+3. **Save your key somewhere secure and copy it**—you will not be able to access this key again beyond this screen. You will need to input it into n8n later. If you lose it, you can always make another API key.
 
 ---
 # Connecting During the Class

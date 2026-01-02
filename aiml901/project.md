@@ -170,14 +170,16 @@ Your grade will be determined using the following rubric. Notice that **impact a
 
 # 8. Timeline and Milestones
 
-| Week | Goals |
-|------|-------|
-| **1** | Identify a promising idea, define the problem and stakeholders, and articulate a preliminary value proposition using Module 3 concepts. |
-| **2** | Begin constructing your workflow in n8n and ensure that the AI component starts to function on simple examples. |
-| **3** | Continue iterating on your workflow, refine the process, and start thinking more concretely about evaluation. |
-| **4** | Develop and demonstrate your evaluation process, and connect the evaluation back to the impact story. |
-| **5** | Strengthen your pitch narrative, clarify your implementation path and risks, and polish your workflow. |
-| **Exam Week** | Record and refine your final pitch video (7:00–8:15), making sure all elements of the rubric are addressed. |
+This is just a suggested pace—feel free to adapt as needed. The key is steady progress rather than leaving everything to the end.
+
+| Week | Suggested Focus |
+|------|-----------------|
+| **1** | **Brainstorm.** Think about domains you know well—a previous company, internship, personal workflow, or startup idea. The best projects come from deep familiarity with a real problem. Don't rush to commit; explore a few directions. |
+| **2** | **Start prototyping.** Build something simple in n8n with the AI Agent node. It doesn't need to be your final idea—you can still pivot. The goal is to get comfortable with the platform. |
+| **3** | **Iterate.** Get more serious about your workflow. Ask for help in office hours or on Slack if you're stuck. Refine your idea based on what you're learning. |
+| **4** | **Focus on value.** Start thinking about your pitch: why does this matter? Use what you learn in Module 3 (evaluation, AI value creation) to strengthen your project. Prepare to pitch your project to Kai for a class competition (Pitch Kai homework due Week 5). |
+| **5** | **Finalize.** Complete your Pitch Kai homework, iterate on feedback, and polish your workflow and pitch narrative. |
+| **Exam Week** | Record your final pitch video (7:00–8:15). |
 
 ---
 
@@ -220,21 +222,26 @@ In particular:
 
 > [!check] Before Submitting Your Project, Make Sure You Have…
 > 
-> ### Your Pitch Video
+> ### **Your Pitch Video**
 > - [ ] A clear explanation of the problem, context, and stakeholders.  
-> - [ ] A value-focused story answering the question: why would your project be useful? Get inspiration from what we did with the Proxima case.   
+> - [ ] A value-focused story using Module 3 ideas (what kind of value, for whom, and in which process).  
+> - [ ] A description of the AI-powered solution that ties technical elements to the impact story.  
 > - [ ] A **live demonstration** of your workflow, showing the AI component running in real time.  
-> - [ ] A demonstration and explanation of how you **evaluated** your process.  
+> - [ ] A demonstration and explanation of your **evaluation process**, with concrete examples.  
 > - [ ] A discussion of implementation, risks, and change management.  
 > - [ ] Your face visible at least part of the time and your screen visible during the demo.  
 > - [ ] Clear, understandable audio.  
 > - [ ] A total length between **7:00 and 8:15**.  
-> - [ ] Your video uploaded in a standard format (for example, `.mp4` or `.mov`).  
 > 
-> ### Other files
-> - [ ] At least one n8n workflow (`.json` file) containing a runnable AI component (the entire workflow does not necessarily have to "work").  
-> - [ ] Optional: Any other thing you want to attach if they help tell your story.
-
+> ### **Your Workflow Files**
+> - [ ] At least one n8n workflow containing a runnable AI component.  
+> - [ ] All relevant workflows exported via **three dots → Download**.  
+> - [ ] Any evaluation workflow exported and uploaded if you created one.  
+> 
+> ### **Your Canvas Submission**
+> - [ ] Your video uploaded in a standard format (for example, `.mp4` or `.mov`).  
+> - [ ] All workflow `.json` files uploaded.  
+> - [ ] Any optional supporting files (slides, screenshots, documentation) uploaded if they help tell your story.  
 
 ---
 
