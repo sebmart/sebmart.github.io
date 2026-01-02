@@ -9,9 +9,9 @@ author:
 2. Google account for the class; we will use Google Calendar.
 3. Telegram account (for exploratory content)
 
-You can get connected [here](access_instructions).
+You can get connected [here](https://sebastienmartin.info/aiml901/n8n_access_instructions.html).
 
-Here is the workflow we will build:
+In this recitation, we will use [n8n](https://aiml901-martin.app.n8n.cloud/) to build a **Google Calendar assistant** that can add, update, and delete events by sending a chat message. Here is the workflow that we will build:
 
 ```JSON
 {
@@ -25,10 +25,10 @@ Here is the workflow we will build:
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        80,
-        336
+        64,
+        144
       ],
-      "id": "eb16a397-3583-4edf-ad30-459f25690deb",
+      "id": "a94969ad-1524-4ac4-bfd5-99405df6ad3e",
       "name": "AI Agent"
     },
     {
@@ -46,10 +46,10 @@ Here is the workflow we will build:
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        64,
-        576
+        48,
+        384
       ],
-      "id": "38288631-9752-49ba-af38-f3589e474246",
+      "id": "22ff2bec-98df-4656-aea6-80c8c582de81",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -78,10 +78,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        800,
-        592
+        784,
+        400
       ],
-      "id": "0151bd69-7335-4d52-ad13-5f7b0e918b90",
+      "id": "b98fe860-c351-410e-a8a3-8ca59a3ad639",
       "name": "Get Events",
       "credentials": {
         "googleCalendarOAuth2Api": {
@@ -107,10 +107,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        960,
-        592
+        944,
+        400
       ],
-      "id": "956c3de2-d6ca-4a3e-85c8-d6991202b684",
+      "id": "e7417335-985b-464b-b903-81e3df817cf8",
       "name": "Delete Event",
       "credentials": {
         "googleCalendarOAuth2Api": {
@@ -126,10 +126,10 @@ Here is the workflow we will build:
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        224,
-        576
+        208,
+        384
       ],
-      "id": "6543709c-49b3-49a4-868a-ea32ea6e7911",
+      "id": "772cf6ae-027f-48f2-b510-1b78efd4e7b7",
       "name": "Simple Memory"
     },
     {
@@ -142,10 +142,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        16,
-        192
+        0,
+        0
       ],
-      "id": "7b9c1fc3-285c-4e84-a567-69d374e3c738",
+      "id": "9279a80f-2eaa-497b-99bb-1610705f1fd3",
       "name": "Sticky Note1"
     },
     {
@@ -158,10 +158,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        368,
-        480
+        352,
+        288
       ],
-      "id": "f522ad3b-4e58-4675-993f-20393a2904f0",
+      "id": "65cb353f-3bdf-4522-88eb-590cce82da35",
       "name": "Sticky Note2"
     },
     {
@@ -174,10 +174,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -272,
-        272
+        -288,
+        80
       ],
-      "id": "97cab3f9-5edb-4116-9c63-88a8ee979c79",
+      "id": "76cac4ee-8cbe-4d21-97c2-02a58f3d5a91",
       "name": "Sticky Note3"
     },
     {
@@ -190,10 +190,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -560,
-        512
+        432,
+        -288
       ],
-      "id": "428c56e5-bd38-4404-a321-ad0ab082a2d9",
+      "id": "e4f34ea5-e98a-4820-b9f2-bea50bb1528b",
       "name": "Sticky Note6"
     },
     {
@@ -203,10 +203,10 @@ Here is the workflow we will build:
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.3,
       "position": [
-        -192,
-        336
+        -208,
+        144
       ],
-      "id": "6461bf4e-6360-4abf-8398-dea7083b6dfa",
+      "id": "aa6f07fc-0ef6-4b5c-bbda-43e12ec0e8d1",
       "name": "When chat message received",
       "webhookId": "18f36ad0-60d3-4c86-85ad-8cf88bbecade"
     },
@@ -230,10 +230,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        640,
-        592
+        624,
+        400
       ],
-      "id": "69c90015-e7be-437d-9caa-7c41cdf7a10f",
+      "id": "99cfd4eb-a1c5-446b-ac4a-8fb93bbcb9a0",
       "name": "Create Event",
       "credentials": {
         "googleCalendarOAuth2Api": {
@@ -261,10 +261,10 @@ Here is the workflow we will build:
       "type": "n8n-nodes-base.googleCalendarTool",
       "typeVersion": 1.3,
       "position": [
-        608,
-        752
+        592,
+        560
       ],
-      "id": "4adfbeab-63c0-425b-b5ed-ced0c10ff0f4",
+      "id": "7e3a96da-afca-46f0-b203-48aed3777dd9",
       "name": "Update Event",
       "credentials": {
         "googleCalendarOAuth2Api": {
@@ -275,11 +275,6 @@ Here is the workflow we will build:
     }
   ],
   "connections": {
-    "AI Agent": {
-      "main": [
-        []
-      ]
-    },
     "OpenAI Chat Model": {
       "ai_languageModel": [
         [
@@ -360,17 +355,10 @@ Here is the workflow we will build:
   },
   "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
 ```
-
----
-In this recitation, we will use [n8n](https://aiml901-martin.app.n8n.cloud/) to build a **Google Calendar assistant** that can add, update, and delete events by sending a text message through Telegram
-
-You can watch a video recording of the recitation here:
-![Recitation 1 Recording](https://youtu.be/zn9OrCbJEdY)
 
 ---
 ## Learning Objectives
@@ -381,7 +369,18 @@ You can watch a video recording of the recitation here:
 - See an example of how we can create value using AI.
 
 ---
-# n8n Terminology
+## n8n Homeworks
+
+There will be several n8n homeworks released during the quarter that will ensure that you are following along with and understanding the recitations. These are not meant to trick you, but rather to make sure that you are up to speed.
+
+These recitations will be entirely screenshot-based. The homework will contain approximately 3 questions per recitation. These questions will ask you to run the workflows from the recitation (showing that they ran successfully) or to identify parts of the workflow. 
+
+Although available earlier, all homework will be due at the end of the quarter. However, **we highly recommend answering these questions as you complete the recitations.** This will ensure that you know both the terminology of AI, as well as that n8n is working properly.
+
+---
+# Part 1: Core Content
+
+## n8n Terminology
 
 Let's get logged in to [n8n](https://aiml901-martin.app.n8n.cloud/home/workflows). Once you do so, watch this brief video that introduces some basic terminology and shows you the n8n interface:
 ![n8n YouTube video](https://youtu.be/LktPqqbnbRM)
@@ -392,14 +391,14 @@ In n8n, we will be making workflows.
 - **Triggers** (or trigger nodes) tell us when the workflow should start. This can occur when we hit execute workflow, send a message, receive an email, or more.
 - **Nodes** each perform a specific task, such as manipulating data, sending an email, or reading a calendar.
 - **Connections** tell n8n in what order we want these operations to occur and how our information should flow through the workflow. Think of it like a process flow chart, with our unit of flow being our information.
-- **Credentials** let us connect n8n to other services, such as OpenAI and Google products
+- **Credentials** let us connect n8n to other services, such as OpenAI and Google products.
 
 ---
-# Part 1: Core Content (Google Calendar Agent)
+## Google Calendar Agent
  
 Now we build a **Calendar assistant**. This shows how to go beyond a single LLM response, giving the AI the ability to actually take actions.
 
-We are using Google Calendar because it is easy to implement, but what we are doing here can be extended to other calendars. Microsoft Outlook's calendar also works but has slightly fewer options, so we need to dive a bit deeper in order to have as much functionality as we would like.
+We are using Google Calendar because it is easy to implement, but what we are doing here can be extended to other calendars. Microsoft Outlook's calendar can also work in general, but it is protected by Northwestern, which is currently preventing us from connecting it fully to n8n.
 
 Start a new workspace and let’s get started!
 
@@ -475,7 +474,7 @@ Now, send a chat message asking for the difference between correlation and causa
 ---
 ### Step 6. System Prompting for Google Calendar Agent
 
-Now, we have seen that we are able to change the agent's behavior. _This is extremely powerful_— with a well-thought-out system prompt, you can change GPT5's default behavior into something like interview practice, a storyteller, or more.
+Now, we have seen that we are able to change the agent's behavior. _This is extremely powerful_. With a well-thought-out system prompt, you can change GPT5's default behavior into something like interview practice, a storyteller, or more.
 
 In our case, we want it to behave as a calendar agent that can update our schedule. There are some tricks to this that are covered in the exercises below. For now, begin to think about what you want the agent's behavior to be like. If you say, "create an event tonight," should it clarify the specific timing or perhaps assume that the event is from 6–9 p.m.? If you don't specify the day, should it assume that you mean today?
 
@@ -555,16 +554,16 @@ Now, try to delete an event. It should work!
 	2. Now, try to do the same thing for the `Update Event` tool.
 
 ---
-## For the Final:
+## For the Homework:
 
-The following topics may appear on the final exam:
+The following topics may appear:
 
 - System prompting
     - Changing the tone of an LLM
     - Providing instructions on using tools efficiently
 - Use of the `AI Agent` node
 - `On chat message` trigger
-- Use of the Google Calendar tool `Add Event` tool.
+- Use of the Google Calendar tool `Create Event`, `Get Events`, `Delete Event`, and `Update Event` tools.
 
 ---
 # Part 2: Exploratory Content (Connecting to Telegram)
@@ -574,6 +573,358 @@ Any content in this section will not be covered on the final exam. However, it i
 For now, we will show how to connect to Telegram, a mobile messaging app. You can also connect services like Slack and WhatsApp, but Telegram is easier to get set up. We will use this to replace our `Chat Trigger` node.
 
 To begin, follow the directions under the `Telegram` section [here.](https://sebastienmartin.info/aiml901/n8n_access_instructions.html)
+
+The entire workflow, configured for Telegram, can be found here:
+
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "=You are a calendar assistant. Your job is to reliably execute the user’s intent with Google Calendar tools.\n\nCurrent date/time: {{ $now }}\n\nDefaults:\n- If no duration: 1 hour.\n- If no start time: 9:00 AM local.\n\nExecution Rules (always follow, in order):\n1) Parse intents in sequence (delete → update → create). Execute each fully before the next.\n2) For Delete or Update: NEVER assume an event ID. First run “Get Events” with the smallest plausible window and summary filter, pick the best match, then pass its ID to the action.\n3) If multiple matches exist, ask one clarifying question.\n4) When replacing attendees, use sendUpdates=\"none\" unless the user asks to notify.\n5) If both a deletion and a creation are requested in one message, DELETE first, then CREATE.\n\nHeuristics:\n- “tonight”, “this evening” → 17:00–23:59 today for search.\n- “this event” after we just created/returned an event → use the most recently returned event’s ID.\n- If user asks “delete this” without a time, search today ± 1 day for events with that summary.\n\nExample:\nUser: “Delete the ‘Soccer’ event tonight, then create ‘Pottery’ at 8:45 pm.\nPlan:\n  a) Get Events(timeMin=today 17:00, timeMax=today 23:59, summary contains “Soccer”)\n  b) Delete Event(eventId=<best match>)\n  c) Create Event (summary=\"Pottery\", start=today 20:45, end=today 21:45)\nExecute the plan."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        -368,
+        432
+      ],
+      "id": "5a4ff9d3-1330-41c8-b40c-89dd7c3ea9a6",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "options": {
+          "reasoningEffort": "low"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -384,
+        672
+      ],
+      "id": "ae7c81f2-9f60-429e-b789-8788fe64ee6c",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Find events by time window; you may also filter by summary text. The default period should be starting today, for a week. \n\nUse this before any Delete/Update to retrieve the correct eventId.",
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "alexjensenaiml901@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alexjensenaiml901@gmail.com"
+        },
+        "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+        "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+        "options": {
+          "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        256,
+        688
+      ],
+      "id": "21feab3f-e689-48c9-adb7-870eb44cc040",
+      "name": "Get Events",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Deletes an event by eventId. You must run Get Events to obtain eventId first.",
+        "operation": "delete",
+        "calendar": {
+          "__rl": true,
+          "value": "alexjensenaiml901@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alexjensenaiml901@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        384,
+        688
+      ],
+      "id": "e0ab5ae4-9ed6-4eba-adbd-1cafdf08e832",
+      "name": "Delete Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "Add something here",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -224,
+        672
+      ],
+      "id": "bf5e64a6-f6cf-461b-a26c-a97dff9bf156",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 1 - Getting Started with n8n (Exploratory Content)",
+        "height": 512,
+        "width": 576,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        -96
+      ],
+      "id": "fe7bcb96-ef33-4e6a-afe7-a5d596e5a44e",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Create an event.",
+        "calendar": {
+          "__rl": true,
+          "value": "alexjensenaiml901@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alexjensenaiml901@gmail.com"
+        },
+        "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+        "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "additionalFields": {
+          "attendees": [],
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        128,
+        688
+      ],
+      "id": "1ed5a64c-deca-40b3-b4bc-9013462bae5b",
+      "name": "Create Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Update an event by eventId. You must run Get Events to obtain eventId first.",
+        "operation": "update",
+        "calendar": {
+          "__rl": true,
+          "value": "alexjensenaiml901@gmail.com",
+          "mode": "list",
+          "cachedResultName": "alexjensenaiml901@gmail.com"
+        },
+        "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+        "updateFields": {
+          "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        688
+      ],
+      "id": "d3c250fe-4ef0-48fc-8347-61a353d5288b",
+      "name": "Update Event",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "4bIt680K4WRhrm6s",
+          "name": "Alex Student Google Calendar"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {
+          "userIds": "ADD YOUR USER ID HERE"
+        }
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -608,
+        432
+      ],
+      "id": "425de0e2-9077-4390-8254-a527a76d63b1",
+      "name": "Telegram Trigger",
+      "webhookId": "448f1a54-03b6-4b6d-8869-20ef105c28c1",
+      "credentials": {
+        "telegramApi": {
+          "id": "Gs2R5t0k3E1VXnyq",
+          "name": "Alex Telegram account (R1)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "Add your User ID here",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        432
+      ],
+      "id": "8af7c1d9-7922-4f84-a4a5-cf219e760be8",
+      "name": "Send a text message",
+      "webhookId": "7a2fc114-0b22-4170-9bd5-0b829e407b17",
+      "credentials": {
+        "telegramApi": {
+          "id": "Gs2R5t0k3E1VXnyq",
+          "name": "Alex Telegram account (R1)"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Events": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update Event": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
+
+Note that there are several places where you will need to add information about your bot and your account. This is explained below.
 
 ---
 ### Step 1. Trigger: Telegram
