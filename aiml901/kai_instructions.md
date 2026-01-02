@@ -22,13 +22,11 @@ To access Kai, create an account on the _NOYESAI Platform_ using this link: [htt
 > [!warning] Important
 > You must use your **Kellogg email** to sign up, or you won’t have access to Kai. Also, check your **junk email** folder if the verification code doesn’t arrive.
 
-Once your account is set up, log in and look for the “case” **AIML-901 Lab – AI Assistants**.  
+Once your account is set up, log in and look for the case **AIML901 AgentOps**.
 
 ![[Pasted image 20251006172910.png]]
 
-If you don’t see it, double-check that you used your official Kellogg email (and create another account if needed). If the issue persists, [reach out to Alex, our TA](mailto:alexander.jensen1@kellogg.northwestern.edu).
-
-You can access Kai either by clicking on `AIML-901 Lab – AI Assistants` or directly via [this link](https://platform.noyesai.com/case-share/ae93e72a-d0ad-4065-b48c-9487bc8cf75d/aiml901-lab-ai-assistants).
+If you don't see it, double-check that you used your official Kellogg email (and create another account if needed). If the issue persists, [reach out to Alex, our TA](mailto:alexander.jensen1@kellogg.northwestern.edu).
 
 ---
 
@@ -36,13 +34,13 @@ You can access Kai either by clicking on `AIML-901 Lab – AI Assistants` or dir
 
 Before each class, a _Kai homework_ will be assigned. You’ll have a guided conversation with Kai to prepare for the next class, and you’ll submit your conversation on Canvas.
 
-Homework is designed to be quick (around 30 minutes) and engaging. It helps you get the most out of class—and can even be fun!
+Homework is designed to be quick (around 1 hour) and engaging. It helps you get the most out of class—and can even be fun!
 
 - Homework is graded for **effort, not results.** You just need to engage with Kai and the material! You’ll receive full credit if you engage seriously and spend the time, regardless of accuracy.  
 - Homework is typically **available starting the evening of the previous class and due the evening before the next one.**  
 - For example, if classes are on Tuesday and Friday, the Friday homework becomes available Tuesday evening and remains open until late Thursday evening. This schedule allows us to review and incorporate your responses before class.
 
 To begin, simply **ask Kai to start the homework.**  
-The session is interactive and usually takes about 30 minutes. Kai will let you know when the homework ends. You can pause at any time and return later, as long as you don’t delete the chat.
+The session is interactive and usually takes about 1 hour. Kai will let you know when the homework ends. You can pause at any time and return later, as long as you don’t delete the chat.
 
 
