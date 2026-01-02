@@ -14,8 +14,6 @@ Each recitation will consist of **core content** and possibly **exploratory cont
 
 We will have 5–10 minute demos/"create with me" periods, where you will either see a workflow or build it along with the instructor, followed by time to explore on your own and ask/answer questions.
 
-Recitations will be in-person on Wednesdays from 10:30-11:30 a.m. Central Time, followed by office hours from 11:30–12:00 p.m. where you can ask about the recitation, class project, or anything else. There will also be a remote option on Zoom on Wednesdays from 6:00–7:00 p.m. Central Time, followed office hours from 7:00–7:30 p.m..
-
 ---
 # Recitation Homeworks
 
