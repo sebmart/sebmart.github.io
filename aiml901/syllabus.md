@@ -163,7 +163,7 @@ There are 10 classes—two per week—organized into three modules. There is als
 *Build a deep understanding of genAI and how AI companies go from raw web data to ChatGPT and powerful AI agents.*
 
 - **Class 1: Let's Get Building**  
-  Dive straight into action by creating your first AI agent while exploring course deliverables and expectations.  
+  Dive straight into action using and creating AI agents while exploring course deliverables and expectations.  
 - **Class 2: Pretraining a Large Language Model**  
   Train your own LLM from scratch to demystify how these powerful models actually learn from data.  
 - **Class 3: Post-training and Alignment**  
