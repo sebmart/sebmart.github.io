@@ -16,12 +16,13 @@ This document is organized into two main sections:
 
 # Before the Class
 
-You need to complete **four tasks** before our first class:
+You need to complete **five tasks** before our first class:
 
 1. **Create your n8n account** (you should have received an invite)
 2. **Choose a Google account** to use with n8n
 3. **Set up your OpenAI API access** (including verification and adding credit)
 4. **Activate your Lovable coupon** (3-month free Pro access for Kellogg students)
+5. **Join the Slack channel** for course discussions and Q&A
 
 ---
 
@@ -89,6 +90,16 @@ Lovable is a tool that lets you create apps and websites using AI. Kellogg stude
 > You may be asked to enter payment details, but you can **cancel immediately after activating** and still keep your 3 months of free access. We recommend doing this right away so you don't forget!
 
 If you already have a paid Lovable account, you'll need to create a new workspace to redeem the code.
+
+---
+
+## 5. Slack Channel
+
+Our Slack channel is the main place to ask questions, get help from the teaching team, and share resources with your classmates. It's a public channel on the Kellogg Slack:
+
+**`#aiml901-agentops`**
+
+Make sure to join before the first class!
 
 ---
 # Connecting During the Class
