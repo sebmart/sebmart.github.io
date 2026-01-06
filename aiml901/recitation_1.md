@@ -375,7 +375,7 @@ There will be several n8n homeworks released during the quarter that will ensure
 
 These recitations will be entirely screenshot-based. The homework will contain approximately 3 questions per recitation. These questions will ask you to run the workflows from the recitation (showing that they ran successfully) or to identify parts of the workflow. 
 
-Although available earlier, all homework will be due at the end of the quarter. However, **we highly recommend answering these questions as you complete the recitations.** This will ensure that you know both the terminology of AI, as well as that n8n is working properly.
+Homework will be released each Tuesday at 11:59 p.m. the day before the corresponding recitation and will be due the following Tuesday at 11:59 p.m.. However, **we highly recommend answering these questions as you complete the recitations.** This will ensure that you know both the terminology of AI, as well as that n8n is working properly.
 
 ---
 # Part 1: Core Content
