@@ -976,8 +976,8 @@ Navigate the ecosystem of state-of-the-art AI tools and companies shaping the fu
 
 ---
 
-## Module 3: From AI to Impact  
-*Bridge the gap between powerful AI tools and measurable business impact through evaluation, strategy, and change management.*
+## Module 2: Leveraging AI for Impact
+*Bridge the gap between powerful AI tools and measurable business impact through agent ops, evaluation, strategy, and change management.*
 
 ### Class 7: Evaluation  
 **Date:** Friday, November 7th  

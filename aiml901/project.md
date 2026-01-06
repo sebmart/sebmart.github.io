@@ -15,7 +15,7 @@ Although the project is graded individually, the underlying idea may be shared w
 
 Agentic AI refers to systems that do more than generate a one-off answer: they use reasoning, tools, and workflows to support or automate parts of a process. In this project, you will design such a process to address a meaningful task in a company, organization, or personal domain where you have enough insight to understand the real constraints, goals, and opportunities.
 
-The outcome should be both technically sound and managerially grounded. From a technical perspective, you will build a working proof-of-concept in n8n that uses AI in a non-trivial way. From a managerial perspective, you will use the frameworks from **Module 3 (“From AI to Impact”)** to explain what kind of value your system creates, how it integrates into a broader process, what risks it entails, and how it might actually be deployed.
+The outcome should be both technically sound and managerially grounded. From a technical perspective, you will build a working proof-of-concept in n8n that uses AI in a non-trivial way. From a managerial perspective, you will use the frameworks from **Module 2 ("Leveraging AI for Impact")** to explain what kind of value your system creates, how it integrates into a broader process, what risks it entails, and how it might actually be deployed.
 
 Because the course is short, you will need to choose a focused, well-defined idea and iterate from there. Choosing a domain you already know makes this significantly easier.
 
@@ -42,7 +42,7 @@ Your submission on Canvas will include the following components.
 
 ### Deliverable 1: A pitch video (7:00–8:15)
 
-You will create a self-contained video that feels like a professional pitch to decision-makers in your chosen context. The video must explain the problem, the AI-enhanced solution, the value and impact using ideas from **Module 3**, a live demonstration of your workflow, your evaluation approach, and a realistic path to implementation.
+You will create a self-contained video that feels like a professional pitch to decision-makers in your chosen context. The video must explain the problem, the AI-enhanced solution, the value and impact using ideas from **Module 2**, a live demonstration of your workflow, your evaluation approach, and a realistic path to implementation.
 
 ### Deliverable 2: Your n8n workflow(s)
 
@@ -62,7 +62,7 @@ The video is the centerpiece of your project. Think of it primarily as a **pitch
 
 Your video should begin with a clear, engaging explanation of the problem you are addressing. Describe the organizational context, the pain point, and why this problem is worth solving. You should make it easy for a non-technical decision-maker in that context to understand what is at stake.
 
-You should then introduce your AI-powered solution as you would in a pitch meeting. Rather than focusing first on the architecture, focus on the **benefit**: what will this system enable? How will it change the way people work, decide, or experience a process? Connect this to the ideas from **Module 3**, such as improvements in quality, speed, cost, risk reduction, or user experience.
+You should then introduce your AI-powered solution as you would in a pitch meeting. Rather than focusing first on the architecture, focus on the **benefit**: what will this system enable? How will it change the way people work, decide, or experience a process? Connect this to the ideas from **Module 2**, such as improvements in quality, speed, cost, risk reduction, or user experience.
 
 Once the value is framed, you will explain how the solution works. At this stage, it is appropriate to walk through the key components of your workflow, but you should keep linking the technical details back to the impact story. You are not just saying “I used n8n and an AI node,” but rather “Here is how this workflow helps achieve the outcome I just described.”
 
@@ -70,14 +70,14 @@ Your video must include a **live demonstration** of the system. During this demo
 
 You must also include a discussion of your **evaluation process**, again using an impact mindset rather than purely technical metrics. Explain how you tested your system, how you chose your test cases, and what you learned from them. Show at least a few concrete examples in the video: the inputs you used, the outputs you obtained, and why you deem them satisfactory or not.
 
-Finally, your pitch should address **implementation and change management**. Using the language and concepts from Module 3, explain how this AI-driven process could be integrated into a broader system, what changes people or organizations would need to make, what risks or failure modes you anticipate, and how you might mitigate them. A strong pitch makes it clear not only that something is technically possible, but that it is worth doing and realistically implementable.
+Finally, your pitch should address **implementation and change management**. Using the language and concepts from Module 2, explain how this AI-driven process could be integrated into a broader system, what changes people or organizations would need to make, what risks or failure modes you anticipate, and how you might mitigate them. A strong pitch makes it clear not only that something is technically possible, but that it is worth doing and realistically implementable.
 
 ## 4.2. Minimum Expectations for the Video
 
 At a minimum, your video must:
 
 - Clearly state the problem, the context, and the stakeholders.  
-- Explain what your system does and why that matters, using value-oriented thinking from Module 3.  
+- Explain what your system does and why that matters, using value-oriented thinking from Module 2.  
 - Show a live demo of your n8n workflow, including the AI component running.  
 - Demonstrate your evaluation process with concrete examples.  
 - Discuss how the solution could be implemented and how it would create value in practice.
@@ -162,7 +162,7 @@ Your grade will be determined using the following rubric. Notice that **impact a
 
 | Category | Description | Weight |
 |---------|-------------|--------|
-| **Potential for Impact** | You identify a meaningful, well-defined problem in a context you understand and make a convincing case that your solution creates real value. You explicitly use the ideas from **Module 3** (e.g., types of value, integration into a broader process, risk and change management). Your pitch should make a decision-maker want to seriously consider your idea. | **40%** |
+| **Potential for Impact** | You identify a meaningful, well-defined problem in a context you understand and make a convincing case that your solution creates real value. You explicitly use the ideas from **Module 2** (e.g., types of value, integration into a broader process, risk and change management). Your pitch should make a decision-maker want to seriously consider your idea. | **40%** |
 | **Prototype** | You present a working AI workflow in n8n. The workflow includes a runnable AI component and reflects careful thought about the design and the evaluation of the system. The prototype does not need to be complex, but it should show that you iterated and that you can connect technical choices to the problem you are solving. | **40%** |
 | **Presentation** | Your video is clear, engaging, and structured like a real pitch: problem, value, solution, evidence (demo + evaluation), and path to implementation. You communicate in a way that is accessible to non-technical stakeholders while still being honest about the system’s capabilities and limitations. | **20%** |
 
@@ -177,7 +177,7 @@ This is just a suggested pace—feel free to adapt as needed. The key is steady 
 | **1** | **Brainstorm.** Think about domains you know well—a previous company, internship, personal workflow, or startup idea. The best projects come from deep familiarity with a real problem. Don't rush to commit; explore a few directions. |
 | **2** | **Start prototyping.** Build something simple in n8n with the AI Agent node. It doesn't need to be your final idea—you can still pivot. The goal is to get comfortable with the platform. |
 | **3** | **Iterate.** Get more serious about your workflow. Ask for help in office hours or on Slack if you're stuck. Refine your idea based on what you're learning. |
-| **4** | **Focus on value.** Start thinking about your pitch: why does this matter? Use what you learn in Module 3 (evaluation, AI value creation) to strengthen your project. Prepare to pitch your project to Kai for a class competition (Pitch Kai homework due Week 5). |
+| **4** | **Focus on value.** Start thinking about your pitch: why does this matter? Use what you learn in Module 2 (evaluation, AI value creation) to strengthen your project. Prepare to pitch your project to Kai for a class competition (Pitch Kai homework due Week 5). |
 | **5** | **Finalize.** Complete your Pitch Kai homework, iterate on feedback, and polish your workflow and pitch narrative. |
 | **Exam Week** | Record your final pitch video (7:00–8:15). |
 
@@ -199,7 +199,7 @@ You are not expected to do this in isolation. You have several resources:
 
 ## 10.1. Advice for a Strong Project
 
-Strong projects usually start from a simple but sharp problem. When you understand a domain deeply, you can explain the value of your idea in a way that feels credible and specific. Use the lenses from Module 3—such as efficiency, quality, risk, user experience, and organizational change—to structure your thinking. Ask yourself: if I were a decision-maker in this context, would this pitch convince me?
+Strong projects usually start from a simple but sharp problem. When you understand a domain deeply, you can explain the value of your idea in a way that feels credible and specific. Use the lenses from Module 2—such as efficiency, quality, risk, user experience, and organizational change—to structure your thinking. Ask yourself: if I were a decision-maker in this context, would this pitch convince me?
 
 Avoid the temptation to chase complexity for its own sake. A simple workflow that clearly creates value and is thoughtfully evaluated is much more impressive than a sprawling system that is hard to explain or justify.
 
@@ -224,7 +224,7 @@ In particular:
 > 
 > ### **Your Pitch Video**
 > - [ ] A clear explanation of the problem, context, and stakeholders.  
-> - [ ] A value-focused story using Module 3 ideas (what kind of value, for whom, and in which process).  
+> - [ ] A value-focused story using Module 2 ideas (what kind of value, for whom, and in which process).  
 > - [ ] A description of the AI-powered solution that ties technical elements to the impact story.  
 > - [ ] A **live demonstration** of your workflow, showing the AI component running in real time.  
 > - [ ] A demonstration and explanation of your **evaluation process**, with concrete examples.  
@@ -342,4 +342,4 @@ This workflow will allow you to start experimenting with system messages, user d
 
 ---
 
-**Enjoy building your project.** Treat this as a chance to practice exactly what Module 3 is about: going from “AI is possible” to “AI is valuable, implementable, and worth pitching.”  
+**Enjoy building your project.** Treat this as a chance to practice exactly what Module 2 is about: going from “AI is possible” to “AI is valuable, implementable, and worth pitching.”  
