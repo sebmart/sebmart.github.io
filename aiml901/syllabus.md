@@ -154,42 +154,39 @@ I've done my best to keep costs low. Expected costs/resources:
 
 # Class Overview
 
-There are 10 classes—two per week—organized into three modules. There is also one recitation per week. The precise content of each class is subject to modifications, as we are updating the content constantly to match the speed of AI improvement.
+There are 10 classes—two per week—organized into two modules. There is also one recitation per week. The precise content of each class is subject to modifications, as we are updating the content constantly to match the speed of AI improvement.
 
 > [!note] E/W Section
 > Classes are combined into five 3-hour sessions (Session 1 = Classes 1–2, Session 2 = Classes 3–4, etc.). Recitations are held live on Zoom.
 
-## Module 1: How AI Works  
-*Build a deep understanding of genAI and how AI companies go from raw web data to ChatGPT and powerful AI agents.*
+- **Class 1: Let's Get Building**
+  Dive straight into action using and creating AI agents while exploring course deliverables and expectations.
 
-- **Class 1: Let's Get Building**  
-  Dive straight into action using and creating AI agents while exploring course deliverables and expectations.  
-- **Class 2: Pretraining a Large Language Model**  
-  Train your own LLM from scratch to demystify how these powerful models actually learn from data.  
-- **Class 3: Post-training and Alignment**  
-  Discover the crucial steps that transform a raw LLM into a helpful, safe, and reliable AI assistant.  
-- **Class 4: AI Agents**  
-  How AI agents work (we finally understand n8n fully!), how to give them tools (RAG, etc.), and how to use them.  
+## Module 1: From Zero to the AI Frontier
+*Build a deep understanding of genAI, how AI companies go from raw web data to ChatGPT and powerful AI agents, and how to control them.*
 
-## Module 2: What AI Can Do  
-*While you ramp up with your project, this module will explore cutting-edge AI tools and discuss how to leverage them*.
+- **Class 2: Pretraining a Large Language Model**
+  Train your own LLM from scratch to demystify how these powerful models actually learn from data.
+- **Class 3: Post-training and Alignment**
+  Discover the crucial steps that transform a raw LLM into a helpful, safe, and reliable AI assistant.
+- **Class 4: Prompting LLMs**
+  Now that the AI company has created a useful LLM, let's take control of it—this hands-on session explores prompting techniques across several use cases, a skill fundamental to everything in this class.
+- **Class 5: AI Agents**
+  How AI agents work (we finally understand n8n fully!), how to give them tools (RAG, etc.), and how to use them. We'll also have significant hands-on time with coding agents like Codex and Claude Code, which represent the frontier of agentic AI.
+- **Class 6: The AI Frontier**
+  An exploration of the state-of-the-art AI technologies and where all of this might be going.
 
-- **Class 5: Leveraging AI**  
-  Deep-dive in the "ChatGPT" product, and prompting techniques.
-- **Class 6: The AI Frontier**  
-  An exploration of the state-of-the-art AI technologies and where all of this might be going. Hands-on with the Lovable agent.  
+## Module 2: Leveraging AI for Impact
+*Bridge the gap between powerful AI tools and measurable business impact through agent ops, evaluation, strategy, and change management.*
 
-## Module 3: From AI to Impact  
-*Bridge the gap between powerful AI tools and measurable business impact through evaluation, strategy, and change management.*
-
-- **Class 7: Evaluation**  
-  Learn why evaluation pipelines are often more critical than the agents themselves for successful AI deployment.  
-- **Class 8: AgentOps Case Study**  
-  Consulting for Proxima Health Systems - What's necessary for an AI project's success?
-- **Class 9: AgentOps**  
-  How do we drive impact with AI? How should companies adapt to the AI disruptions?
-- **Class 10: Project Showcase & Farewell**  
-  The bittersweet last class! We will go over the project deliverables, and Kai will be the judge of a project pitch competition! We will give you tips on staying up to date with the field.
+- **Class 7: AgentOps**
+  Introduction to the Proxima Health case—we'll design an agent for the company in this hands-on class.
+- **Class 8: Evaluation**
+  Learn how to automatically evaluate an AI project, and start thinking about continuous improvement and AI strategy.
+- **Class 9: AgentOps and Change Management**
+  Taking multiple perspectives to think deeply about what truly leads to the success of an AI project.
+- **Class 10: Project Showcase & Farewell**
+  The bittersweet last class! We will go over the project deliverables, and Kai will be the judge of a project pitch competition! We will give you tips on staying up to date with the field, plus one last hands-on session.
 
 ## Recitations
 
