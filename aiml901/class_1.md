@@ -3,7 +3,11 @@ title: "Class 1: Let's get building!"
 author:
   - Sébastien Martin
 ---
-## What you already prepared
+
+If you want to replicate what we did in the lecture, follow the instructions below.
+
+---
+## What you should already have after Homework 1
 
 - An OpenAI API key (it's like a password for your OpenAI account).
 - A Google Account.
@@ -12,9 +16,9 @@ author:
 If you've not done it yet, [instructions are available here](https://sebastienmartin.info/aiml901/software_setup.html).
 
 ---
-## What's needed for today
+## What's needed to replicate what we saw in the lecture
 
-- Copy the following code below into a new n8n workflow:
+- Copy the following code below into a new n8n workflow (you can click on the "Copy code" button that appears at the top right of the code block when you hover over it). Don't be afraid of this code—we will never write it ourselves! This is just a way to easily transfer an n8n workflow:
 ```json
 {
   "nodes": [
@@ -422,3 +426,7 @@ If you've not done it yet, [instructions are available here](https://sebastienma
 | ------------ | ------------ | --------------- | ------------------ |
 |              |              |                 |                    |
 
+---
+## Next steps
+
+After that, all you need to do is follow the instructions written in the n8n workflow step by step.
