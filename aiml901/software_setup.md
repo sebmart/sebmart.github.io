@@ -126,7 +126,7 @@ We will show you how to get set up with Google Calendar, but the same idea holds
 ---
 ### Getting Connected to Telegram
 
-We will use Telegram to message n8n since it has a great interface for connecting chatbots.
+We can use Telegram to message n8n since it has a great interface for connecting chatbots.
 
 Download the Telegram app on your phone to get started.
 
@@ -136,4 +136,4 @@ Download the Telegram app on your phone to get started.
 4. In Telegram, the message begins with `Done! Congratulations on your new bot. You will find it at`, followed by a URL. Click on this link and hit `Start` to begin a chat with your bot.
 
 > [!info] Telegram Privacy
-> When you make a Telegram bot, this is technically accessible by anyone who knows the bot's username. This means that other people could potentially message your bot. When we are linking an n8n workflow to Telegram, we should ensure that we only move forward if the message is from a whitelisted user (or, more restrictively, just yourself). [Here is a great video](https://www.youtube.com/watch?v=QZ93nQGwnPg) showing both how to set up Telegram with n8n and also how to make sure that it only accepts messages from valid users. We will do a similar but slightly easier step in Recitation 1.
+> When you make a Telegram bot, this is technically accessible by anyone who knows the bot's username. This means that other people could potentially message your bot. When we are linking an n8n workflow to Telegram, we should ensure that we only move forward if the message is from a whitelisted user (or, more restrictively, just yourself). [Here is a great video](https://www.youtube.com/watch?v=QZ93nQGwnPg) showing both how to set up Telegram with n8n and also how to make sure that it only accepts messages from valid users. We will show a similar but slightly easier step in Recitation 1.
