@@ -3,6 +3,10 @@ title: "Project: Agentic AI for Real-World Impact"
 author:
   - Sébastien Martin, Alex Jensen
 ---
+
+> [!tip] See what past students built!
+> Explore the [Project Showcase](https://sebastienmartin.info/aiml901/showcase/) featuring projects from course alumni—complete with pitch videos, descriptions, and real-world AI applications across industries.
+
 This project is the main deliverable of the course and represents your opportunity to design a thoughtful, practical, and innovative use of **agentic AI**. Your goal is to select a real problem in a setting you understand well, create a functioning AI-powered workflow—implemented at least in part using **n8n**—and present the idea, the prototype, and the path to impact through a polished **pitch video**.
 
 The video is not just a technical demo. It is a **pitch to real stakeholders** (or potential investors) explaining why your idea matters, how it creates value, and how it could realistically be implemented. The technical prototype is an important part of this, but it is only one piece of the broader story.

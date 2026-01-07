@@ -3,6 +3,10 @@ title: Syllabus
 author:
   - Sébastien Martin
 ---
+
+> [!tip] See what past students built!
+> Explore the [Project Showcase](https://sebastienmartin.info/aiml901/showcase/) featuring projects from course alumni—complete with pitch videos, descriptions, and real-world AI applications across industries.
+
 # AIML-901OP-5 AI Foundations for Managers - AgentOps
 
 ![[course_canvas_vignette.png|400]]
