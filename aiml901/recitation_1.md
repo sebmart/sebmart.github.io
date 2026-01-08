@@ -361,6 +361,10 @@ In this recitation, we will use [n8n](https://aiml901-martin.app.n8n.cloud/) to 
 ```
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 1 Recording](https://youtu.be/UVnL2dgAouE)
+
+---
 ## Learning Objectives
 
 - Learn the basics of **nodes** and **connections** in n8n.
