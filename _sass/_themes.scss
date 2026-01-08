@@ -20,18 +20,10 @@
   --global-back-to-top-bg-color: rgba(#{red($black-color)}, #{green($black-color)}, #{blue($black-color)}, 0.4);
   --global-back-to-top-text-color: #{$white-color};
 
-  --global-tip-block: #42b983;
-  --global-tip-block-bg: #e2f5ec;
-  --global-tip-block-text: #215d42;
-  --global-tip-block-title: #359469;
-  --global-warning-block: #e7c000;
-  --global-warning-block-bg: #fff8d8;
-  --global-warning-block-text: #6b5900;
-  --global-warning-block-title: #b29400;
-  --global-danger-block: #c00;
-  --global-danger-block-bg: #ffe0e0;
-  --global-danger-block-text: #600;
-  --global-danger-block-title: #c00;
+  --global-tip-block: #{$purple-color};
+  --global-tip-block-bg: #faf4fa;
+  --global-tip-block-text: #333;
+  --global-tip-block-title: #{$purple-color};
 
   #light-toggle-dark,
   #light-toggle-light {
@@ -75,10 +67,10 @@ html[data-theme="dark"] {
   --global-back-to-top-bg-color: rgba(#{red($white-color)}, #{green($white-color)}, #{blue($white-color)}, 0.5);
   --global-back-to-top-text-color: #{$black-color};
 
-  --global-tip-block: #42b983;
-  --global-tip-block-bg: #e2f5ec;
-  --global-tip-block-text: #215d42;
-  --global-tip-block-title: #359469;
+  --global-tip-block: #{$cyan-color};
+  --global-tip-block-bg: #1a3a44;
+  --global-tip-block-text: #a8e0f0;
+  --global-tip-block-title: #{$cyan-color};
   --global-warning-block: #e7c000;
   --global-warning-block-bg: #fff8d8;
   --global-warning-block-text: #6b5900;

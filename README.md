@@ -1,8 +1,9 @@
 # sebmart.github.io
 
-This repository hosts Sébastien Martin’s personal website, built with
-[Jekyll](https://jekyllrb.com/) on top of the
-[al-folio](https://alshedivat.github.io/al-folio/) theme.
+This repository hosts Sébastien Martin's personal website, built with
+[Jekyll](https://jekyllrb.com/). Originally forked from the
+[al-folio](https://alshedivat.github.io/al-folio/) theme, though it has since
+diverged significantly.
 
 ## Content overview
 - Home (`_pages/about.md`) surfaces the main biography, news highlights, and links
