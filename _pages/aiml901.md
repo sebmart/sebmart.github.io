@@ -23,4 +23,7 @@ What makes this course special is watching students transform their domain exper
     With AIML 901 students after class.
 </div>
 
-If you're curious about the course, check out the [syllabus](/aiml901/syllabus.html) for the full details. You can also explore the [project showcase](/aiml901/showcase/) to see what past students have built—complete with pitch videos and real-world AI applications across industries. Feel free to [reach out](mailto:sebastien.martin@kellogg.northwestern.edu) if you'd like to learn more!
+> **Want to learn more?**
+>
+> Check out the [syllabus](/aiml901/syllabus.html) for full course details, or explore the [project showcase](/aiml901/showcase/) to see what past students have built—complete with pitch videos and real-world AI applications across industries. Feel free to [reach out](mailto:sebastien.martin@kellogg.northwestern.edu) if you have questions!
+{: .block-tip }
