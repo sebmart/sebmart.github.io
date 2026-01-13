@@ -12,10 +12,6 @@ In Lecture 1, you saw a small example of this with class emails with questions a
 While a professor might want to be more accessible than this, we can imagine many scenarios where the head of a team does not need to receive all requests unless absolutely necessary. We simply use this scenario since it is one we know best!
 
 ---
-You can watch a video recording of the recitation here:
-![Recitation 2 Recording](https://www.youtube.com/watch?v=rqAwlg62Utw)
-
----
 ## You'll Need...
 
 1. Google Sheets connection
@@ -26,7 +22,8 @@ You can watch a video recording of the recitation here:
 ## Learning Objectives
 
 - A deeper understanding of n8n and node input and output with JSON expressions.
-- Learn about branching and build routing with `If`, `Wait`, and Gmail/Google Sheets nodes.
+- Learn about branching and build routing with `If` and Gmail/Google Sheets nodes.
+- Understand and problem-solve errors in n8n.
 
 ---
 # Part 1: Core Content 
@@ -56,6 +53,7 @@ Example:
   "students": ["Maya", "John", "Priya"]
 }
 ```
+
 3. **Referencing values**: You get values by following the keys.
 - In the first example, `name` → `"Albert Einstein"`.
 - In the second example, we can refer to the second element of the array "students" (which is "John") with the expression `students[1]`. For the third element, we would choose `students[2]`. This may seem counterintuitive, but arrays are numbered starting from 0.
@@ -160,199 +158,6 @@ Click on it and it will turn purple. If you try to send a different chat message
 To see the use of this further, look at the AI Agent node after the chat trigger. If you hit the `Execute Workflow` button and do not unpin the chat trigger, it will receive the same input each time. We can also execute the node by itself; click into it and press `Execute step`. Note that this only works when the input is available, which you will see on the lefthand side of the screen when you click into the node. We will practice this as we make our agent.
 
 ---
-### Exercise
-
-You will be given a workflow and you should use your JSON skills to find the error and fix it. Copy and paste in this workflow:
-
-```JSON
-{
-  "nodes": [
-    {
-      "parameters": {
-        "options": {
-          "responseMode": "lastNode"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
-      "typeVersion": 1.3,
-      "position": [
-        -304,
-        0
-      ],
-      "id": "bd9a4ec0-1e97-47ea-9a97-1889a390f1a9",
-      "name": "When chat message received",
-      "webhookId": "0a6de3a1-29f0-481d-97ce-9e55298d7bd7"
-    },
-    {
-      "parameters": {
-        "mode": "raw",
-        "jsonOutput": "={\n  \"message\": \"{{ $json.chatInput }}\",\n  \"students\": [\n    {\"name\": \"Romeo\"},\n    {\"name\": \"Juliet\"},\n    {\"name\": \"Mercutio\"}\n  ]\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -96,
-        0
-      ],
-      "id": "c6005c6a-e7ba-44db-b197-e34b575300cd",
-      "name": "Build profile"
-    },
-    {
-      "parameters": {
-        "sendTo": "={{ $json.email }}",
-        "subject": "Class Roster",
-        "emailType": "text",
-        "message": "=The students in your class are {{ $json.students[0].name }}, {{ $json.students[1].name }}, and {{ $json.students[2].name }}.\n\nThe message you sent them is:\n\n{{ $json.message }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
-      "position": [
-        112,
-        0
-      ],
-      "id": "1104fbf2-41c0-45e4-9c55-d975d0f40f86",
-      "name": "Send a message",
-      "webhookId": "aba873ec-57da-4766-acfc-86beebc5acf5",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "06JM4io9KZSonBii",
-          "name": "Sebastien Gmail account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 2 - n8n Deep Dive",
-        "height": 464,
-        "width": 576
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -560,
-        -544
-      ],
-      "id": "1624390a-2e72-4777-9301-a895d43e1feb",
-      "name": "Sticky Note6"
-    },
-    {
-      "parameters": {
-        "content": "## Questions\n\n1. What node do we see an error in?\n2. Try to fix the error. What needs to change? Try to do it yourself, but remember that the AI Assistant can help you as well!\n",
-        "height": 192,
-        "width": 528,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        48,
-        -272
-      ],
-      "id": "c0024e2d-f4f6-4a84-ba90-c5985bcea201",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "mode": "raw",
-        "jsonOutput": "={\n  \"message\": \"Email sent!\",\n  \"message2\": \"Just showing off that this is not being sent\",\n  \"message_for_students\": \"{{ $('Build profile').item.json.message }}\"\n}\n ",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        304,
-        0
-      ],
-      "id": "6e6780ce-7fdb-4a1b-9f8c-b8b6eb6116bf",
-      "name": "Response Message"
-    }
-  ],
-  "connections": {
-    "When chat message received": {
-      "main": [
-        [
-          {
-            "node": "Build profile",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Build profile": {
-      "main": [
-        [
-          {
-            "node": "Send a message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send a message": {
-      "main": [
-        [
-          {
-            "node": "Response Message",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Response Message": {
-      "main": [
-        []
-      ]
-    }
-  },
-  "pinData": {
-    "When chat message received": [
-      {
-        "sessionId": "fec14fd0c4184413a1ad74a95daef98f",
-        "action": "sendMessage",
-        "chatInput": "Glad to see you at the recitation!"
-      }
-    ]
-  },
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
-  }
-}
-```
-
-Note that I have pinned a chat message, but you are free to unpin it.
-
-1. What node is causing the error? What is the error?
-2. Try to fix the error. What needs to change? Remember, you can use the AI Assistant to help you.
-
-One small note: the `Chat Trigger` has some hidden behavior. If we look at the last node, we see that it has three key-value pairs:
-
-```JSON
-{
-  "message": "Email sent!",
-  "message2": "Just showing off that this is not being sent",
-  "message_for_students": "{{ $('Build profile').item.json.message }}"
-}
-```
-
-The chat trigger has several response modes. Up to this point, we have only used `When Last Node Finishes`. In this case, it looks for the output of the last node and if there is a key called "message", it will return that value. Otherwise, it will return the whole object.
-
-To see this, change the key "message" to anything else. If you run the entire workflow again, you'll see that in the chat, you actually receive the entire JSON object!
-
-To make it extremely clear what you are returning, you can change the response mode to `Using Response Nodes` and then add a node at the end called `Respond to Chat`. Just make sure to put in the correct message there!
-
-A last note: as shown in the JSON clip from the last node above, the `message_for_students` is actually referencing a node that is not directly connected to it. As a result, we can't just reference that message as 
-```JSON
-{{ $json.message }}
-```
-We instead have to use the name of the node followed by `.item`. You are not expected to know all of JSON, but it's important to note this difference.
-
----
 ## Creating our Email Triage Agent
 
 Now, we begin to build our agent. We first want to lay out exactly what we want our workflow to do. It should:
@@ -360,8 +165,9 @@ Now, we begin to build our agent. We first want to lay out exactly what we want 
 1. Receive emails,
 2. Use an AI agent to assign a category (administrative, class content, n8n, etc.), assign a specific teaching team member to the email, draft a response, and assign an urgency level to the email,
 3. CCs the appropriate member of the teaching team for high-urgency items,
-4. Responds to all emails, and
-5. Logs every ticket to Google Sheets.
+4. Responds to all emails,
+5. Logs every ticket to Google Sheets, and
+6. Sends a separate reminder to the relevant member of the teaching team.
 
 Note that we could definitely still critique this workflow. Perhaps we always should CC the teaching team or only have the agent respond to a specific set of emails. This structure is quite flexible and we encourage you to explore and optimize it yourself.
 
@@ -370,31 +176,6 @@ Start a new workflow and let's get started! You will be provided with instructio
 ```JSON
 {
   "nodes": [
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-5-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-5-mini"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        -656,
-        432
-      ],
-      "id": "0efc3509-bc91-4c35-8fb5-c40e0af0e6fd",
-      "name": "GPT-5 mini",
-      "credentials": {
-        "openAiApi": {
-          "id": "uvUQw4I0j1mG2TKg",
-          "name": "Alex Jensen Student OpenAI"
-        }
-      }
-    },
     {
       "parameters": {
         "pollTimes": {
@@ -411,94 +192,15 @@ Start a new workflow and let's get started! You will be provided with instructio
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.3,
       "position": [
-        -1120,
-        224
+        144,
+        528
       ],
-      "id": "2ed9041a-4219-4a36-9922-8ece1666d7e2",
+      "id": "9ce98fa7-d77f-48a9-a1b6-08632c8f7668",
       "name": "When receiving an email",
       "credentials": {
         "gmailOAuth2": {
-          "id": "9tmoAeGxRcPZeGwf",
-          "name": "Alex Jensen Student Gmail"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Sender: {{ $json.firstName }}\nSubject: {{ $json.subject }}\nContent: {{ $json.text }}",
-        "hasOutputParser": true,
-        "options": {
-          "systemMessage": "You will receive an email sent from a student to the AIML901 teaching team at Kellogg. You are an AI agent named \"Kai Support\" that will help them and connect them to the team.\n\nYour goal is to:\n- Reply to the email (choose title and content)\n- CC the correct team member to the email\n- Create a corresponding ticket in the teaching team's spreadsheet.\n\n# Categories\n\n- *administrative*: administrative question(s) or information  (e.g., when is the final exam; I cannot attend next class, etc..)\n- *content*: course content question(s) (e.g., what's an LLM?)\n- *n8n*: technical questions about n8n\n- *project*: question about the individual class project.\n- *other*: anything that is hard to relate to the other categories.\n\n# Behavior\n\n- Use the name \"Kai support\" to sign the email.\n- Adopt the tone of a cheerful PhD student TA\n- In addition to the information provided here, use the AIML-901 Docs tool to reference other information about the class.\n- You do not necessarily have enough information to help the student. When in doubt, always prefer to be sincere about what you know and what you don't. And if you don't, mention that the person you CCed will help. If you have the information necessary to respond to all of the student's questions, set confidence to TRUE and otherwise, set it to FALSE.\n\n# Teaching Team:\n- Sebastien Martin\n  - main instructor\n  - aiml901sebastienmartin+prof@gmail.com\n  - role: anything important or that cannot be directed to another team member, such as personal situations and complex questions\n- Alex Jensen\n  - TA\n  - aiml901sebastienmartin+ta@gmail.com\n  - role: anything relating to n8n, the final exam, and quick content questions\n- Jillian Law\n  - In-person class moderator\n  - JillianLaw2024@u.northwestern.edu\n  - role: anything relating to attendance, seating, and classroom rules\n\n# Background information\n\n**Location:** KGH 1130  \n- **Lectures:** Tue/Fri  \n  - Sec. 31: 10:30–12  \n  - Sec. 32: 1:30–3  \n- **Recitations:** Wed  \n  - Sec. 31: 1:30–2:30  \n  - Sec. 32: 3:30–4:30  \n- **Office Hours:** Wed  \n  - Sec. 31 & 32: 2:30–3:30, 4:30–5  \n\n**Policy:** [Kellogg Honor Code](http://www.kellogg.northwestern.edu/policies/honor-code.aspx)\n\n---\n\n## Module 1: How AI Works\n*Build a deep understanding of genAI, from pretraining to agents.*\n\n- **Class 1 (Oct 21):** Build your first AI agent; intro to deliverables  \n- **Recitation 1 (Oct 22):** Build a Google Calendar agent (first n8n agent)  \n- **Class 2 (Oct 24):** Pretraining a large language model  \n- **Class 3 (Oct 28):** Post-training, alignment, and safety  \n- **Recitation 2 (Oct 29):** Build a customer service agent (n8n deep dive)  \n- **Class 4 (Oct 31):** AI agents, tools (RAG, etc.), usage  \n\n---\n\n## Module 2: What AI Can Do\n*AI tools, prompting, productivity, ecosystem.*\n\n- **Class 5 (Nov 4):** Prompting and leveraging AI  \n- **Recitation 3 (Nov 4–5, evening):** Build a personal assistant agent (advanced n8n)  \n- **Class 6 (Nov 5):** AI landscape and state-of-the-art companies  \n\n---\n\n## Module 3: From AI to Impact\n*Connecting AI to business outcomes.*\n\n- **Class 7 (Nov 7):** Evaluation pipelines  \n- **Class 8 (Nov 11):** AI strategy & risk management  \n- **Recitation 4 (Nov 12):** Build an evaluation mechanism (agent evaluation)  \n- **Class 9 (Nov 14):** Change management with AI case study  \n- **Class 10 (Nov 18):** Project showcase, final exam review, staying current  \n- **Recitation 5 (Nov 19):** End-to-end product creation (Lovable, apps/websites)  \n\n---\n\n## Deliverables\n- **Weekly Homework:** AI-powered, delivered by *Kai* (<30 min each)  \n- **Project:** Individual, due Nov 25 (early submissions allowed)  \n- **Final Exam:** Online, self-serve (Nov 21–25), 1h30, focused on n8n recitations"
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
-      "position": [
-        -656,
-        224
-      ],
-      "id": "77d53275-bfdb-4ea6-8629-7865b95e748d",
-      "name": "Category Agent"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "5cb9f2b0-bcfd-4839-8db8-ae80bef2e4d7",
-              "leftValue": "={{ $json.output.ticket_priority }}",
-              "rightValue": "high",
-              "operator": {
-                "type": "string",
-                "operation": "equals",
-                "name": "filter.operator.equals"
-              }
-            }
-          ],
-          "combinator": "or"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -304,
-        224
-      ],
-      "id": "1e7020ec-b1f8-4f90-ab59-c66b2c88cb01",
-      "name": "If confident in response..."
-    },
-    {
-      "parameters": {
-        "resource": "thread",
-        "operation": "reply",
-        "threadId": "={{ $('When receiving an email').item.json.threadId }}",
-        "messageId": "={{ $('When receiving an email').item.json.threadId }}",
-        "message": "={{ $json.output.response_content }}",
-        "options": {
-          "ccList": "={{ $json.output.response_cc }}"
-        }
-      },
-      "type": "n8n-nodes-base.gmail",
-      "typeVersion": 2.1,
-      "position": [
-        16,
-        80
-      ],
-      "id": "d6983087-c773-41e9-b122-59e89629f615",
-      "name": "reply to the query (with CC)",
-      "webhookId": "9694af38-894a-4c7b-9e1e-bb465bdce757",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "9tmoAeGxRcPZeGwf",
-          "name": "Alex Jensen Student Gmail"
+          "id": "9Rpb3KSeY5jaPu26",
+          "name": "Alex Student Gmail"
         }
       }
     },
@@ -520,34 +222,108 @@ Start a new workflow and let's get started! You will be provided with instructio
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -896,
-        224
+        368,
+        528
       ],
-      "id": "aea404a8-48f2-4311-b5de-0074c2152dee",
+      "id": "973c0d4d-2765-4e32-bdc5-a94ed960a7b0",
       "name": "Set First Name"
     },
     {
       "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"response_content\",\n    \"response_cc\",\n    \"ticket_description\",\n    \"ticket_category\",\n    \"ticket_cc\",\n    \"ticket_priority\",\n    \"ticket_name\",\n    \"confidence\"\n  ],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"response_content\": {\n      \"type\": \"string\",\n      \"description\": \"Formatted like a complete email content (e.g., starts with hi and ends with signature).\"\n    },\n    \"response_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The email address of the person to CC. Nothing else.\"\n    },\n    \"ticket_description\": {\n      \"type\": \"string\",\n      \"description\": \"Just one sentence, to the point.\"\n    },\n    \"ticket_category\": {\n      \"type\": \"string\",\n      \"enum\": [\"administrative\", \"content\", \"n8n\", \"project\", \"other\"],\n      \"description\": \"One of the allowed categories.\"\n    },\n    \"ticket_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The full name of the person corresponding to the CCed email address.\"\n    },\n    \"ticket_name\": {\n      \"type\": \"string\",\n      \"description\": \"Name of the student; if unknown, their email.\"\n    },\n    \"ticket_priority\": {\n      \"type\": \"string\",\n      \"description\": \"Priority label (e.g., low/medium/high).\"\n    },\n    \"confidence\": {\n      \"type\": \"boolean\",\n      \"description\": \"Model's confidence in the category/route; true if the answer to all of the questions is known and false otherwise.\"\n    }\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1024,
+        800
+      ],
+      "id": "74f23027-61e6-4676-9f77-10b8038ba352",
+      "name": "agent decision format"
+    },
+    {
+      "parameters": {
+        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 2 - n8n Deep Dive",
+        "height": 464,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        432,
+        32
+      ],
+      "id": "b015a87f-a4ed-491e-91ff-301f42e6da78",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Set First Name').item.json.threadId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        544,
+        784
+      ],
+      "id": "bea54655-05e4-44ff-b09f-72e0f9b4d57d",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Reply to a message in Gmail without CCing anyone",
         "resource": "thread",
         "operation": "reply",
-        "threadId": "={{ $('When receiving an email').item.json.threadId }}",
-        "messageId": "={{ $('When receiving an email').item.json.threadId }}",
-        "message": "={{ $json.output.response_content }}",
+        "threadId": "={{ $('Set First Name').item.json.threadId }}",
+        "messageId": "={{ $('Set First Name').item.json.id }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
         "options": {}
       },
-      "type": "n8n-nodes-base.gmail",
+      "type": "n8n-nodes-base.gmailTool",
       "typeVersion": 2.1,
       "position": [
-        16,
-        432
+        672,
+        832
       ],
-      "id": "68dcde3a-5e59-4e17-a11b-cfee67f2c40d",
-      "name": "reply to the query (no CC)",
-      "webhookId": "9694af38-894a-4c7b-9e1e-bb465bdce757",
+      "id": "a8a779c2-80d8-410d-811f-1fdb9ab678b3",
+      "name": "Reply to a message in Gmail",
+      "webhookId": "eca0178c-0444-4570-9abb-a13b8367889c",
       "credentials": {
         "gmailOAuth2": {
-          "id": "9tmoAeGxRcPZeGwf",
-          "name": "Alex Jensen Student Gmail"
+          "id": "9Rpb3KSeY5jaPu26",
+          "name": "Alex Student Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Reply to a message in Gmail while CCing a member of the teaching team.",
+        "resource": "thread",
+        "operation": "reply",
+        "threadId": "={{ $('Set First Name').item.json.threadId }}",
+        "messageId": "={{ $('Set First Name').item.json.id }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {
+          "ccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CC', ``, 'string') }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        880,
+        848
+      ],
+      "id": "e70c5023-8829-4e3e-a235-fc275642cf83",
+      "name": "Reply to a message in Gmail (CC)",
+      "webhookId": "eca0178c-0444-4570-9abb-a13b8367889c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9Rpb3KSeY5jaPu26",
+          "name": "Alex Student Gmail"
         }
       }
     },
@@ -556,31 +332,31 @@ Start a new workflow and let's get started! You will be provided with instructio
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "1wihBsfwaC8bLMhqnyoy5aIx7DGq-RRihR8NRrjtNDu8",
+          "value": "12c9o9E9vqZF9IK2oDJ5l50xYiVbg-l7C_W4koeAm-Mk",
           "mode": "list",
-          "cachedResultName": "Class 1 - student email tickets",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wihBsfwaC8bLMhqnyoy5aIx7DGq-RRihR8NRrjtNDu8/edit?usp=drivesdk"
+          "cachedResultName": "Recitation 2 Email Triage",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12c9o9E9vqZF9IK2oDJ5l50xYiVbg-l7C_W4koeAm-Mk/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
-          "cachedResultName": "ticket list",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1wihBsfwaC8bLMhqnyoy5aIx7DGq-RRihR8NRrjtNDu8/edit#gid=0"
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/12c9o9E9vqZF9IK2oDJ5l50xYiVbg-l7C_W4koeAm-Mk/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "Student ": "={{ $json.output.ticket_name }}",
-            "Assigned Teaching Staff": "={{ $json.output.ticket_cc }}",
-            "Category": "={{ $json.output.ticket_category }}",
-            "Email Description": "={{ $json.output.ticket_description }}"
+            "Assigned Teaching Staff": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Assigned_Teaching_Staff', ``, 'string') }}",
+            "Student": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Student', ``, 'string') }}",
+            "Category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Category', ``, 'string') }}",
+            "Email Description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Email_Description', ``, 'string') }}"
           },
           "matchingColumns": [],
           "schema": [
             {
-              "id": "Student ",
-              "displayName": "Student ",
+              "id": "Student",
+              "displayName": "Student",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -620,92 +396,128 @@ Start a new workflow and let's get started! You will be provided with instructio
         },
         "options": {}
       },
-      "type": "n8n-nodes-base.googleSheets",
+      "type": "n8n-nodes-base.googleSheetsTool",
       "typeVersion": 4.7,
       "position": [
-        32,
-        272
+        768,
+        976
       ],
-      "id": "98af70fe-0d07-4f3f-bfd6-7218af05e963",
-      "name": "Add ticket to table",
+      "id": "b4a4b6b7-b5cb-4bea-b0f6-9c7a1c454e7f",
+      "name": "Append row",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "27QZYZYoFChPQNfR",
-          "name": "Alex Jensen Student Google Sheets"
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
         }
       }
     },
     {
       "parameters": {
-        "schemaType": "manual",
-        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"response_content\",\n    \"response_cc\",\n    \"ticket_description\",\n    \"ticket_category\",\n    \"ticket_cc\",\n    \"ticket_priority\",\n    \"ticket_name\",\n    \"confidence\"\n  ],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"response_content\": {\n      \"type\": \"string\",\n      \"description\": \"Formatted like a complete email content (e.g., starts with hi and ends with signature).\"\n    },\n    \"response_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The email address of the person to CC. Nothing else.\"\n    },\n    \"ticket_description\": {\n      \"type\": \"string\",\n      \"description\": \"Just one sentence, to the point.\"\n    },\n    \"ticket_category\": {\n      \"type\": \"string\",\n      \"enum\": [\"administrative\", \"content\", \"n8n\", \"project\", \"other\"],\n      \"description\": \"One of the allowed categories.\"\n    },\n    \"ticket_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The full name of the person corresponding to the CCed email address.\"\n    },\n    \"ticket_name\": {\n      \"type\": \"string\",\n      \"description\": \"Name of the student; if unknown, their email.\"\n    },\n    \"ticket_priority\": {\n      \"type\": \"string\",\n      \"description\": \"Priority label (e.g., low/medium/high).\"\n    },\n    \"confidence\": {\n      \"type\": \"boolean\",\n      \"description\": \"Model's confidence in the category/route; true if the answer to all of the questions is known and false otherwise.\"\n    }\n  }\n}"
+        "promptType": "define",
+        "text": "=Sender: {{ $json.firstName }}\nSubject: {{ $json.subject }}\nContent: {{ $json.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You will receive an email sent from a student to the AIML901 teaching team at Kellogg. You are an AI agent named \"Kai Support\" that will help them and connect them to the team.\n\nYour goal is to use your tools to:\n- Reply to the email (choose content)\n- CC the correct team member to the email\n- Create a corresponding ticket in the teaching team's spreadsheet.\n\n# Categories\n\nYou will assign a category to use the Google Sheets tool. These categories are:\n\n- *administrative*: administrative question(s) or information  (e.g., when is the final exam; I cannot attend next class, etc..)\n- *content*: course content question(s) (e.g., what's an LLM?)\n- *n8n*: technical questions about n8n\n- *project*: question about the individual class project.\n- *other*: anything that is hard to relate to the other categories.\n\n# Tools\n\nYou have 3 tools available:\n\n- Append row allows you to log the email in Google Sheets.\n- Reply to a message in Gmail allows you to reply to the message without CCing a member of the teaching team.\n- Reply to a message in Gmail allows you to reply to the message while CCing a member of the teaching team.\n\n# Behavior\n\n- Always use the tools. You should respond to the student and also log your response using the Google Sheet tool.\n- Use the name \"Kai support\" to sign the email.\n- Adopt the tone of a cheerful PhD student TA\n- In addition to the information provided here, use the AIML-901 Docs tool to reference other information about the class.\n- You do not necessarily have enough information to help the student. When in doubt, always prefer to be sincere about what you know and what you don't. And if you don't, mention that the person you CCed will help. If you have the information necessary to respond to all of the student's questions, set confidence to TRUE and otherwise, set it to FALSE.\n\n# Teaching Team:\n- Sebastien Martin\n  - main instructor\n  - aiml901sebastienmartin+prof@gmail.com\n  - role: anything important or that cannot be directed to another team member, such as personal situations and complex questions\n- Alex Jensen\n  - TA\n  - aiml901sebastienmartin+ta@gmail.com\n  - role: anything relating to n8n, the final exam, and quick content questions\n- Gitanjali Jaggi\n  - In-person class moderator for Section 31\n  - gitanjali.jaggi@kellogg.northwestern.edu\n  - role: anything relating to attendance, seating, and classroom rules\n- Erika Guan\n  - In-person class moderator for Section 81\n  - erikaguanqing@gmail.com\n  - role: anything relating to attendance, seating, and classroom rules\n\n# Background information\n\n**Location:** KGH 1130  \n- **Lectures:** Tue/Fri  \n  - Sec. 31: 10:30–12  \n  - Sec. 32: 1:30–3  \n- **Recitations:** Wed  \n  - Sec. 31: 1:30–2:30  \n  - Sec. 32: 3:30–4:30  \n- **Office Hours:** Wed  \n  - Sec. 31 & 32: 2:30–3:30, 4:30–5  \n\n**Policy:** [Kellogg Honor Code](http://www.kellogg.northwestern.edu/policies/honor-code.aspx)\n\n---\n\n## Module 1: How AI Works\n*Build a deep understanding of genAI, from pretraining to agents.*\n\n- **Class 1 (Oct 21):** Build your first AI agent; intro to deliverables  \n- **Recitation 1 (Oct 22):** Build a Google Calendar agent (first n8n agent)  \n- **Class 2 (Oct 24):** Pretraining a large language model  \n- **Class 3 (Oct 28):** Post-training, alignment, and safety  \n- **Recitation 2 (Oct 29):** Build a customer service agent (n8n deep dive)  \n- **Class 4 (Oct 31):** AI agents, tools (RAG, etc.), usage  \n\n---\n\n## Module 2: What AI Can Do\n*AI tools, prompting, productivity, ecosystem.*\n\n- **Class 5 (Nov 4):** Prompting and leveraging AI  \n- **Recitation 3 (Nov 4–5, evening):** Build a personal assistant agent (advanced n8n)  \n- **Class 6 (Nov 5):** AI landscape and state-of-the-art companies  \n\n---\n\n## Module 3: From AI to Impact\n*Connecting AI to business outcomes.*\n\n- **Class 7 (Nov 7):** Evaluation pipelines  \n- **Class 8 (Nov 11):** AI strategy & risk management  \n- **Recitation 4 (Nov 12):** Build an evaluation mechanism (agent evaluation)  \n- **Class 9 (Nov 14):** Change management with AI case study  \n- **Class 10 (Nov 18):** Project showcase, final exam review, staying current  \n- **Recitation 5 (Nov 19):** End-to-end product creation (Lovable, apps/websites)  \n\n---\n\n## Deliverables\n- **Weekly Homework:** AI-powered, delivered by *Kai* (<30 min each)  \n- **Project:** Individual, due Nov 25 (early submissions allowed)  \n- **Final Exam:** Online, self-serve (Nov 21–25), 1h30, focused on n8n recitations"
+        }
       },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
       "position": [
-        -480,
-        416
+        608,
+        528
       ],
-      "id": "00d730db-fb34-44d3-b60f-c8d524da007d",
-      "name": "agent decision format"
+      "id": "0e3b673d-81ae-42ff-b597-66304c61d4f5",
+      "name": "Category Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.1",
+          "mode": "list",
+          "cachedResultName": "gpt-5.1"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        736
+      ],
+      "id": "fa0c841a-6e64-46e8-b505-6f0ae73d633f",
+      "name": "GPT-5.1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5cb9f2b0-bcfd-4839-8db8-ae80bef2e4d7",
+              "leftValue": "={{ $json.output.ticket_priority }}",
+              "rightValue": "high",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1024,
+        528
+      ],
+      "id": "2a876b68-7f10-453b-9400-f77a06607916",
+      "name": "If high priority..."
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ $('Category Agent').item.json.output.response_cc }}",
+        "subject": "URGENT: Email Requiring Response",
+        "emailType": "text",
+        "message": "There is an urgent email requiring your attention.",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1248,
+        432
+      ],
+      "id": "86cad136-c5ca-4b3d-b530-9e47515ebe2a",
+      "name": "High Priority Reminder Email",
+      "webhookId": "ce6930ee-2f72-469b-9664-92c8c123e2e1",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "9Rpb3KSeY5jaPu26",
+          "name": "Alex Student Gmail"
+        }
+      }
     }
   ],
   "connections": {
-    "GPT-5 mini": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Category Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "When receiving an email": {
       "main": [
         [
           {
             "node": "Set First Name",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Category Agent": {
-      "main": [
-        [
-          {
-            "node": "If confident in response...",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If confident in response...": {
-      "main": [
-        [
-          {
-            "node": "Add ticket to table",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "reply to the query (with CC)",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Add ticket to table",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "reply to the query (no CC)",
             "type": "main",
             "index": 0
           }
@@ -733,6 +545,84 @@ Start a new workflow and let's get started! You will be provided with instructio
           }
         ]
       ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply to a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reply to a message in Gmail (CC)": {
+      "ai_tool": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row": {
+      "ai_tool": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Category Agent": {
+      "main": [
+        [
+          {
+            "node": "If high priority...",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "GPT-5.1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Category Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If high priority...": {
+      "main": [
+        [
+          {
+            "node": "High Priority Reminder Email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
     }
   },
   "pinData": {},
@@ -748,16 +638,39 @@ Start a new workflow and let's get started! You will be provided with instructio
 
 - **Add node:** `On App Event → Gmail → On message received`
 	- Connect with your Gmail connection. Ideally, use an email that's not your personal one so that it does not respond to those ones.
-	- `Poll Times`: By default, we can't let n8n listen constantly for emails. A "poll time" just tells us how often it checks if there is a new email. In this case, if this was just an email waiting for student emails, we could assume that we won't receive more than 1 email per minute, but we could adapt this accordingly.
+	- `Poll Times`: By default, we can't let n8n listen constantly for emails. A "poll time" just tells us how often it checks if there are new emails. If multiple emails are received within that time, the workflow will run once for each email, which is exactly what we want.
 
-Click `Execute Workflow` and send an email to the Gmail that you used for this node. You should see a large JSON object with many fields. Now, you are better able to parse this!
+Click `Execute Workflow` and send an email to the Gmail that you used for this node. Once you do so, you should see a large JSON object with many fields. Using your knowledge of JSON, you should be better able to parse this now! 
 
-Once you have done this step, pin the data in this node. This means we don't need to keep sending emails to ourselves.
+For ease of use, **pin the data in this node.** This means we don't need to keep sending emails to ourselves and can instead use the same email over and over for testing once we are sure that the first step is working properly.
 
 ---
-### Step 2: Extract First Name
+### Step 2A: Edit Fields and Error Handling
 
-To be able to respond more personably, we will extract the first name of the user. Note that this is perhaps not the best use case; for the sake of simplicity, we assume that people sending the email have one word first names, but we know that this doesn't hold in practice. It's easier (and more accurate) to simply give the AI Agent the full name of the user and let it determine what their first name is. However, this node is extremely useful.
+To be able to respond more personably, we will extract the first name of the user. Note that this is perhaps not the best use case; for the sake of simplicity, we assume that people sending the email have one word first names, but we know that this doesn't hold in practice. It's easier (and more accurate) to simply give the AI Agent the full name of the user and let it determine what their first name is. 
+
+To do this, we introduce a new node, called `Edit Fields (Set)`, which is extremely useful for defining information in a JSON format. We will also use this as an opportunity to practice dealing with errors in n8n.
+
+- **Add node:** `Edit Fields (Set)`
+	- Now that you know the basics of JSON, you can choose either mode! We will stick with `Manual Mapping` for this recitation.
+- `Fields to Set`: Click `Add Field`. 
+	- This will find the name of the person sending the email and takes the first word as the first name.
+	- For name, put `firstName`. We are creating a new JSON key and then need to give it a value.
+	- Next to the equality sign, put 
+```JSON
+	{{ $json.email }}
+```
+
+#### Exercises: 
+1. Try to run this node. What happens when you try to do so? Does it run successfully?
+2. Try to fix the error. What needs to change? Remember, you can use the AI Assistant to help you. Try to get this to run in any way without an error.
+
+Spoilers ahead! Try to understand what is happening in this node before moving onto the next part.
+
+---
+### Step 2B: Fixing the Node
+
+Note that we aren't really getting an error, but it's simply not doing what we want it to do. This is one of the trickiest parts of using n8n or other software; sometimes, things will run, but they are not functioning properly, and it is up to us to identify these cases. In this case, `firstName` is just given the value `null`.  We now fix this.
 
 - **Add node:** `Edit Fields (Set)`
 	- Now that you know the basics of JSON, you can choose either mode! We will stick with `Manual Mapping` for this recitation.
@@ -777,7 +690,7 @@ Now, when you are in the node, click `Execute Step`. This will only execute this
 ---
 ### Step 3: Categorization Agent
 
-We now add our AI agent, which has several responsibilities. Given an email, it needs to assign it a **category, corresponding teaching staff (professor, TA, IPCM),** and **urgency level.**
+We now add our AI agent, which has several responsibilities. Given an email, it needs to assign it a **category, corresponding teaching staff (professor, TA, IPCM),** and **urgency level.** It will then use its tools to send the email to the appropriate people and log the response in a Google Sheet.
 
 Feel free to create this yourself, but we also will provide you with some code that you can copy and paste to get this node. This includes:
 
@@ -785,35 +698,24 @@ Feel free to create this yourself, but we also will provide you with some code t
 - The model (in our case, OpenAI);
 - `Prompt (User Message)`, including the student's first name, the subject of the email, and the email itself;
 - A `System Message` that explains the behavior of the agent and some general rules;
-- An `Output Parser`, which we will not discuss in depth yet. This is a tool that says that the output of the AI Agent needs to have a specific format. In our case, this ensures that we always have the output structure that we want.
+- `Simple Memory`, used in case the AI Agent needs to perform multiple actions.
 
 ```JSON
 {
   "nodes": [
     {
       "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-5-mini",
-          "mode": "list",
-          "cachedResultName": "gpt-5-mini"
-        },
-        "options": {}
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Set First Name').item.json.threadId }}"
       },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
       "position": [
-        -1152,
-        96
+        576,
+        816
       ],
-      "id": "709145a8-493c-4f86-89bf-02874dcfd591",
-      "name": "GPT-5 mini",
-      "credentials": {
-        "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
-        }
-      }
+      "id": "bea54655-05e4-44ff-b09f-72e0f9b4d57d",
+      "name": "Simple Memory"
     },
     {
       "parameters": {
@@ -821,40 +723,51 @@ Feel free to create this yourself, but we also will provide you with some code t
         "text": "=Sender: {{ $json.firstName }}\nSubject: {{ $json.subject }}\nContent: {{ $json.text }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "You will receive an email sent from a student to the AIML901 teaching team at Kellogg. You are an AI agent named \"Kai Support\" that will help them and connect them to the team.\n\nYour goal is to:\n- Reply to the email (choose title and content)\n- CC the correct team member to the email\n- Create a corresponding ticket in the teaching team's spreadsheet.\n\n# Categories\n\n- *administrative*: administrative question(s) or information  (e.g., when is the final exam; I cannot attend next class, etc..)\n- *content*: course content question(s) (e.g., what's an LLM?)\n- *n8n*: technical questions about n8n\n- *project*: question about the individual class project.\n- *other*: anything that is hard to relate to the other categories.\n\n# Behavior\n\n- Use the name \"Kai support\" to sign the email.\n- Adopt the tone of a cheerful PhD student TA\n- In addition to the information provided here, use the AIML-901 Docs tool to reference other information about the class.\n- You do not necessarily have enough information to help the student. When in doubt, always prefer to be sincere about what you know and what you don't. And if you don't, mention that the person you CCed will help. If you have the information necessary to respond to all of the student's questions, set confidence to TRUE and otherwise, set it to FALSE.\n\n# Teaching Team:\n- Sebastien Martin\n  - main instructor\n  - aiml901sebastienmartin+prof@gmail.com\n  - role: anything important or that cannot be directed to another team member, such as personal situations and complex questions\n- Alex Jensen\n  - TA\n  - aiml901sebastienmartin+ta@gmail.com\n  - role: anything relating to n8n, the final exam, and quick content questions\n- Jillian Law\n  - In-person class moderator\n  - JillianLaw2024@u.northwestern.edu\n  - role: anything relating to attendance, seating, and classroom rules\n\n# Background information\n\n**Location:** KGH 1130  \n- **Lectures:** Tue/Fri  \n  - Sec. 31: 10:30–12  \n  - Sec. 32: 1:30–3  \n- **Recitations:** Wed  \n  - Sec. 31: 1:30–2:30  \n  - Sec. 32: 3:30–4:30  \n- **Office Hours:** Wed  \n  - Sec. 31 & 32: 2:30–3:30, 4:30–5  \n\n**Policy:** [Kellogg Honor Code](http://www.kellogg.northwestern.edu/policies/honor-code.aspx)\n\n---\n\n## Module 1: How AI Works\n*Build a deep understanding of genAI, from pretraining to agents.*\n\n- **Class 1 (Oct 21):** Build your first AI agent; intro to deliverables  \n- **Recitation 1 (Oct 22):** Build a Google Calendar agent (first n8n agent)  \n- **Class 2 (Oct 24):** Pretraining a large language model  \n- **Class 3 (Oct 28):** Post-training, alignment, and safety  \n- **Recitation 2 (Oct 29):** Build a customer service agent (n8n deep dive)  \n- **Class 4 (Oct 31):** AI agents, tools (RAG, etc.), usage  \n\n---\n\n## Module 2: What AI Can Do\n*AI tools, prompting, productivity, ecosystem.*\n\n- **Class 5 (Nov 4):** Prompting and leveraging AI  \n- **Recitation 3 (Nov 4–5, evening):** Build a personal assistant agent (advanced n8n)  \n- **Class 6 (Nov 5):** AI landscape and state-of-the-art companies  \n\n---\n\n## Module 3: From AI to Impact\n*Connecting AI to business outcomes.*\n\n- **Class 7 (Nov 7):** Evaluation pipelines  \n- **Class 8 (Nov 11):** AI strategy & risk management  \n- **Recitation 4 (Nov 12):** Build an evaluation mechanism (agent evaluation)  \n- **Class 9 (Nov 14):** Change management with AI case study  \n- **Class 10 (Nov 18):** Project showcase, final exam review, staying current  \n- **Recitation 5 (Nov 19):** End-to-end product creation (Lovable, apps/websites)  \n\n---\n\n## Deliverables\n- **Weekly Homework:** AI-powered, delivered by *Kai* (<30 min each)  \n- **Project:** Individual, due Nov 25 (early submissions allowed)  \n- **Final Exam:** Online, self-serve (Nov 21–25), 1h30, focused on n8n recitations"
+          "systemMessage": "You will receive an email sent from a student to the AIML901 teaching team at Kellogg. You are an AI agent named \"Kai Support\" that will help them and connect them to the team.\n\nYour goal is to use your tools to:\n- Reply to the email (choose content)\n- CC the correct team member to the email\n- Create a corresponding ticket in the teaching team's spreadsheet.\n\n# Categories\n\nYou will assign a category to use the Google Sheets tool. These categories are:\n\n- *administrative*: administrative question(s) or information  (e.g., when is the final exam; I cannot attend next class, etc..)\n- *content*: course content question(s) (e.g., what's an LLM?)\n- *n8n*: technical questions about n8n\n- *project*: question about the individual class project.\n- *other*: anything that is hard to relate to the other categories.\n\n# Tools\n\nYou have 3 tools available:\n\n- Append row allows you to log the email in Google Sheets.\n- Reply to a message in Gmail allows you to reply to the message without CCing a member of the teaching team.\n- Reply to a message in Gmail allows you to reply to the message while CCing a member of the teaching team.\n\n# Behavior\n\n- Always use the tools. You should respond to the student and also log your response using the Google Sheet tool.\n- Use the name \"Kai support\" to sign the email.\n- Adopt the tone of a cheerful PhD student TA\n- In addition to the information provided here, use the AIML-901 Docs tool to reference other information about the class.\n- You do not necessarily have enough information to help the student. When in doubt, always prefer to be sincere about what you know and what you don't. And if you don't, mention that the person you CCed will help. If you have the information necessary to respond to all of the student's questions, set confidence to TRUE and otherwise, set it to FALSE.\n\n# Teaching Team:\n- Sebastien Martin\n  - main instructor\n  - aiml901sebastienmartin+prof@gmail.com\n  - role: anything important or that cannot be directed to another team member, such as personal situations and complex questions\n- Alex Jensen\n  - TA\n  - aiml901sebastienmartin+ta@gmail.com\n  - role: anything relating to n8n, the final exam, and quick content questions\n- Gitanjali Jaggi\n  - In-person class moderator for Section 31\n  - gitanjali.jaggi@kellogg.northwestern.edu\n  - role: anything relating to attendance, seating, and classroom rules\n- Erika Guan\n  - In-person class moderator for Section 81\n  - erikaguanqing@gmail.com\n  - role: anything relating to attendance, seating, and classroom rules\n\n# Background information\n\n**Location:** KGH 1130  \n- **Lectures:** Tue/Fri  \n  - Sec. 31: 10:30–12  \n  - Sec. 32: 1:30–3  \n- **Recitations:** Wed  \n  - Sec. 31: 1:30–2:30  \n  - Sec. 32: 3:30–4:30  \n- **Office Hours:** Wed  \n  - Sec. 31 & 32: 2:30–3:30, 4:30–5  \n\n**Policy:** [Kellogg Honor Code](http://www.kellogg.northwestern.edu/policies/honor-code.aspx)\n\n---\n\n## Module 1: How AI Works\n*Build a deep understanding of genAI, from pretraining to agents.*\n\n- **Class 1 (Oct 21):** Build your first AI agent; intro to deliverables  \n- **Recitation 1 (Oct 22):** Build a Google Calendar agent (first n8n agent)  \n- **Class 2 (Oct 24):** Pretraining a large language model  \n- **Class 3 (Oct 28):** Post-training, alignment, and safety  \n- **Recitation 2 (Oct 29):** Build a customer service agent (n8n deep dive)  \n- **Class 4 (Oct 31):** AI agents, tools (RAG, etc.), usage  \n\n---\n\n## Module 2: What AI Can Do\n*AI tools, prompting, productivity, ecosystem.*\n\n- **Class 5 (Nov 4):** Prompting and leveraging AI  \n- **Recitation 3 (Nov 4–5, evening):** Build a personal assistant agent (advanced n8n)  \n- **Class 6 (Nov 5):** AI landscape and state-of-the-art companies  \n\n---\n\n## Module 3: From AI to Impact\n*Connecting AI to business outcomes.*\n\n- **Class 7 (Nov 7):** Evaluation pipelines  \n- **Class 8 (Nov 11):** AI strategy & risk management  \n- **Recitation 4 (Nov 12):** Build an evaluation mechanism (agent evaluation)  \n- **Class 9 (Nov 14):** Change management with AI case study  \n- **Class 10 (Nov 18):** Project showcase, final exam review, staying current  \n- **Recitation 5 (Nov 19):** End-to-end product creation (Lovable, apps/websites)  \n\n---\n\n## Deliverables\n- **Weekly Homework:** AI-powered, delivered by *Kai* (<30 min each)  \n- **Project:** Individual, due Nov 25 (early submissions allowed)  \n- **Final Exam:** Online, self-serve (Nov 21–25), 1h30, focused on n8n recitations"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        -1152,
-        -112
+        672,
+        528
       ],
-      "id": "dd8dc66f-6b4e-4b6e-9340-7faf0dbf647f",
+      "id": "0e3b673d-81ae-42ff-b597-66304c61d4f5",
       "name": "Category Agent"
     },
     {
       "parameters": {
-        "schemaType": "manual",
-        "inputSchema": "{\n  \"type\": \"object\",\n  \"required\": [\n    \"response_content\",\n    \"response_cc\",\n    \"ticket_description\",\n    \"ticket_category\",\n    \"ticket_cc\",\n    \"ticket_priority\",\n    \"ticket_name\",\n    \"confidence\"\n  ],\n  \"additionalProperties\": false,\n  \"properties\": {\n    \"response_content\": {\n      \"type\": \"string\",\n      \"description\": \"Formatted like a complete email content (e.g., starts with hi and ends with signature).\"\n    },\n    \"response_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The email address of the person to CC. Nothing else.\"\n    },\n    \"ticket_description\": {\n      \"type\": \"string\",\n      \"description\": \"Just one sentence, to the point.\"\n    },\n    \"ticket_category\": {\n      \"type\": \"string\",\n      \"enum\": [\"administrative\", \"content\", \"n8n\", \"project\", \"other\"],\n      \"description\": \"One of the allowed categories.\"\n    },\n    \"ticket_cc\": {\n      \"type\": \"string\",\n      \"description\": \"The full name of the person corresponding to the CCed email address.\"\n    },\n    \"ticket_name\": {\n      \"type\": \"string\",\n      \"description\": \"Name of the student; if unknown, their email.\"\n    },\n    \"ticket_priority\": {\n      \"type\": \"string\",\n      \"description\": \"Priority label (e.g., low/medium/high).\"\n    },\n    \"confidence\": {\n      \"type\": \"boolean\",\n      \"description\": \"Model's confidence in the category/route; true if the answer to all of the questions is known and false otherwise.\"\n    }\n  }\n}"
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.1",
+          "mode": "list",
+          "cachedResultName": "gpt-5.1"
+        },
+        "options": {}
       },
-      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
-      "typeVersion": 1.3,
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
       "position": [
-        -976,
-        80
+        448,
+        784
       ],
-      "id": "9b8cb8a7-d9f9-4de2-92ce-056137835154",
-      "name": "agent decision format"
+      "id": "fa0c841a-6e64-46e8-b505-6f0ae73d633f",
+      "name": "GPT-5.1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
     }
   ],
   "connections": {
-    "GPT-5 mini": {
-      "ai_languageModel": [
+    "Simple Memory": {
+      "ai_memory": [
         [
           {
             "node": "Category Agent",
-            "type": "ai_languageModel",
+            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -865,12 +778,12 @@ Feel free to create this yourself, but we also will provide you with some code t
         []
       ]
     },
-    "agent decision format": {
-      "ai_outputParser": [
+    "GPT-5.1": {
+      "ai_languageModel": [
         [
           {
             "node": "Category Agent",
-            "type": "ai_outputParser",
+            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -885,28 +798,155 @@ Feel free to create this yourself, but we also will provide you with some code t
 }
 ```
 
-If you click on the `Output Parser`, you'll be able to see that this is just JSON. Try running the AI agent. Looking at the key called `required`, you will see a list of words (response_content, response_cc, etc.) that are exactly the keys in the output.
+---
+### Step 4: Gmail Tools
 
-Run this node and for now, let's pin the output. This means that we don't have to send another call to the OpenAI API. Note that we see the keys from the output parser, but they are an object called `output`. Therefore, if we want to retrieve the `response_content`, we would need to write
+Now, we need to give our agent the power to send emails, both CCing the teaching team and not. Due to how n8n is built, we actually will create two separate tools to handle this, with just one different step between the two tools:
+
+- **Add node:** Click the `+` for Tool under the AI Agent node and choose `Gmail`.
+	- Create a credential for your Gmail.
+- `Tool Description` gives the agent more information on how to use this tool. In our case, we choose `Set Manually` and should say which tool this is. For example, for the tool where we do not want to CC anyone, we might say, "Reply to a message in Gmail without CCing anyone" while for the tool that CCs the teaching team, we might say, "Reply to a message in Gmail while CCing a member of the teaching team."
+- `Resource`: We will choose `Thread`. This lets us respond directly to an email, as opposed to sending a new email not in a thread.
+- `Operation`: Choose `Reply` to have it send an email.
+- `Thread ID`: This tells the agent which email to respond to.
+```JSON
+{{ $('Set First Name').item.json.threadId }}
+```
+- `Message Snippet or ID`: This tells the agent which message in particular within the thread to respond to.
+```JSON
+{{ $('Set First Name').item.json.id }}
+```
+- `Email Type`: We are not sending a very formatted email with pictures, so we choose Text as opposed to HTML.
+- `Message`: Press the stars to the right of the box. This lets our agent decide what to put as the message of the email.
+- For the Gmail tool with CCing: Press `Add option → CC` and then press the stars to the right of the box to let the agent decide whom to CC.
+
+You should now have two separate Gmail tools, giving your agent the power to send emails! 
+
+> [!info] Note
+> In practice, we need to be careful about what we allow our LLM to do, since a lack of alignment with our vision can lead to unintended consequences. In future recitations, we will discuss **evaluation**, which is how we test if our agent is performing well.
+
+---
+### Step 5: Google Sheet Tool
+
+Now, we will log responses in a Google Sheet in case we need to refer back to the emails. This isn't strictly necessary but is useful when we want to test how well the agent is performing its task.
+
+First, make a Google Sheet with the following column titles:
+
+| Student | Assigned Teaching Staff | Category | Email Description |
+| ------- | ----------------------- | -------- | ----------------- |
+|         |                         |          |                   |
+Back in n8n:
+- **Add node:** Click the `+` for Tool under the AI Agent node and choose `Google Sheets Tool`.
+	- Create a credential for your Google Sheets.`
+- `Operation`: We choose `Append Row` to add rows to the sheet. Each response will add one new row to the spreadsheet.
+- `Document`: whatever you call the Google Sheets file
+- `Sheet`: the correct sheet within the document
+- `Mapping Column Mode`: Map Each Column Manually
+- For the four columns, press the stars to the right of the text box in order to have the agent automatically fill in these fields.
+
+---
+
+### Step 6: Output Parser
+
+We will add an `Output Parser`, which we will not discuss in depth yet. This is a tool that says that the output of the AI Agent needs to have a specific format. In our case, this ensures that we always have the output structure that we want.
+
+- In the `AI Agent`, click `Require Specific Output Format`. If you exit the node, you will see a new option on the bottom of the node next to `Tool` called `Output Parser`.
+- Click on the `+` for `Output Parser` and choose `Structured Output Parser`.
+- For `Schema Type`, we could use a JSON example, but we will use `Define using JSON Schema`.
+- For the `Input Schema`, copy and paste in the following code:
+```JSON
+{
+  "type": "object",
+  "required": [
+    "response_content",
+    "response_cc",
+    "ticket_description",
+    "ticket_category",
+    "ticket_cc",
+    "ticket_priority",
+    "ticket_name",
+    "confidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "response_content": {
+      "type": "string",
+      "description": "Formatted like a complete email content (e.g., starts with hi and ends with signature)."
+    },
+    "response_cc": {
+      "type": "string",
+      "description": "The email address of the person to CC. Nothing else."
+    },
+    "ticket_description": {
+      "type": "string",
+      "description": "Just one sentence, to the point."
+    },
+    "ticket_category": {
+      "type": "string",
+      "enum": ["administrative", "content", "n8n", "project", "other"],
+      "description": "One of the allowed categories."
+    },
+    "ticket_cc": {
+      "type": "string",
+      "description": "The full name of the person corresponding to the CCed email address."
+    },
+    "ticket_name": {
+      "type": "string",
+      "description": "Name of the student; if unknown, their email."
+    },
+    "ticket_priority": {
+      "type": "string",
+      "description": "Priority label (e.g., low/medium/high)."
+    },
+    "confidence": {
+      "type": "boolean",
+      "description": "Model's confidence in the category/route; true if the answer to all of the questions is known and false otherwise."
+    }
+  }
+}
+```
+
+You can see that this is just JSON! It tells us that we want to include information such as a brief description of the email, whom should be CCed, a category for the email, a priority level. Feel free to explore this further.
+
+Now, try running the AI agent. Looking at the key called `required`, you will see a list of words (response_content, response_cc, etc.) that are exactly the keys in the output. For now, let's pin the output. This means that we don't have to send another call to the OpenAI API. Note that we see the keys from the output parser, but they are an object called `output`. Therefore, if we want to retrieve the `response_content`, we would need to write
 
 ```JSON
 {{ $json.output.response_content }}
 ```
 
----
-### Step 4: Routing
+> [!info] Note
+> Output parsers can look intimidating, but we can actually use ChatGPT or another LLM to write these very easily! For example, you could say, "I want a JSON schema for an output parser that includes a key called ticket_priority that is low, medium, or high and another key called ticket_description which is just a sentence." 
 
-We now need to decide whether a member of the teaching team needs to be CCed or if this can be handled by the agent's response. The Category Agent gives us a **priority level** (ticket_priority), indicating how urgent the message is. If the message is high priority, we want to CC the teaching team.
+---
+### Step 7: Routing with an Error
+
+While the agent determines whether or not a member of the teaching team needs to be CCed, some emails are more time-sensitive than others. The Category Agent gives us a **priority level** (ticket_priority), indicating how urgent the message is. Perhaps we want to send an extra reminder to the associated member of the teaching team when the email is high priority. To do this, we want to send this message **conditionally**, which can be done using the `If` node.
+
+> [!info] Note
+> We will originally set this up slightly incorrectly to demonstrate an error. Make sure to follow Step 8 after this to fix it!
 
 - **Add node:** `If`
     - For value1, input the priority assigned by the Category Agent:
     ```JSON
     {{ $json.output.ticket_priority }}
     ```
-    - Click the dropdown next to “is equal to”. Choose `#Number` and then “is greater than or equal to”
-    - For value2, put `high`. This means that our condition is True if the message is high priority and False otherwise.
+    - Click the dropdown next to “is equal to”. Choose `Boolean` and then `is true`.
  - **What it does:** If the ticket is high priority, then we will take the True branch. Otherwise, we take the False branch.
 - **Why this matters:** This allows us to execute different paths depending on the priority of the ticket. In our case, we only want to CC the teaching team if deemed necessary, and this lets us distinguish between the two cases. 
+
+#### Exercise:
+1. Try to run the workflow. Where do you see an error?
+2. Try to fix the error. Try to do it yourself, but remember that the AI Assistant can help you as well.
+
+Now, we'll fix this error.
+
+---
+### Step 8: Fixing Routing
+
+You should see an error along the lines of "Wrong type: 'low' is a string but was expecting a boolean." A boolean is a value that is either True or False. In our case, `ticket_priority` will be low, medium, or high, causing this to break!
+
+- Click the dropdown next to “is equal to”. Choose `String` and then “is greater than or equal to”
+    - For value2, put `high`. This means that our condition is True if the message is high priority and False otherwise.
 
 ---
 ### Exercises
@@ -917,66 +957,31 @@ We now need to decide whether a member of the teaching team needs to be CCed or 
 4. Add your own custom condition! Note that we have other information available from the AI agent. 
 
 ---
-### Step 5: Email Response
+### Step 9: Email Reminder
 
-Now, we respond using the output from the agent. We first consider the case when the ticket is not high priority. In this case, we do not need to CC the teaching team.
+Now, we need to create a reminder for the teaching team. For the sake of simplicity, we will also use email here, but in practice, we could use something like Telegram (see [Recitation 1](https://sebastienmartin.info/aiml901/recitation_1.html)) to notify the teaching team on multiple platforms.
 
-- **Add node:** `Gmail → Thread Actions → Reply to a message`
-`Thread ID`: 
+- **Add node:** `Gmail → Send a message`
+- `To`: we want to send this to the correct member of the team
 ```JSON
-{{ $('When receiving an email').item.json.threadId }}
+{{ $('Category Agent').item.json.output.response_cc }}
 ```
-`Message Snippet or ID`:
-```JSON
-{{ $('When receiving an email').item.json.threadId }}
-```
-`Message`:
-```JSON
-{{ $json.output.response_content }}
-```
+- For the subject line and message, you can customize these; we just want a simple reminder, like "There is an urgent email requiring your attention." We could make this more specific, as well.
 - Connect this to the `true` output from the If node.
-- **What it does:** This sends a message to respond to the email that the student sent. A "thread" is a chain of emails and replies, so using the Thread ID allows us to respond directly to the email instead of just sending them a separate email.
-
----
-### Step 6: CCing the Teaching Team
-
-The steps here are identical as the previous step, but now we want to CC the teaching team.
-
-- Copy the node from Step 7 and connect it to the `false` output from the If node.
-- Click into the node. Click `Add option` and then `CC`. In the field, we will input
-```JSON
-{{ $json.output.response_cc }}
-```
-
----
-### Step 7: Logging Tickets
-
-Finally, we want to log each ticket in a Google Sheet. First, make a Google Sheet with the following column titles:
-
-| Student | Assigned Teaching Staff | Category | Email Description |
-| ------- | ----------------------- | -------- | ----------------- |
-|         |                         |          |                   |
-
-- **Add node:** `Google Sheets → Append row in sheet`
-    - Document: whatever you call the Google Sheets file
-    - Sheet: the correct sheet within the document
-    - Mapping Column Mode: Map Each Column Manually
-    - We then need to drag and drop the correct information from our fields.
-- Connect this to both the `true` and `false` outputs of the If node, since we want to log the tickets regardless of whether the teaching team is CCed.
-
+- **What it does:** This sends an email to a member of the teaching team. Note that this is slightly different from the Gmail tools that we attached directly to the AI Agent. The AI is able to decide how many emails to send and when to send them, but this node will always run when it is reached.
 ---
 ### Exercises:
 
-1. Let's say we only want to add tickets to the sheet if the teaching team is not CCed. What would we change?
-2. We would like to know if the ticket is handled by a human or AI. Add a column to your Google Sheets called Handled By and have it fill in as “Human” if the teaching team was CCed and “AI” if it was not.
-	- *Hint*: Use the `Edit Fields (Set)` node to map this to a value.
-3. For transparency, maybe we want Professor Martin to be CCed on any email where other members of the teaching team are also CCed. However, there can also be emails where just Professor Martin is CCed. What would we need to change here? 
-4. We do not give the Category Agent much information about how it should decide how confident it is in its response. In fact, it is possible that it could decide that it should never (or always) CC the teaching team. Try sending several emails with different issues to see how it handles this. Are there any guidelines we can add to ensure how well we do this?
+1. What would we change if we want to also send the extra reminder email if the AI Agent is not confident in its response? Implement this in n8n.
+2. Let's say we only want to add tickets to the sheet if the teaching team is not CCed. What would we change?
+3. We would like to know if the ticket is handled by a human or AI. Add a column to your Google Sheets called Handled By and have it fill in as “Human” if the teaching team was CCed and “AI” if it was not.
+4. For transparency, maybe we want Professor Martin to be CCed on any email where other members of the teaching team are also CCed. However, there can also be emails where just Professor Martin is CCed. What would we need to change here? 
+5. We do not give the Category Agent much information about how it should decide how confident it is in its response. In fact, it is possible that it could decide that it should never (or always) CC the teaching team. Try sending several emails with different issues to see how it handles this. Are there any guidelines we can add to ensure how well we do this?
    
-   **Challenge:** Try changing the content of the output parser so instead of giving True or False for the confidence parameter, it gives a number between 1 and 5. The easiest way to do this is to give the JSON in the output parser to ChatGPT and ask it to modify it; it is generally quite good at this. What else needs to change in the workflow?
+   **Challenge:** This question goes along with Question 1. Try changing the content of the output parser so instead of giving True or False for the confidence parameter, it gives a number between 1 and 5. The easiest way to do this is to give the JSON in the output parser to ChatGPT and ask it to modify it; it is generally quite good at this. What else needs to change in the workflow?
 
 ---
-### For the Final:
+### For the Homework:
 
 - JSON structure in n8n
 - Node inputs and outputs
@@ -1005,10 +1010,10 @@ Copy and paste the following into your workflow. Do not worry about connecting i
       "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
       "typeVersion": 1.3,
       "position": [
-        -1568,
-        304
+        0,
+        1280
       ],
-      "id": "37282b22-6d56-47ff-af9b-129b35e3486c",
+      "id": "9a451388-a915-4878-a812-887f460ab3da",
       "name": "Simple Vector Store"
     },
     {
@@ -1019,10 +1024,10 @@ Copy and paste the following into your workflow. Do not worry about connecting i
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        -1520,
-        512
+        48,
+        1488
       ],
-      "id": "4c2ef9b2-f5b2-4458-b9c8-6658f99575d7",
+      "id": "99c2d48c-f7a3-448b-9c93-57613df597db",
       "name": "Default Data Loader"
     },
     {
@@ -1032,10 +1037,10 @@ Copy and paste the following into your workflow. Do not worry about connecting i
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        -1312,
-        512
+        256,
+        1488
       ],
-      "id": "4f948be1-b6cd-460f-aacc-1f86f1bd327c",
+      "id": "07f70d48-cfc8-405c-bd4d-9754b9dab713",
       "name": "Embeddings OpenAI",
       "credentials": {
         "openAiApi": {
@@ -1057,11 +1062,27 @@ Copy and paste the following into your workflow. Do not worry about connecting i
       "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
       "typeVersion": 1.3,
       "position": [
-        -1136,
-        304
+        432,
+        1280
       ],
-      "id": "5397980f-2cd3-4bc8-baab-abad43dbc2d1",
+      "id": "b8c19147-fd2d-459e-a5b4-5ae3490c449d",
       "name": "AIML 901 Docs"
+    },
+    {
+      "parameters": {
+        "content": "## Exploratory Content: RAG",
+        "height": 400,
+        "width": 1184,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -304,
+        1216
+      ],
+      "typeVersion": 1,
+      "id": "e76859d4-0618-4494-a216-b5b47b2ddd34",
+      "name": "Sticky Note"
     }
   ],
   "connections": {
