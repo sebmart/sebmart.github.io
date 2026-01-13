@@ -1,5 +1,5 @@
 ---
-title: "Class 5: Prompting and Leveraging AI"
+title: "Class 4: Prompting LLMs"
 author:
   - Sébastien Martin
 ---
