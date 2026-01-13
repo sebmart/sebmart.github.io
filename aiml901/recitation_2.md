@@ -969,6 +969,7 @@ Now, we need to create a reminder for the teaching team. For the sake of simplic
 - For the subject line and message, you can customize these; we just want a simple reminder, like "There is an urgent email requiring your attention." We could make this more specific, as well.
 - Connect this to the `true` output from the If node.
 - **What it does:** This sends an email to a member of the teaching team. Note that this is slightly different from the Gmail tools that we attached directly to the AI Agent. The AI is able to decide how many emails to send and when to send them, but this node will always run when it is reached.
+
 ---
 ### Exercises:
 
