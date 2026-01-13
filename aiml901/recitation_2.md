@@ -923,7 +923,7 @@ Now, try running the AI agent. Looking at the key called `required`, you will se
 While the agent determines whether or not a member of the teaching team needs to be CCed, some emails are more time-sensitive than others. The Category Agent gives us a **priority level** (ticket_priority), indicating how urgent the message is. Perhaps we want to send an extra reminder to the associated member of the teaching team when the email is high priority. To do this, we want to send this message **conditionally**, which can be done using the `If` node.
 
 > [!info] Note
-> We will originally set this up slightly incorrectly to demonstrate an error. Make sure to follow Step 8 after this to fix it!
+> We will originally set this up to demonstrate an error. Make sure to follow Step 8 after this to fix it!
 
 - **Add node:** `If`
     - For value1, input the priority assigned by the Category Agent:
@@ -931,7 +931,7 @@ While the agent determines whether or not a member of the teaching team needs to
     {{ $json.output.ticket_priority }}
     ```
     - Click the dropdown next to “is equal to”. Choose `Boolean` and then `is true`.
- - **What it does:** If the ticket is high priority, then we will take the True branch. Otherwise, we take the False branch.
+- **What it does:** If the ticket is high priority, then we will take the True branch. Otherwise, we take the False branch.
 - **Why this matters:** This allows us to execute different paths depending on the priority of the ticket. In our case, we only want to CC the teaching team if deemed necessary, and this lets us distinguish between the two cases. 
 
 #### Exercise:
