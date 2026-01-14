@@ -36,8 +36,60 @@
 
     .hero {
       background: linear-gradient(180deg, var(--purple-bg) 0%, var(--bg) 100%);
-      padding: 60px 24px 48px;
+      padding: 40px 24px 32px;
+    }
+
+    .hero-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      margin-bottom: 24px;
+    }
+
+    .hero-logo-wrapper {
+      flex-shrink: 0;
+    }
+
+    .hero-logo {
+      width: 320px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 6px 24px rgba(78, 42, 132, 0.15);
+    }
+
+    .hero-title {
+      text-align: left;
+      line-height: 1.05;
+    }
+
+    .hero-title-line {
+      display: block;
+      font-size: clamp(2.2rem, 4.5vw, 3rem);
+      font-weight: 700;
+      color: var(--purple);
+    }
+
+    .hero-content {
       text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      .hero-header {
+        flex-direction: column;
+        text-align: center;
+      }
+      .hero-title {
+        text-align: center;
+      }
+      .hero-logo {
+        width: 280px;
+      }
     }
 
     .hero-badge {
@@ -52,20 +104,12 @@
       letter-spacing: 0.02em;
     }
 
-    .hero h1 {
-      font-size: clamp(1.75rem, 4vw, 2.75rem);
-      font-weight: 700;
-      color: var(--purple);
-      margin-bottom: 16px;
-      line-height: 1.2;
-    }
-
     .hero-intro {
-      max-width: 720px;
-      margin: 0 auto 28px;
-      font-size: 1.05rem;
+      max-width: 860px;
+      margin: 0 auto 12px;
+      font-size: 0.95rem;
       color: var(--text-secondary);
-      line-height: 1.7;
+      line-height: 1.6;
     }
 
     .hero-intro strong { color: var(--text); }
@@ -397,16 +441,28 @@
 </head>
 <body>
     <section class="hero">
-    <h1>AIML 901 Student Project Showcase</h1>
-    <p class="hero-intro">
-      In <strong>AIML 901: AI Foundations for Managers — AgentOps</strong>, Kellogg MBA students spend 5 intensive weeks learning to build AI agents that solve real business problems. Each student designs and implements a working AI agent for a domain they know deeply. Interested in a project? Reach out to the student directly—they'd love to hear from you.
-    </p>
-    <p class="hero-credits">
-      Taught by <a href="https://sebastienmartin.info" target="_blank">Sébastien Martin</a> · TA: Alex Jensen
-    </p>
-    <p class="hero-thanks">
-      <em>Thank you to the students who agreed to share their work</em>, and to <a href="https://n8n.io" target="_blank">n8n</a> and <a href="https://lovable.dev" target="_blank">Lovable</a> for sponsoring this course.
-    </p>
+    <div class="hero-container">
+      <div class="hero-header">
+        <div class="hero-logo-wrapper">
+          <img src="course_logo.jpg" alt="AIML901 AgentOps" class="hero-logo">
+        </div>
+        <h1 class="hero-title">
+          <span class="hero-title-line">Project</span>
+          <span class="hero-title-line">Showcase</span>
+        </h1>
+      </div>
+      <div class="hero-content">
+        <p class="hero-intro">
+          In <strong>AIML 901: AI Foundations for Managers — AgentOps</strong>, Kellogg MBA students spend 5 intensive weeks learning to build AI agents that solve real business problems. Each student designs and implements a working AI agent for a domain they know deeply. Interested in a project? Reach out to the student directly—they'd love to hear from you.
+        </p>
+        <p class="hero-credits">
+          Taught by <a href="https://sebastienmartin.info" target="_blank">Sébastien Martin</a> · TA: Alex Jensen
+        </p>
+        <p class="hero-thanks">
+          <em>Thank you to the students who agreed to share their work</em>, and to <a href="https://n8n.io" target="_blank">n8n</a> and <a href="https://lovable.dev" target="_blank">Lovable</a> for sponsoring this course.
+        </p>
+      </div>
+    </div>
   </section>
 
   <section class="controls">
