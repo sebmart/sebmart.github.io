@@ -19,6 +19,10 @@ While a professor might want to be more accessible than this, we can imagine man
 3. OpenAI connection
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 2 Recording](https://youtu.be/Bq2opHK7ic0)
+
+---
 ## Learning Objectives
 
 - A deeper understanding of n8n and node input and output with JSON expressions.
@@ -652,6 +656,7 @@ To be able to respond more personably, we will extract the first name of the use
 To do this, we introduce a new node, called `Edit Fields (Set)`, which is extremely useful for defining information in a JSON format. We will also use this as an opportunity to practice dealing with errors in n8n.
 
 - **Add node:** `Edit Fields (Set)`
+	- Rename this node to `Set First Name`. This will prevent an error later on that's discussed in depth in the video!
 	- Now that you know the basics of JSON, you can choose either mode! We will stick with `Manual Mapping` for this recitation.
 - `Fields to Set`: Click `Add Field`. 
 	- This will find the name of the person sending the email and takes the first word as the first name.
@@ -835,6 +840,7 @@ First, make a Google Sheet with the following column titles:
 | Student | Assigned Teaching Staff | Category | Email Description |
 | ------- | ----------------------- | -------- | ----------------- |
 |         |                         |          |                   |
+
 Back in n8n:
 - **Add node:** Click the `+` for Tool under the AI Agent node and choose `Google Sheets Tool`.
 	- Create a credential for your Google Sheets.`
@@ -952,9 +958,8 @@ You should see an error along the lines of "Wrong type: 'low' is a string but wa
 ### Exercises
 
 1. Run the `If` node. Was the previous email considered high priority?
-2. If you click on `Add condition`, we can add other conditions to help determine which path should be taken. Add a condition saying that if the `ticket_category` is "other", the teaching team should be CCed, regardless of the priority level.
-3. Looking back at the AI agent, we can see that one of the outputs (and one of the inputs to the `If` node) was `confidence`. This will be either "True" or "False" and indicates whether the AI thinks it is able to accurately respond to the email. Add a condition that if confidence is False, the teaching team should be CCed, regardless of the priority level. (Note: you will need to click on the box that says "Is equal to" and choose `Boolean → Is True`)
-4. Add your own custom condition! Note that we have other information available from the AI agent. 
+2. Looking back at the AI agent, we can see that one of the outputs (and one of the inputs to the `If` node) was `confidence`. This will be either "True" or "False" and indicates whether the AI thinks it is able to accurately respond to the email. Add a condition so that if the confidence is False, we send the urgent reminder email, regardless of priority level. (Note: you will need to click on the box that says "Is equal to" and choose `Boolean → Is True`)
+3. Add your own custom condition! Note that we have other information available from the AI agent. 
 
 ---
 ### Step 9: Email Reminder
@@ -974,10 +979,10 @@ Now, we need to create a reminder for the teaching team. For the sake of simplic
 ### Exercises:
 
 1. What would we change if we want to also send the extra reminder email if the AI Agent is not confident in its response? Implement this in n8n.
-2. Let's say we only want to add tickets to the sheet if the teaching team is not CCed. What would we change?
-3. We would like to know if the ticket is handled by a human or AI. Add a column to your Google Sheets called Handled By and have it fill in as “Human” if the teaching team was CCed and “AI” if it was not.
-4. For transparency, maybe we want Professor Martin to be CCed on any email where other members of the teaching team are also CCed. However, there can also be emails where just Professor Martin is CCed. What would we need to change here? 
-5. We do not give the Category Agent much information about how it should decide how confident it is in its response. In fact, it is possible that it could decide that it should never (or always) CC the teaching team. Try sending several emails with different issues to see how it handles this. Are there any guidelines we can add to ensure how well we do this?
+2. Let's say we want to have some emails where the teaching team is not CCed, and we only want to add tickets to the sheet if the teaching team is not CCed. What would we change?
+	1. In this case, we would like to know if the ticket is handled by a human or AI. Add a column to your Google Sheets called Handled By and have it fill in as “Human” if the teaching team was CCed and “AI” if it was not.
+3. For transparency, maybe we want Professor Martin to be CCed on any email where other members of the teaching team are also CCed. However, there can also be emails where just Professor Martin is CCed. What would we need to change here? 
+4. We do not give the Category Agent much information about how it should decide how confident it is in its response. In fact, it is possible that it could decide that it should never (or always) CC the teaching team. Try sending several emails with different issues to see how it handles this. Are there any guidelines we can add to ensure how well we do this?
    
    **Challenge:** This question goes along with Question 1. Try changing the content of the output parser so instead of giving True or False for the confidence parameter, it gives a number between 1 and 5. The easiest way to do this is to give the JSON in the output parser to ChatGPT and ask it to modify it; it is generally quite good at this. What else needs to change in the workflow?
 

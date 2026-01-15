@@ -9,10 +9,6 @@ Additionally, sub-workflows let us make our system more modular and allow us to 
 To demonstrate this, we consider a communications team at a nonprofit in Evanston that needs to create social media posts and send out press releases. Because the nonprofit works with many Spanish-speaking people, it is important that the social media posts are bilingual. They are hoping to utilize AI to be able to create high-quality content that engages with their community.
 
 ---
-You can watch a video recording of the recitation here:
-![Recitation 3 Recording](https://www.youtube.com/watch?v=tGdDLdCqQe8)
-
----
 ## You'll Need...
 
 - OpenAI connection
@@ -1313,7 +1309,7 @@ These are all ideas on how to make this workflow more robust and better. Try to 
 **Challenge:** Most posts on social media require some sort of graphic. Change the workflow so that users can submit photos/videos to be included or AI can generate some graphics. This is beyond the core content, so you may need to explore some to figure this one out!
 
 ---
-## For the Final:
+## For the Homework:
 
 - `n8n Form` trigger
 - Constructing sub-workflows to make custom tools
