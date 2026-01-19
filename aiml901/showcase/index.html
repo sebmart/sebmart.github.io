@@ -297,9 +297,9 @@
     }
 
     .badge-quarter {
-      background: var(--purple-lighter);
-      color: var(--purple);
-      border: 1px solid var(--purple-light);
+      background: var(--surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
     }
 
     .badge-category {
@@ -575,8 +575,8 @@
             <p class="card-author">by ${p.author}</p>
           </div>
           <div class="card-badges">
-            <span class="badge badge-quarter">${p.quarter}</span>
             ${p.has_video ? '<span class="badge badge-video">Pitch Video</span>' : ''}
+            <span class="badge badge-quarter">${p.quarter}</span>
             <span class="badge badge-category">${p.category}</span>
           </div>
           <p class="card-description">${p.short_description}</p>
