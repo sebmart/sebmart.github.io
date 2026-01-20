@@ -688,6 +688,7 @@ Note that we aren't really getting an error, but it's simply not doing what we w
 ```
 		
 - `Input Fields to Include`: If we want, we can pass the inputs directly to the output. This makes it easy to keep passing data through the nodes, even if we don't directly use it. For now, we choose `All`.
+- Change the name of this node to `Set First Name`. This is not necessary, but will help us remember what node performs which function. Additionally, we will see that our `Simple Memory` node that we will add in the next step will use this node name.
 - **What it does:** The `Set` node lets us transform JSON objects. 
 
 Now, when you are in the node, click `Execute Step`. This will only execute this node. In the output, you will see a lot of the key-value pairs from the input, as well as a new one called `firstName`.

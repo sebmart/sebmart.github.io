@@ -6,7 +6,7 @@ While we have started to see some of the tools available to AI agents, we someti
 
 Additionally, sub-workflows let us make our system more modular and allow us to reuse "building blocks" (workflows) that we create. For example, take our Google Calendar agent from Recitation 1. We might have multiple workflows that use this, such as a personal assistant but also a broader workflow that sends out event invites and reminders to multiple people. We can make this agent into a sub-workflow and then call it from each of these other workflows instead of building the exact same agent into multiple workflows.
 
-To demonstrate this, we consider a communications team at a nonprofit in Evanston that needs to create social media posts and send out press releases. Because the nonprofit works with many Spanish-speaking people, it is important that the social media posts are bilingual. They are hoping to utilize AI to be able to create high-quality content that engages with their community.
+To demonstrate this, we consider a communications team at an education and learning company calling Evanston Pathways seeking to expand access to bilingual education. They need to create social media posts and send out press releases. Because the company works with many Spanish-speaking people, it is important that the social media posts are bilingual. They are hoping to utilize AI to be able to create high-quality content that engages with their community.
 
 ---
 ## You'll Need...
@@ -36,6 +36,7 @@ Our workflow will
 3. Present it to a member of the comms team who can then iterate and finally approve posts,
 4. Translate social media posts to Spanish using appropriate language,
 5. Send final drafts by email to the comms team for posting.
+
 ## Sub-workflows
 
 Press releases and social media posts are extremely different formats with different audiences. While we could build a single agent to handle both, in practice performance can suffer when you overload a single agent with too many tools (though this is becoming less and less of a problem). Instead, by decomposing into two agents each specialized for its domain, you reduce complexity per agent and (hopefully) improve reliability, which we do using **evaluation** and will be discussed in Recitation 4. Realistically, the given example could easily be handled by one agent, but this is more to illustrate some different designs that you can use in your projects.
@@ -67,7 +68,7 @@ Press Release Agent:
         0,
         0
       ],
-      "id": "f7d178e5-8b10-4e96-8ded-0625571c1424",
+      "id": "3019f1a4-a2f3-485b-af76-5bf7479caf62",
       "name": "When Executed by Another Workflow"
     },
     {
@@ -81,16 +82,16 @@ Press Release Agent:
         368,
         208
       ],
-      "id": "d6bfbd25-a5f2-4412-a765-d4f16b39b550",
+      "id": "32ae928a-afc3-40cf-8c81-b0625f498400",
       "name": "Structured Output Parser"
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4o",
+          "value": "gpt-5.2",
           "mode": "list",
-          "cachedResultName": "gpt-4o"
+          "cachedResultName": "gpt-5.2"
         },
         "options": {}
       },
@@ -100,7 +101,7 @@ Press Release Agent:
         192,
         208
       ],
-      "id": "83969bbb-e37e-4ac2-9d7d-170ac2aed97d",
+      "id": "c2bc74ca-4cff-4453-828f-d9553be4ab4a",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -116,7 +117,7 @@ Press Release Agent:
             {
               "id": "9625122e-1bc8-4230-a6e0-ae94b835f49b",
               "name": "press_release_body",
-              "value": "={{ $json.output.press_release_body }}\n\nEvanston Immigrant Rights is an organization founded in 2020 that works to strengthen civic engagement, fight discrimination, and foster economic opportunity for Latine families.",
+              "value": "={{ $json.output.press_release_body }}\n\nFounded in 2022, Evanston Pathways is an education and learning company that creates bilingual programs, digital tools, and live experiences for Spanish- and English-speaking audiences.",
               "type": "string"
             }
           ]
@@ -132,7 +133,7 @@ Press Release Agent:
         560,
         0
       ],
-      "id": "058a7c54-4db9-4b2b-bb1d-6532e41c9e16",
+      "id": "1633715c-babb-4f8a-96ee-f5df814e3c9a",
       "name": "Edit Fields"
     },
     {
@@ -141,7 +142,7 @@ Press Release Agent:
         "text": "=Text: {{ $json.text }}\nTitle: {{ $json.title }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants.\n\nUsing the content provided, your role is to create English-language press releases following AP format that are both accessible and engaging. These should be professional and ready to send to news outlets.\n\n*Do not write in Spanish; this will later be translated.*"
+          "systemMessage": "Act as the in-house marketing and communications specialist for Evanston Pathways, an education and learning company whose mission is to expand access to high-quality bilingual education through programs, digital tools, and live experiences for Spanish- and English-speaking audiences. You have expertise in brand storytelling, public relations, and multicultural marketing.\n\nUsing the content provided, your role is to create English-language press releases following AP format that are both accessible and engaging. These should be professional and ready to send to news outlets.\n\n*Do not write in Spanish; this will later be translated.*"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -150,7 +151,7 @@ Press Release Agent:
         224,
         0
       ],
-      "id": "af1d9dbb-9537-4cb8-a907-aa9ed3cd3400",
+      "id": "1cd9402e-0487-4b45-a58e-c8f5a958a7a9",
       "name": "AI Agent"
     }
   ],
@@ -202,7 +203,6 @@ Press Release Agent:
   },
   "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
@@ -225,10 +225,10 @@ Social Media Agent:
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        0,
-        0
+        -16,
+        -64
       ],
-      "id": "696f05a8-7a70-4b0c-b71f-a8c3ad1ecbdc",
+      "id": "72095570-8433-45d1-950d-b2a2f80285ba",
       "name": "When Executed by Another Workflow"
     },
     {
@@ -239,34 +239,34 @@ Social Media Agent:
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        368,
-        208
+        352,
+        144
       ],
-      "id": "3354b318-7ee6-41a2-90b5-783e7b460a0b",
+      "id": "0f1f789f-9082-49d1-b35a-fd585bb88c60",
       "name": "Structured Output Parser"
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4o",
+          "value": "gpt-5.2",
           "mode": "list",
-          "cachedResultName": "gpt-4o"
+          "cachedResultName": "gpt-5.2"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        192,
-        208
+        176,
+        144
       ],
-      "id": "ea1a237b-bbe2-4854-8a91-1a875e8ec17d",
+      "id": "3b5937aa-184e-4210-bff2-fd4c93ca5ef9",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "uvUQw4I0j1mG2TKg",
-          "name": "Alex Jensen Student OpenAI"
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
         }
       }
     },
@@ -276,16 +276,16 @@ Social Media Agent:
         "text": "={{ $json.text }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants.\n\nUsing the content provided, your role is to create English-language social media posts that are both accessible and engaging. These are posts for primarily Facebook and Instagram; write a single post that is common for both and do not create separate posts for multiple platforms.\n\n*Do not write in Spanish; this will later be translated.*"
+          "systemMessage": "Act as the in-house marketing and communications specialist for Evanston Pathways, an education and learning company whose mission is to expand access to high-quality bilingual education through programs, digital tools, and live experiences for Spanish- and English-speaking audiences. You have expertise in brand storytelling, public relations, and multicultural marketing.\n\nUsing the content provided, your role is to create English-language social media posts that are both accessible and engaging. These are posts for primarily Facebook and Instagram; write a single post that is common for both and do not create separate posts for multiple platforms.\n\n*Do not write in Spanish; this will later be translated.*"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        208,
-        0
+        192,
+        -64
       ],
-      "id": "c917db3f-a7fa-4926-a7f5-a02a3df0f843",
+      "id": "69737c1f-c554-4239-84b9-937d89f6ac7f",
       "name": "AI Agent"
     }
   ],
@@ -326,7 +326,6 @@ Social Media Agent:
   },
   "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
@@ -356,34 +355,34 @@ We will build our agent, following the steps shown before. There are steps walki
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        720,
-        912
+        608,
+        1152
       ],
-      "id": "cc3dff7d-3a20-4162-8489-47b0cac126cd",
+      "id": "1edd02f8-b402-40d5-b1e7-a6fc3611e53b",
       "name": "Structured Output Parser"
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1-nano",
+          "value": "gpt-5.1",
           "mode": "list",
-          "cachedResultName": "gpt-4.1-nano"
+          "cachedResultName": "gpt-5.1"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        208,
-        912
+        96,
+        1152
       ],
-      "id": "36a08a96-ec5e-45b0-8202-f2f3573665bb",
+      "id": "b8125693-60bf-40fe-8352-b391d023e33c",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
-          "id": "uvUQw4I0j1mG2TKg",
-          "name": "Alex Jensen Student OpenAI"
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
         }
       }
     },
@@ -392,10 +391,10 @@ We will build our agent, following the steps shown before. There are steps walki
         "description": "Call this tool to write English-language press releases.",
         "workflowId": {
           "__rl": true,
-          "value": "5Os35ha1b6CBLvL5",
+          "value": "4v0pdadZnfSQhOLg",
           "mode": "list",
-          "cachedResultUrl": "/workflow/5Os35ha1b6CBLvL5",
-          "cachedResultName": "Press Release Agent"
+          "cachedResultUrl": "/workflow/4v0pdadZnfSQhOLg",
+          "cachedResultName": "AIML901 Staff  — WI 2026 Recitation 3 - Press Release Agent"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -403,9 +402,7 @@ We will build our agent, following the steps shown before. There are steps walki
             "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('text', ``, 'string') }}",
             "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', ``, 'string') }}"
           },
-          "matchingColumns": [
-            "text"
-          ],
+          "matchingColumns": [],
           "schema": [
             {
               "id": "text",
@@ -414,8 +411,7 @@ We will build our agent, following the steps shown before. There are steps walki
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
+              "type": "string"
             },
             {
               "id": "title",
@@ -424,8 +420,7 @@ We will build our agent, following the steps shown before. There are steps walki
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
+              "type": "string"
             }
           ],
           "attemptToConvertTypes": false,
@@ -435,10 +430,10 @@ We will build our agent, following the steps shown before. There are steps walki
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        464,
-        1056
+        352,
+        1296
       ],
-      "id": "ad77909b-9edc-4fae-8216-df0a5748bc2a",
+      "id": "5bb708bd-3d55-445d-90c7-f8d3d76c4b1d",
       "name": "Press Release"
     },
     {
@@ -446,10 +441,10 @@ We will build our agent, following the steps shown before. There are steps walki
         "description": "Call this tool to write English-language social media posts.",
         "workflowId": {
           "__rl": true,
-          "value": "8CsMXZr7diykgdrL",
+          "value": "JQrj7xeTOS7qofDT",
           "mode": "list",
-          "cachedResultUrl": "/workflow/8CsMXZr7diykgdrL",
-          "cachedResultName": "Social Media Agent"
+          "cachedResultUrl": "/workflow/JQrj7xeTOS7qofDT",
+          "cachedResultName": "AIML901 Staff  — WI 2026 Recitation 3 - Social Media Agent"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
@@ -467,8 +462,7 @@ We will build our agent, following the steps shown before. There are steps walki
               "defaultMatch": false,
               "display": true,
               "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
+              "type": "string"
             }
           ],
           "attemptToConvertTypes": false,
@@ -478,10 +472,10 @@ We will build our agent, following the steps shown before. There are steps walki
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        608,
-        1056
+        496,
+        1296
       ],
-      "id": "eafa83ae-9bbb-40b6-a766-1a83d41dd984",
+      "id": "76edee1d-3c9d-41dc-ba43-e2c5600d25fa",
       "name": "Social Media"
     },
     {
@@ -490,16 +484,16 @@ We will build our agent, following the steps shown before. There are steps walki
         "text": "=Title:  {{ $json.Title }}\nContent: {{ $json.Content }}\nFormat(s): {{ $json.Format }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants.\n\nUsing the content provided, your role is to use your tools to create English-language social media posts and/or press releases (based on the formats) that are both accessible and engaging. \n\nWhen the format includes social media, use the Social Media tool to write posts. Similarly, use the Press Release tool to write press releases. Do not write these posts/press releases yourself; always use the tools to do so."
+          "systemMessage": "Act as the in-house marketing and communications specialist for Evanston Pathways, an education and learning company whose mission is to expand access to high-quality bilingual education through programs, digital tools, and live experiences for Spanish- and English-speaking audiences. You have expertise in brand storytelling, public relations, and multicultural marketing.\n\nUsing the content provided, your role is to use your tools to create English-language social media posts and/or press releases (based on the formats) that are both accessible and engaging. \n\nWhen the format includes social media, use the Social Media tool to write posts. Similarly, use the Press Release tool to write press releases. Do not write these posts/press releases yourself; always use the tools to do so."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        448,
-        672
+        336,
+        912
       ],
-      "id": "a86f0fbb-bfc0-4322-8538-0d940021a829",
+      "id": "22e3ff54-1763-4ede-88c2-86d2d30fcc6f",
       "name": "First Draft Agent"
     },
     {
@@ -510,10 +504,10 @@ We will build our agent, following the steps shown before. There are steps walki
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        352,
-        912
+        240,
+        1152
       ],
-      "id": "8716ae83-8155-4061-84ee-5a89ddd88230",
+      "id": "f6364d2c-0ff8-4096-a6eb-aa28634d6c81",
       "name": "Simple Memory"
     },
     {
@@ -555,12 +549,28 @@ We will build our agent, following the steps shown before. There are steps walki
       "type": "n8n-nodes-base.formTrigger",
       "typeVersion": 2.3,
       "position": [
-        192,
-        672
+        80,
+        912
       ],
-      "id": "04f3a35a-d9cf-44cd-9875-d7a7a10e2837",
+      "id": "a666efc4-8495-44e9-a64a-99462779d60e",
       "name": "On form submission",
       "webhookId": "b020cfdb-1b8d-45a1-a02a-838a27a95d04"
+    },
+    {
+      "parameters": {
+        "content": "## Form Input and First Draft",
+        "height": 576,
+        "width": 752,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        0,
+        848
+      ],
+      "id": "09719a1a-ce49-4106-a2d5-aef47acb2532",
+      "name": "Sticky Note"
     }
   ],
   "connections": {
@@ -689,7 +699,7 @@ Format(s): {{ $json.Format }}
 	```
 	- `System Message`:
 ```Text
-Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants.
+Act as the in-house marketing and communications specialist for Evanston Pathways, an education and learning company whose mission is to expand access to high-quality bilingual education through programs, digital tools, and live experiences for Spanish- and English-speaking audiences. You have expertise in brand storytelling, public relations, and multicultural marketing.
 
 Using the content provided, your role is to use your tools to create English-language social media posts and/or press releases (based on the formats) that are both accessible and engaging. 
 
@@ -697,7 +707,7 @@ When the format includes social media, use the Social Media tool to write posts.
 ```
 - Attach a `Structured Output Parser` and choose `Define using JSON Schema`. For the input schema, put
 ```JSON
-  {
+{
   "type": "object",
   "required": ["social_media_body", "press_release_title", "press_release_body"],
   "additionalProperties": false,
@@ -707,7 +717,8 @@ When the format includes social media, use the Social Media tool to write posts.
     "press_release_body": { "type": "string", "description": "Press release body text (headline NOT duplicated). May be empty." }
   }
 }
-  ```
+```
+  
   This means that this agent will output a press release and title, as well as a social media post based on the input.
 
 ---
@@ -742,10 +753,10 @@ We will walk through each step, but you can also copy and paste the following in
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1664,
-        112
+        1792,
+        1264
       ],
-      "id": "26aa4f6a-5805-42a5-85e7-d994fc5b0bd4",
+      "id": "fa93edc9-b89e-4941-bcc8-b2c02fe43a7f",
       "name": "Structured Output Parser1"
     },
     {
@@ -781,10 +792,10 @@ We will walk through each step, but you can also copy and paste the following in
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        1040,
-        -224
+        1168,
+        928
       ],
-      "id": "f9a95665-bd2a-473b-9a1d-e5a95dc0ac35",
+      "id": "074af94b-42e6-49ba-9f76-018e3ffe9742",
       "name": "Wait",
       "webhookId": "d7b8fbd7-19e3-407f-8609-d4c82381669e"
     },
@@ -792,19 +803,19 @@ We will walk through each step, but you can also copy and paste the following in
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4o",
+          "value": "gpt-5.2",
           "mode": "list",
-          "cachedResultName": "gpt-4o"
+          "cachedResultName": "gpt-5.2"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1456,
-        112
+        1584,
+        1264
       ],
-      "id": "dfae788c-bea7-46f6-941c-0013eced2528",
+      "id": "88411a4f-f926-403b-a167-3bfba98e1b21",
       "name": "OpenAI Chat Model2",
       "credentials": {
         "openAiApi": {
@@ -841,10 +852,10 @@ We will walk through each step, but you can also copy and paste the following in
       "type": "n8n-nodes-base.if",
       "typeVersion": 2.2,
       "position": [
-        1280,
-        -224
+        1408,
+        928
       ],
-      "id": "0e3503c2-9536-4be4-91b1-81e6cc088a18",
+      "id": "208d31c9-f88d-44f6-9381-f03e85386b2d",
       "name": "Approved?"
     },
     {
@@ -852,10 +863,10 @@ We will walk through each step, but you can also copy and paste the following in
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        800,
-        -224
+        928,
+        928
       ],
-      "id": "248ab95e-b6f0-4555-8dea-c8b8cced42ca",
+      "id": "a98b3e71-a67a-4318-9142-764f27b0abae",
       "name": "Merge",
       "alwaysOutputData": false
     },
@@ -869,10 +880,10 @@ We will walk through each step, but you can also copy and paste the following in
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        768,
-        -800
+        1088,
+        304
       ],
-      "id": "c355edd6-ea3b-4d2b-82c4-15ec45e9de6e",
+      "id": "15f19e3c-31c1-4e8e-94bd-eb18489be2cc",
       "name": "Sticky Note6"
     },
     {
@@ -881,17 +892,33 @@ We will walk through each step, but you can also copy and paste the following in
         "text": "=Title: {{ $('Merge').item.json.output.press_release_title }}\nPress Release body:{{ $('Merge').item.json.output.press_release_body }}\nSocial Media body: {{ $('Merge').item.json.output.social_media_body }}\nEdits: {{ $json.Edits }}",
         "hasOutputParser": true,
         "options": {
-          "systemMessage": "Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants throughout the greater Chicago area.\n\nYou will be given messages as well as edits that are wanted. Using this, your role is to edit the messages given to reflect these changes and return them to the user. These will be press releases and social media posts associated with community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants throughout Evanston and the broader Chicago area.\n\n"
+          "systemMessage": "Act as the in-house marketing and communications specialist for Evanston Pathways, an education and learning company whose mission is to expand access to high-quality bilingual education through programs, digital tools, and live experiences for Spanish- and English-speaking audiences. You have expertise in brand storytelling, public relations, and multicultural marketing.\n\nYou will be given messages as well as edits that are wanted. Using this, your role is to edit the messages given to reflect these changes and return them to the user. These will be press releases and social media posts associated with community events and public engagement, targeting a diverse Spanish- and English-speaking audience throughout Evanston and the broader Chicago area.\n\n"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        1472,
-        -144
+        1600,
+        1008
       ],
-      "id": "f901dba1-62eb-4d44-9382-ae4cde383dc2",
+      "id": "89c2bb66-d29e-4123-b8fe-f0c0eeaab1c9",
       "name": "Editor"
+    },
+    {
+      "parameters": {
+        "content": "## Human-in-the-loop",
+        "height": 560,
+        "width": 1056,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        848,
+        848
+      ],
+      "id": "2fe697fe-05a5-42ea-aaa2-0a72edfc7763",
+      "name": "Sticky Note2"
     }
   ],
   "connections": {
@@ -1037,11 +1064,11 @@ Edits: {{ $json.Edits }}
 ```
 - `System Message`:
 ```Text
-Act as a communications specialist with expertise in community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants throughout Minnesota.
+Act as the in-house marketing and communications specialist for Evanston Pathways, an education and learning company whose mission is to expand access to high-quality bilingual education through programs, digital tools, and live experiences for Spanish- and English-speaking audiences. You have expertise in brand storytelling, public relations, and multicultural marketing.
 
-You will be given messages as well as edits that are wanted. Using this, your role is to edit the messages given to reflect these changes and return them to the user. These will be press releases and social media posts associated with community organizing and Latine public engagement, targeting a diverse audience of Latine immigrants throughout Evanston and the broader Chicago area.
-
+You will be given messages as well as edits that are wanted. Using this, your role is to edit the messages given to reflect these changes and return them to the user. These will be press releases and social media posts associated with community events and public engagement, targeting a diverse Spanish- and English-speaking audience throughout Evanston and the broader Chicago area.
 ```
+- Make sure to add an `OpenAI Chat Model` node.
 - **What it does:** This takes the posts and the edits and incorporates them. Note that in the system message, we still want to provide some information about the context so it does not stray too far from the original message. 
 
 Finally, connect the output to `Input 2` of the `Merge` node.
@@ -1247,22 +1274,23 @@ Below is the code that you can copy for this portion. Connect the `true` output 
 
 - **Add node:** `If`
 	- Set value1 as 
-  ```JSON
+```JSON
 {{ $('On form submission').item.json.Format }}
 ```
+
 	- Change the center condition to `Array → contains`
 	- Set value2 as `Social Media`
 - **What it does:** The n8n Form provides the choices of Social Media and/or Press Release as potential formats. The `Format` field is therefore "Social Media," "Press Release," or "Social Media, Press Release". If Format contains the words "Social Media," we need to provide translation.
 
 - **Add node:** `AI Agent`. Connect this to the `true` branch of the If node.
-	- Add a chat model. For the Reasoning Effort, we will choose `Low`, but you 
+	- Add a chat model.
 	- `Prompt (User Message)`: 
 ```Text
 Text: {{ $('Merge').item.json.output.social_media_body }}
 ```
 - Set `System Message`:
 ```Text
-Act as a professional English-Spanish translator and communications specialist with expertise in community organizing and Latine public engagement. You will be provided with English-language text that needs to be translated to Spanish. Use Latin American Spanish, targeting a diverse audience of Latine immigrants throughout Evanston and the broader Chicago area. Use an approachable tone for social media outreach but be sure to use “usted” instead of “tú” unless told otherwise. Use terminology widely understood by Spanish-speaking immigrants from a range of Latin American countries including Mexico, El Salvador, Ecuador, and beyond.
+Act as a professional English-Spanish translator and communications specialist with expertise in brand storytelling, public relations, and multicultural marketing. You will be provided with English-language text that needs to be translated to Spanish. Use Latin American Spanish, targeting a diverse Spanish-speaking audience throughout Evanston and the broader Chicago area. Use an approachable tone for social media outreach but be sure to use “usted” instead of “tú” unless told otherwise. Use terminology widely understood by Spanish-speaking people from a range of Latin American countries including Mexico, El Salvador, Ecuador, and beyond.
 ```
 
 ---
@@ -1302,9 +1330,11 @@ These are all ideas on how to make this workflow more robust and better. Try to 
 
 1. What if we also want to send the final draft to the same email address as the person submitting the idea? What would we need to change?
 2. Let's say that you send press releases to one English-language (Evanston Roundtable) and one Spanish-language (Telemundo) newspaper. Now, you need to translate some of the press releases. What would you change in the workflow to make this work?
-3. Different forms of social media have different requirements, both in terms of character limits but also in terms of audience and how to gain traction. In this example, Facebook tends towards a slightly older (and more Spanish-speaking) audience, while Twitter/X is used by those who are very involved politically in these spheres. How would you change the workflow to better cater to these differences?
-4. In our workflow, every draft requires explicit human approval. How could you change the process so that some posts (like low-stakes reminders) are auto-approved if they meet certain criteria, while others (like press releases) always require human review?
-5. In the current format, the AI only sees the most recent set of edits. How could you modify the loop so the AI has access to the full revision history, and what might be the benefits or risks of that?
+3. Note that our decision about whether or not Spanish translation is needed could be done by an AI Agent! Change Part 3 of the workflow to be done by an AI Agent with a Gmail tool.
+	1. As an added challenge: try Question 1 again with your new workflow. What if you want it to be able to decide whom to send the message to?
+4. Different forms of social media have different requirements, both in terms of character limits but also in terms of audience and how to gain traction. In this example, Facebook tends towards a slightly older (and more Spanish-speaking) audience, while Twitter/X is used by those who are very involved politically in these spheres. How would you change the workflow to better cater to these differences?
+5. In our workflow, every draft requires explicit human approval. How could you change the process so that some posts (like low-stakes reminders) are auto-approved if they meet certain criteria, while others (like press releases) always require human review?
+6. In the current format, the AI only sees the most recent set of edits. How could you modify the loop so the AI has access to the full revision history, and what might be the benefits or risks of that?
 
 **Challenge:** Most posts on social media require some sort of graphic. Change the workflow so that users can submit photos/videos to be included or AI can generate some graphics. This is beyond the core content, so you may need to explore some to figure this one out!
 
@@ -1333,7 +1363,7 @@ You actually have all of the tools needed to make a very powerful personal assis
           "message"
         ],
         "additionalFields": {
-          "userIds": ""
+          "userIds": "7969872434"
         }
       },
       "type": "n8n-nodes-base.telegramTrigger",
@@ -1361,8 +1391,8 @@ You actually have all of the tools needed to make a very powerful personal assis
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        1152,
-        -224
+        1216,
+        -256
       ],
       "id": "07a75515-d0e4-435d-a2dc-65ae2d553b3a",
       "name": "Sticky Note"
@@ -1392,6 +1422,7 @@ You actually have all of the tools needed to make a very powerful personal assis
     {
       "parameters": {
         "operation": "sendAudio",
+        "chatId": "7969872434",
         "binaryData": true,
         "binaryPropertyName": "message",
         "additionalFields": {
@@ -1714,6 +1745,7 @@ You actually have all of the tools needed to make a very powerful personal assis
     },
     {
       "parameters": {
+        "chatId": "7969872434",
         "text": "={{ $json.output }}",
         "additionalFields": {
           "appendAttribution": false
@@ -1722,8 +1754,8 @@ You actually have all of the tools needed to make a very powerful personal assis
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        736,
-        -320
+        816,
+        -160
       ],
       "id": "9f3048bd-cc05-4ed8-9921-29e3bbc6e70a",
       "name": "Telegram1",
@@ -1784,6 +1816,7 @@ You actually have all of the tools needed to make a very powerful personal assis
           "__rl": true,
           "value": "ECrpNyUWeIkmgvAS",
           "mode": "list",
+          "cachedResultUrl": "/workflow/ECrpNyUWeIkmgvAS",
           "cachedResultName": "Hacker News Agent"
         },
         "workflowInputs": {
@@ -1813,8 +1846,8 @@ You actually have all of the tools needed to make a very powerful personal assis
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        912,
-        160
+        944,
+        304
       ],
       "id": "fc46d422-dd36-4b8b-829e-d604739192b2",
       "name": "Hacker News Agent"
@@ -1852,6 +1885,7 @@ You actually have all of the tools needed to make a very powerful personal assis
           "__rl": true,
           "value": "iMmctJb0I5A39EXz",
           "mode": "list",
+          "cachedResultUrl": "/workflow/iMmctJb0I5A39EXz",
           "cachedResultName": "Outlook Calendar Agent"
         },
         "workflowInputs": {
@@ -1872,6 +1906,16 @@ You actually have all of the tools needed to make a very powerful personal assis
               "canBeUsedToMatch": true,
               "type": "string",
               "removed": false
+            },
+            {
+              "id": "sessionId",
+              "displayName": "sessionId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -1975,9 +2019,9 @@ You actually have all of the tools needed to make a very powerful personal assis
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4.1",
+          "value": "gpt-5",
           "mode": "list",
-          "cachedResultName": "gpt-4.1"
+          "cachedResultName": "gpt-5"
         },
         "options": {}
       },
@@ -2023,8 +2067,8 @@ You actually have all of the tools needed to make a very powerful personal assis
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2,
       "position": [
-        -672,
-        224
+        -480,
+        640
       ],
       "id": "2cdb3c7d-d9db-46e3-a1c1-0bb1884ad3d0",
       "name": "Schedule Trigger"
@@ -2052,8 +2096,8 @@ You actually have all of the tools needed to make a very powerful personal assis
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -464,
-        224
+        -272,
+        640
       ],
       "id": "0731db3e-24df-4ce8-ae78-786ec1484ac9",
       "name": "Edit Fields"
@@ -2069,8 +2113,8 @@ You actually have all of the tools needed to make a very powerful personal assis
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -48,
-        224
+        144,
+        640
       ],
       "id": "0324d7f7-7d9c-4bf9-b045-ee6c7aa079ee",
       "name": "Send a text message",
@@ -2086,15 +2130,15 @@ You actually have all of the tools needed to make a very powerful personal assis
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "iMmctJb0I5A39EXz",
+          "value": "ywXDWOLdybp9QPaj",
           "mode": "list",
-          "cachedResultName": "Outlook Calendar Agent"
+          "cachedResultUrl": "/workflow/ywXDWOLdybp9QPaj",
+          "cachedResultName": "Google Calendar Agent"
         },
         "workflowInputs": {
           "mappingMode": "defineBelow",
           "value": {
-            "query": "={{ $json.query }}",
-            "sessionId": "={{ $json.sessionId }}"
+            "query": "={{ $json.query }}"
           },
           "matchingColumns": [
             "query"
@@ -2103,16 +2147,6 @@ You actually have all of the tools needed to make a very powerful personal assis
             {
               "id": "query",
               "displayName": "query",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string",
-              "removed": false
-            },
-            {
-              "id": "sessionId",
-              "displayName": "sessionId",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -2129,11 +2163,11 @@ You actually have all of the tools needed to make a very powerful personal assis
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.2,
       "position": [
-        -256,
-        224
+        -64,
+        640
       ],
       "id": "20526997-3192-46dc-9565-88e963cb82fa",
-      "name": "Execute Workflow"
+      "name": "Call 'Google Calendar Agent'"
     }
   ],
   "connections": {
@@ -2389,14 +2423,14 @@ You actually have all of the tools needed to make a very powerful personal assis
       "main": [
         [
           {
-            "node": "Execute Workflow",
+            "node": "Call 'Google Calendar Agent'",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Execute Workflow": {
+    "Call 'Google Calendar Agent'": {
       "main": [
         [
           {
@@ -2430,7 +2464,7 @@ Note that we have two nodes that feed their outputs into the Assistant Agent. If
 [Cartesia](https://cartesia.ai/sonic) and [ElevenLabs](https://elevenlabs.io/) are both services that offer speech-to-voice. I have had more success connecting Cartesia, which you can see in the `Personality` section. We can then send this voice message back in Telegram.
 ## Tools and the HTTP Request Node
 
-The `Assistant Agent` has many different tools available to it. Most of these are fairly simple and we will focus only on the `Outlook Calendar Agent`, which is quite similar to the Google Calendar Agent we built in [Recitation 1](https://sebastienmartin.info/aiml901/recitation_1.html). The code for this can be found here:
+The `Assistant Agent` has many different tools available to it. Most of these are fairly simple and we will focus only on the `Hacker News Agent`. The code for this can be found here:
 
 ```JSON
 {
@@ -2441,9 +2475,6 @@ The `Assistant Agent` has many different tools available to it. Most of these ar
           "values": [
             {
               "name": "query"
-            },
-            {
-              "name": "sessionId"
             }
           ]
         }
@@ -2451,29 +2482,46 @@ The `Assistant Agent` has many different tools available to it. Most of these ar
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        336,
-        -32
+        -192,
+        -224
       ],
-      "id": "be11cbd5-fac4-4776-8f66-330b871423c7",
+      "id": "b91711cf-65c7-4902-acf8-87cadda2c364",
       "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.query }}",
+        "options": {
+          "systemMessage": "=## Role: \nRetrieve news articles from Hacker News.\n\n## Functions:\nGet top stories– retrieve IDs for top articles.\nGet new stories– retrieve IDs for new articles.\nGet article– use ID to retrieve information about articles\n\n## Rules\n- First use get top stories or get new stories to get the relevant IDs. Then, use this ID for get article in order to retrieve information about the article.\n- For each article, give a link, the name of the article, and a 1-3 sentence summary of the article.\n\n## Examples\n- “Get the top 3 Hacker News posts” → { \"count\": 3 }\n\n## Notes:\nCurrent date/time: {{ $now }}\nDefault number of articles to retrieve: 5 if unspecified."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.9,
+      "position": [
+        48,
+        -224
+      ],
+      "id": "ee985fe9-af05-4804-9916-4c9fdef4cc5c",
+      "name": "AI Agent"
     },
     {
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "gpt-4o",
+          "value": "gpt-5.1",
           "mode": "list",
-          "cachedResultName": "gpt-4o"
+          "cachedResultName": "gpt-5.1"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        400,
-        192
+        -80,
+        -48
       ],
-      "id": "fe226bf0-f4b8-4ede-90be-d9b2f04ab45e",
+      "id": "e81ddbfd-5fd0-4d35-8924-a9593c2a6fb3",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -2484,195 +2532,111 @@ The `Assistant Agent` has many different tools available to it. Most of these ar
     },
     {
       "parameters": {
-        "resource": "event",
-        "operation": "create",
-        "calendarId": {
-          "__rl": true,
-          "value": "AAMkADhlZGEyZThmLTIzYzAtNGM0OS1iM2I2LTdiYmU4ZWQwOGIwYwBGAAAAAACCcm4e8iszRIRP3X-iyLzzBwDiHnTvtseZT6m7N6TID-8BAAAAAAEGAADiHnTvtseZT6m7N6TID-8BAAA1p1spAAA=",
-          "mode": "list",
-          "cachedResultName": "Calendar"
+        "toolDescription": "Looks for top articles",
+        "url": "https://hacker-news.firebaseio.com/v0/topstories.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "count",
+              "value": "={{ $fromAI('parameters1_Value', ``, 'string') }}"
+            },
+            {
+              "name": "id",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters1_Value', ``, 'string') }}"
+            },
+            {
+              "name": "url",
+              "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('parameters2_Value', ``, 'string') }}"
+            }
+          ]
         },
-        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', ``, 'string') }}",
-        "startDateTime": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
-        "endDateTime": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        128
+      ],
+      "id": "e275340d-d93c-425a-8eff-e251da2d4903",
+      "name": "Get Top Stories"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Looks for new articles",
+        "url": "https://hacker-news.firebaseio.com/v0/newstories.json",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "count",
+              "value": "={{ $fromAI('parameters1_Value', ``, 'string') }}"
+            },
+            {
+              "name": "id",
+              "value": "={{ $fromAI('parameters2_Value', ``, 'string') }}"
+            },
+            {
+              "name": "url",
+              "value": "={{ $fromAI('parameters3_Value', ``, 'string') }}"
+            }
+          ]
+        },
+        "options": {
+          "batching": {
+            "batch": {
+              "batchSize": 1,
+              "batchInterval": 500
+            }
+          },
+          "timeout": 10000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        352,
+        128
+      ],
+      "id": "cb004d7f-dd00-4d87-b338-a41173b8cfaa",
+      "name": "Get New Stories"
+    },
+    {
+      "parameters": {
+        "articleId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Article_ID', ``, 'string') }}",
         "additionalFields": {}
       },
-      "type": "n8n-nodes-base.microsoftOutlookTool",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.hackerNewsTool",
+      "typeVersion": 1,
       "position": [
-        688,
-        192
+        512,
+        128
       ],
-      "id": "a88256ee-75d9-45bc-997d-e5889e9ac511",
-      "name": "Create Event",
-      "webhookId": "6cfbc2f2-d5e0-4b87-a039-bb45906d33c5",
-      "credentials": {
-        "microsoftOutlookOAuth2Api": {
-          "id": "03pPB9ZsD3ALVRos",
-          "name": "Microsoft Outlook"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "event",
-        "operation": "delete",
-        "calendarId": {
-          "__rl": true,
-          "value": "AAMkADhlZGEyZThmLTIzYzAtNGM0OS1iM2I2LTdiYmU4ZWQwOGIwYwBGAAAAAACCcm4e8iszRIRP3X-iyLzzBwDiHnTvtseZT6m7N6TID-8BAAAAAAEGAADiHnTvtseZT6m7N6TID-8BAAA1p1spAAA=",
-          "mode": "list",
-          "cachedResultName": "Calendar"
-        },
-        "eventId": {
-          "__rl": true,
-          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event', `the id that matches the events id`, 'string') }}",
-          "mode": "id"
-        }
-      },
-      "type": "n8n-nodes-base.microsoftOutlookTool",
-      "typeVersion": 2,
-      "position": [
-        816,
-        192
-      ],
-      "id": "bdb3502d-3633-4b4d-9468-d94ec4b2e88e",
-      "name": "Delete Event",
-      "webhookId": "6cfbc2f2-d5e0-4b87-a039-bb45906d33c5",
-      "credentials": {
-        "microsoftOutlookOAuth2Api": {
-          "id": "03pPB9ZsD3ALVRos",
-          "name": "Microsoft Outlook"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "resource": "event",
-        "operation": "update",
-        "calendarId": {
-          "__rl": true,
-          "value": "AAMkADhlZGEyZThmLTIzYzAtNGM0OS1iM2I2LTdiYmU4ZWQwOGIwYwBGAAAAAACCcm4e8iszRIRP3X-iyLzzBwDiHnTvtseZT6m7N6TID-8BAAAAAAEGAADiHnTvtseZT6m7N6TID-8BAAA1p1spAAA=",
-          "mode": "list",
-          "cachedResultName": "Calendar"
-        },
-        "eventId": {
-          "__rl": true,
-          "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event', `the id that matches the events id`, 'string') }}",
-          "mode": "id"
-        },
-        "additionalFields": {
-          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', `end time of the event`, 'string') }}",
-          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', `start time of the event`, 'string') }}",
-          "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Title', `title of the event`, 'string') }}"
-        }
-      },
-      "type": "n8n-nodes-base.microsoftOutlookTool",
-      "typeVersion": 2,
-      "position": [
-        1072,
-        192
-      ],
-      "id": "a74b106d-a34a-4615-9033-6880aa59708e",
-      "name": "Update Events",
-      "webhookId": "6cfbc2f2-d5e0-4b87-a039-bb45906d33c5",
-      "credentials": {
-        "microsoftOutlookOAuth2Api": {
-          "id": "03pPB9ZsD3ALVRos",
-          "name": "Microsoft Outlook"
-        }
-      }
+      "id": "3776ac2e-a0fd-42a2-9c0a-56cd06f275b7",
+      "name": "Get Article"
     },
     {
       "parameters": {
         "sessionIdType": "customKey",
-        "sessionKey": "{{ $(\"Trigger Node\").item.json.sessionId }}",
-        "contextWindowLength": 20
+        "sessionKey": "{{ $(\"Trigger Node\").item.json.sessionId }}"
       },
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        560,
-        192
+        0,
+        112
       ],
-      "id": "96d487b2-0aff-428e-9810-0c133456948c",
+      "id": "d9527974-a4c3-433e-9949-5440980947cc",
       "name": "Simple Memory"
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "={{ $json.query }}",
-        "options": {
-          "systemMessage": "=You are a calendar assistant. Your job is to reliably execute the user’s intent with Outlook Calendar tools by creating, retrieving, updating, and deleting events.\n\nCurrent date/time: {{ $now }}\nTimezone: America/Chicago\n\nDefaults:\n- If no duration: 1 hour.\n- If no start time: 9:00 AM local.\n- When supplying datetimes, use the full datetime, like 2025-09-19T10:00:00-05:00.\n\nFunctions:\nCreate Event - Make a new event. \nGet Events - Retrieve calendar schedules. This requires you to supply at least a start and end time (startFilter and endFilter) and possibly a keyword (title).\nDelete Event - Remove an event (requires event ID from \"Get Events\")\nUpdate Event - Modify an event (requires event ID from \"Get Events\")\n\nExecution Rules (always follow, in order):\n1) Parse intents in sequence (delete → update → create). Execute each fully before the next.\n2) For Delete or Update: NEVER assume an event ID. First run “Get Events” with the smallest plausible window and summary filter, pick the best match, then pass its ID to the action.\n3) If multiple matches exist, ask one clarifying question.\n4) If both a deletion and a creation are requested in one message, DELETE first, then CREATE.\n5) If asked about events this week, filter events to only ones this week.\n6) If asked about an event in a certain time frame, look through all events in that time frame to find the proper one. For example, if I am asked to delete the event \"Party\" this week, you should search through all events this week to find the one called Party and delete it. If there are multiple events with the same name in the specified time frame, ask which one the user means.\n\nHeuristics:\n- “tonight”, “this evening” → 17:00–23:59 today for search.\n- “this event” after we just created/returned an event → use the most recently returned event’s ID.\n- If user asks “delete this” without a time, search today ± 1 day for events with that summary.\n\nExample:\nUser: “Delete the ‘Soccer’ event tonight, then create ‘Soccer (NEW)’ at 8:45 pm and invite alex.e.jensen@gmail.com”\nPlan:\n  a) Get Events(timeMin=today 17:00, timeMax=today 23:59, summary contains “Soccer”)\n  b) Delete Event(eventId=<best match>)\n  c) Create Event (with Attendees)(summary=\"Soccer (NEW)\", start=today 20:45, end=today 21:45, attendees=[{email:\"alex.e.jensen@gmail.com\"}])\nExecute the plan."
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 1.9,
-      "position": [
-        656,
-        -32
-      ],
-      "id": "4ebf3c10-8305-4f1f-8283-165f0afb6ecc",
-      "name": "AI Agent",
-      "retryOnFail": false
-    },
-    {
-      "parameters": {
-        "description": "Call this tool to get calendar events and event IDs.\n\n- For startFilter and endFilter, give dates. These represent the beginning and end of the time frame in which you are searching for events. Use the full datetime, like 2025-09-19T10:00:00-05:00.\n- title represents a keyword or phrase that you are looking for within the title of an event. If you are not searching by title, leave this as an empty string.\n\nIf you want to update or delete an event, retrieve the event ID using this tool.",
-        "workflowId": {
-          "__rl": true,
-          "value": "e2ySKjJfF1SdFUwz",
-          "mode": "list",
-          "cachedResultName": "Outlook Calendar Get Events"
-        },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "startFilter": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('startFilter', ``, 'string') }}",
-            "endFilter": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('endFilter', ``, 'string') }}",
-            "title": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('title', ``, 'string') }}"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "startFilter",
-              "displayName": "startFilter",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            },
-            {
-              "id": "endFilter",
-              "displayName": "endFilter",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            },
-            {
-              "id": "title",
-              "displayName": "title",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "canBeUsedToMatch": true,
-              "type": "string"
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
-      "typeVersion": 2.2,
-      "position": [
-        944,
-        192
-      ],
-      "id": "e8ec760c-5f76-4def-a398-632dfbd244bf",
-      "name": "Get Events"
     }
   ],
   "connections": {
@@ -2698,7 +2662,7 @@ The `Assistant Agent` has many different tools available to it. Most of these ar
         ]
       ]
     },
-    "Create Event": {
+    "Get Top Stories": {
       "ai_tool": [
         [
           {
@@ -2709,7 +2673,7 @@ The `Assistant Agent` has many different tools available to it. Most of these ar
         ]
       ]
     },
-    "Delete Event": {
+    "Get New Stories": {
       "ai_tool": [
         [
           {
@@ -2720,7 +2684,7 @@ The `Assistant Agent` has many different tools available to it. Most of these ar
         ]
       ]
     },
-    "Update Events": {
+    "Get Article": {
       "ai_tool": [
         [
           {
@@ -2741,240 +2705,17 @@ The `Assistant Agent` has many different tools available to it. Most of these ar
           }
         ]
       ]
-    },
-    "Get Events": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
     }
   },
   "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "ceb54e93c9453c0a04a7088216a654255644d70f37e774115b7c5a7902f6fb77"
   }
 }
 ```
 
-Specifically, note that the `Get Events` tool is actually another workflow call! That workflow can be found here:
-
-```JSON
-{
-  "nodes": [
-    {
-      "parameters": {
-        "workflowInputs": {
-          "values": [
-            {
-              "name": "startFilter"
-            },
-            {
-              "name": "endFilter"
-            },
-            {
-              "name": "title"
-            }
-          ]
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1.1,
-      "position": [
-        192,
-        0
-      ],
-      "id": "beed3efb-9724-4c7a-9639-f1d336d80cad",
-      "name": "When Executed by Another Workflow"
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "4c35acbc-1cdb-4eff-8567-764c94ed6da3",
-              "leftValue": "={{ $json.title }}",
-              "rightValue": "",
-              "operator": {
-                "type": "string",
-                "operation": "notEmpty",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        416,
-        0
-      ],
-      "id": "3b2f5707-d0f6-4e47-b9d6-dace82b6049a",
-      "name": "If title exists..."
-    },
-    {
-      "parameters": {
-        "url": "https://graph.microsoft.com/v1.0/me/calendar/calendarView",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "microsoftOutlookOAuth2Api",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "startDateTime",
-              "value": "={{ $json.startFilter }}"
-            },
-            {
-              "name": "endDateTime",
-              "value": "={{ $json.endFilter }}"
-            },
-            {
-              "name": "$filter",
-              "value": "=contains(subject, '{{ $json.title }}')"
-            },
-            {
-              "name": "$select",
-              "value": "subject,start,end,attendees,id"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "outlook.timezone",
-              "value": "Central Standard Time"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        640,
-        -80
-      ],
-      "id": "15632857-1d19-4251-b705-f672144f325f",
-      "name": "Find Events By Title",
-      "credentials": {
-        "microsoftOutlookOAuth2Api": {
-          "id": "03pPB9ZsD3ALVRos",
-          "name": "Microsoft Outlook"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "url": "https://graph.microsoft.com/v1.0/me/calendar/calendarView",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "microsoftOutlookOAuth2Api",
-        "sendQuery": true,
-        "queryParameters": {
-          "parameters": [
-            {
-              "name": "startDateTime",
-              "value": "={{ $json.startFilter }}"
-            },
-            {
-              "name": "endDateTime",
-              "value": "={{ $json.endFilter }}"
-            },
-            {
-              "name": "$select",
-              "value": "subject,start,end,attendees,id"
-            }
-          ]
-        },
-        "sendHeaders": true,
-        "headerParameters": {
-          "parameters": [
-            {
-              "name": "outlook.timezone",
-              "value": "Central Standard Time"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "position": [
-        640,
-        96
-      ],
-      "id": "593c1878-6b64-4da6-8585-724a0c16d174",
-      "name": "Find Events without Title",
-      "credentials": {
-        "microsoftOutlookOAuth2Api": {
-          "id": "03pPB9ZsD3ALVRos",
-          "name": "Microsoft Outlook"
-        }
-      }
-    }
-  ],
-  "connections": {
-    "When Executed by Another Workflow": {
-      "main": [
-        [
-          {
-            "node": "If title exists...",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If title exists...": {
-      "main": [
-        [
-          {
-            "node": "Find Events By Title",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Find Events without Title",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Find Events without Title": {
-      "main": [
-        []
-      ]
-    }
-  },
-  "pinData": {},
-  "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "ceb54e93c9453c0a04a7088216a654255644d70f37e774115b7c5a7902f6fb77"
-  }
-}
-```
-
-It is possible to use the `Get Many Events` option like in Google Calendar, but this is just to showcase what is possible. Additionally, with some older LLM models, the `Get Many Events` tool was unreliable, but that should be improved now.
-
-Looking at the `Get Events` tool linked above, we see that we can search for events by time period and then we can either include the title or not. You will see two nodes that may look unfamiliar. These are called `HTTP Request` nodes, and they are some of the most powerful nodes in n8n. They let you request data from any app or service that has a REST API. As a result, you can replace essentially any node in n8n that connects to another service with this one, though configuring it can be slightly trickier. However, this allows for a much higher degree of control.
+This lets us look for articles that are new or popular. You will see two nodes that may look unfamiliar. These are called `HTTP Request` nodes, and they are some of the most powerful nodes in n8n. They let you request data from any app or service that has a REST API. As a result, you can replace essentially any node in n8n that connects to another service with this one, though configuring it can be slightly trickier. However, this allows for a much higher degree of control.
 
 ## Schedule Trigger
 
-You might notice a small workflow consisting of four nodes. This is one of the most useful ways that I use my workflows. The `Schedule Trigger` will execute every day at 8 a.m. and this then sends a question to my calendar agent asking for my schedule for the day. This small workflow then gives me a Telegram message summarizing my calendar for the day.
+You might notice in the large assistant workflow that there is an additional, smaller workflow consisting of four nodes. This is one of the most useful ways that I use my workflows. The `Schedule Trigger` will execute every day at 8 a.m. and this then sends a question to my calendar agent asking for my schedule for the day. This small workflow then gives me a Telegram message summarizing my calendar for the day.
