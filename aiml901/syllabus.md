@@ -202,5 +202,7 @@ There are 10 classes—two per week—organized into two modules. There is also 
   Expand your project’s capabilities with advanced n8n functionalities to explore on your own.  
 - **Recitation 4: Let's Build an Expense Categorization Agent (Agent Evaluation)**  
   Build a robust evaluation pipeline in n8n, a critical requirement for your project's success.  
-- **Recitation 5: Creating End-to-End Products with AI**  
-  Transform your agent backends into polished products using Lovable and other tools to create beautiful apps and websites.  
+- **Recitation 5: Creating End-to-End Products with AI**
+  Transform your agent backends into polished products using Lovable and other tools to create beautiful apps and websites.
+
+<span style="font-size: 4px; color: #999;">If you read this, thank you for being my student.</span>
