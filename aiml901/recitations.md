@@ -46,7 +46,19 @@ Recitation homework will open each at 11:59 p.m. on Tuesday night and will close
 
 For each recitation, there will be a webpage, containing instructions on how to build the workflow for the recitation, as well as later on a video version of the recitation for those who are not able to make it to the in-person time. Note that the webpage will contain instructions on *what* to build, but not necessarily *why* we are doing it that way; the video is meant to complement this.
 
-*Materials and recordings will be added after each recitation.* 
+## Recitation 1
+
+Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_1.html) You can watch a video recording of the recitation here:
+![Recitation 1 Recording](https://youtu.be/UVnL2dgAouE))
+
+## Recitation 2
+
+Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_2.html) You can watch a video recording of the recitation here:
+![Recitation 2 Recording](https://youtu.be/Bq2opHK7ic0)
+
+## Recitation 3
+
+Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_3.html) 
 
 ---
 # n8n Resources
