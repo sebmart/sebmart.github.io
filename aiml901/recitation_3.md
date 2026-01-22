@@ -18,6 +18,10 @@ To demonstrate this, we consider a communications team at an education and learn
 	- A copy of [this Google Form](https://docs.google.com/forms/d/1VVZw92zXz0YlRbYuar2YAKp5ipo-0afF2aHn0fMnvgE/copy) with a connected Google Sheet
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 3 Recording](https://youtu.be/JdyuojSYP0Q)
+
+---
 ## Learning Objectives
 
 - Understanding sub-workflows and calling them both as tools and as parts of our main workflow
@@ -331,7 +335,7 @@ Social Media Agent:
 }
 ```
 
-Make sure to select your credentials for the OpenAI model.
+Make sure to select your credentials for the OpenAI model. You will also need to hit the `Publish` button in the top right to make these workflows available for the later steps.
 
 You should recognize all of the nodes besides the `When Executed by Another Workflow` trigger. This allows us to call the workflow from another one. Click into one of these nodes. While we can let all data be accepted, we choose the `Input data mode` as `Define using fields below` to ensure that our data arrives the way that we want it.
 
