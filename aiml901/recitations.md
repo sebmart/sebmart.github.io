@@ -49,7 +49,7 @@ For each recitation, there will be a webpage, containing instructions on how to 
 ## Recitation 1
 
 Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_1.html) You can watch a video recording of the recitation here:
-![Recitation 1 Recording](https://youtu.be/UVnL2dgAouE)
+![Recitation 1 Recording](https://youtu.be/UVnL2dgAouE))
 
 ## Recitation 2
 
@@ -58,8 +58,7 @@ Instructions for the recitation can be found [here.](https://sebastienmartin.inf
 
 ## Recitation 3
 
-Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_3.html) You can watch a video recording of the recitation here:
-![Recitation 3 Recording](https://youtu.be/JdyuojSYP0Q)
+Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_3.html) 
 
 ---
 # n8n Resources
@@ -83,3 +82,5 @@ If you run into an error and you are unable to understand it using the AI Assist
 ## YouTube
 
 There are many YouTube tutorials on building different workflows. While many of them focus on automation and do not go in-depth on _why_ they are making certain decisions, this can still be useful in gaining practice with the interface and different types of nodes.
+
+<p style="font-size: 8px; color: #999; margin-top: 50px;">if you see me, you went to lecture 6!</p>
