@@ -184,13 +184,13 @@ There are 10 classes—two per week—organized into two modules. There is also 
 *Bridge the gap between powerful AI tools and measurable business impact through agent ops, evaluation, strategy, and change management.*
 
 - **Class 7: AgentOps**
-  Introduction to the Proxima Health case—we'll design an agent for the company in this hands-on class.
-- **Class 8: Evaluation**
-  Learn how to automatically evaluate an AI project, and start thinking about continuous improvement and AI strategy.
-- **Class 9: AgentOps and Change Management**
-  Taking multiple perspectives to think deeply about what truly leads to the success of an AI project.
-- **Class 10: Project Showcase & Farewell**
-  The bittersweet last class! We will go over the project deliverables, and Kai will be the judge of a project pitch competition! We will give you tips on staying up to date with the field, plus one last hands-on session.
+  How do we go from "I can build a cool AI prototype" to "real world impact"?
+- **Class 8: Evaluation and Continuous Improvement**
+  How do we know if our AI workflow is working? How can we improve it?
+- **Class 9: Change Management and Innovation**
+  A deep dive into the Proxima Health case study—how do you drive impact with AI?
+- **Class 10: Keeping up with AI**
+  "Kai awards", advice to keep learning about AI, Farewell
 
 ## Recitations
 
@@ -200,9 +200,9 @@ There are 10 classes—two per week—organized into two modules. There is also 
   Level up your n8n skills with advanced features that will empower your course project.  
 - **Recitation 3: Let's Build a Bilingual Communications Agent (Advanced n8n Usage)**  
   Expand your project’s capabilities with advanced n8n functionalities to explore on your own.  
-- **Recitation 4: Let's Build an Expense Categorization Agent (Agent Evaluation)**  
-  Build a robust evaluation pipeline in n8n, a critical requirement for your project's success.  
-- **Recitation 5: Creating End-to-End Products with AI**
+- **Recitation 4: Creating End-to-End Products with AI**
   Transform your agent backends into polished products using Lovable and other tools to create beautiful apps and websites.
+- **Recitation 5: Let's Build an Expense Categorization Agent (Agent Evaluation)**  
+  Build a robust evaluation pipeline in n8n, a critical requirement for your project's success.  
 
 <span style="font-size: 4px; color: #999;">If you read this, thank you for being my student.</span>
