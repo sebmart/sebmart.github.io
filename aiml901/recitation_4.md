@@ -19,6 +19,10 @@ So far, we have focused on n8n’s core functionalities and building workflows w
 - **Optional:** SerpAPI account
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 3 Recording](https://youtu.be/EZWktts27cI)
+
+---
 ## Learning Objectives
 
 - Explain what a webhook is and how webhooks work in n8n.
