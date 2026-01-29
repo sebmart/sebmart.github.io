@@ -9,11 +9,15 @@ author:
 
 # AIML-901OP-5 AI Foundations for Managers - AgentOps
 
-![[course_canvas_vignette.png|400]]
-**Kellogg School of Management**  
-Instructor: Sébastien Martin  
-*Email:* [sebastien.martin@kellogg.northwestern.edu](mailto:sebastien.martin@kellogg.northwestern.edu)  
-*Website:* [sebastienmartin.info](https://sebastienmartin.info)
+<div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 1rem;">
+  <img src="attachments/course_canvas_vignette.png" alt="Course illustration" style="width: 300px; flex-shrink: 0;">
+  <div>
+    <strong>Kellogg School of Management</strong><br>
+    Instructor: Sébastien Martin<br>
+    <em>Email:</em> <a href="mailto:sebastien.martin@kellogg.northwestern.edu">sebastien.martin@kellogg.northwestern.edu</a><br>
+    <em>Website:</em> <a href="https://sebastienmartin.info">sebastienmartin.info</a>
+  </div>
+</div>
 # Course Overview
 
 AI is advancing at an unprecedented pace. The best way to understand its potential is not just to study it, but to use it. This immersive course provides Kellogg students with extensive hands-on experience building with generative AI, equipping you with practical skills to immediately apply these technologies in business contexts. In just five weeks, you will go from AI outsider to AI insider, taking your first steps toward building solutions while developing the essential vocabulary and conceptual framework to navigate the rapidly evolving AI landscape. 
