@@ -258,8 +258,8 @@ By default, the `AI Agent` node returns a single key, called `output`. We then w
 - `Response Body`:
 ```JSON
 {
-  "output": "{{ $json.output }}",
-  "sessionId": "{{ $('Webhook').item.json.body.sessionId }}"
+  "output": "{{ JSON.stringify($json.output).slice(1, -1) }}",  
+  "sessionId": "{{ $('Webhook').item.json.body.sessionId }}"  
 }
 ```
 Note that we need to put JSON expressions still in quotations to signal that they are strings (words).
