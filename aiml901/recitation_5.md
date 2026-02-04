@@ -1,103 +1,176 @@
 ---
-Author: Alex Jensen
 title: Recitation 5
+author: Alex Jensen
 ---
-> [!info] **Important: No Core Content**  
-> This recitation contains **no core content**, though we will explore some practice questions for the final exam. However, all new n8n content in this document is **exploratory only** and will **not be directly tested** on the final exam.  
-
----
-You can watch a video recording of the recitation here:
-![Recitation 5 Recording](https://youtu.be/JeFV-Bu8Qeg)
+Today, we continue with our exploration of the Proxima Health Systems case. We have talked about creating an agent to help with CRM, follow-up emails, or other aspects of the workflow. In this recitation we explore this further. What would an agent for this process look like? How do we know that it is "doing a good job?" It's our job to come up with a way to understand how well the agent is performing and optimize it as much as possible.
 
 ---
 ## You'll Need...
 
-- Lovable account
 - Google Sheets connection
 - OpenAI connection
-- Google Sheet with the following column names:
-
-| email | session_id | text | type | company | jobTitle | jobDescription |
-| ----- | ---------- | ---- | ---- | ------- | -------- | -------------- |
-|       |            |      |      |         |          |                |
-
-- **Optional:** SerpAPI account
+- CRM spreadsheet with columns **account_name, contact, type, summary, needs, products,** and **next_steps**. You can make a copy of it [here](https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/copy).
+- Expense evaluation spreadsheet that you can [copy from here](https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/copy).
 
 ---
 ## Learning Objectives
 
-- Explain what a webhook is and how webhooks work in n8n.
-- Describe how to connect n8n to a front-end tool such as Lovable (or another app that can send HTTP requests).
-- Work through final-exam-style problems
+- Understand how to build an evaluation pipeline in n8n
+- Decide between different choices of metrics
 
 ---
-# Exploratory Content: Interview Prep Agent
+# Exercise
 
-Our running example is an **interview coach bot**. Our process will be as follows:
-
-1. A user fills in a form on a website with:
-   - Interviewee name  
-   - Company name  
-   - Job title  
-   - Job description  
-   - (Optional) resume upload  
-2. When they submit the form, an AI agent will play the role of the interviewer and ask questions like a custom GPT, but with the added context from the job description. Questions and answers will be logged in a Google Sheet for future reference.
-3. At the end, the user can click **“Analyze conversation”**:
-   - n8n pulls the full conversation from the Google Sheet.
-   - This is sent to an **Analysis Agent**, which returns feedback on their performance.
-
-Note that while we could do this all in n8n, most products have a nice frontend. We will make a website in Lovable and then use a **webhook** to send information back and forth between Lovable and n8n
+We will actually start by brainstorming how we would do this. What sort of input would we want to process? What would a good output look like? Thinking about these ideas will inform the structure of our agent, as well as what we will test for in evaluation.
 
 ---
-## Webhooks
+# Part 1: Proxima Health Agent
 
-A **webhook** is a URL that another service can call to trigger your workflow. In the beginning of our process, a user submits information to a form on the website. The website will then send that information to a URL, where our n8n workflow will be listening for the information. This process is repeated later with other webhooks.
-
-In n8n, a Webhook node:
-- Has a **method** (`GET`, `POST`, etc.).
-	- Methods indicate the purpose of the request and what should be expected for a successful request. In our case, we will use `POST` since we want to send information back and forth between the two 
-- Has a **path** (e.g., `"39706c09-..."`).
-	- This is randomly generated and matches the end of the URL
-- Exposes a derived URL like:
-  ```text
-  https://<your-n8n-instance>/webhook/<path>
-  ```
-n8n provides you with a test URL, as well as a production URL which you would use for the actual product.
-
-When a request hits this URL:
-- The request body appears on `$json` (for JSON payloads).
-- Query parameters appear on `$query`.
-- The workflow starts running from that Webhook node.
-
-We will choose the `Respond` option called `Using 'Respond to Webhook' node` so that we have more control over when we return information. 
-
-> [!info] **Important for security:**  
-> Never publish your real webhook URLs. Anyone could send information to this URL and potentially access your information from your workflows.
-
----
-## The Workflow
-
-You can copy and paste the entire workflow here:
+We will start with the expense agent itself. Copy and paste the following code into a new workflow:
 
 ```JSON
 {
   "nodes": [
     {
       "parameters": {
-        "promptType": "define",
-        "text": "=Interviewee Name: {{ $('Initial Form Response').item.json.body.name }}\nCompany Name: {{ $('Initial Form Response').item.json.body.company }}\nJob Title: {{ $('Initial Form Response').item.json.body.jobTitle }}\nJob Description: {{ $('Initial Form Response').item.json.body.jobDescription }}\nResume: {{ $json.text }}",
+        "formTitle": "Client conversation transcript",
+        "formDescription": "Upload the recording of the customer interaction, or directly upload the transcript.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Audio recording",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".flac, .mp3, .mp4, .mpeg, .mpga, .m4a, .ogg, .wav, .webm"
+            },
+            {
+              "fieldLabel": "If no audio, directly copy the transcript"
+            }
+          ]
+        },
         "options": {
-          "systemMessage": "You are an interviewer. You work at the company given by the job title, and you are interviewing the user for the role also that is given. Ask questions to determine their fit for the role and understand their experience. Just like an interviewer, you're only going to ask one question at a time; concentrate on focused questions. Your role is to be a good example of what an interview might look like. Available to you is connection to the internet, so you are able to search for the company and gain information on them as well.\n\nImportant note: unless specifically asked for clarification, when asking questions, DO NOT give examples to the interviewee. They should think through the question on their own."
+          "appendAttribution": false
         }
       },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
       "position": [
-        800,
-        -96
+        -144,
+        656
       ],
-      "id": "f3ee0f11-cb90-418e-bdcd-8a157b557175",
-      "name": "AI Agent"
+      "id": "4841881c-982d-4cc4-a175-912d5fc5fff1",
+      "name": "Upload audio or transcript",
+      "webhookId": "e98e13f8-6154-497a-8fb1-dffc65bc72ad"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['Audio recording'].size }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    },
+                    "id": "3f164f0c-56f0-4d4b-83a4-ce557f107d13"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "if audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6c74856b-96be-415f-a1e7-e4054d602e78",
+                    "leftValue": "={{ $json['If no audio, directly copy the transcript'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "if transcript"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "if nothing"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        48,
+        640
+      ],
+      "id": "befdb855-2313-46c2-beb5-071bb6f8e9e7",
+      "name": "Detect input type"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "Audio_recording",
+        "options": {
+          "language": "en"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        368,
+        464
+      ],
+      "id": "e2192fe1-6d24-4520-b0fa-e8b6fd73bedc",
+      "name": "Transcribe audio of visit",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Missing information!",
+        "completionMessage": "You did not submit a recording or a transcript!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        832
+      ],
+      "id": "0a1b1cef-8aa7-4949-b2ab-3380b818b27e",
+      "name": "Error: nothing was uploaded!",
+      "webhookId": "486ab396-07f9-41b2-8f47-2988208ad6aa"
     },
     {
       "parameters": {
@@ -107,15 +180,17 @@ You can copy and paste the entire workflow here:
           "mode": "list",
           "cachedResultName": "gpt-5"
         },
-        "options": {}
+        "options": {
+          "reasoningEffort": "low"
+        }
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        880,
-        144
+        688,
+        784
       ],
-      "id": "355aa427-30dd-400a-a286-70a330176d94",
+      "id": "8d828a36-e3d4-43a2-b9bc-c6b10e46ffb2",
       "name": "OpenAI Chat Model",
       "credentials": {
         "openAiApi": {
@@ -126,75 +201,26 @@ You can copy and paste the entire workflow here:
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Create Session ID').item.json.session_id }}",
-        "contextWindowLength": 20
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"AfterVisit AI Output (Flat Simplified)\",\n  \"type\": \"object\",\n  \"description\": \"Flat, no-nesting schema for teaching and evaluation.\",\n  \"required\": [\n    \"account_name\",\n    \"contact\",\n    \"type\",\n    \"summary\",\n    \"needs\",\n    \"products\",\n    \"next_steps\",\n    \"follow_up_email_subject\",\n    \"follow_up_email_body_text\"\n  ],\n  \"properties\": {\n    \"account_name\": {\n      \"type\": \"string\",\n      \"description\": \"Account (hospital/clinic) name.\"\n    },\n    \"contact\": {\n      \"type\": \"string\",\n      \"description\": \"Primary customer attendee full name (single string).\"\n    },\n    \"type\": {\n      \"type\": \"string\",\n      \"enum\": [\"onsite\", \"virtual\", \"phone\"],\n      \"description\": \"Interaction type.\"\n    },\n    \"summary\": {\n      \"type\": \"string\",\n      \"description\": \"Short paragraph of what was discussed.\"\n    },\n    \"needs\": {\n      \"type\": \"string\",\n      \"description\": \"Bullet-style plain text list of customer needs or pain points (one per line, prefixed with '- ').\"\n    },\n    \"products\": {\n      \"type\": \"string\",\n      \"description\": \"Single primary product category for the meeting.\",\n      \"enum\": [\n        \"capital_equipment\",\n        \"diagnostics\",\n        \"consumables\",\n        \"services\",\n        \"digital_ops\"\n      ]\n    },\n    \"next_steps\": {\n      \"type\": \"string\",\n      \"description\": \"Bullet-style plain text list of follow-up actions (one per line, prefixed with '- ').\"\n    },\n    \"follow_up_email_subject\": {\n      \"type\": \"string\",\n      \"description\": \"Email subject.\"\n    },\n    \"follow_up_email_body_text\": {\n      \"type\": \"string\",\n      \"description\": \"Plain-text email body.\"\n    }\n  }\n}\n"
       },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        1072,
-        144
+        928,
+        784
       ],
-      "id": "cd9378a0-4907-4d72-b211-33b8ab0c9316",
-      "name": "Simple Memory"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
-      "typeVersion": 1,
-      "position": [
-        1248,
-        144
-      ],
-      "id": "ed43ae2a-f926-4a4e-a551-e200bb20df5d",
-      "name": "SerpAPI",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "conditions": {
-          "options": {
-            "caseSensitive": true,
-            "leftValue": "",
-            "typeValidation": "strict",
-            "version": 2
-          },
-          "conditions": [
-            {
-              "id": "e3bd1619-aff7-4bda-91da-705f2c2f0efd",
-              "leftValue": "={{ $('Initial Form Response').item.binary.resume }}",
-              "rightValue": "",
-              "operator": {
-                "type": "object",
-                "operation": "exists",
-                "singleValue": true
-              }
-            }
-          ],
-          "combinator": "and"
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.if",
-      "typeVersion": 2.2,
-      "position": [
-        -192,
-        -112
-      ],
-      "id": "da9aee4f-e6f8-46ba-9418-71245846c033",
-      "name": "If"
+      "id": "b623e320-89d4-4531-88b4-bcd705497091",
+      "name": "Agent Output Rules"
     },
     {
       "parameters": {
         "assignments": {
           "assignments": [
             {
-              "id": "f08e2fdb-78d8-4052-825a-57581c91424f",
+              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
               "name": "text",
-              "value": "No resume included",
+              "value": "={{ $('Upload audio or transcript').item.json['If no audio, directly copy the transcript'] }}",
               "type": "string"
             }
           ]
@@ -204,162 +230,106 @@ You can copy and paste the entire workflow here:
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        64,
-        0
+        368,
+        656
       ],
-      "id": "0ecdabb6-8d49-4cff-bccb-a73aa151252b",
-      "name": "No Resume"
-    },
-    {
-      "parameters": {
-        "operation": "pdf",
-        "binaryPropertyName": "resume",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1,
-      "position": [
-        64,
-        -208
-      ],
-      "id": "4d56f2ea-56e3-42db-8313-b8185148c7f7",
-      "name": "Extract from File"
+      "id": "584f7f0a-5b1d-4c1a-a592-2c068af88db2",
+      "name": "Process the transcript"
     },
     {
       "parameters": {
         "promptType": "define",
-        "text": "=Interviewee Response: {{ $('Responding to Questions').item.json.body.message }}",
+        "text": "={{ $json.text }}",
+        "hasOutputParser": true,
         "options": {
-          "systemMessage": "You are an interviewer. You work at the company given by the job title, and you are interviewing the user for the role also that is given. Ask questions to determine their fit for the role and understand their experience. Just like an interviewer, you're only going to ask one question at a time; concentrate on focused questions. Your role is to be a good example of what an interview might look like. Available to you is connection to the internet, so you are able to search for the company and gain information on them as well.\n\nImportant note: unless specifically asked for clarification, when asking questions, DO NOT give examples to the interviewee. They should think through the question on their own."
+          "systemMessage": "System role: AfterVisit AI – Transcript Parser and Summarizer\n\nPurpose\n- Parse a single sales rep transcript and produce a minimal JSON object that downstream automation (n8n) can route to Salesforce (CRM) and Outlook.\n\nCompany context (for grounding)\n- Proxima Health Systems (PXH) is a North American distributor serving hospitals and clinics. Offerings span:\n  - Capital equipment (e.g., infusion pumps, patient monitors, sterilizers, OR tables/lights)\n  - Diagnostics and clinical systems (POC analyzers, vital‑signs stations)\n  - Consumables and accessories (tubing sets, filters, electrodes, drapes)\n  - Services (field repair, preventive‑maintenance plans, depot/loaners)\n  - Digital/operations (asset tracking, service scheduling, basic compliance documentation)\n- Buying and stakeholders often include materials management/procurement, clinical leaders (OR/ICU/Med‑Surg), and biomedical engineering. Finance may weigh in on large capital purchases.\n- Sales reps are relationship‑driven account owners. A typical visit reviews the installed base and open issues, surfaces needs/pain points, discusses products or service options, agrees on next steps, and plans follow‑ups. Notes are logged in Salesforce; follow‑up emails recap agreements.\n\nInputs you receive\n- One raw transcript of an interaction (onsite, virtual, or phone) between a PXH rep and a single customer attendee. There is no separate context summary; extract everything from the transcript itself.\n\nYour task\n- Output a single JSON document that matches the caller‑provided flat schema (no nesting) with top‑level keys: `account_name`, `contact`, `type`, `summary`, `needs`, `products`, `next_steps`, `follow_up_email_subject`, `follow_up_email_body_text`.\n- Output JSON only. No markdown, no commentary, no code fences.\n\nGuidelines\n1. Be faithful to the transcript; do not invent facts. If a value is missing, return the smallest valid value the schema allows (e.g., `[]` for arrays, `\"\"` for strings).\n2. type must be one of `onsite`, `virtual`, `phone` based on cues (“onsite”, “Zoom/Teams/Teams”, “called”).\n3. summary: 2–4 sentences capturing main issues, products/services discussed, and direction of travel.\n4. needs: return a single string formatted as a newline-separated bullet list (`- item`) of customer pain points and requests. Omit blank trailing lines.\n5. products: return a single string from representing the primary category for the visit.\n6. next_steps: return a single plain-text string formatted as a newline-separated bullet list (`- action`) covering all follow-up items and dates, mirroring transcript phrasing (e.g., “next Wednesday”, “by Tuesday”, or a date).\n7. contact: return the single customer attendee’s full name string. Do not include the PXH rep or add emails/roles.\n8. account_name: use the customer organization named in the transcript. If multiple orgs are mentioned, choose the customer site the rep is visiting/serving.\n9. follow_up_email_subject: concise subject referencing the main topic and, when obvious, the account.\n10. follow_up_email_body_text: short, polite recap (4–7 sentences) reiterating key points and next steps without marketing fluff.\n11. Avoid PHI or patient identifiers unless explicitly present; do not add any.\n\nChecklist before sending\n- JSON conforms to the schema (keys present, types correct) and contains no extra properties.\n- Product category is chosen from the allowed set and reflects the main focus of the conversation.\n- `needs` field is a single string with newline-separated `- item` bullets that mirror the transcript.\n- Next steps field is a single string with newline-separated `- action` bullets that align with the transcript timing.\n- Email subject/body align with the summary and remain professional and concise."
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.2,
       "position": [
-        880,
-        416
+        720,
+        592
       ],
-      "id": "fa09c880-e1b5-4683-8d4f-49cf44589f45",
-      "name": "AI Agent1"
+      "id": "e147805f-b6bc-488b-8571-2a85245cb349",
+      "name": "Process transcript with AI"
     },
     {
       "parameters": {
-        "respondWith": "json",
-        "responseBody": "={\n  \"output\": \"{{ $json.output }}\",\n  \"session_id\": \"{{ $('Responding to Questions').item.json.body.session_id }}\"\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
-      "position": [
-        1200,
-        416
-      ],
-      "id": "e465ff92-f4cf-408b-92d6-7379ef179340",
-      "name": "Send Question"
-    },
-    {
-      "parameters": {
-        "respondWith": "json",
-        "responseBody": "={\n  \"output\": \"{{ $json.output }}\",\n  \"session_id\": \"{{ $('Create Session ID').item.json.session_id }}\",\n  \"email\": \"{{ $('Initial Form Response').item.json.body.email }}\"\n}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
-      "position": [
-        1152,
-        -96
-      ],
-      "id": "fbacb469-bb9d-4c41-afb8-eba4d6893980",
-      "name": "Send Initial Question"
-    },
-    {
-      "parameters": {
-        "content": "## Responding to the form and storing the data",
-        "height": 544,
-        "width": 1024
+        "content": "# AfterVisit AI agent workflow ",
+        "height": 576,
+        "width": 2384,
+        "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -720,
-        -288
+        -224,
+        432
       ],
-      "id": "88cfbdc1-ddaf-4d21-b3da-05eda8b8e36a",
-      "name": "Sticky Note"
+      "id": "e29123dc-37d6-461d-84dc-da90f8f0215c",
+      "name": "Sticky Note1"
     },
     {
       "parameters": {
-        "content": "## Interview Questions",
-        "height": 992,
-        "width": 1328,
-        "color": 3
+        "resource": "draft",
+        "additionalFields": {}
       },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
       "position": [
-        352,
-        -160
+        1520,
+        784
       ],
-      "id": "8543d70b-fe9d-4c9b-840c-c8cc1f295680",
-      "name": "Sticky Note2"
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "e2bef90b-1c27-4e68-953f-5e0bc38f638b",
-              "name": "session_id",
-              "value": "={{ $('Initial Form Response').item.json.body.email }}-{{ $now }}",
-              "type": "string"
-            }
-          ]
-        },
-        "includeOtherFields": true,
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -432,
-        -112
-      ],
-      "id": "44ba6ec9-71b2-4664-9122-9349c7c15cac",
-      "name": "Create Session ID"
+      "id": "b22f6e71-1dd8-48b9-b208-feb2da6bc6c5",
+      "name": "Create Outlook draft",
+      "webhookId": "94253bc1-9e63-4a92-a93e-f56a1bf2c407",
+      "disabled": true
     },
     {
       "parameters": {
         "operation": "append",
         "documentId": {
           "__rl": true,
-          "value": "1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw",
+          "value": "1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8",
           "mode": "list",
-          "cachedResultName": "Interview Prep",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit?usp=drivesdk"
+          "cachedResultName": "Proxima Health Logging Spreadsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/edit?usp=drivesdk"
         },
         "sheetName": {
           "__rl": true,
           "value": "gid=0",
           "mode": "list",
-          "cachedResultName": "Interview Sheet",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit#gid=0"
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/edit#gid=0"
         },
         "columns": {
           "mappingMode": "defineBelow",
           "value": {
-            "session_id": "={{ $('Create Session ID').item.json.session_id }}",
-            "text": "={{ $('Send Initial Question').item.json.output }}",
-            "email": "={{ $('Initial Form Response').item.json.body.email }}",
-            "type": "question",
-            "company": "={{ $('Initial Form Response').item.json.body.company }}",
-            "jobTitle": "={{ $('Initial Form Response').item.json.body.jobTitle }}",
-            "jobDescription": "={{ $('Initial Form Response').item.json.body.jobDescription }}"
+            "account_name": "={{ $json.output.account_name }}",
+            "contact": "={{ $json.output.contact }}",
+            "type": "={{ $json.output.type }}",
+            "summary": "={{ $json.output.summary }}",
+            "needs": "={{ $json.output.needs }}",
+            "products": "={{ $json.output.products }}",
+            "next_steps": "={{ $json.output.next_steps }}",
+            "date": "={{ new Date($('Upload audio or transcript').item.json.submittedAt).toLocaleDateString('en-US') }}"
           },
           "matchingColumns": [],
           "schema": [
             {
-              "id": "email",
-              "displayName": "email",
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "account_name",
+              "displayName": "account_name",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -367,17 +337,8 @@ You can copy and paste the entire workflow here:
               "canBeUsedToMatch": true
             },
             {
-              "id": "session_id",
-              "displayName": "session_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "text",
-              "displayName": "text",
+              "id": "contact",
+              "displayName": "contact",
               "required": false,
               "defaultMatch": false,
               "display": true,
@@ -394,34 +355,40 @@ You can copy and paste the entire workflow here:
               "canBeUsedToMatch": true
             },
             {
-              "id": "company",
-              "displayName": "company",
+              "id": "summary",
+              "displayName": "summary",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "jobTitle",
-              "displayName": "jobTitle",
+              "id": "needs",
+              "displayName": "needs",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
             },
             {
-              "id": "jobDescription",
-              "displayName": "jobDescription",
+              "id": "products",
+              "displayName": "products",
               "required": false,
               "defaultMatch": false,
               "display": true,
               "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": false
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "next_steps",
+              "displayName": "next_steps",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
             }
           ],
           "attemptToConvertTypes": false,
@@ -432,530 +399,77 @@ You can copy and paste the entire workflow here:
       "type": "n8n-nodes-base.googleSheets",
       "typeVersion": 4.7,
       "position": [
-        1440,
-        -96
+        1520,
+        608
       ],
-      "id": "d056e70a-2654-4774-b5c9-6c350a3a5739",
+      "id": "8fcc0798-80cf-4a50-87a5-219b7d06a9b5",
       "name": "Append row in sheet",
       "credentials": {
         "googleSheetsOAuth2Api": {
-          "id": "shJALxJGn2GrowJT",
-          "name": "Alex Google Sheets"
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
         }
       }
     },
     {
       "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw",
-          "mode": "list",
-          "cachedResultName": "Interview Prep",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Interview Sheet",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit#gid=0"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "session_id": "={{ $json.body.session_id }}",
-            "text": "={{ $json.body.message }}",
-            "email": "={{ $json.body.email }}",
-            "type": "answer"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "email",
-              "displayName": "email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "session_id",
-              "displayName": "session_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "text",
-              "displayName": "text",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "type",
-              "displayName": "type",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "company",
-              "displayName": "company",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "jobTitle",
-              "displayName": "jobTitle",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "jobDescription",
-              "displayName": "jobDescription",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        688,
-        416
-      ],
-      "id": "84a910ff-2529-4a4f-96ba-21fa684c4302",
-      "name": "Append row in sheet1",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "shJALxJGn2GrowJT",
-          "name": "Alex Google Sheets"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "operation": "append",
-        "documentId": {
-          "__rl": true,
-          "value": "1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw",
-          "mode": "list",
-          "cachedResultName": "Interview Prep",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Interview Sheet",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit#gid=0"
-        },
-        "columns": {
-          "mappingMode": "defineBelow",
-          "value": {
-            "session_id": "={{ $('Responding to Questions').item.json.session_id }}",
-            "text": "={{ $json.output}}",
-            "email": "={{ $('Responding to Questions').item.json.body.email }}",
-            "type": "question"
-          },
-          "matchingColumns": [],
-          "schema": [
-            {
-              "id": "email",
-              "displayName": "email",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "session_id",
-              "displayName": "session_id",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "text",
-              "displayName": "text",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "type",
-              "displayName": "type",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true
-            },
-            {
-              "id": "company",
-              "displayName": "company",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "jobTitle",
-              "displayName": "jobTitle",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            },
-            {
-              "id": "jobDescription",
-              "displayName": "jobDescription",
-              "required": false,
-              "defaultMatch": false,
-              "display": true,
-              "type": "string",
-              "canBeUsedToMatch": true,
-              "removed": true
-            }
-          ],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": false
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        1456,
-        416
-      ],
-      "id": "93a6d80a-1d1a-4ec1-929b-039e822ce9f4",
-      "name": "Append row in sheet2",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "shJALxJGn2GrowJT",
-          "name": "Alex Google Sheets"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "content": "## Analysis of the conversation",
-        "height": 464,
-        "width": 1552,
+        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 5 - Evaluation\n\n![Proxima Health logo](https://i.ibb.co/My1FBbwg/company-logo.jpg)\n\n",
+        "height": 624,
+        "width": 496,
         "color": 5
       },
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -464,
-        864
+        -752,
+        176
       ],
-      "id": "4c96a81e-a85e-4135-8f54-2e6fc7a53e67",
-      "name": "Sticky Note1"
-    },
-    {
-      "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Responding to Questions1').item.json.body.session_id }}",
-        "contextWindowLength": 20
-      },
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "typeVersion": 1.3,
-      "position": [
-        976,
-        688
-      ],
-      "id": "28b6b9b4-22d5-48ca-ad62-b9a56eea3ea4",
-      "name": "Simple Memory1"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-5",
-          "mode": "list",
-          "cachedResultName": "gpt-5"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        800,
-        688
-      ],
-      "id": "c2d8912f-b2f3-4cf8-9703-3cfcfb2c582c",
-      "name": "OpenAI Chat Model1",
-      "credentials": {
-        "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
-      "typeVersion": 1,
-      "position": [
-        1152,
-        688
-      ],
-      "id": "714b7686-2757-457a-87c2-b1f534bdcb5b",
-      "name": "SerpAPI1",
-      "disabled": true
-    },
-    {
-      "parameters": {
-        "documentId": {
-          "__rl": true,
-          "value": "1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw",
-          "mode": "list",
-          "cachedResultName": "Interview Prep",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Interview Sheet",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1YsqV1kEYkrtxrsfreaK7KGYIZbk0eIgivmG2KaLpkkw/edit#gid=0"
-        },
-        "filtersUI": {
-          "values": [
-            {
-              "lookupColumn": "email",
-              "lookupValue": "={{ $json.body.email }}"
-            },
-            {
-              "lookupColumn": "session_id",
-              "lookupValue": "={{ $json.body.session_id }}"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.googleSheets",
-      "typeVersion": 4.7,
-      "position": [
-        96,
-        928
-      ],
-      "id": "2662f7bc-7155-4cd9-8a8d-a0344e030f7a",
-      "name": "Get row(s) in sheet",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "shJALxJGn2GrowJT",
-          "name": "Alex Google Sheets"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "gpt-5",
-          "mode": "list",
-          "cachedResultName": "gpt-5"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        512,
-        1136
-      ],
-      "id": "48904d7b-1294-49ae-9636-1c14f5bfc43b",
-      "name": "OpenAI Chat Model2",
-      "credentials": {
-        "openAiApi": {
-          "id": "ng8YPN3U1fTEiF8P",
-          "name": "AIML901 OpenAI account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Company: {{ $json.company }}\nJob Title: {{ $json.jobTitle }}\nJob Description: {{ $json.jobDescription }}\nConversation: {{ $json.conversation }}",
-        "options": {
-          "systemMessage": "You are an expert at interview prep. You are provided with a conversation between an interviewer and an interviewee. Your role is to provide expert-level feedback based on the company, job title, job description, and the responses of the user to help the user prepare for the interview.\n\nIn formulating your response, give critical feedback that can help the user improve. Consider their tone, how they present themselves, and any other factors in their responses."
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.agent",
-      "typeVersion": 2.2,
-      "position": [
-        512,
-        928
-      ],
-      "id": "8db07597-2a60-451e-a9aa-da6201258b0b",
-      "name": "Analysis Agent"
-    },
-    {
-      "parameters": {
-        "respondWith": "text",
-        "responseBody": "={{ $json.output }}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.respondToWebhook",
-      "typeVersion": 1.4,
-      "position": [
-        848,
-        928
-      ],
-      "id": "bfc907bc-c104-4685-9398-749fe1dc7afe",
-      "name": "Respond to Webhook"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        -336,
-        1136
-      ],
-      "id": "eda59813-bf1d-41f1-a959-7312693f9411",
-      "name": "When clicking ‘Execute workflow’"
-    },
-    {
-      "parameters": {
-        "mode": "raw",
-        "jsonOutput": "{\n  \"body\": {\n    \"email\": \"alexander.jensen1@kellogg.northwestern.edu\",\n    \"session_id\": \"alexander.jensen1@kellogg.northwestern.edu-2025-10-20T10:32:58.700-05:00\"\n  }\n}\n",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        -160,
-        1136
-      ],
-      "id": "67def341-0f42-492b-b25c-c8f4b22a0a80",
-      "name": "Edit Fields1"
-    },
-    {
-      "parameters": {
-        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 5 - End-to-End Products with n8n",
-        "height": 560,
-        "width": 768,
-        "color": 6
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -464,
-        272
-      ],
-      "id": "01611138-76f4-4241-9093-276e07cd02b6",
+      "id": "6ceb3a36-39c0-4ba5-8f6c-f2403223ba45",
       "name": "Sticky Note6"
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "4fbf6fdf-e7e8-4f77-8b44-fc53c2b0cbe5",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -672,
-        -112
-      ],
-      "id": "c8bced55-53c9-4909-8909-572f6fa3ffd8",
-      "name": "Initial Form Response",
-      "webhookId": "4fbf6fdf-e7e8-4f77-8b44-fc53c2b0cbe5"
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "e04b66cf-d88e-40a7-91fc-17c9387a81c7",
-        "responseMode": "responseNode",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        432,
-        416
-      ],
-      "id": "98592108-b01c-45cc-bee8-5d825cc118f2",
-      "name": "Responding to Questions",
-      "webhookId": "e04b66cf-d88e-40a7-91fc-17c9387a81c7"
-    },
-    {
-      "parameters": {
-        "httpMethod": "POST",
-        "path": "be22d135-0a2a-497a-af26-f51d290705ae",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.webhook",
-      "typeVersion": 2.1,
-      "position": [
-        -224,
-        928
-      ],
-      "id": "d9e0b20d-fc1a-49cb-9333-2a3ae4dd34dc",
-      "name": "Analysis Webhook",
-      "webhookId": "be22d135-0a2a-497a-af26-f51d290705ae"
-    },
-    {
-      "parameters": {
-        "jsCode": "// If your column names are different, tweak the lookups below.\nconst first = items[0]?.json ?? {};\n\nconst company        = first.company        ?? first.Company        ?? '';\nconst jobTitle       = first.jobTitle       ?? first['Job Title']   ?? '';\nconst jobDescription = first.jobDescription ?? first['Job Description'] ?? '';\n\n// Build the conversation from every row (keeps sheet order)\nconst conversation = items\n  .map(i => `${i.json.type}: ${i.json.text}`)\n  .join('\\n\\n');\n\n\nreturn [{\n  json: {\n    conversation: conversation,\n    company,\n    jobTitle,\n    jobDescription\n  }\n}];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        304,
-        928
-      ],
-      "id": "e75a264b-7462-4096-b541-d2b4713c077f",
-      "name": "Recreating Transcript"
     }
   ],
   "connections": {
-    "AI Agent": {
+    "Upload audio or transcript": {
       "main": [
         [
           {
-            "node": "Send Initial Question",
+            "node": "Detect input type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detect input type": {
+      "main": [
+        [
+          {
+            "node": "Transcribe audio of visit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process the transcript",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error: nothing was uploaded!",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe audio of visit": {
+      "main": [
+        [
+          {
+            "node": "Process transcript with AI",
             "type": "main",
             "index": 0
           }
@@ -966,256 +480,45 @@ You can copy and paste the entire workflow here:
       "ai_languageModel": [
         [
           {
-            "node": "AI Agent",
+            "node": "Process transcript with AI",
             "type": "ai_languageModel",
             "index": 0
           }
         ]
       ]
     },
-    "Simple Memory": {
-      "ai_memory": [
+    "Agent Output Rules": {
+      "ai_outputParser": [
         [
           {
-            "node": "AI Agent",
-            "type": "ai_memory",
+            "node": "Process transcript with AI",
+            "type": "ai_outputParser",
             "index": 0
           }
         ]
       ]
     },
-    "SerpAPI": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
+    "Process the transcript": {
       "main": [
         [
           {
-            "node": "Extract from File",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "No Resume",
+            "node": "Process transcript with AI",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "No Resume": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "AI Agent1": {
-      "main": [
-        [
-          {
-            "node": "Send Question",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send Question": {
-      "main": [
-        [
-          {
-            "node": "Append row in sheet2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Send Initial Question": {
+    "Process transcript with AI": {
       "main": [
         [
           {
             "node": "Append row in sheet",
             "type": "main",
             "index": 0
-          }
-        ]
-      ]
-    },
-    "Create Session ID": {
-      "main": [
-        [
+          },
           {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Append row in sheet1": {
-      "main": [
-        [
-          {
-            "node": "AI Agent1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Simple Memory1": {
-      "ai_memory": [
-        [
-          {
-            "node": "AI Agent1",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model1": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent1",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "SerpAPI1": {
-      "ai_tool": [
-        [
-          {
-            "node": "AI Agent1",
-            "type": "ai_tool",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Get row(s) in sheet": {
-      "main": [
-        [
-          {
-            "node": "Recreating Transcript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model2": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Analysis Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Analysis Agent": {
-      "main": [
-        [
-          {
-            "node": "Respond to Webhook",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "Edit Fields1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Edit Fields1": {
-      "main": [
-        [
-          {
-            "node": "Get row(s) in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Initial Form Response": {
-      "main": [
-        [
-          {
-            "node": "Create Session ID",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Responding to Questions": {
-      "main": [
-        [
-          {
-            "node": "Append row in sheet1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Analysis Webhook": {
-      "main": [
-        [
-          {
-            "node": "Get row(s) in sheet",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Recreating Transcript": {
-      "main": [
-        [
-          {
-            "node": "Analysis Agent",
+            "node": "Create Outlook draft",
             "type": "main",
             "index": 0
           }
@@ -1231,64 +534,1696 @@ You can copy and paste the entire workflow here:
 }
 ```
 
-The URLs shown in the webhooks when you copy and paste are only randomly generated when you create the nodes yourself. As a result, these are not the actual webhook URLs used for the example demonstration, since then anyone who had that URL would be able to send information to it.
+This consists of...
+1. An **n8n Form** that allows users to upload a voice recording or a transcript of the conversation;
+2. A **Switch** node that determines if the upload is a voice recording or transcript;
+3. An **OpenAI transcription** node that can convert a voice recording to text;
+4. An **Edit Fields** node that prepares the input for the agent. This is not important for now, but it will be once we start to add in other forms of inputs;
+5. An **AI Agent** that will write a follow-up email, summarize the conversation, and extract information such as the product category, needs, and next steps;
+6. An **Output Parser** to ensure the formatting of the output;
+7. A **Google Sheets** node to log the expense.
 
-This workflow contains several parts:
-- The user form and initial question;
-- The interview with questions and answers;
-- The analysis of the conversation.
+With this, we have a full pipeline that lets us categorize expenses! 
 
-Note that because these are three different processes entirely, we set up separate webhooks for each.
-
-Here are several highlights for you to explore:
-- The `Extract from File` node lets you extract text or other information from a document. In our case, this lets us extract the raw text from a resume/CV for our AI agent.
-- SerpAPI is a way to connect a Google Search tool to your agent. In this case, we might want to give our agent this capability, since it would allow it to gain additional context on the company.
-- Note that for each additional response for the interview, we do not include the entirety of the previous conversation in the `Prompt (User Message)` field. Instead, we originally create a session ID and use this and the `Simple Memory` nodes to keep track of the conversation throughout.
-- In the analysis section, we use a `Code` node that we call "Recreating Transcript" to take the rows from the Google Sheet and process them into a transcript of the conversation.
-
---- 
-## Connecting to Lovable
-
-While we have slightly less control in Lovable, we are able to prompt it to send information to a webhook. For example, my initial prompt for the website focused entirely on the screen where the user inputs information:
-
-```text
-Let's make an interview prep site. I want the theme to be based on Northwestern Kellogg's colors, but keep it sleek. There should be a form where a user can fill out the job title, job description, and then also input their resume as a PDF. This will be sent via a webhook to [ADD YOUR WEBHOOK URL HERE]. You will receive questions from n8n that you will present the user with.
-
-Once they input this, this screen should disappear and it should look more like a purple chatbot where they will have a back-and-forth where you ask questions and they respond.
-```
-
-I then iterated on this, including making some fields (like the resume) optional, added a `Company` field, and described how I wanted the information returned by the n8n workflow to be presented. This gives us a form that looks like this:
-![[r5_website.png]]
-
-For this first webhook, it will display as the first question on the next screen, where the user holds the conversation:
-![[r5_interview_chatbot.png]]
-
-When a user has finished answering the questions that they want to, they can press the "End Interview" button and receive feedback:
-![[r5_interview_analysis.png]]
-
-Note that it can take several rounds of iteration in Lovable to get it to display exactly what you want. I recommend using their `Chat` feature and asking Lovable's agent questions if information isn't being passed correctly; it's very helpful to work through things!
+Make sure to click into the `OpenAI Chat Model` node to fill in your credentials. In the `Append row in sheet` node for Google Sheets, also add your credential and choose the `Expenses Spreadsheet` from earlier. You may need to run the workflow once and drag-and-drop the appropriate key into each `Value to Send` for the spreadsheet.
 
 ---
-# Final Exam Review
+### Exercises
 
-The final exam will be entirely screenshot-based and will be based around the Core Content from each recitation. **If you are able to successfully run the workflows from each recitation, you should perform well.**
+For the following exercises, here is an example transcript that you can use:
 
-Here are some questions to help you understand what to expect from this format, based on [Recitation 1](https://sebastienmartin.info/aiml901/recitation_1.html):
-
-1. Send the message `Hello` via the chat. Screenshot the JSON output of the `Chat Trigger`.
-2. Screenshot the system message.
-3. Screenshot showing which LLM model you are using.
-4. Send the following message and attach a screenshot showing that the entire workflow has run:
 ```text
-Add an event to my calendar called Pottery tonight at 6 p.m.
+Context: Onsite visit at North Shore Medical Center (Med/Surg floor conference nook). Proxima Health Systems (PXH) rep Alex Lee meets with Jordan Patel (Biomed lead) and Maria Santos (Materials Management). Goal: discuss infusion pump alarm issues, PM backlog, and potential refresh options; align on next steps. Alex (PXH): Thanks for making time, Jordan, Maria. Quick agenda: (1) alarm drift on Med/Surg pumps, (2) PM backlog on ~14 units, (3) whether a refresh in FY26 makes sense, and (4) next steps and dates. Sound right? Jordan (Biomed): That’s our list. Nurses flagged nuisance alarms and a couple of pumps with unreliable occlusion alerts. We’ve also slipped on PMs—staffing and parts. Maria (Materials): And if we look at any refresh, I’ll need early heads‑up for budget. Alex (PXH): On the alarms, is it mostly nuisance or do you see true drift out of spec? Jordan (Biomed): Mostly nuisance—sensors still pass, but thresholds seem sensitive. Two pumps failed occlusion checks last week. Alex (PXH): Understood. On PMs, my last export showed 14 units past due. Does that match your list? Jordan (Biomed): Yes—four are more than 60 days overdue, the rest 30–60. We missed a shipment on filters and some tubings for test rigs. Alex (PXH): Ok. For the immediate needs, we can: (a) get you a parts kit and prioritize PM visits for the overdue 14 units, (b) run a quick alarm calibration sweep, and (c) set a nursing in‑service to reduce nuisance alerts. Does that help? Jordan (Biomed): Yes, parts and PM support would be great. Training for nurses helps too. Maria (Materials): Just send me the parts list and lead times so I can align POs. Alex (PXH): Got it. On the longer term: some sites are moving to the next‑gen infusion pumps—better alarm management and analytics. Should we explore a FY26 refresh, maybe staged by unit? Jordan (Biomed): Possibly. ICU is interested in advanced profiles; Med/Surg could stay standard. I’d want a short demo for ICU and a side‑by‑side. Maria (Materials): For budget, give me two options: standard configuration and an advanced bundle. If service can include a preventive maintenance (PM) plan, that’s helpful. Alex (PXH): Perfect. So products on the table are infusion pumps (capital equipment) and PM plans (services). Any consumables we should bundle—tubing sets, filters? Jordan (Biomed): Tubing sets—yes, but keep that separate from capital. Filters we need for maintenance, please include. Alex (PXH): Noted. Let me summarize needs and then we’ll lock next steps: — Needs/pain points: nuisance alarms on Med/Surg; two pumps failing occlusion checks; PM backlog on 14 units; parts shortages (filters/tubings); ICU wants demo of advanced features; Materials needs budget options. — Products discussed: infusion pumps (capital_equipment), preventive maintenance plans (services), consumables (tubing sets/filters) as a separate line. Jordan (Biomed): That’s accurate. Maria (Materials): Works for me. Alex (PXH): Next steps I propose: 1) I’ll schedule a 30‑minute ICU demo for the next‑gen pumps. Target date: next Wednesday. 2) I’ll send two quote options by Tuesday: (a) standard configuration; (b) advanced bundle; both will include a PM plan line. 3) I’ll coordinate a PM visit to clear the 14 overdue units and ship the maintenance filters. We’ll propose dates in that quote email. Jordan (Biomed): Please invite our ICU nurse manager, Dr. Kim, to the demo. Maria (Materials): And price the PM plan as an add‑on so finance can see the delta. Alex (PXH): Done. For the follow‑up email, I’ll recap: issues we discussed, the two quote options, and the demo date. Anything else you want documented? Jordan (Biomed): Include that two units failed occlusion checks—so service should prioritize those first. Maria (Materials): Add expected lead times on filters and the service window options. Alex (PXH): Will do. Quick recap before we break: — Summary: We reviewed alarm and PM issues on Med/Surg infusion pumps, agreed to a short ICU demo of next‑gen pumps, and to receive two quotes (standard vs advanced) with an optional PM plan. Immediate focus is clearing PM backlog and addressing two failed occlusion checks; Materials needs parts lead times. — Next steps/dates: • Schedule ICU demo (Alex) – target next Wednesday. • Send two quote options incl. PM plan (Alex) – by Tuesday. • Coordinate PM visit + ship filters (Alex with Service) – dates proposed in the quote email. Jordan (Biomed): Sounds good. Maria (Materials): Thanks, looking forward to the email. Alex (PXH): Appreciate the time. I’ll follow up as outlined.
 ```
-5. Now, use the workflow to delete that event from your calendar. Attach a screenshot showing that the entire workflow has run.
-6. Update the event to be from 8–10 p.m.. 
-	1. Attach a screenshot showing the output of the agent.
-	2. Attach a screenshot of the whole workflow after it has run.
-7. Take a screenshot of the node that lets the LLM refer to past answers.
-8. Take a screenshot of the node that determines which LLM we use.
 
-Several notes:
-- When we say "show that the entire workflow has run", make sure to capture the **whole workflow**. We should see the green checkmarks indicating that the nodes have run.
-- When we say to screenshot a particular node, we are asking for you to take a picture of the exterior of the node. If we ask for the output of a particular node, you will need to "click into" the node.
+1. Look at the system message. This does not contain a description of the product categories, but the agent is still assigning items to each! How does it know what the categories are?
+2. Instead of using an output parser, we could have given the agent a Google Sheets tool and let it automatically fill in the columns. What are the advantages and disadvantages of doing it this way?
+3. Try sending several conversation transcripts and see how it categorizes them in the spreadsheet. What happens if information is missing? More examples of transcripts can be found in the [Proxima Health Evaluation spreadsheet](https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit?gid=0#gid=0).
+4. Can you improve how it assigns product categories by modifying the system prompt?
+5. What if a transcript is assigned a product category of services instead of diagnostics? Is that better or worse than if the category should be diagnostics and it was instead assigned consumables? Or do we not care about this distinction?
+
+As an added note, we may need to add instructions on how to deal with missing information. Here is one thing we could add to the end of the system message to do so:
+
+```text
+Failure handling
+- If essential details are missing, fill with minimal valid values rather than guessing.
+- If the transcript seems incomplete, still return a valid JSON structure with empty arrays/strings where allowed.
+```
+
+---
+# Part 2: Adding in Evaluation Pipeline
+
+Now, we want a formal way to test how well our expense agent actually works. To do so, we need to create an understanding of _what it means for our agent to work well_.
+
+To implement this, we will use n8n's **evaluation** nodes and triggers to let us test different inputs and see how well they do against our chosen benchmarks. We consider two types of tasks:
+- **Verifiable tasks** can be automatically checked to see if the agent is performing them correctly. For example, is the agent assigning an expense to the correct category?
+- **Non-verifiable or unverifiable tasks** do not have a clear right/wrong answer. For example, does the agent's description of the expense accurately reflect it?
+Both of these can be handled in n8n! For this walkthrough, we will focus on two metrics, but you will be encouraged to create your own metrics in the exercises.
+
+The two metrics we will consider are as follows:
+- **Correctness metric:** each transcript is given a product category, which is one of **“Capital Equipment,” “diagnostics,” “Consumables,” ”Services”** or **“Digital Ops.”** Does the agent categorize correctly?
+- **LLM-as-a-judge:** We are also given a potential follow-up email by the agent. Is this email professional and does it fit the tone and language that we want reps to use?
+
+> [!info] Note
+> There is an important difference between human-in-the-loop and evaluation. Human-in-the-loop should not be used to fix systemic/recurring errors; we should catch that during evaluation and use it to improve our system message. Instead, human-in-the-loop is meant to provide human oversight once we are already confident that our agent is doing well.
+
+In this portion, we focus on the correctness metric. Here are the nodes that we will build:
+
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "source": "googleSheets",
+        "documentId": {
+          "__rl": true,
+          "value": "1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas",
+          "mode": "list",
+          "cachedResultName": "Proxima Health Evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.evaluationTrigger",
+      "typeVersion": 4.7,
+      "position": [
+        -128,
+        64
+      ],
+      "id": "895a434f-1161-4a8c-93a7-9f0868c91f36",
+      "name": "Evaluation Transcripts",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
+              "name": "text",
+              "value": "={{ $json['Conversation Transcripts'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        64
+      ],
+      "id": "c35b46ea-a149-434a-845b-844d7c0f29e3",
+      "name": "Process evaluation transcript"
+    },
+    {
+      "parameters": {
+        "operation": "setMetrics",
+        "metric": "customMetrics",
+        "metrics": {
+          "assignments": [
+            {
+              "name": "correct product category",
+              "value": "={{ $('Evaluation').item.json.output.contact == $('Evaluation Transcripts').item.json.contact }}",
+              "type": "number",
+              "id": "90922726-2513-4b0b-ab2f-da9db16b9383"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1936,
+        -32
+      ],
+      "id": "aa0559c5-cb6a-41c8-baea-11e0eebf83c2",
+      "name": "Evaluation Metrics"
+    },
+    {
+      "parameters": {
+        "source": "googleSheets",
+        "documentId": {
+          "__rl": true,
+          "value": "1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas",
+          "mode": "list",
+          "cachedResultName": "Proxima Health Evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit#gid=0"
+        },
+        "outputs": {
+          "values": [
+            {
+              "outputName": "generated_account_name",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.account_name }}"
+            },
+            {
+              "outputName": "generated_contact",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.contact }}"
+            },
+            {
+              "outputName": "generated_type",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.type }}"
+            },
+            {
+              "outputName": "generated_summary",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.summary }}"
+            },
+            {
+              "outputName": "generated_needs",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.needs }}"
+            },
+            {
+              "outputName": "generated_products",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.products }}"
+            },
+            {
+              "outputName": "generated_next_steps",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.next_steps }}"
+            },
+            {
+              "outputName": "generated_email_subject",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.follow_up_email_subject }}"
+            },
+            {
+              "outputName": "generated_email_body",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.follow_up_email_body_text }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1936,
+        176
+      ],
+      "id": "76b4c942-279a-4bb8-9672-7b2acea9ad3e",
+      "name": "Record Evaluation",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "checkIfEvaluating"
+      },
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1104,
+        592
+      ],
+      "id": "bc1daef2-8911-4f08-9a5a-314d7da22688",
+      "name": "Evaluation"
+    },
+    {
+      "parameters": {
+        "content": "# Evaluation pipeline",
+        "height": 576,
+        "width": 2384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -160
+      ],
+      "id": "48be7154-934b-4184-956f-68a20fbec7b3",
+      "name": "Sticky Note2"
+    }
+  ],
+  "connections": {
+    "Evaluation Transcripts": {
+      "main": [
+        [
+          {
+            "node": "Process evaluation transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process evaluation transcript": {
+      "main": [
+        []
+      ]
+    },
+    "Evaluation": {
+      "main": [
+        [
+          {
+            "node": "Evaluation Metrics",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Record Evaluation",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
+
+---
+## Step 1: Evaluation Spreadsheet
+
+To test our agent, we need examples of inputs, or expenses that members of the team might input. We will store this in a Google Sheet; an example that you can copy can be found [here](https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/copy).
+
+This spreadsheet has many columns. For now, we focus on **Conversation Transcripts, Products, Generated Products, Generated Email Body, Rating** and **Judge Email Feedback**.For the correctness metric, we need to supply the "correct answer" (given by the column Products) along with the input so that we can compare the output of our agent (given by Generated Products) to the true answer.
+
+For LLM-as-a-judge, since there is no longer a true answer, our analogous step will be providing specific directions to the LLM, which may include examples of what "good" outputs look like. We will use the Judge Email Feedback column so that the judge will explain its decision-making.
+
+---
+## Step 2: Evaluation Trigger
+
+- **Add node**: `Add another trigger → When running evaluation`
+	- I renamed this node to `Evaluation Transcripts`, which we will use later on.
+	- Source: `Google Sheets`
+	- Document Containing Dataset: Proxima Health Evaluation spreadsheet that you copied earlier
+- **What it does**: This spreadsheet contains examples of potential transcripts. When we execute the workflow from this evaluation node, it will treat each row of the spreadsheet as a separate input and run through each row one at a time. 
+
+---
+## Step 2: Standardizing Inputs
+
+- **Add node**: `Edit Fields (Set)`
+	- Rename this node to `Process evaluation transcript`. This isn't strictly necessary, but in Step 4, you may copy and paste in some expressions for each output. In order to do so, we need to have the same node name.
+	- Mode: `Manual Mapping`
+	- Click `Add Field` and make name be `text` with value `{{ $json['Conversation Transcripts'] }}`
+	- Connect this node to the evaluation trigger and then also to the AI Agent node.
+- **What it does**: Note that if we tried to directly feed the output of the evaluation trigger into the AI Agent, this would result in an error because the User Message in the agent is `{{ $json.text }}`. As a result, we standardize our input format so it is the same if we are evaluating or if there is a chat message.
+
+Now, connect the output of this node directly to the `AI Agent`.
+
+> [!info] General Use
+> This is a great strategy in general if data could be coming from different sources to one node in n8n. For example, you might want to have a workflow that allows you to test using the `Chat Trigger` node but it can also receive messages from Telegram. Since the JSON formats of these triggers are different, you can use the `Edit Fields (Set)` node to make their outputs look similar so you can feed them into the next node more easily and not have to deal with each case separately.
+
+---
+## Step 3: Routing
+
+When we are testing, we don't want to update the spreadsheet that is holding our actual expenses! Remove the connection between the AI Agent and the following nodes. We will add a special node that checks if we are performing evaluation and chooses the path based on this.
+
+- **Add node**: `Action in an app → Evaluation → Check if evaluating`
+	- Connect this to the output of the agent
+- **What it does**: We might want different behavior if we are evaluating versus actual runs of the workflow. In our case, we want to log actual calls in a spreadsheet, but if we are doing evaluation, we will log it elsewhere.
+
+Now, connect the `Normal` output from this node to the Google Sheet and Outlook nodes. If we are not evaluating, then it will choose this branch and act like before!
+
+---
+## Step 4: Evaluation Logging
+
+- **Add node**: `Action in an app → Evaluation → Set Outputs`
+	- Source: `Google Sheets`
+	- Document: `Proxima Health Evaluation`
+	- Choose `Add Output` and give it the name `generated_account_name` with value
+```JSON
+{{ $('Process transcript with AI').item.json.output.account_name }}
+```
+- Add more outputs with names `generated_contact`, `generated_type`, `generated_summary`, `generated_needs`, `generated_products`, `generated_next_steps`, `generated_email_subject`, and `generated_email_body`. Note that these match the names of the columns in the spreadsheet, though we leave two of them out for now. For the expressions for each column, use `{{ $('Process transcript with AI').item.json.output.[COLUMN NAME HERE] }}`, inserting the correct column name. This will also be shown in the video; running each evaluation node in order will make this easier.
+- Connect to the `Evaluation` output of the evaluation check in Step 3.
+- We choose the name `Assigned Category` so that it matches the column name in the Google Sheet and writes its output in the correct place.
+- **What it does**: We want to log what our AI Agent categorizes the prompt. This lets it write to the column in the Google Sheet so we have a clear record of what the assigned category was.
+
+---
+## Step 5: Correctness Metric
+
+Now, we want to see how well our agent did. However, this is largely dependent on what we think "good" means. For example, it's possible that product categories could overlap; if our agent assigns a transcript to one instead of the other, is this better or worse than if it confused these categories in a slightly different way?
+
+To start, we just use a correctness metric. In our Proxima Health Evaluation document, note that we have a column called **Products**. This is the product category that we think the prompt should be assigned to. If the category that the agent assigns is the same as this category, we mark it as correct, and otherwise, we mark it as incorrect.
+
+- **Add node**: `Action in an app → Evaluation → Set Metrics`
+	- Metric: `Custom Metrics`. We could use `Categorization`, but we will later add another metric.
+	- Click `Add Field`. For name, put something like `correct product category`.
+	- For the other box, put `{{ $('Evaluation').item.json.output.contact == $('Evaluation Transcripts').item.json.contact }}``
+- **What it does**: This simply compares the expected and actual answer to see if they are the same.
+- Connect this to the `Check if Evaluating` node.
+
+---
+## Exercises
+
+1. Now, execute the workflow starting at the evaluation trigger. How well does it do? 
+2. At this firm, the product category `services` makes up the vast majority of the expenses. Does the evaluation reflect this? How could we make it reflect this more? 
+3. Try to add a correctness metric for the `contact` field. What should we do if there is no name reported?
+4. Realistically, reps might instead add a voice note talking through the conversation, rather than the conversation transcript itself. What would we change to deal with this?
+5. **Challenge:** Note that the rep submitting the transcript might forget crucial information, such as needs or the contact at Proxima Health Systems.
+	1. The needs are perhaps most vital. If they are missing, the agent should flag it and and send the user a message to ask about this. Note: our agent currently does not have memory. What happens if it asks the user and then they respond?
+	2. If the contact is missing, what should the default behavior be? Implement your idea in n8n.
+
+---
+# Part 3: LLM-as-a-Judge
+
+Correctness is a rather coarse metric and beyond categorization, it may not even be applicable. For example, the agent also generates a description of each expense which would allow us to quickly check on how the budget is being spent. We might be interested in how useful these descriptions are. This is a **non-verifiable task**; we cannot verify if its answer is correct, and in fact, there might not even be a correct answer!
+
+To still be able to evaluate the agent's answers in this case, we instead can use another LLM as a judge. 
+
+Note that there is a way to do this using a `Set Metrics` evaluation node in n8n and choosing the metric `Helpfulness (AI-based)`. However, **we won't do this**. We will do it in a slightly different way that lets us log more information, including the reasoning of the judge agent. 
+
+While we walk through the steps to create each node, you can also check this against the actual nodes:
+
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# Original Transcript\n\n{{ $('Process evaluation transcript').item.json.text }}\n\n# Generated Email\n\n**Title:** {{ $json.output.follow_up_email_subject }}\n**Body:**\n{{ $json.output.follow_up_email_body_text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "System role: AfterVisit AI – Follow-Up Email Quality Judge\n\nPurpose\n- Evaluate an LLM-generated follow-up email (subject + body) against a sales-call transcript for Proxima Health Systems (PXH).\n- Provide consistent scoring (1–5) and qualitative feedback that instructors can share with students.\n- Focus on clarity, warmth, completeness, and actionability aligned with PXH relationship standards.\n\nCompany context\n- PXH is a North American distributor serving hospitals and clinics with:\n  - Capital equipment (e.g., OR tables/lights, infusion pumps)\n  - Diagnostics and clinical systems (chemistry analyzers, point-of-care testing)\n  - Consumables and accessories (electrodes, cuffs, filters)\n  - Services (field repair, preventive-maintenance plans, depot coverage)\n  - Digital/operations offerings (asset tracking, workflow scheduling)\n- Sales reps are trusted account owners. A strong follow-up email thanks the customer, mirrors the visit summary, confirms needs/pain points, and clearly states next actions with dates or owners.\n- Reps document everything in Salesforce and send the email externally, so tone must be professional yet warm. No internal CRM shorthand should appear.\n\nInputs you receive\n- One raw transcript of a PXH rep meeting or call with a single customer stakeholder.\n- One proposed email draft consisting of a subject line and a body.\n\nYour task\n- Compare the draft email against the transcript.\n- Produce a structured response that conforms exactly to the caller-provided JSON Schema (one rating field and one explanation field). Do not add extra fields or commentary.\n\nScoring rubric (apply holistic judgment)\n5 – Outstanding. Subject references the main topic/account, greeting is warm (“Hi/Hello/Dear <name>,”), tone is appreciative, and the body accurately and succinctly recaps all major issues, needs, and next steps (including owners/dates). Email closes with a professional sign-off and invites follow-up.\n4 – Strong. Covers almost everything with minor omissions or slightly less polished phrasing, but still aligned with PXH standards.\n3 – Adequate. Captures some key items but misses notable needs/next steps, or tone/opening/closing feels generic. Student should revise.\n2 – Weak. Omits several critical items, misstates facts, or feels transactional/cold. Significant rewrite required.\n1 – Unacceptable. Wrong account/contact, fabricated content, or missing core deliverables (e.g., no next steps, no thanks, no greeting).\n\nEvaluation checklist (use to ground your comments)\n- Greeting & tone: opens with “Hi/Hello/Dear <contact name>,” acknowledges the meeting, thanks the stakeholder, and maintains a collaborative tone without slang.\n- Subject line: mentions the key topic(s) and, when obvious, the account/site.\n- Summary accuracy: reflects major discussion points without inventing details.\n- Needs/pain points: surfaces customer asks/pain points drawn from the transcript.\n- Next steps: lists all agreed follow-up actions with owners and timing language.\n- Clarity & structure: organized in short paragraphs or bullets; easy to skim.\n- Professional close: ends with a friendly invitation to reach out and a sign-off (“Best regards, Alex / Proxima Health Systems” or equivalent).\n- Compliance: no PHI; no internal-only notes (e.g., SKU shorthand unless customer used it).\n\nExamples (for scoring intuition – do not quote verbatim in outputs)\n\nExample A – Strong email (Rate 5/5)\nTranscript highlights: site walk-through for OR tables; needs tilt-stable table, new lights, ergonomic package; next steps include demo next Wednesday, dual quotes, financing summary by mid-month.\nDraft email:\nSubject: “Thank you — OR table and lighting next steps for Summit Ridge Surgical Center”\nBody:\n“Hi Dr. Sofia Ramirez,\n\nThank you for walking me through OR 2 today. We confirmed the tilt drift on the table, the aging light arms, and your interest in the ergonomic package. As discussed, I’ll send the invite for the in-room demo next Wednesday at 2 pm, deliver both the baseline and ergonomic quotes tomorrow, and forward a financing summary by November 15 so Finance can review. I’ll also include the maintenance interval details you called out. Please let me know if there are accessories you’d like us to bring to the demo.\n\nWarm regards,\nCasey Morgan\nProxima Health Systems”\nWhy 5: Warm tone, precise recap, every next step with owners/dates, professional close.\n\nExample B – Needs improvement (Rate 3/5)\nTranscript highlights: virtual call about analyzer coolant leak, QC drift, urgent service tech, loaner, reagent replenishment, depot coverage quote.\nDraft email:\nSubject: “Analyzer follow-up”\nBody:\n“Hey Dr. Meredith Lawson,\n\nJust following up about the analyzer leak. I’ll check with service on timing and let you know if we can send someone. We’ll also look at the depot option. Talk soon.\n\nThanks,\nRiley Chen”\nWhy 3: Tone too casual (“Hey”), misses QC drift, reagent replenishment, and loaner commitments; vague next steps.\n\nExample C – Poor email (Rate 1/5)\nTranscript highlights: consumables backorder, substitution matrix, split shipments, par tracking one-pager.\nDraft email:\nSubject: “Meeting recap”\nBody:\n“Hi Dana,\n\nThanks for the chat. We’ll be in touch.\n\n- Sam”\nWhy 1: Omits needs, substitution details, and all action items; unusable for CRM.\n\nFailure handling\n- If the email references facts not in the transcript, call them out as hallucinations and lower the rating.\n- If the email misses critical safety, compliance, or timing details, deduct accordingly.\n- If greeting is wrong contact or tone is cold/transactional, reflect that in the score.\n\nReminder\n- Provide an honest, actionable assessment grounded in the transcript.\n- Be concise but specific in your explanation so a student knows exactly what to fix.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        48
+      ],
+      "id": "c3a69c28-ccf3-43c7-8752-b7945519382a",
+      "name": "Email Judge"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "gpt-5.2"
+        },
+        "options": {
+          "responseFormat": "json_object",
+          "reasoningEffort": "low"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        272
+      ],
+      "id": "3aa5877a-47ca-459a-856f-78cc95036704",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"Email Judge Output\",\n  \"type\": \"object\",\n  \"required\": [\"rating\", \"explanation\"],\n  \"properties\": {\n    \"rating\": {\n      \"type\": \"integer\",\n      \"minimum\": 1,\n      \"maximum\": 5,\n      \"description\": \"Overall quality score for the follow-up email (1 = poor, 5 = excellent).\"\n    },\n    \"explanation\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"description\": \"Concise rationale (3–5 sentences) referencing transcript evidence.\"\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1728,
+        272
+      ],
+      "id": "165307ce-6795-4d21-8cd6-21a126f21605",
+      "name": "judge output rules"
+    }
+  ],
+  "connections": {
+    "Email Judge": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Judge",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "judge output rules": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Email Judge",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
+
+We will also need to modify our `Set Metrics` and `Set Outputs` nodes slightly, discussed below.
+
+---
+## Step 1: Judge Agent
+
+Connect the output of the `Set Metrics` node to the agent. This agent receives:
+- The original transcript from the user
+- The generated email, including the title and body
+It then generates a rating from 1-5 (called `rating`) and an explanation about the score (called `explanation`).
+
+Note that we use a newer, stronger model for this evaluation.
+
+---
+## Step 2: Logging Reasoning
+
+Now, we want to record both the score and the reasoning so we can easily view this. This will be helpful if we want to determine if the judge is performing well. 
+
+- Open the `Set Outputs` evaluation node.
+- Click `Add Output`. We will add two outputs.
+- `name`: `rating`. This is how the judge rated the email. For the `Value`, write
+```JSON
+{{ $json.output.explanation }}
+```
+- `name`: `judge_email_feedback`. This represents the explanation about the rating. For the `Value`, write
+```JSON
+{{ $json.output.rating }}
+```
+This lets us log the information in the sheet
+
+---
+## Step 3: Judge Metric
+
+- Open the `Set Metrics` evaluation node. Click `Add Field`
+- `name`: Write something like `email quality`. For the value, write
+```JSON
+{{ $json.output.rating }}
+```
+
+Congratulations, you have just built an evaluation pipeline for both the product categorization and emails!
+
+---
+## Exercises
+
+1. Does the judge perform well? Are its scores representative of what we would like?
+	- Add instructions to the judge agent's system prompt to modify its behavior.
+2. Try to add your own metric. This can be based on fields that the AI Agent already has (such as date), or you can add fields to the agent!
+
+**Challenge:**
+1. We might want to evaluate product categorization beyond correctness. As mentioned before, certain miscategorizations are worse than others. Let's say that miscategorizing anything else as `capital_equipment` is 3 times as worse as other miscategorizations and miscategorizing `services` as others is twice as worse as other miscategorizations. Create a custom metric that then calculates the total miscategorization score based on these rules.
+
+---
+## For the Homework:
+
+-  Creating evaluation pipelines for your agents
+	- Use of the nodes `Set Outputs, Set Metrics,` and `Check if Evaluating` and the evaluation trigger `On new Evaluation event`
+
+> [!info] Note
+> For the project, you do **not** need to build an evaluation pipeline in n8n. However, you do have to show some form of evaluation, which could just be a spreadsheet with inputs, outputs, and some reasoning about how well the agent is performing.
+
+---
+# Full Workflow
+
+In case you have some error in your workflow, here is the entire workflow to check, including the evaluation pipeline:
+
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Client conversation transcript",
+        "formDescription": "Upload the recording of the customer interaction, or directly upload the transcript.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Audio recording",
+              "fieldType": "file",
+              "multipleFiles": false,
+              "acceptFileTypes": ".flac, .mp3, .mp4, .mpeg, .mpga, .m4a, .ogg, .wav, .webm"
+            },
+            {
+              "fieldLabel": "If no audio, directly copy the transcript"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.3,
+      "position": [
+        -144,
+        656
+      ],
+      "id": "4841881c-982d-4cc4-a175-912d5fc5fff1",
+      "name": "Upload audio or transcript",
+      "webhookId": "e98e13f8-6154-497a-8fb1-dffc65bc72ad"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json['Audio recording'].size }}",
+                    "rightValue": 0,
+                    "operator": {
+                      "type": "number",
+                      "operation": "gt"
+                    },
+                    "id": "3f164f0c-56f0-4d4b-83a4-ce557f107d13"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "if audio"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6c74856b-96be-415f-a1e7-e4054d602e78",
+                    "leftValue": "={{ $json['If no audio, directly copy the transcript'] }}",
+                    "rightValue": "",
+                    "operator": {
+                      "type": "string",
+                      "operation": "notEmpty",
+                      "singleValue": true
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "if transcript"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "renameFallbackOutput": "if nothing"
+        }
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        48,
+        640
+      ],
+      "id": "befdb855-2313-46c2-beb5-071bb6f8e9e7",
+      "name": "Detect input type"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "binaryPropertyName": "Audio_recording",
+        "options": {
+          "language": "en"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        368,
+        464
+      ],
+      "id": "e2192fe1-6d24-4520-b0fa-e8b6fd73bedc",
+      "name": "Transcribe audio of visit",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "Missing information!",
+        "completionMessage": "You did not submit a recording or a transcript!",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.3,
+      "position": [
+        208,
+        832
+      ],
+      "id": "0a1b1cef-8aa7-4949-b2ab-3380b818b27e",
+      "name": "Error: nothing was uploaded!",
+      "webhookId": "486ab396-07f9-41b2-8f47-2988208ad6aa"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5",
+          "mode": "list",
+          "cachedResultName": "gpt-5"
+        },
+        "options": {
+          "reasoningEffort": "low"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        688,
+        784
+      ],
+      "id": "8d828a36-e3d4-43a2-b9bc-c6b10e46ffb2",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"AfterVisit AI Output (Flat Simplified)\",\n  \"type\": \"object\",\n  \"description\": \"Flat, no-nesting schema for teaching and evaluation.\",\n  \"required\": [\n    \"account_name\",\n    \"contact\",\n    \"type\",\n    \"summary\",\n    \"needs\",\n    \"products\",\n    \"next_steps\",\n    \"follow_up_email_subject\",\n    \"follow_up_email_body_text\"\n  ],\n  \"properties\": {\n    \"account_name\": {\n      \"type\": \"string\",\n      \"description\": \"Account (hospital/clinic) name.\"\n    },\n    \"contact\": {\n      \"type\": \"string\",\n      \"description\": \"Primary customer attendee full name (single string).\"\n    },\n    \"type\": {\n      \"type\": \"string\",\n      \"enum\": [\"onsite\", \"virtual\", \"phone\"],\n      \"description\": \"Interaction type.\"\n    },\n    \"summary\": {\n      \"type\": \"string\",\n      \"description\": \"Short paragraph of what was discussed.\"\n    },\n    \"needs\": {\n      \"type\": \"string\",\n      \"description\": \"Bullet-style plain text list of customer needs or pain points (one per line, prefixed with '- ').\"\n    },\n    \"products\": {\n      \"type\": \"string\",\n      \"description\": \"Single primary product category for the meeting.\",\n      \"enum\": [\n        \"capital_equipment\",\n        \"diagnostics\",\n        \"consumables\",\n        \"services\",\n        \"digital_ops\"\n      ]\n    },\n    \"next_steps\": {\n      \"type\": \"string\",\n      \"description\": \"Bullet-style plain text list of follow-up actions (one per line, prefixed with '- ').\"\n    },\n    \"follow_up_email_subject\": {\n      \"type\": \"string\",\n      \"description\": \"Email subject.\"\n    },\n    \"follow_up_email_body_text\": {\n      \"type\": \"string\",\n      \"description\": \"Plain-text email body.\"\n    }\n  }\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        928,
+        784
+      ],
+      "id": "b623e320-89d4-4531-88b4-bcd705497091",
+      "name": "Agent Output Rules"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
+              "name": "text",
+              "value": "={{ $('Upload audio or transcript').item.json['If no audio, directly copy the transcript'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        656
+      ],
+      "id": "584f7f0a-5b1d-4c1a-a592-2c068af88db2",
+      "name": "Process the transcript"
+    },
+    {
+      "parameters": {
+        "source": "googleSheets",
+        "documentId": {
+          "__rl": true,
+          "value": "1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas",
+          "mode": "list",
+          "cachedResultName": "Proxima Health Evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.evaluationTrigger",
+      "typeVersion": 4.7,
+      "position": [
+        -128,
+        64
+      ],
+      "id": "895a434f-1161-4a8c-93a7-9f0868c91f36",
+      "name": "Evaluation Transcripts",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
+              "name": "text",
+              "value": "={{ $json['Conversation Transcripts'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        64
+      ],
+      "id": "c35b46ea-a149-434a-845b-844d7c0f29e3",
+      "name": "Process evaluation transcript"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "System role: AfterVisit AI – Transcript Parser and Summarizer\n\nPurpose\n- Parse a single sales rep transcript and produce a minimal JSON object that downstream automation (n8n) can route to Salesforce (CRM) and Outlook.\n\nCompany context (for grounding)\n- Proxima Health Systems (PXH) is a North American distributor serving hospitals and clinics. Offerings span:\n  - Capital equipment (e.g., infusion pumps, patient monitors, sterilizers, OR tables/lights)\n  - Diagnostics and clinical systems (POC analyzers, vital‑signs stations)\n  - Consumables and accessories (tubing sets, filters, electrodes, drapes)\n  - Services (field repair, preventive‑maintenance plans, depot/loaners)\n  - Digital/operations (asset tracking, service scheduling, basic compliance documentation)\n- Buying and stakeholders often include materials management/procurement, clinical leaders (OR/ICU/Med‑Surg), and biomedical engineering. Finance may weigh in on large capital purchases.\n- Sales reps are relationship‑driven account owners. A typical visit reviews the installed base and open issues, surfaces needs/pain points, discusses products or service options, agrees on next steps, and plans follow‑ups. Notes are logged in Salesforce; follow‑up emails recap agreements.\n\nInputs you receive\n- One raw transcript of an interaction (onsite, virtual, or phone) between a PXH rep and a single customer attendee. There is no separate context summary; extract everything from the transcript itself.\n\nYour task\n- Output a single JSON document that matches the caller‑provided flat schema (no nesting) with top‑level keys: `account_name`, `contact`, `type`, `summary`, `needs`, `products`, `next_steps`, `follow_up_email_subject`, `follow_up_email_body_text`.\n- Output JSON only. No markdown, no commentary, no code fences.\n\nGuidelines\n1. Be faithful to the transcript; do not invent facts. If a value is missing, return the smallest valid value the schema allows (e.g., `[]` for arrays, `\"\"` for strings).\n2. type must be one of `onsite`, `virtual`, `phone` based on cues (“onsite”, “Zoom/Teams/Teams”, “called”).\n3. summary: 2–4 sentences capturing main issues, products/services discussed, and direction of travel.\n4. needs: return a single string formatted as a newline-separated bullet list (`- item`) of customer pain points and requests. Omit blank trailing lines.\n5. products: return a single string from representing the primary category for the visit.\n6. next_steps: return a single plain-text string formatted as a newline-separated bullet list (`- action`) covering all follow-up items and dates, mirroring transcript phrasing (e.g., “next Wednesday”, “by Tuesday”, or a date).\n7. contact: return the single customer attendee’s full name string. Do not include the PXH rep or add emails/roles.\n8. account_name: use the customer organization named in the transcript. If multiple orgs are mentioned, choose the customer site the rep is visiting/serving.\n9. follow_up_email_subject: concise subject referencing the main topic and, when obvious, the account.\n10. follow_up_email_body_text: short, polite recap (4–7 sentences) reiterating key points and next steps without marketing fluff.\n11. Avoid PHI or patient identifiers unless explicitly present; do not add any.\n\nChecklist before sending\n- JSON conforms to the schema (keys present, types correct) and contains no extra properties.\n- Product category is chosen from the allowed set and reflects the main focus of the conversation.\n- `needs` field is a single string with newline-separated `- item` bullets that mirror the transcript.\n- Next steps field is a single string with newline-separated `- action` bullets that align with the transcript timing.\n- Email subject/body align with the summary and remain professional and concise."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        720,
+        592
+      ],
+      "id": "e147805f-b6bc-488b-8571-2a85245cb349",
+      "name": "Process transcript with AI"
+    },
+    {
+      "parameters": {
+        "operation": "setMetrics",
+        "metric": "customMetrics",
+        "metrics": {
+          "assignments": [
+            {
+              "name": "correct product category",
+              "value": "={{ $('Evaluation').item.json.output.contact == $('Evaluation Transcripts').item.json.contact }}",
+              "type": "number",
+              "id": "90922726-2513-4b0b-ab2f-da9db16b9383"
+            },
+            {
+              "id": "8e1766bc-a913-454e-b34d-722148996c01",
+              "name": "email quality",
+              "value": "={{ $json.output.rating }}",
+              "type": "number"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1936,
+        -32
+      ],
+      "id": "aa0559c5-cb6a-41c8-baea-11e0eebf83c2",
+      "name": "Evaluation Metrics"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# Original Transcript\n\n{{ $('Process evaluation transcript').item.json.text }}\n\n# Generated Email\n\n**Title:** {{ $json.output.follow_up_email_subject }}\n**Body:**\n{{ $json.output.follow_up_email_body_text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "System role: AfterVisit AI – Follow-Up Email Quality Judge\n\nPurpose\n- Evaluate an LLM-generated follow-up email (subject + body) against a sales-call transcript for Proxima Health Systems (PXH).\n- Provide consistent scoring (1–5) and qualitative feedback that instructors can share with students.\n- Focus on clarity, warmth, completeness, and actionability aligned with PXH relationship standards.\n\nCompany context\n- PXH is a North American distributor serving hospitals and clinics with:\n  - Capital equipment (e.g., OR tables/lights, infusion pumps)\n  - Diagnostics and clinical systems (chemistry analyzers, point-of-care testing)\n  - Consumables and accessories (electrodes, cuffs, filters)\n  - Services (field repair, preventive-maintenance plans, depot coverage)\n  - Digital/operations offerings (asset tracking, workflow scheduling)\n- Sales reps are trusted account owners. A strong follow-up email thanks the customer, mirrors the visit summary, confirms needs/pain points, and clearly states next actions with dates or owners.\n- Reps document everything in Salesforce and send the email externally, so tone must be professional yet warm. No internal CRM shorthand should appear.\n\nInputs you receive\n- One raw transcript of a PXH rep meeting or call with a single customer stakeholder.\n- One proposed email draft consisting of a subject line and a body.\n\nYour task\n- Compare the draft email against the transcript.\n- Produce a structured response that conforms exactly to the caller-provided JSON Schema (one rating field and one explanation field). Do not add extra fields or commentary.\n\nScoring rubric (apply holistic judgment)\n5 – Outstanding. Subject references the main topic/account, greeting is warm (“Hi/Hello/Dear <name>,”), tone is appreciative, and the body accurately and succinctly recaps all major issues, needs, and next steps (including owners/dates). Email closes with a professional sign-off and invites follow-up.\n4 – Strong. Covers almost everything with minor omissions or slightly less polished phrasing, but still aligned with PXH standards.\n3 – Adequate. Captures some key items but misses notable needs/next steps, or tone/opening/closing feels generic. Student should revise.\n2 – Weak. Omits several critical items, misstates facts, or feels transactional/cold. Significant rewrite required.\n1 – Unacceptable. Wrong account/contact, fabricated content, or missing core deliverables (e.g., no next steps, no thanks, no greeting).\n\nEvaluation checklist (use to ground your comments)\n- Greeting & tone: opens with “Hi/Hello/Dear <contact name>,” acknowledges the meeting, thanks the stakeholder, and maintains a collaborative tone without slang.\n- Subject line: mentions the key topic(s) and, when obvious, the account/site.\n- Summary accuracy: reflects major discussion points without inventing details.\n- Needs/pain points: surfaces customer asks/pain points drawn from the transcript.\n- Next steps: lists all agreed follow-up actions with owners and timing language.\n- Clarity & structure: organized in short paragraphs or bullets; easy to skim.\n- Professional close: ends with a friendly invitation to reach out and a sign-off (“Best regards, Alex / Proxima Health Systems” or equivalent).\n- Compliance: no PHI; no internal-only notes (e.g., SKU shorthand unless customer used it).\n\nExamples (for scoring intuition – do not quote verbatim in outputs)\n\nExample A – Strong email (Rate 5/5)\nTranscript highlights: site walk-through for OR tables; needs tilt-stable table, new lights, ergonomic package; next steps include demo next Wednesday, dual quotes, financing summary by mid-month.\nDraft email:\nSubject: “Thank you — OR table and lighting next steps for Summit Ridge Surgical Center”\nBody:\n“Hi Dr. Sofia Ramirez,\n\nThank you for walking me through OR 2 today. We confirmed the tilt drift on the table, the aging light arms, and your interest in the ergonomic package. As discussed, I’ll send the invite for the in-room demo next Wednesday at 2 pm, deliver both the baseline and ergonomic quotes tomorrow, and forward a financing summary by November 15 so Finance can review. I’ll also include the maintenance interval details you called out. Please let me know if there are accessories you’d like us to bring to the demo.\n\nWarm regards,\nCasey Morgan\nProxima Health Systems”\nWhy 5: Warm tone, precise recap, every next step with owners/dates, professional close.\n\nExample B – Needs improvement (Rate 3/5)\nTranscript highlights: virtual call about analyzer coolant leak, QC drift, urgent service tech, loaner, reagent replenishment, depot coverage quote.\nDraft email:\nSubject: “Analyzer follow-up”\nBody:\n“Hey Dr. Meredith Lawson,\n\nJust following up about the analyzer leak. I’ll check with service on timing and let you know if we can send someone. We’ll also look at the depot option. Talk soon.\n\nThanks,\nRiley Chen”\nWhy 3: Tone too casual (“Hey”), misses QC drift, reagent replenishment, and loaner commitments; vague next steps.\n\nExample C – Poor email (Rate 1/5)\nTranscript highlights: consumables backorder, substitution matrix, split shipments, par tracking one-pager.\nDraft email:\nSubject: “Meeting recap”\nBody:\n“Hi Dana,\n\nThanks for the chat. We’ll be in touch.\n\n- Sam”\nWhy 1: Omits needs, substitution details, and all action items; unusable for CRM.\n\nFailure handling\n- If the email references facts not in the transcript, call them out as hallucinations and lower the rating.\n- If the email misses critical safety, compliance, or timing details, deduct accordingly.\n- If greeting is wrong contact or tone is cold/transactional, reflect that in the score.\n\nReminder\n- Provide an honest, actionable assessment grounded in the transcript.\n- Be concise but specific in your explanation so a student knows exactly what to fix.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        48
+      ],
+      "id": "c3a69c28-ccf3-43c7-8752-b7945519382a",
+      "name": "Email Judge"
+    },
+    {
+      "parameters": {
+        "source": "googleSheets",
+        "documentId": {
+          "__rl": true,
+          "value": "1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas",
+          "mode": "list",
+          "cachedResultName": "Proxima Health Evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit#gid=0"
+        },
+        "outputs": {
+          "values": [
+            {
+              "outputName": "generated_account_name",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.account_name }}"
+            },
+            {
+              "outputName": "generated_contact",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.contact }}"
+            },
+            {
+              "outputName": "generated_type",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.type }}"
+            },
+            {
+              "outputName": "generated_summary",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.summary }}"
+            },
+            {
+              "outputName": "generated_needs",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.needs }}"
+            },
+            {
+              "outputName": "generated_products",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.products }}"
+            },
+            {
+              "outputName": "generated_next_steps",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.next_steps }}"
+            },
+            {
+              "outputName": "generated_email_subject",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.follow_up_email_subject }}"
+            },
+            {
+              "outputName": "generated_email_body",
+              "outputValue": "={{ $('Process transcript with AI').item.json.output.follow_up_email_body_text }}"
+            },
+            {
+              "outputName": "judge_email_feedback",
+              "outputValue": "={{ $json.output.explanation }}"
+            },
+            {
+              "outputName": "rating",
+              "outputValue": "={{ $json.output.rating }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1936,
+        176
+      ],
+      "id": "76b4c942-279a-4bb8-9672-7b2acea9ad3e",
+      "name": "Record Evaluation",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "checkIfEvaluating"
+      },
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1104,
+        592
+      ],
+      "id": "bc1daef2-8911-4f08-9a5a-314d7da22688",
+      "name": "Evaluation"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "gpt-5.2"
+        },
+        "options": {
+          "responseFormat": "json_object",
+          "reasoningEffort": "low"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        272
+      ],
+      "id": "3aa5877a-47ca-459a-856f-78cc95036704",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# AfterVisit AI agent workflow ",
+        "height": 576,
+        "width": 2384,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        432
+      ],
+      "id": "e29123dc-37d6-461d-84dc-da90f8f0215c",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"Email Judge Output\",\n  \"type\": \"object\",\n  \"required\": [\"rating\", \"explanation\"],\n  \"properties\": {\n    \"rating\": {\n      \"type\": \"integer\",\n      \"minimum\": 1,\n      \"maximum\": 5,\n      \"description\": \"Overall quality score for the follow-up email (1 = poor, 5 = excellent).\"\n    },\n    \"explanation\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"description\": \"Concise rationale (3–5 sentences) referencing transcript evidence.\"\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1728,
+        272
+      ],
+      "id": "165307ce-6795-4d21-8cd6-21a126f21605",
+      "name": "judge output rules"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.microsoftOutlook",
+      "typeVersion": 2,
+      "position": [
+        1520,
+        784
+      ],
+      "id": "b22f6e71-1dd8-48b9-b208-feb2da6bc6c5",
+      "name": "Create Outlook draft",
+      "webhookId": "94253bc1-9e63-4a92-a93e-f56a1bf2c407",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8",
+          "mode": "list",
+          "cachedResultName": "Proxima Health Logging Spreadsheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "account_name": "={{ $json.output.account_name }}",
+            "contact": "={{ $json.output.contact }}",
+            "type": "={{ $json.output.type }}",
+            "summary": "={{ $json.output.summary }}",
+            "needs": "={{ $json.output.needs }}",
+            "products": "={{ $json.output.products }}",
+            "next_steps": "={{ $json.output.next_steps }}",
+            "date": "={{ new Date($('Upload audio or transcript').item.json.submittedAt).toLocaleDateString('en-US') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "account_name",
+              "displayName": "account_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "contact",
+              "displayName": "contact",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "type",
+              "displayName": "type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "summary",
+              "displayName": "summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "needs",
+              "displayName": "needs",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "products",
+              "displayName": "products",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "next_steps",
+              "displayName": "next_steps",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1520,
+        608
+      ],
+      "id": "8fcc0798-80cf-4a50-87a5-219b7d06a9b5",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "\n\n![Alt text](https://sebastienmartin.info/aiml901/attachments/course_canvas_vignette.png)\n\n# Recitation 5 - Evaluation\n\n![Proxima Health logo](https://i.ibb.co/My1FBbwg/company-logo.jpg)\n\n",
+        "height": 624,
+        "width": 496,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -752,
+        176
+      ],
+      "id": "6ceb3a36-39c0-4ba5-8f6c-f2403223ba45",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "# Evaluation pipeline",
+        "height": 576,
+        "width": 2384
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -160
+      ],
+      "id": "48be7154-934b-4184-956f-68a20fbec7b3",
+      "name": "Sticky Note2"
+    }
+  ],
+  "connections": {
+    "Upload audio or transcript": {
+      "main": [
+        [
+          {
+            "node": "Detect input type",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Detect input type": {
+      "main": [
+        [
+          {
+            "node": "Transcribe audio of visit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Process the transcript",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Error: nothing was uploaded!",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe audio of visit": {
+      "main": [
+        [
+          {
+            "node": "Process transcript with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Process transcript with AI",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Agent Output Rules": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Process transcript with AI",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process the transcript": {
+      "main": [
+        [
+          {
+            "node": "Process transcript with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluation Transcripts": {
+      "main": [
+        [
+          {
+            "node": "Process evaluation transcript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process evaluation transcript": {
+      "main": [
+        [
+          {
+            "node": "Process transcript with AI",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Process transcript with AI": {
+      "main": [
+        [
+          {
+            "node": "Evaluation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Email Judge": {
+      "main": [
+        [
+          {
+            "node": "Record Evaluation",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Evaluation Metrics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Evaluation": {
+      "main": [
+        [
+          {
+            "node": "Email Judge",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Outlook draft",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Judge",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "judge output rules": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Email Judge",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
+
+---
+# Exploratory Content: Monthly CRM Updates
+
+Note that we could easily exchange the `Chat Trigger` node for a Telegram message node, which would make it easy for employees to input expenses and allow for better tracking. With this information collected in our Google Sheet, we might want to know how many items we have for each product category each month.
+
+We will walk through the steps to build this workflow, that complements our previous one:
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "months",
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        224,
+        1184
+      ],
+      "id": "38ba8205-ad4a-47c4-8927-e8fd2b13b2f7",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8",
+          "mode": "list",
+          "cachedResultName": "Proxima Health Logging CRM",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/edit#gid=0"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        432,
+        1184
+      ],
+      "id": "24a35f89-079e-43f7-83f5-f747ffb992f3",
+      "name": "Get row(s) in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "62207fd1-7f07-4e67-9b2e-912793fb6bfe",
+              "leftValue": "={{ $json.date }}",
+              "rightValue": "={{ new Date(Date.now() - 30*24*60*60*1000).toISOString() }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "after"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        1184
+      ],
+      "id": "c6d4eee4-0076-4eba-a5d8-351b2d944b26",
+      "name": "Filter"
+    },
+    {
+      "parameters": {
+        "fieldsToSummarize": {
+          "values": [
+            {
+              "field": "products"
+            }
+          ]
+        },
+        "fieldsToSplitBy": "products",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.summarize",
+      "typeVersion": 1.1,
+      "position": [
+        832,
+        1184
+      ],
+      "id": "b19fc805-6d28-47af-8149-158e35e322ba",
+      "name": "Summarize"
+    },
+    {
+      "parameters": {
+        "sendTo": "alexjensenaiml901@gmail.com",
+        "subject": "Monthly CRM Report",
+        "emailType": "text",
+        "message": "=Here is how many events you have for each product category for the previous month:\n\n{{ $json.data[0].products }}: ${{ $json.data[0].count_products }}\n\n{{ $json.data[1].products }}: ${{ $json.data[1].count_products }}\n\n{{ $json.data[2].products }}: ${{ $json.data[2].count_products }}\n\n{{ $json.data[3].products }}: ${{ $json.data[3].count_products }}\n\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1232,
+        1184
+      ],
+      "id": "354f97b7-2959-41a5-bdea-b31469fe9929",
+      "name": "Send a message",
+      "webhookId": "e1c31dba-96ba-4d3b-a67c-f61c68959187",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "ZDwBAnHZsFJYfLcn",
+          "name": "Alex Gmail"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        1184
+      ],
+      "id": "b31fcbf0-289a-43ef-b34d-41246135c139",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "content": "## Exploratory content: monthly CRM updates",
+        "height": 256,
+        "width": 1280
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        160,
+        1104
+      ],
+      "id": "828395c9-a96f-408b-bef2-213c983e9f5f",
+      "name": "Sticky Note"
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Summarize",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Summarize": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
+
+---
+## Step 1: Schedule Trigger
+
+- **Add node:** `Schedule Trigger`
+- Set it up to trigger once per month. You can also choose what time this should occur at.
+
+---
+## Step 2: Retrieving Data
+
+- **Add node:** `Google Sheets → Get row(s) in sheet`
+	- Choose the `Proxima Health Logging CRM` spreadsheet from before
+
+---
+## Step 3: Filtering
+
+We now want to only look at expenses from the past month.
+
+- **Add node:** `Filter`
+- For the first value, choose
+```JSON
+{{ $json.date }}
+```
+- Choose `Date & Time → is after`
+- For the second value, choose 
+```JSON
+{{ new Date(Date.now() - 30*24*60*60*1000).toISOString() }}
+```
+- This represents 30 days before the current time.
+
+---
+## Step 4: Summarizing
+
+Now, we want to count the number of rows by product category. `Summarize` lets us do operations such as summing, counting, and finding the minimum or maximum of a set of data.
+
+- **Add node:** `Summarize`
+	- Aggregation: `Count`
+	- Field: `products`
+	- Fields to Split By: `products`
+		- This means that we get one number for services, one for capital equipment, and so forth.
+
+---
+## Step 5: Aggregating
+
+This is a common step to make our data easier to access. If you run each node individually, you will see that the `Summarize` node will return a separate JSON object for each category. To actually be able to reference each of these values individually, we need to transform the structure. To see this difficulty, try to make a Gmail node directly after the `Summarize` node and reference each category's amount.
+
+- **Add node:** `Aggregate`
+	- Aggregate: `All Item Data (Into a Single List)`
+	- Put Output in Field: `data`
+	- Include: `All Fields`
+- **What it does**: Takes all of the JSON objects and makes them into a single list, allowing us to reference each category individually. 
+
+----
+## Step 6: Email
+
+- **Add node:** `Gmail → Send a message`
+	- Resource: `Message`
+	- Operation: `Send`
+	- To: Your choice! 
+	- Subject: I chose something like "Monthly CRM Report"
+	- Email Type: `Text`
+	- Message:
+```JSON
+Here is how many events you have for each product category for the previous month:
+
+{{ $json.data[0].products }}: ${{ $json.data[0].count_products }}
+
+{{ $json.data[1].products }}: ${{ $json.data[1].count_products }}
+
+{{ $json.data[2].products }}: ${{ $json.data[2].count_products }}
+
+{{ $json.data[3].products }}: ${{ $json.data[3].count_products }}
+
+
+```
+
+This is a relatively simple email structure, but just shows all of the expenses. Note that this hard-codes the fact that there will be four product categories, which may not be the case.
