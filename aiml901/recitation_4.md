@@ -20,7 +20,7 @@ So far, we have focused on n8n’s core functionalities and building workflows w
 
 ---
 You can watch a video recording of the recitation here:
-![Recitation 3 Recording](https://youtu.be/EZWktts27cI)
+![Recitation 4 Recording](https://youtu.be/EZWktts27cI)
 
 ---
 ## Learning Objectives

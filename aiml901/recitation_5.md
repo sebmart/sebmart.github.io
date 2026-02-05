@@ -19,6 +19,10 @@ Today, we continue with our exploration of the Proxima Health Systems case. We h
 - Decide between different choices of metrics
 
 ---
+You can watch a video recording of the recitation here:
+![Recitation 5 Recording](https://youtu.be/XCPieJQeJaA)
+
+---
 # Exercise
 
 We will actually start by brainstorming how we would do this. What sort of input would we want to process? What would a good output look like? Thinking about these ideas will inform the structure of our agent, as well as what we will test for in evaluation.
