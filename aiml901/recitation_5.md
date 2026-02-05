@@ -625,7 +625,7 @@ In this portion, we focus on the correctness metric. Here are the nodes that we 
     {
       "parameters": {
         "promptType": "define",
-        "text": "=# Original Transcript\n\n{{ $('Edit Fields (Set)').item.json.text }}\n\n# Generated Email\n\n**Title:** {{ $json.output.follow_up_email_subject }}\n**Body:**\n{{ $json.output.follow_up_email_body_text }}",
+        "text": "=# Original Transcript\n\n{{ $('Edit Fields').item.json.text }}\n\n# Generated Email\n\n**Title:** {{ $json.output.follow_up_email_subject }}\n**Body:**\n{{ $json.output.follow_up_email_body_text }}",
         "hasOutputParser": true,
         "options": {
           "systemMessage": "System role: AfterVisit AI – Follow-Up Email Quality Judge\n\nPurpose\n- Evaluate an LLM-generated follow-up email (subject + body) against a sales-call transcript for Proxima Health Systems (PXH).\n- Provide consistent scoring (1–5) and qualitative feedback that instructors can share with students.\n- Focus on clarity, warmth, completeness, and actionability aligned with PXH relationship standards.\n\nCompany context\n- PXH is a North American distributor serving hospitals and clinics with:\n  - Capital equipment (e.g., OR tables/lights, infusion pumps)\n  - Diagnostics and clinical systems (chemistry analyzers, point-of-care testing)\n  - Consumables and accessories (electrodes, cuffs, filters)\n  - Services (field repair, preventive-maintenance plans, depot coverage)\n  - Digital/operations offerings (asset tracking, workflow scheduling)\n- Sales reps are trusted account owners. A strong follow-up email thanks the customer, mirrors the visit summary, confirms needs/pain points, and clearly states next actions with dates or owners.\n- Reps document everything in Salesforce and send the email externally, so tone must be professional yet warm. No internal CRM shorthand should appear.\n\nInputs you receive\n- One raw transcript of a PXH rep meeting or call with a single customer stakeholder.\n- One proposed email draft consisting of a subject line and a body.\n\nYour task\n- Compare the draft email against the transcript.\n- Produce a structured response that conforms exactly to the caller-provided JSON Schema (one rating field and one explanation field). Do not add extra fields or commentary.\n\nScoring rubric (apply holistic judgment)\n5 – Outstanding. Subject references the main topic/account, greeting is warm (“Hi/Hello/Dear <name>,”), tone is appreciative, and the body accurately and succinctly recaps all major issues, needs, and next steps (including owners/dates). Email closes with a professional sign-off and invites follow-up.\n4 – Strong. Covers almost everything with minor omissions or slightly less polished phrasing, but still aligned with PXH standards.\n3 – Adequate. Captures some key items but misses notable needs/next steps, or tone/opening/closing feels generic. Student should revise.\n2 – Weak. Omits several critical items, misstates facts, or feels transactional/cold. Significant rewrite required.\n1 – Unacceptable. Wrong account/contact, fabricated content, or missing core deliverables (e.g., no next steps, no thanks, no greeting).\n\nEvaluation checklist (use to ground your comments)\n- Greeting & tone: opens with “Hi/Hello/Dear <contact name>,” acknowledges the meeting, thanks the stakeholder, and maintains a collaborative tone without slang.\n- Subject line: mentions the key topic(s) and, when obvious, the account/site.\n- Summary accuracy: reflects major discussion points without inventing details.\n- Needs/pain points: surfaces customer asks/pain points drawn from the transcript.\n- Next steps: lists all agreed follow-up actions with owners and timing language.\n- Clarity & structure: organized in short paragraphs or bullets; easy to skim.\n- Professional close: ends with a friendly invitation to reach out and a sign-off (“Best regards, Alex / Proxima Health Systems” or equivalent).\n- Compliance: no PHI; no internal-only notes (e.g., SKU shorthand unless customer used it).\n\nExamples (for scoring intuition – do not quote verbatim in outputs)\n\nExample A – Strong email (Rate 5/5)\nTranscript highlights: site walk-through for OR tables; needs tilt-stable table, new lights, ergonomic package; next steps include demo next Wednesday, dual quotes, financing summary by mid-month.\nDraft email:\nSubject: “Thank you — OR table and lighting next steps for Summit Ridge Surgical Center”\nBody:\n“Hi Dr. Sofia Ramirez,\n\nThank you for walking me through OR 2 today. We confirmed the tilt drift on the table, the aging light arms, and your interest in the ergonomic package. As discussed, I’ll send the invite for the in-room demo next Wednesday at 2 pm, deliver both the baseline and ergonomic quotes tomorrow, and forward a financing summary by November 15 so Finance can review. I’ll also include the maintenance interval details you called out. Please let me know if there are accessories you’d like us to bring to the demo.\n\nWarm regards,\nCasey Morgan\nProxima Health Systems”\nWhy 5: Warm tone, precise recap, every next step with owners/dates, professional close.\n\nExample B – Needs improvement (Rate 3/5)\nTranscript highlights: virtual call about analyzer coolant leak, QC drift, urgent service tech, loaner, reagent replenishment, depot coverage quote.\nDraft email:\nSubject: “Analyzer follow-up”\nBody:\n“Hey Dr. Meredith Lawson,\n\nJust following up about the analyzer leak. I’ll check with service on timing and let you know if we can send someone. We’ll also look at the depot option. Talk soon.\n\nThanks,\nRiley Chen”\nWhy 3: Tone too casual (“Hey”), misses QC drift, reagent replenishment, and loaner commitments; vague next steps.\n\nExample C – Poor email (Rate 1/5)\nTranscript highlights: consumables backorder, substitution matrix, split shipments, par tracking one-pager.\nDraft email:\nSubject: “Meeting recap”\nBody:\n“Hi Dana,\n\nThanks for the chat. We’ll be in touch.\n\n- Sam”\nWhy 1: Omits needs, substitution details, and all action items; unusable for CRM.\n\nFailure handling\n- If the email references facts not in the transcript, call them out as hallucinations and lower the rating.\n- If the email misses critical safety, compliance, or timing details, deduct accordingly.\n- If greeting is wrong contact or tone is cold/transactional, reflect that in the score.\n\nReminder\n- Provide an honest, actionable assessment grounded in the transcript.\n- Be concise but specific in your explanation so a student knows exactly what to fix.\n"
@@ -793,29 +793,6 @@ In this portion, we focus on the correctness metric. Here are the nodes that we 
     },
     {
       "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
-              "name": "text",
-              "value": "={{ $json['Conversation Transcripts'] }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        368,
-        64
-      ],
-      "id": "c35b46ea-a149-434a-845b-844d7c0f29e3",
-      "name": "Edit Fields (Set)"
-    },
-    {
-      "parameters": {
         "source": "googleSheets",
         "documentId": {
           "__rl": true,
@@ -846,6 +823,29 @@ In this portion, we focus on the correctness metric. Here are the nodes that we 
           "name": "Alex Student Google Sheet"
         }
       }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
+              "name": "text",
+              "value": "={{ $json['Conversation Transcripts'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        64
+      ],
+      "id": "c35b46ea-a149-434a-845b-844d7c0f29e3",
+      "name": "Edit Fields"
     }
   ],
   "connections": {
@@ -899,20 +899,20 @@ In this portion, we focus on the correctness metric. Here are the nodes that we 
         ]
       ]
     },
-    "Edit Fields (Set)": {
-      "main": [
-        []
-      ]
-    },
     "When fetching a dataset row": {
       "main": [
         [
           {
-            "node": "Edit Fields (Set)",
+            "node": "Edit Fields",
             "type": "main",
             "index": 0
           }
         ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        []
       ]
     }
   },
@@ -1014,6 +1014,109 @@ Correctness is a rather coarse metric and beyond categorization, it may not even
 To still be able to evaluate the agent's answers in this case, we instead can use another LLM as a judge. 
 
 Note that there is a way to do this using a `Set Metrics` evaluation node in n8n and choosing the metric `Helpfulness (AI-based)`. However, **we won't do this**. We will do it in a slightly different way that lets us log more information, including the reasoning of the judge agent. 
+
+Here is the Judge agent that we will build:
+
+```JSON
+{
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=# Original Transcript\n\n{{ $('Edit Fields').item.json.text }}\n\n# Generated Email\n\n**Title:** {{ $json.output.follow_up_email_subject }}\n**Body:**\n{{ $json.output.follow_up_email_body_text }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "System role: AfterVisit AI – Follow-Up Email Quality Judge\n\nPurpose\n- Evaluate an LLM-generated follow-up email (subject + body) against a sales-call transcript for Proxima Health Systems (PXH).\n- Provide consistent scoring (1–5) and qualitative feedback that instructors can share with students.\n- Focus on clarity, warmth, completeness, and actionability aligned with PXH relationship standards.\n\nCompany context\n- PXH is a North American distributor serving hospitals and clinics with:\n  - Capital equipment (e.g., OR tables/lights, infusion pumps)\n  - Diagnostics and clinical systems (chemistry analyzers, point-of-care testing)\n  - Consumables and accessories (electrodes, cuffs, filters)\n  - Services (field repair, preventive-maintenance plans, depot coverage)\n  - Digital/operations offerings (asset tracking, workflow scheduling)\n- Sales reps are trusted account owners. A strong follow-up email thanks the customer, mirrors the visit summary, confirms needs/pain points, and clearly states next actions with dates or owners.\n- Reps document everything in Salesforce and send the email externally, so tone must be professional yet warm. No internal CRM shorthand should appear.\n\nInputs you receive\n- One raw transcript of a PXH rep meeting or call with a single customer stakeholder.\n- One proposed email draft consisting of a subject line and a body.\n\nYour task\n- Compare the draft email against the transcript.\n- Produce a structured response that conforms exactly to the caller-provided JSON Schema (one rating field and one explanation field). Do not add extra fields or commentary.\n\nScoring rubric (apply holistic judgment)\n5 – Outstanding. Subject references the main topic/account, greeting is warm (“Hi/Hello/Dear <name>,”), tone is appreciative, and the body accurately and succinctly recaps all major issues, needs, and next steps (including owners/dates). Email closes with a professional sign-off and invites follow-up.\n4 – Strong. Covers almost everything with minor omissions or slightly less polished phrasing, but still aligned with PXH standards.\n3 – Adequate. Captures some key items but misses notable needs/next steps, or tone/opening/closing feels generic. Student should revise.\n2 – Weak. Omits several critical items, misstates facts, or feels transactional/cold. Significant rewrite required.\n1 – Unacceptable. Wrong account/contact, fabricated content, or missing core deliverables (e.g., no next steps, no thanks, no greeting).\n\nEvaluation checklist (use to ground your comments)\n- Greeting & tone: opens with “Hi/Hello/Dear <contact name>,” acknowledges the meeting, thanks the stakeholder, and maintains a collaborative tone without slang.\n- Subject line: mentions the key topic(s) and, when obvious, the account/site.\n- Summary accuracy: reflects major discussion points without inventing details.\n- Needs/pain points: surfaces customer asks/pain points drawn from the transcript.\n- Next steps: lists all agreed follow-up actions with owners and timing language.\n- Clarity & structure: organized in short paragraphs or bullets; easy to skim.\n- Professional close: ends with a friendly invitation to reach out and a sign-off (“Best regards, Alex / Proxima Health Systems” or equivalent).\n- Compliance: no PHI; no internal-only notes (e.g., SKU shorthand unless customer used it).\n\nExamples (for scoring intuition – do not quote verbatim in outputs)\n\nExample A – Strong email (Rate 5/5)\nTranscript highlights: site walk-through for OR tables; needs tilt-stable table, new lights, ergonomic package; next steps include demo next Wednesday, dual quotes, financing summary by mid-month.\nDraft email:\nSubject: “Thank you — OR table and lighting next steps for Summit Ridge Surgical Center”\nBody:\n“Hi Dr. Sofia Ramirez,\n\nThank you for walking me through OR 2 today. We confirmed the tilt drift on the table, the aging light arms, and your interest in the ergonomic package. As discussed, I’ll send the invite for the in-room demo next Wednesday at 2 pm, deliver both the baseline and ergonomic quotes tomorrow, and forward a financing summary by November 15 so Finance can review. I’ll also include the maintenance interval details you called out. Please let me know if there are accessories you’d like us to bring to the demo.\n\nWarm regards,\nCasey Morgan\nProxima Health Systems”\nWhy 5: Warm tone, precise recap, every next step with owners/dates, professional close.\n\nExample B – Needs improvement (Rate 3/5)\nTranscript highlights: virtual call about analyzer coolant leak, QC drift, urgent service tech, loaner, reagent replenishment, depot coverage quote.\nDraft email:\nSubject: “Analyzer follow-up”\nBody:\n“Hey Dr. Meredith Lawson,\n\nJust following up about the analyzer leak. I’ll check with service on timing and let you know if we can send someone. We’ll also look at the depot option. Talk soon.\n\nThanks,\nRiley Chen”\nWhy 3: Tone too casual (“Hey”), misses QC drift, reagent replenishment, and loaner commitments; vague next steps.\n\nExample C – Poor email (Rate 1/5)\nTranscript highlights: consumables backorder, substitution matrix, split shipments, par tracking one-pager.\nDraft email:\nSubject: “Meeting recap”\nBody:\n“Hi Dana,\n\nThanks for the chat. We’ll be in touch.\n\n- Sam”\nWhy 1: Omits needs, substitution details, and all action items; unusable for CRM.\n\nFailure handling\n- If the email references facts not in the transcript, call them out as hallucinations and lower the rating.\n- If the email misses critical safety, compliance, or timing details, deduct accordingly.\n- If greeting is wrong contact or tone is cold/transactional, reflect that in the score.\n\nReminder\n- Provide an honest, actionable assessment grounded in the transcript.\n- Be concise but specific in your explanation so a student knows exactly what to fix.\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1520,
+        48
+      ],
+      "id": "c3a69c28-ccf3-43c7-8752-b7945519382a",
+      "name": "Email Judge"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-5.2",
+          "mode": "list",
+          "cachedResultName": "gpt-5.2"
+        },
+        "options": {
+          "responseFormat": "json_object",
+          "reasoningEffort": "low"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1472,
+        272
+      ],
+      "id": "3aa5877a-47ca-459a-856f-78cc95036704",
+      "name": "OpenAI Chat Model1",
+      "credentials": {
+        "openAiApi": {
+          "id": "ng8YPN3U1fTEiF8P",
+          "name": "AIML901 OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n  \"$schema\": \"https://json-schema.org/draft/2020-12/schema\",\n  \"title\": \"Email Judge Output\",\n  \"type\": \"object\",\n  \"required\": [\"rating\", \"explanation\"],\n  \"properties\": {\n    \"rating\": {\n      \"type\": \"integer\",\n      \"minimum\": 1,\n      \"maximum\": 5,\n      \"description\": \"Overall quality score for the follow-up email (1 = poor, 5 = excellent).\"\n    },\n    \"explanation\": {\n      \"type\": \"string\",\n      \"minLength\": 1,\n      \"description\": \"Concise rationale (3–5 sentences) referencing transcript evidence.\"\n    }\n  },\n  \"additionalProperties\": false\n}\n"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1728,
+        272
+      ],
+      "id": "165307ce-6795-4d21-8cd6-21a126f21605",
+      "name": "judge output rules"
+    }
+  ],
+  "connections": {
+    "Email Judge": {
+      "main": [
+        []
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Email Judge",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "judge output rules": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Email Judge",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
+  }
+}
+```
 
 We will also need to modify our `Set Metrics` and `Set Outputs` nodes slightly, discussed below.
 
@@ -1289,62 +1392,6 @@ In case you have some error in your workflow, here is the entire workflow to che
     },
     {
       "parameters": {
-        "source": "googleSheets",
-        "documentId": {
-          "__rl": true,
-          "value": "1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas",
-          "mode": "list",
-          "cachedResultName": "Proxima Health Evaluation",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit?usp=drivesdk"
-        },
-        "sheetName": {
-          "__rl": true,
-          "value": "gid=0",
-          "mode": "list",
-          "cachedResultName": "Sheet1",
-          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit#gid=0"
-        }
-      },
-      "type": "n8n-nodes-base.evaluationTrigger",
-      "typeVersion": 4.7,
-      "position": [
-        -128,
-        64
-      ],
-      "id": "895a434f-1161-4a8c-93a7-9f0868c91f36",
-      "name": "Evaluation Transcripts",
-      "credentials": {
-        "googleSheetsOAuth2Api": {
-          "id": "O8nOyQiiMhjSi2Pa",
-          "name": "Alex Student Google Sheet"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "assignments": {
-          "assignments": [
-            {
-              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
-              "name": "text",
-              "value": "={{ $json['Conversation Transcripts'] }}",
-              "type": "string"
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.set",
-      "typeVersion": 3.4,
-      "position": [
-        368,
-        64
-      ],
-      "id": "c35b46ea-a149-434a-845b-844d7c0f29e3",
-      "name": "Process evaluation transcript"
-    },
-    {
-      "parameters": {
         "promptType": "define",
         "text": "={{ $json.text }}",
         "hasOutputParser": true,
@@ -1369,7 +1416,7 @@ In case you have some error in your workflow, here is the entire workflow to che
           "assignments": [
             {
               "name": "correct product category",
-              "value": "={{ $('Evaluation').item.json.output.contact == $('Evaluation Transcripts').item.json.contact }}",
+              "value": "={{ $('Evaluation').item.json.output.products == $('When fetching a dataset row').item.json.products }}",
               "type": "number",
               "id": "90922726-2513-4b0b-ab2f-da9db16b9383"
             },
@@ -1394,7 +1441,7 @@ In case you have some error in your workflow, here is the entire workflow to che
     {
       "parameters": {
         "promptType": "define",
-        "text": "=# Original Transcript\n\n{{ $('Process evaluation transcript').item.json.text }}\n\n# Generated Email\n\n**Title:** {{ $json.output.follow_up_email_subject }}\n**Body:**\n{{ $json.output.follow_up_email_body_text }}",
+        "text": "=# Original Transcript\n\n{{ $('Edit Fields').item.json.text }}\n\n# Generated Email\n\n**Title:** {{ $json.output.follow_up_email_subject }}\n**Body:**\n{{ $json.output.follow_up_email_body_text }}",
         "hasOutputParser": true,
         "options": {
           "systemMessage": "System role: AfterVisit AI – Follow-Up Email Quality Judge\n\nPurpose\n- Evaluate an LLM-generated follow-up email (subject + body) against a sales-call transcript for Proxima Health Systems (PXH).\n- Provide consistent scoring (1–5) and qualitative feedback that instructors can share with students.\n- Focus on clarity, warmth, completeness, and actionability aligned with PXH relationship standards.\n\nCompany context\n- PXH is a North American distributor serving hospitals and clinics with:\n  - Capital equipment (e.g., OR tables/lights, infusion pumps)\n  - Diagnostics and clinical systems (chemistry analyzers, point-of-care testing)\n  - Consumables and accessories (electrodes, cuffs, filters)\n  - Services (field repair, preventive-maintenance plans, depot coverage)\n  - Digital/operations offerings (asset tracking, workflow scheduling)\n- Sales reps are trusted account owners. A strong follow-up email thanks the customer, mirrors the visit summary, confirms needs/pain points, and clearly states next actions with dates or owners.\n- Reps document everything in Salesforce and send the email externally, so tone must be professional yet warm. No internal CRM shorthand should appear.\n\nInputs you receive\n- One raw transcript of a PXH rep meeting or call with a single customer stakeholder.\n- One proposed email draft consisting of a subject line and a body.\n\nYour task\n- Compare the draft email against the transcript.\n- Produce a structured response that conforms exactly to the caller-provided JSON Schema (one rating field and one explanation field). Do not add extra fields or commentary.\n\nScoring rubric (apply holistic judgment)\n5 – Outstanding. Subject references the main topic/account, greeting is warm (“Hi/Hello/Dear <name>,”), tone is appreciative, and the body accurately and succinctly recaps all major issues, needs, and next steps (including owners/dates). Email closes with a professional sign-off and invites follow-up.\n4 – Strong. Covers almost everything with minor omissions or slightly less polished phrasing, but still aligned with PXH standards.\n3 – Adequate. Captures some key items but misses notable needs/next steps, or tone/opening/closing feels generic. Student should revise.\n2 – Weak. Omits several critical items, misstates facts, or feels transactional/cold. Significant rewrite required.\n1 – Unacceptable. Wrong account/contact, fabricated content, or missing core deliverables (e.g., no next steps, no thanks, no greeting).\n\nEvaluation checklist (use to ground your comments)\n- Greeting & tone: opens with “Hi/Hello/Dear <contact name>,” acknowledges the meeting, thanks the stakeholder, and maintains a collaborative tone without slang.\n- Subject line: mentions the key topic(s) and, when obvious, the account/site.\n- Summary accuracy: reflects major discussion points without inventing details.\n- Needs/pain points: surfaces customer asks/pain points drawn from the transcript.\n- Next steps: lists all agreed follow-up actions with owners and timing language.\n- Clarity & structure: organized in short paragraphs or bullets; easy to skim.\n- Professional close: ends with a friendly invitation to reach out and a sign-off (“Best regards, Alex / Proxima Health Systems” or equivalent).\n- Compliance: no PHI; no internal-only notes (e.g., SKU shorthand unless customer used it).\n\nExamples (for scoring intuition – do not quote verbatim in outputs)\n\nExample A – Strong email (Rate 5/5)\nTranscript highlights: site walk-through for OR tables; needs tilt-stable table, new lights, ergonomic package; next steps include demo next Wednesday, dual quotes, financing summary by mid-month.\nDraft email:\nSubject: “Thank you — OR table and lighting next steps for Summit Ridge Surgical Center”\nBody:\n“Hi Dr. Sofia Ramirez,\n\nThank you for walking me through OR 2 today. We confirmed the tilt drift on the table, the aging light arms, and your interest in the ergonomic package. As discussed, I’ll send the invite for the in-room demo next Wednesday at 2 pm, deliver both the baseline and ergonomic quotes tomorrow, and forward a financing summary by November 15 so Finance can review. I’ll also include the maintenance interval details you called out. Please let me know if there are accessories you’d like us to bring to the demo.\n\nWarm regards,\nCasey Morgan\nProxima Health Systems”\nWhy 5: Warm tone, precise recap, every next step with owners/dates, professional close.\n\nExample B – Needs improvement (Rate 3/5)\nTranscript highlights: virtual call about analyzer coolant leak, QC drift, urgent service tech, loaner, reagent replenishment, depot coverage quote.\nDraft email:\nSubject: “Analyzer follow-up”\nBody:\n“Hey Dr. Meredith Lawson,\n\nJust following up about the analyzer leak. I’ll check with service on timing and let you know if we can send someone. We’ll also look at the depot option. Talk soon.\n\nThanks,\nRiley Chen”\nWhy 3: Tone too casual (“Hey”), misses QC drift, reagent replenishment, and loaner commitments; vague next steps.\n\nExample C – Poor email (Rate 1/5)\nTranscript highlights: consumables backorder, substitution matrix, split shipments, par tracking one-pager.\nDraft email:\nSubject: “Meeting recap”\nBody:\n“Hi Dana,\n\nThanks for the chat. We’ll be in touch.\n\n- Sam”\nWhy 1: Omits needs, substitution details, and all action items; unusable for CRM.\n\nFailure handling\n- If the email references facts not in the transcript, call them out as hallucinations and lower the rating.\n- If the email misses critical safety, compliance, or timing details, deduct accordingly.\n- If greeting is wrong contact or tone is cold/transactional, reflect that in the score.\n\nReminder\n- Provide an honest, actionable assessment grounded in the transcript.\n- Be concise but specific in your explanation so a student knows exactly what to fix.\n"
@@ -1732,6 +1779,62 @@ In case you have some error in your workflow, here is the entire workflow to che
       ],
       "id": "48be7154-934b-4184-956f-68a20fbec7b3",
       "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "source": "googleSheets",
+        "documentId": {
+          "__rl": true,
+          "value": "1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas",
+          "mode": "list",
+          "cachedResultName": "Proxima Health Evaluation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/edit#gid=0"
+        }
+      },
+      "type": "n8n-nodes-base.evaluationTrigger",
+      "typeVersion": 4.7,
+      "position": [
+        -112,
+        64
+      ],
+      "id": "32076304-db54-4176-9ead-794b22acb9b5",
+      "name": "When fetching a dataset row",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "O8nOyQiiMhjSi2Pa",
+          "name": "Alex Student Google Sheet"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9d283c07-a1a1-44e8-a301-f93e4da2aedd",
+              "name": "text",
+              "value": "={{ $json['Conversation Transcripts'] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        368,
+        64
+      ],
+      "id": "c35b46ea-a149-434a-845b-844d7c0f29e3",
+      "name": "Edit Fields"
     }
   ],
   "connections": {
@@ -1815,28 +1918,6 @@ In case you have some error in your workflow, here is the entire workflow to che
         ]
       ]
     },
-    "Evaluation Transcripts": {
-      "main": [
-        [
-          {
-            "node": "Process evaluation transcript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Process evaluation transcript": {
-      "main": [
-        [
-          {
-            "node": "Process transcript with AI",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Process transcript with AI": {
       "main": [
         [
@@ -1904,6 +1985,28 @@ In case you have some error in your workflow, here is the entire workflow to che
           {
             "node": "Email Judge",
             "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When fetching a dataset row": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Process transcript with AI",
+            "type": "main",
             "index": 0
           }
         ]
