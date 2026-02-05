@@ -581,7 +581,7 @@ To implement this, we will use n8n's **evaluation** nodes and triggers to let us
 Both of these can be handled in n8n! For this walkthrough, we will focus on two metrics, but you will be encouraged to create your own metrics in the exercises.
 
 The two metrics we will consider are as follows:
-- **Correctness metric:** each transcript is given a product category, which is one of **“Capital Equipment,” “diagnostics,” “Consumables,” ”Services”** or **“Digital Ops.”** Does the agent categorize correctly?
+- **Correctness metric:** each transcript is given a product category, which is one of **“Capital Equipment,” “Diagnostics,” “Consumables,” ”Services”** or **“Digital Ops.”** Does the agent categorize correctly?
 - **LLM-as-a-judge:** We are also given a potential follow-up email by the agent. Is this email professional and does it fit the tone and language that we want reps to use?
 
 > [!info] Note
