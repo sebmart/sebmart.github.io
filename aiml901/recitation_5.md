@@ -26,7 +26,7 @@ We will actually start by brainstorming how we would do this. What sort of input
 ---
 # Part 1: Proxima Health Agent
 
-We will start with the expense agent itself. Copy and paste the following code into a new workflow:
+We will start with the agent itself. Copy and paste the following code into a new workflow:
 
 ```JSON
 {
@@ -541,11 +541,11 @@ This consists of...
 4. An **Edit Fields** node that prepares the input for the agent. This is not important for now, but it will be once we start to add in other forms of inputs;
 5. An **AI Agent** that will write a follow-up email, summarize the conversation, and extract information such as the product category, needs, and next steps;
 6. An **Output Parser** to ensure the formatting of the output;
-7. A **Google Sheets** node to log the expense.
+7. A **Google Sheets** node to mimic a CRM system.
 
-With this, we have a full pipeline that lets us categorize expenses! 
+With this, we have a full pipeline that lets us create follow-up emails and log conversations! 
 
-Make sure to click into the `OpenAI Chat Model` node to fill in your credentials. In the `Append row in sheet` node for Google Sheets, also add your credential and choose the `Expenses Spreadsheet` from earlier. You may need to run the workflow once and drag-and-drop the appropriate key into each `Value to Send` for the spreadsheet.
+Make sure to click into the `OpenAI Chat Model` node to fill in your credentials. In the `Append row in sheet` node for Google Sheets, also add your credential and choose the `Proxima Health Logging CRM` spreadsheet from earlier. You may need to run the workflow once and drag-and-drop the appropriate key into each `Value to Send` for the spreadsheet.
 
 ---
 ### Exercises
@@ -573,11 +573,11 @@ Failure handling
 ---
 # Part 2: Adding in Evaluation Pipeline
 
-Now, we want a formal way to test how well our expense agent actually works. To do so, we need to create an understanding of _what it means for our agent to work well_.
+Now, we want a formal way to test how well our agent actually works. To do so, we need to create an understanding of _what it means for our agent to work well_.
 
 To implement this, we will use n8n's **evaluation** nodes and triggers to let us test different inputs and see how well they do against our chosen benchmarks. We consider two types of tasks:
-- **Verifiable tasks** can be automatically checked to see if the agent is performing them correctly. For example, is the agent assigning an expense to the correct category?
-- **Non-verifiable or unverifiable tasks** do not have a clear right/wrong answer. For example, does the agent's description of the expense accurately reflect it?
+- **Verifiable tasks** can be automatically checked to see if the agent is performing them correctly. For example, is the agent assigning a conversation the correct product category?
+- **Non-verifiable or unverifiable tasks** do not have a clear right/wrong answer. For example, does the agent's description of the conversation accurately reflect it? Is the follow-up email good for the scenario?
 Both of these can be handled in n8n! For this walkthrough, we will focus on two metrics, but you will be encouraged to create your own metrics in the exercises.
 
 The two metrics we will consider are as follows:
@@ -927,7 +927,7 @@ In this portion, we focus on the correctness metric. Here are the nodes that we 
 ---
 ## Step 1: Evaluation Spreadsheet
 
-To test our agent, we need examples of inputs, or expenses that members of the team might input. We will store this in a Google Sheet; an example that you can copy can be found [here](https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/copy).
+To test our agent, we need examples of inputs (conversations) that reps might input. We will store this in a Google Sheet; an example that you can copy can be found [here](https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/copy).
 
 This spreadsheet has many columns. For now, we focus on **Conversation Transcripts, Products, Generated Products, Generated Email Body, Rating** and **Judge Email Feedback**.For the correctness metric, we need to supply the "correct answer" (given by the column Products) along with the input so that we can compare the output of our agent (given by Generated Products) to the true answer.
 
@@ -958,7 +958,7 @@ Now, connect the output of this node directly to the `AI Agent`.
 ---
 ## Step 3: Routing
 
-When we are testing, we don't want to update the spreadsheet that is holding our actual expenses! Remove the connection between the AI Agent and the following nodes. We will add a special node that checks if we are performing evaluation and chooses the path based on this.
+When we are testing, we don't want to update our actual CRM! Remove the connection between the AI Agent and the following nodes. We will add a special node that checks if we are performing evaluation and chooses the path based on this.
 
 - **Add node**: `Action in an app → Evaluation → Check if evaluating`
 	- Connect this to the output of the agent
@@ -999,7 +999,7 @@ To start, we just use a correctness metric. In our Proxima Health Evaluation doc
 ## Exercises
 
 1. Now, execute the workflow starting at the evaluation trigger. How well does it do? 
-2. At this firm, the product category `services` makes up the vast majority of the expenses. Does the evaluation reflect this? How could we make it reflect this more? 
+2. At this firm, the product category `services` makes up the vast majority of the conversations. Does the evaluation reflect this? How could we make it reflect this more? 
 3. Try to add a correctness metric for the `contact` field. What should we do if there is no name reported?
 4. Realistically, reps might instead add a voice note talking through the conversation, rather than the conversation transcript itself. What would we change to deal with this?
 5. **Challenge:** Note that the rep submitting the transcript might forget crucial information, such as needs or the contact at Proxima Health Systems.
@@ -1009,9 +1009,9 @@ To start, we just use a correctness metric. In our Proxima Health Evaluation doc
 ---
 # Part 3: LLM-as-a-Judge
 
-Correctness is a rather coarse metric and beyond categorization, it may not even be applicable. For example, the agent also generates a description of each expense which would allow us to quickly check on how the budget is being spent. We might be interested in how useful these descriptions are. This is a **non-verifiable task**; we cannot verify if its answer is correct, and in fact, there might not even be a correct answer!
+Correctness is a rather coarse metric and beyond categorization, it may not even be applicable. For example, the agent also generates a description of each conversation which would allow us to quickly understand the visit. We might be interested in how useful these descriptions are. This is a **non-verifiable task**; we cannot verify if its answer is correct, and in fact, there might not even be a correct answer!
 
-To still be able to evaluate the agent's answers in this case, we instead can use another LLM as a judge. 
+To still be able to evaluate the agent's answers in this case, we instead can use another LLM as a judge. We will focus on the follow-up email generated by the AI.
 
 Note that there is a way to do this using a `Set Metrics` evaluation node in n8n and choosing the metric `Helpfulness (AI-based)`. However, **we won't do this**. We will do it in a slightly different way that lets us log more information, including the reasoning of the judge agent. 
 
@@ -2024,7 +2024,7 @@ In case you have some error in your workflow, here is the entire workflow to che
 ---
 # Exploratory Content: Monthly CRM Updates
 
-Note that we could easily exchange the `Chat Trigger` node for a Telegram message node, which would make it easy for employees to input expenses and allow for better tracking. With this information collected in our Google Sheet, we might want to know how many items we have for each product category each month.
+Note that we could easily exchange the `n8n Form` node for a Telegram message node, which would make it easy for employees to input conversations and allow for better tracking. With this information collected in our Google Sheet, we might want to know how many items we have for each product category each month.
 
 We will walk through the steps to build this workflow, that complements our previous one:
 ```JSON
@@ -2271,7 +2271,7 @@ We will walk through the steps to build this workflow, that complements our prev
 ---
 ## Step 3: Filtering
 
-We now want to only look at expenses from the past month.
+We now want to only look at rep visits from the past month.
 
 - **Add node:** `Filter`
 - For the first value, choose
@@ -2331,4 +2331,4 @@ Here is how many events you have for each product category for the previous mont
 
 ```
 
-This is a relatively simple email structure, but just shows all of the expenses. Note that this hard-codes the fact that there will be four product categories, which may not be the case.
+This is a relatively simple email structure, but just shows all of the product categories. Note that this hard-codes the fact that there will be four product categories, which may not be the case.
