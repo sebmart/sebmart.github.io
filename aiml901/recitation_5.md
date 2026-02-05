@@ -10,7 +10,7 @@ Today, we continue with our exploration of the Proxima Health Systems case. We h
 - Google Sheets connection
 - OpenAI connection
 - CRM spreadsheet with columns **account_name, contact, type, summary, needs, products,** and **next_steps**. You can make a copy of it [here](https://docs.google.com/spreadsheets/d/1zMdQ5iWJ4Eyl6nkJ36Iw2XpIOomoVqkCHjN4pTZd5O8/copy).
-- Expense evaluation spreadsheet that you can [copy from here](https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/copy).
+- Evaluation spreadsheet that you can [copy from here](https://docs.google.com/spreadsheets/d/1ePXxc7pEmgbPLlxmJWX42hbwElrJJQQalafInWFOuas/copy).
 
 ---
 ## Learning Objectives
