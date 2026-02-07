@@ -66,6 +66,9 @@ Instructions for the recitation can be found [here.](https://sebastienmartin.inf
 Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_4.html) You can watch a video recording of the recitation here:
 ![Recitation 3 Recording](https://youtu.be/EZWktts27cI)
 
+## Recitation 5
+Instructions for the recitation can be found [here.](https://sebastienmartin.info/aiml901/recitation_5.html) You can watch a video recording of the recitation here:
+![Recitation 5 Recording](https://youtu.be/XCPieJQeJaA)
 
 ---
 # n8n Resources
