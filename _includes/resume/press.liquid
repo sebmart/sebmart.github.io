@@ -1,0 +1,24 @@
+<ul class="card-text font-weight-light list-group list-group-flush">
+  {% for content in data[1] %}
+    <li class="list-group-item">
+      <div class="row">
+        <div class="col-12 col-sm-2 col-md-1 text-center date-column">
+          <span class="badge font-weight-bold danger-color-dark text-uppercase align-middle" style="min-width: 50px">{{ content.year }}</span>
+        </div>
+        <div class="col-12 col-sm-10 col-md-11 mt-2 mt-sm-0 details-column">
+          <h6 class="title font-weight-bold ml-1 ml-md-4">
+            {% if content.url and content.url != '' %}
+              <a href="{{ content.url }}">{{ content.title }}</a>
+            {% else %}
+              {{ content.title }}
+            {% endif %}
+          </h6>
+          <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem"><em>{{ content.outlet }}</em></h6>
+          {% if content.notes and content.notes != '' %}
+            <h6 class="ml-1 ml-md-4" style="font-size: 0.95rem; font-style: italic">{{ content.notes }}</h6>
+          {% endif %}
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>

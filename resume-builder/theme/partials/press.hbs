@@ -1,0 +1,30 @@
+{{#if resume.press.length}}
+<div class='sectionLine'></div>
+<div id='press' class="sectionBlock">
+	<div class='sectionName'>
+		<span>PRESS</span>
+	</div>
+	<div class='sectionContent'>
+		{{#each resume.press}}
+		<div class='blockHeader'>
+			<span class='title'>
+				{{#if title}}{{title}}{{/if}}
+			</span>
+			{{#if outlet}}
+				<span class='divider'>|</span>
+				<span class="awarder">{{outlet}}</span>
+			{{/if}}
+			{{#if year}}
+			<span class='date'>
+				<span class='date'>{{year}}</span>
+			</span>
+			{{/if}}
+		</div>
+		{{#if notes}}
+			<em>{{notes}}</em>
+		{{/if}}
+		{{#unless @last}}<div class='separator'></div>{{/unless}}
+		{{/each}}
+	</div>
+</div>
+{{/if}}

@@ -1,6 +1,6 @@
 {
   "basics": {
-    "lastUpdated": "2025-12",
+    "lastUpdated": "2026-02",
     "name": "Sébastien Martin",
     "label": "Associate Professor",
     "image": "",
@@ -424,6 +424,190 @@
       "releaseDate": "2016",
       "url": "https://www.sciencedirect.com/science/article/abs/pii/S0191261516303307",
       "summary": ""
+    }
+  ],
+  "press": [
+    {
+      "year": "2026",
+      "outlet": "Kellogg News",
+      "title": "Building AI foundations for the future",
+      "url": "https://www.kellogg.northwestern.edu/news/blog/2026/02/10/building-ai-foundations/",
+      "notes": "About my AIML 901 course."
+    },
+    {
+      "year": "2026",
+      "outlet": "Kellogg Insight",
+      "title": "Say Hello to Your New AI Study Buddy",
+      "url": "https://insight.kellogg.northwestern.edu/article/say-hello-to-your-new-ai-study-buddy",
+      "notes": "Co-authored with Robert Bray, about our AI homework research."
+    },
+    {
+      "year": "2025",
+      "outlet": "ESAB Corporation",
+      "title": "ESAB Appoints Dr. Sébastien Martin to Board; Announces Retirement of Director Patrick Allender",
+      "url": "https://investors.esabcorporation.com/news/news-details/2025/ESAB-Appoints-Dr--Sbastien-Martin-to-Board-Announces-Retirement-of-Director-Patrick-Allender/default.aspx",
+      "notes": "Press release announcing my appointment to ESAB's Board and Audit Committee."
+    },
+    {
+      "year": "2025",
+      "outlet": "Wall Street Journal",
+      "title": "AI Is Teaching the Next Generation of M.B.A.s the Classic Case Study",
+      "url": "https://www.wsj.com/tech/ai/ai-is-teaching-the-next-generation-of-m-b-a-s-the-classic-case-study-a4eb4227?st=vKvaWA&reflink=desktopwebshare_permalink",
+      "notes": "Coverage of the first AI case I created for Kellogg."
+    },
+    {
+      "year": "2025",
+      "outlet": "Kellogg Insight",
+      "title": "Sure, AI Can Automate. But How Can You Use It to Innovate?",
+      "url": "https://insight.kellogg.northwestern.edu/article/ai-innovation-vs-automation",
+      "notes": "On using domain expertise and experimentation to build AI case studies."
+    },
+    {
+      "year": "2025",
+      "outlet": "Poets & Quants",
+      "title": "No Code, No Problem: Kellogg Says Its New AI Course Is Built For Every MBA",
+      "url": "https://poetsandquants.com/2025/09/01/no-code-no-problem-kellogg-says-its-new-ai-course-is-built-for-every-mba/",
+      "notes": "About the launch of AIML 901 across five departments."
+    },
+    {
+      "year": "2025",
+      "outlet": "Poets & Quants",
+      "title": "2025 Best 40 Under 40 MBA Professors: Sébastien Martin",
+      "url": "https://poetsandquants.com/2025/05/21/2025-best-40-under-40-mba-professors-sebastien-martin-kellogg-school-of-management-northwestern-university/?pq-category=2025&pq-category-2=40-under-40",
+      "notes": "Recognized among Poets & Quants' 40 Under 40 MBA professors."
+    },
+    {
+      "year": "2025",
+      "outlet": "Kellogg Insight",
+      "title": "The Hidden Costs of Successful Experiments",
+      "url": "https://insight.kellogg.northwestern.edu/article/the-hidden-cost-of-successful-experiments",
+      "notes": "Explores pitfalls when scaling positive experiment results."
+    },
+    {
+      "year": "2024",
+      "outlet": "MIT Sloan Management Review",
+      "title": "Does Generative AI Impose a Creativity Tax?",
+      "url": "https://sloanreview.mit.edu/article/does-genai-impose-a-creativity-tax/",
+      "notes": "Article on creativity trade-offs in generative AI collaboration."
+    },
+    {
+      "year": "2024",
+      "outlet": "Kellogg Insight",
+      "title": "Podcast: When AI Becomes a TA",
+      "url": "https://insight.kellogg.northwestern.edu/article/podcast-when-ai-becomes-a-ta",
+      "notes": "Podcast conversation about AI teaching assistants."
+    },
+    {
+      "year": "2024",
+      "outlet": "Wall Street Journal",
+      "title": "If AI Gives You Bad Answers, Tell It to Do Better",
+      "url": "https://www.wsj.com/tech/ai/ai-chatbots-feedback-results-fa549914",
+      "notes": "Discussed research on improving chatbot responses via feedback."
+    },
+    {
+      "year": "2024",
+      "outlet": "Montreal AI Ethics Institute",
+      "title": "Human-AI Interactions and Societal Pitfalls",
+      "url": "https://montrealethics.ai/human-ai-interactions-and-societal-pitfalls/",
+      "notes": "Essay on the societal risks of human-AI collaboration."
+    },
+    {
+      "year": "2023",
+      "outlet": "Kellogg Insight",
+      "title": "The Big Trade-off at the Heart of Generative AI",
+      "url": "https://insight.kellogg.northwestern.edu/article/trade-off-generative-ai",
+      "notes": "Reprinted in Fortune China, Exame, Am\u00e9rica Economia, and World Economic Forum."
+    },
+    {
+      "year": "2023",
+      "outlet": "Kellogg Insight",
+      "title": "Podcast: Using AI Comes with a Trade-off. Now Multiply That by 8 Billion.",
+      "url": "https://insight.kellogg.northwestern.edu/article/podcast-using-ai-comes-with-a-tradeoff-now-multiply-that-by-8-billion",
+      "notes": "Podcast episode on systemic consequences of widespread AI adoption."
+    },
+    {
+      "year": "2023",
+      "outlet": "UCLA Anderson Review",
+      "title": "AI from AI: a Future of Generic and Biased Online Content?",
+      "url": "https://anderson-review.ucla.edu/ai-from-ai-a-future-of-generic-and-biased-online-content/",
+      "notes": "Interview on risks of AI-generated online content."
+    },
+    {
+      "year": "2023",
+      "outlet": "Kellogg Insight",
+      "title": "At Their Best, Self-Learning Algorithms Can Be a \u201cWin-Win-Win\u201d",
+      "url": "https://insight.kellogg.northwestern.edu/article/at-their-best-self-learning-algorithms-can-be-a-win-win-win",
+      "notes": "Highlights benefits of self-learning algorithms when aligned with stakeholders."
+    },
+    {
+      "year": "2022",
+      "outlet": "Kellogg Insight",
+      "title": "Podcast: What One School District\u2019s Fiasco Says About the Strengths and Limits of AI",
+      "url": "https://insight.kellogg.northwestern.edu/article/podcast-what-one-school-districts-fiasco-says-about-the-strengths-and-limits-of-ai",
+      "notes": "Podcast episode on lessons from school district AI deployment."
+    },
+    {
+      "year": "2022",
+      "outlet": "ORMS Today",
+      "title": "Building an O.R. framework to drive school district policies",
+      "url": "https://pubsonline.informs.org/do/10.1287/orms.2022.01.06/full/",
+      "notes": "Feature on operations research for equitable school schedules."
+    },
+    {
+      "year": "2021",
+      "outlet": "SFUSD",
+      "title": "I helped design the 2021-22 school schedule changes in San Francisco",
+      "url": "https://www.sfusd.edu/schools/school-start-and-end-times-2021-22",
+      "notes": "Includes project site schoolbelltimes.org."
+    },
+    {
+      "year": "2021",
+      "outlet": "Kellogg Insight",
+      "title": "2 Ways to Improve Rideshares for Drivers and Customers",
+      "url": "https://insight.kellogg.northwestern.edu/article/improve-rideshares-for-drivers-and-customers",
+      "notes": "Strategies to reduce rideshare costs, emissions, and pickup times."
+    },
+    {
+      "year": "2020",
+      "outlet": "Kellogg Insight",
+      "title": "Researchers Designed an Algorithm to Save Schools Money and Improve Equity. The District Loved it. Then Things Got Messy.",
+      "url": "https://insight.kellogg.northwestern.edu/article/algorithm-schools-student-equity",
+      "notes": "Case study on implementation challenges in school transportation optimization."
+    },
+    {
+      "year": "2018",
+      "outlet": "The Boston Globe",
+      "title": "The Equity Machine",
+      "url": "https://apps.bostonglobe.com/ideas/graphics/2018/09/equity-machine/",
+      "notes": "Interactive feature on Boston Public Schools bus routing."
+    },
+    {
+      "year": "2018",
+      "outlet": "Wired",
+      "title": "What the Boston School Bus Schedule Can Teach Us About AI",
+      "url": "https://www.wired.com/story/joi-ito-ai-and-bus-routes/",
+      "notes": "Story on AI-informed scheduling in Boston."
+    },
+    {
+      "year": "2017",
+      "outlet": "SIAM News",
+      "title": "A School Bus Trip to the Crossroads of Policy and Optimization",
+      "url": "https://sinews.siam.org/Details-Page/a-school-bus-trip-to-the-crossroads-of-policy-and-optimization",
+      "notes": "Profile of optimization work for school buses."
+    },
+    {
+      "year": "2017",
+      "outlet": "WBUR",
+      "title": "2 MIT Engineers Use Math To Plot A Path For Boston\u2019s School Buses",
+      "url": "http://www.wbur.org/edify/2017/07/27/mit-quantum-boston-bus-routes",
+      "notes": "Radio coverage on redesigning Boston bus routes."
+    },
+    {
+      "year": "2017",
+      "outlet": "Wall Street Journal",
+      "title": "How Do You Fix a School-Bus Problem? Call MIT",
+      "url": "https://www.wsj.com/articles/how-do-you-fix-a-school-bus-problem-call-mit-1502456400",
+      "notes": "Feature on the Boston bus scheduling project."
     }
   ],
   "languages": [
