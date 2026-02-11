@@ -429,6 +429,13 @@
   "press": [
     {
       "year": "2026",
+      "outlet": "YouTube",
+      "title": "Teaching with AI — Talk at Kellogg All Hands Meeting",
+      "url": "https://www.youtube.com/watch?v=eTiQ76dVgak",
+      "notes": "Talk on teaching with AI at the Kellogg School of Management, January 27, 2026."
+    },
+    {
+      "year": "2026",
       "outlet": "Kellogg News",
       "title": "Building AI foundations for the future",
       "url": "https://www.kellogg.northwestern.edu/news/blog/2026/02/10/building-ai-foundations/",
