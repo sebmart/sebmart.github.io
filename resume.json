@@ -429,6 +429,13 @@
   "press": [
     {
       "year": "2026",
+      "outlet": "Spotify",
+      "title": "Podcast: AI & Fintech — Fintech Frontlines by FinTech @ Kellogg",
+      "url": "https://open.spotify.com/episode/26oaZPRIRKjRs6kdSalMew",
+      "notes": "Interview on AI trends in fintech, covering data privacy, credit scoring, and agentic commerce."
+    },
+    {
+      "year": "2026",
       "outlet": "YouTube",
       "title": "Teaching with AI — Talk at Kellogg All Hands Meeting",
       "url": "https://www.youtube.com/watch?v=eTiQ76dVgak",
