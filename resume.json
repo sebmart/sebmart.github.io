@@ -77,17 +77,17 @@
   ],
   "industry_and_advisory": [
     {
-      "name": "ESAB Corporation",
+      "name": "ESAB Corporation (NYSE: ESAB)",
       "position": "Board Member",
       "url": "",
       "location": "North Bethesda, Maryland, U.S.",
       "startDate": "2026-01",
       "endDate": "Current",
-      "summary": "Member of the Board of Directors, providing strategic oversight with a focus on innovation, AI adoption, and operational excellence.",
+      "summary": "Member of the Board of Directors, providing strategic oversight with a focus on innovation, AI adoption, and operational excellence. ESAB is a global leader in fabrication and gas control technology ($3B revenue, 10,000 employees).",
       "highlights": []
     },
     {
-      "name": "ESAB Corporation",
+      "name": "ESAB Corporation (NYSE: ESAB)",
       "position": "AI advisor to the CEO",
       "url": "",
       "location": "North Bethesda, Maryland, U.S.",
@@ -242,10 +242,18 @@
   ],
   "publications": [
     {
+      "name": "The Value of a Little Flexibility in Stable Matching",
+      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
+      "publisher": "Working Paper",
+      "releaseDate": "2026",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6208698",
+      "summary": ""
+    },
+    {
       "name": "AI homework increases student satisfaction: A field experiment at the Kellogg School of Management",
       "authors":"R. Bray, S. Martin",
-      "publisher": "Submitted to INFORMS Transactions on Education",
-      "releaseDate": "2025",
+      "publisher": "Major revision, INFORMS Transactions on Education",
+      "releaseDate": "2026",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5627650",
       "summary" : ""
     },
@@ -284,7 +292,7 @@
     {
       "name": "The Trap of Complexity in Experimentation",
       "authors": "Y. Huang, S. Martin, Z. Qin",
-      "publisher": "Submitted to Management Science",
+      "publisher": "Working Paper",
       "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5126086",
       "summary": ""
@@ -316,16 +324,16 @@
     {
       "name": "Dual-sourcing of capacity",
       "authors": "S. Chopra, P. Mishra, K. Smilowitz",
-      "publisher": "Submitted to MSOM",
-      "releaseDate": "2024",
+      "publisher": "Working Paper",
+      "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4322824",
       "summary": ""
     },
     {
       "name": "Relative Monte Carlo for Reinforcement Learning",
       "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
-      "publisher": "Working Paper",
-      "releaseDate": "2025",
+      "publisher": "Submitted to Management Science",
+      "releaseDate": "2026",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
       "summary": ""
     },
