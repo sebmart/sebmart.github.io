@@ -1,5 +1,5 @@
 ---
-title: AI Foundations for Managers — Class Recordings
+title: "AI Foundations for Managers — Class Recordings"
 author:
   - Sébastien Martin
 ---
