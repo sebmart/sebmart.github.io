@@ -1,10 +1,12 @@
 ---
-title: Class Recordings
+title: AI Foundations for Managers — Class Recordings
 author:
   - Sébastien Martin
 ---
 
-# Winter 2026
+All lecture and recitation recordings from **AIML 901: AI Foundations for Managers — AgentOps**, taught by Professor [Sébastien Martin](https://sebastienmartin.info) at the Kellogg School of Management (Winter 2026). This hands-on, five-week intensive takes you from AI outsider to AI insider, covering everything from training LLMs from scratch to building and deploying AI agents with n8n.
+
+> **A note on audio quality:** Some lecture recordings have imperfect microphone audio (the first one in particular), but they are all understandable.
 
 **Lectures**
 1. [Let's Get Building](#1-lets-get-building) — Jan 6
@@ -19,11 +21,11 @@ author:
 10. [Keeping up with AI](#10-keeping-up-with-ai) — Feb 4
 
 **Recitations**
-1. [Getting Started with n8n](#recitation-1-getting-started-with-n8n)
-2. [n8n Deep Dive](#recitation-2-n8n-deep-dive)
-3. [Advanced n8n Usage](#recitation-3-advanced-n8n-usage)
-4. [Agent Evaluation](#recitation-4-agent-evaluation)
-5. [End-to-End Products with AI](#recitation-5-end-to-end-products-with-ai)
+1. [Getting Started with n8n](#recitation-1-getting-started-with-n8n) — Jan 7
+2. [n8n Deep Dive](#recitation-2-n8n-deep-dive) — Jan 14
+3. [Advanced n8n Usage](#recitation-3-advanced-n8n-usage) — Jan 21
+4. [Agent Evaluation](#recitation-4-agent-evaluation) — Jan 28
+5. [End-to-End Products with AI](#recitation-5-end-to-end-products-with-ai) — Feb 4
 
 ---
 
@@ -100,26 +102,26 @@ author:
 ---
 
 ## Recitation 1: Getting Started with n8n
-*Let's Build a Google Calendar Agent — Master the fundamentals of n8n, your go-to platform for creating and testing intelligent agents.*
+*January 7 — Let's Build a Google Calendar Agent. Master the fundamentals of n8n, your go-to platform for creating and testing intelligent agents.*
 
 ![Recitation 1 Recording](https://youtu.be/UVnL2dgAouE)
 
 ## Recitation 2: n8n Deep Dive
-*Let's Build an Email Triage Agent — Level up your n8n skills with advanced features that will empower your course project.*
+*January 14 — Let's Build an Email Triage Agent. Level up your n8n skills with advanced features that will empower your course project.*
 
 ![Recitation 2 Recording](https://youtu.be/Bq2opHK7ic0)
 
 ## Recitation 3: Advanced n8n Usage
-*Let's Build a Bilingual Communications Agent — Expand your project's capabilities with advanced n8n functionalities to explore on your own.*
+*January 21 — Let's Build a Bilingual Communications Agent. Expand your project's capabilities with advanced n8n functionalities to explore on your own.*
 
 ![Recitation 3 Recording](https://youtu.be/JdyuojSYP0Q)
 
 ## Recitation 4: Agent Evaluation
-*Let's Build an Expense Categorization Agent — Build a robust evaluation pipeline in n8n, a critical requirement for your project's success.*
+*January 28 — Let's Build an Expense Categorization Agent. Build a robust evaluation pipeline in n8n, a critical requirement for your project's success.*
 
 ![Recitation 4 Recording](https://youtu.be/EZWktts27cI)
 
 ## Recitation 5: End-to-End Products with AI
-*Transform your agent backends into polished products using Lovable and other tools to create beautiful apps and websites.*
+*February 4 — Transform your agent backends into polished products using Lovable and other tools to create beautiful apps and websites.*
 
 ![Recitation 5 Recording](https://youtu.be/XCPieJQeJaA)
