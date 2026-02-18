@@ -4,7 +4,7 @@ author:
   - Sébastien Martin
 ---
 
-All lecture and recitation recordings from **AIML 901: AI Foundations for Managers — AgentOps**, taught by Professor [Sébastien Martin](https://sebastienmartin.info) at the Kellogg School of Management (Winter 2026). This hands-on, five-week intensive takes you from AI outsider to AI insider, covering everything from training LLMs from scratch to building and deploying AI agents with n8n.
+All lecture and recitation recordings from **AIML 901: AI Foundations for Managers — AgentOps**, taught by Professor [Sébastien Martin](https://sebastienmartin.info) at the Kellogg School of Management (Winter 2026), with recitations led by Alex Jensen. This hands-on, five-week intensive takes you from AI outsider to AI insider, covering everything from training LLMs from scratch to building and deploying AI agents with n8n.
 
 > **A note on audio quality:** Some lecture recordings have imperfect microphone audio (the first one in particular), but they are all understandable.
 
