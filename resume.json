@@ -131,18 +131,18 @@
       "courses": []
     }
   ],
-  "awards": [ 
-    {
-      "title": "Poets and Quants Best 40 Under 40 MBA Professors",
-      "date": "2025",
-      "awarder": "Poets and Quants",
-      "summary": "Awarded to 40 best business school professors under 40 years old every year"
-    },
+  "awards": [
     {
       "title": "INFORMS Journal on Computing Meritorious Reviewer Award",
       "date": "2026",
       "awarder": "INFORMS",
       "summary": "For my service as a reviewer for INFORMS Journal on Computing in 2025."
+    },
+    {
+      "title": "Poets and Quants Best 40 Under 40 MBA Professors",
+      "date": "2025",
+      "awarder": "Poets and Quants",
+      "summary": "Awarded to 40 best business school professors under 40 years old every year"
     },
     {
       "title": "INFORMS Journal on Computing Meritorious Reviewer Award",
