@@ -1,4 +1,4 @@
-{% assign work_items = include.items | sort: 'startDate' | reverse %}
+{% assign work_items = include.items %}
 {% for content in work_items %}
   <li class="list-group-item">
     <div class="row">

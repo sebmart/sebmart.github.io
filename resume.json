@@ -1,6 +1,6 @@
 {
   "basics": {
-    "lastUpdated": "2026-02",
+    "lastUpdated": "2026-03",
     "name": "Sébastien Martin",
     "label": "Associate Professor",
     "image": "",
@@ -42,6 +42,24 @@
       "startDate": "2025-09",
       "endDate": "Current",
       "summary": "I teach the MBA course \"AI Foundations for Managers, AgentOps\".",
+      "highlights": []
+    },
+    {
+      "name": "Manufacturing & Service Operations Management (MSOM)",
+      "position": "Associate Editor, AI Department",
+      "url": "https://pubsonline.informs.org/journal/msom",
+      "startDate": "2026-03",
+      "endDate": "Current",
+      "summary": "",
+      "highlights": []
+    },
+    {
+      "name": "Transportation Science",
+      "position": "Associate Editor",
+      "url": "https://pubsonline.informs.org/journal/trsc",
+      "startDate": "2024-10",
+      "endDate": "Current",
+      "summary": "",
       "highlights": []
     },
     {
@@ -272,7 +290,7 @@
       "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
     },
     {
-      "name": "Value of Sharing in Robots-as-a-Service Operations",
+      "name": "Value of Sharing in Routing-Scheduling Operations",
       "authors": "A. Jacquillat, S. Martin, K. Zhang",
       "publisher": "Major revision, Management Science",
       "releaseDate": "2025",
@@ -371,7 +389,7 @@
       "name": "Supply Prioritization in Hybrid Marketplaces",
       "authors": "F. Castro, J. Gao, S. Martin",
       "publisher": "Working Paper",
-      "releaseDate": "2022",
+      "releaseDate": "2023",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4119096",
       "summary": ""
     },
@@ -411,7 +429,7 @@
       "name": "The Price of Interpretability",
       "authors": "D. Bertsimas, A. Delarue, P. Jaillet, S. Martin",
       "publisher": "arXiv",
-      "releaseDate": "2019",
+      "releaseDate": "2020",
       "url": "https://arxiv.org/abs/1907.03419",
       "summary": ""
     },
