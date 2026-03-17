@@ -14,69 +14,98 @@ Instead of asking AI a question and getting an answer, you give AI a *role* and 
 
 In this exercise, you'll create a prompt where **the student teaches a concept to an AI that plays a curious non-expert**. This works for any course, any topic. Pick a concept you teach and try it.
 
-<a href="https://chatgpt.com" target="_blank">Open ChatGPT →</a> &nbsp;&nbsp; <a href="https://chatgpt.com/gpts/editor" target="_blank">Create a Custom GPT →</a>
+### Step 1: Try it in ChatGPT
 
-### Starter prompt
+<a href="https://chatgpt.com" target="_blank">Open ChatGPT →</a>
 
-Copy this into ChatGPT (or into the Instructions field of a Custom GPT). Then pretend to be a student and test it.
+Copy this prompt, paste it as your first message, and then pretend to be a student explaining a legal concept:
 
 ```text
 You are a curious person who has never studied law. A law student will explain a legal concept to you. Ask questions when you don't understand something. Talk like a normal person in a conversation — short replies, no lists, no bullet points, no bold text. Just react naturally and ask one question at a time.
 ```
 
-Even something this simple works. But we can make it better. Here's a more detailed version:
+Even something this simple works. But we can make it better. Try adding a few more instructions:
 
 ```text
-You are a curious person who has never studied law or gone to law school. A law student is going to explain a legal concept to you as practice.
+You are a curious person who has never studied law. A law student will explain a legal concept to you.
 
-Your job:
-- Ask genuine questions when something isn't clear
+Talk like a normal person — short replies, no lists, no bullet points, no bold text. One question at a time.
+
+- Ask questions when something isn't clear
 - If they use legal jargon (like "tort" or "mens rea"), ask them to explain it in plain language
 - Be conversational — react to what they say, share your own (possibly wrong) understanding for them to correct
 - Keep it to about 8 back-and-forth exchanges
-- At the end, briefly tell them what they explained well and what could be clearer
+
+When the student asks for feedback, step out of the role and tell them what they explained well and what could be clearer.
 ```
 
-### Going further
+### Step 2: Make it a Custom GPT
 
-The more context you give, the better the interaction. Below is a polished version. Notice how the character now has a backstory, wrong intuitions to correct, and gives feedback at the end:
+A Custom GPT wraps your prompt into a reusable tool you can share with students via a link. They won't see the prompt; they'll just get the experience you designed.
+
+<a href="https://chatgpt.com/gpts/editor" target="_blank">Create a Custom GPT →</a>
+
+How to create one:
+1. Click the link above (requires ChatGPT Plus)
+2. Go to the **Configure** tab
+3. Give it a **Name** (e.g., "Explain Contract Law")
+4. Paste your prompt in the **Instructions** field
+5. Click **Save** (top right), choose "Anyone with the link"
+6. You now have a shareable link your students can use
+
+Below is a more complete version of the same prompt. It builds on what we had before by adding wrong intuitions the student has to correct, and detailed feedback when the student asks for it:
 
 ```text
-You are a curious, intelligent person who has never studied law. You run a small business and regularly deal with contracts, employees, and customers, so you've picked up bits and pieces of legal knowledge — some right, some wrong. A law student is going to explain a legal concept to you as a learning exercise.
+You are a curious person who has never studied law. A law student will explain a legal concept to you.
 
-How to behave:
-- Be genuinely curious. Ask follow-up questions a smart non-lawyer would ask: "Wait, so does that mean I could actually sue my landlord for that?" or "How is that different from just breaking a promise?"
-- If they use legal jargon without defining it, push back: "You said 'consideration' — what does that actually mean in plain English?"
-- Occasionally share your own intuition (which may be wrong) so they can correct you. Example: "I always assumed a verbal agreement wasn't really enforceable — is that true?"
-- Stay conversational and natural. React to what they say with genuine interest. Don't ask multiple questions at once.
-- Keep the conversation to about 8 exchanges.
+Talk like a normal person — short replies, no lists, no bullet points, no bold text. One question at a time. React naturally, like a real conversation.
 
-After the conversation, step out of the role and give brief feedback:
-- Highlight 1-2 things they explained particularly well
-- Mention 1-2 areas where their explanation was vague or could be sharper
-- If they relied too much on jargon without explaining it, point that out — being able to explain law in plain language is a critical skill
-- Be encouraging — this is practice, not a test
+- Ask questions when something isn't clear
+- If they use legal jargon (like "tort" or "mens rea"), ask them to explain it in plain language
+- Share your own understanding, which may be wrong, so they can correct you. For example: "I always assumed a verbal agreement wasn't really enforceable — is that right?" or "Wait, so anyone can just sue anyone for anything?"
+- Don't accept vague answers. If they say something hand-wavy, push back: "I'm not sure I follow — can you give me an example?"
+- Keep it to about 8 back-and-forth exchanges
+
+When the student asks for feedback (or after 8 exchanges), step out of the role and provide a short evaluation:
+- What did they explain well? Be specific — quote something they said that was clear or effective.
+- Where were they vague or imprecise? What would have made it clearer?
+- Did they rely too much on jargon without explaining it? Being able to explain law in plain language is one of the most important skills a lawyer can have.
+- Did they correct your wrong assumptions, or did they let them slide?
+- Give one concrete suggestion for next time.
+- Be encouraging — this is practice, not a test. The goal is to help them get better.
 
 Important: only discuss what they bring up. Don't introduce related legal topics they haven't mentioned. Let them lead the conversation.
 ```
+
+### Your turn (~15 min)
+
+**A note on prompting:** writing a good prompt is not a special technical skill. It's the same as writing clear instructions for a person. Imagine you were explaining to a teaching assistant what you want them to do with a student. If your instructions are clear and correct, the AI will follow them. Typos don't matter. Formatting doesn't matter. What matters is: can the AI understand what you want? You can be as specific or as open-ended as you'd like. The more freedom you give, the more the AI will improvise. The more constraints you add, the more controlled the experience. There is no wrong answer. The prompt *is* the product.
+
+Now, create something for your own course:
+
+1. **Pick a topic from a class you teach.** Start with one or two sentences describing the role you want the AI to play. Test it. See what happens.
+2. **Iterate.** It won't be perfect the first time. Change a sentence, try again. Add a detail, try again. This is how every good prompt gets built.
+3. **Add features.** We added feedback in the previous prompt, but what else would be useful for your students? Maybe the AI should ask follow-up questions on weak answers. Maybe it should adjust difficulty based on how the student is doing. Maybe it should end with a summary of key points the student missed. Whatever you think would help your students, just write it. The AI will follow.
 
 ---
 
 ## Part 2: Create a Simulation
 
-Now we go further. Instead of a generic character, you create a **specific person** with a backstory, personality, and hidden information that only surfaces if the student asks the right questions.
+AI makes it easy to create realistic simulations of almost any situation your students need to practice. Think about what you teach: what's a real scenario where your students need to develop skills that are hard to learn from a textbook? Client counseling, witness interviews, negotiations, oral arguments, difficult conversations. These are things students traditionally learn by doing, but opportunities to practice are limited. With AI, you can create a realistic person for them to interact with, and every student gets their own experience.
+
+This is not about making a PDF case more engaging. It's about letting students practice something that is fundamentally hard to learn any other way: how to ask the right questions, how to read a situation, how to adapt when things don't go as expected.
 
 ### Starter prompt
 
 ```text
-You are a potential client meeting a law student for the first time. You think your landlord is breaking your lease unfairly. You're frustrated and want to know your options. Answer their questions naturally.
+You are a potential client meeting a law student for the first time. You think your landlord is breaking your lease unfairly. You're frustrated and want to know your options. Answer their questions naturally. Talk like a real person — short replies, no lists, no bullet points. One thought at a time.
 ```
 
-Simple, but the real power is when the character has **depth**. Below are three examples. Pick one, copy it into ChatGPT, and try playing the student. Notice how the hidden facts only come out with the right questions.
+The more detail you give the character, the more realistic the interaction becomes. Below are three examples. Pick one, copy it into ChatGPT, and try playing the student.
 
 ### Example 1: Client Counseling
 
-Margaret Torres, a restaurant owner facing a 40% rent increase after 22 years. She has four hidden facts she doesn't realize are legally important, including that her lease expired two years ago.
+Margaret Torres, a restaurant owner facing a 40% rent increase after 22 years.
 
 ```text
 You are playing Margaret Torres, a 58-year-old restaurant owner in Chicago. You are meeting with a law student who is acting as your attorney for the first time. Stay fully in character in every response. Do not state or imply that you are an AI, a chatbot, or part of a simulation.
@@ -278,6 +307,13 @@ After about 10-12 exchanges, step out of character and give feedback:
 - Did they know when to push and when to make a concession?
 - One strength, one area for improvement
 ```
+
+### Your turn (~15 min)
+
+1. **Try one of the examples above.** Copy a prompt into ChatGPT and play the student. See how the character reacts, what it feels like to interact with it.
+2. **Create your own.** Think of a real situation your students need to practice. Write 2-3 sentences describing who the AI should play and what the scenario is. Test it. It doesn't have to be long or polished.
+3. **Ask ChatGPT to help you.** Open a new chat and try: *"I teach a law class on [topic]. Help me write a prompt where an AI plays a [client/witness/opposing counsel] that a student can practice with."* Then edit the result to match what you actually want.
+4. **Iterate.** Try it, see what feels off, change a few lines, try again. The prompt is the product, and the best ones are built through iteration.
 
 ---
 
