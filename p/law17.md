@@ -4,6 +4,10 @@ description: "Northwestern Law School — March 17, 2026"
 show_nav: true
 ---
 
+**[Download the slides (PDF)](/p/law17-slides.pdf)** · **[sebastienmartin.info](/)**
+
+---
+
 ## Part 1: Design an AI Homework
 
 Instead of asking AI a question and getting an answer, you give AI a *role* and let your students learn by interacting with it.
