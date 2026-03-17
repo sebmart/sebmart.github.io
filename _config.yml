@@ -214,6 +214,7 @@ defaults:
       layout: shared
       sitemap: false
       nav: false
+      permalink: /p/:basename/
 
 sass:
   style: compressed
