@@ -1,0 +1,49 @@
+---
+layout: none
+---
+<!doctype html>
+<html lang="{{ site.lang }}">
+  <head>
+    {% include head.liquid %}
+  </head>
+  <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+    {% unless page.show_nav == false %}
+      {% include header.liquid %}
+    {% endunless %}
+
+    {% if page.title %}
+      <div class="shared-hero">
+        <div class="container">
+          <div class="shared-hero__top">
+            <h1 class="shared-hero__title">{{ page.title }}</h1>
+            {% if page.show_nav == false and site.enable_darkmode %}
+              <button id="light-toggle" class="shared-hero__toggle" title="Change theme">
+                <i class="ti ti-moon-filled" id="light-toggle-dark"></i>
+                <i class="ti ti-sun-filled" id="light-toggle-light"></i>
+              </button>
+            {% endif %}
+          </div>
+          {% if page.description %}
+            <p class="shared-hero__description">{{ page.description }}</p>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="container mt-4" role="main">
+      <div class="post">
+        <article>
+          {{ content }}
+        </article>
+      </div>
+    </div>
+
+    {% include footer.liquid %}
+
+    {% include scripts/jquery.liquid %}
+    {% include scripts/bootstrap.liquid %}
+    {% include scripts/misc.liquid %}
+    {% include scripts/analytics.liquid %}
+    {% include scripts/back_to_top.liquid %}
+  </body>
+</html>

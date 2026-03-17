@@ -60,7 +60,7 @@ blockquote {
   border-left: 5px solid var(--global-theme-color);
   margin: 1.5em 0;
   padding: 1em;
-  font-size: 1.2rem;
+  font-size: 0.95rem;
 
   p {
     margin-bottom: 0;
@@ -218,8 +218,9 @@ ul.task-list input[type="checkbox"] {
 }
 
 .post-description {
-  margin-bottom: 2rem;
-  font-size: 0.875rem;
+  margin-bottom: 0;
+  font-size: 1.1rem;
+  color: var(--global-text-color-light);
 
   a {
     color: inherit;
@@ -229,6 +230,12 @@ ul.task-list input[type="checkbox"] {
       text-decoration: none;
     }
   }
+}
+
+.post-header {
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--global-divider-color);
 }
 
 // Navbar customization
@@ -932,7 +939,7 @@ progress::-moz-progress-bar {
   }
 }
 
-details.aiml901-code-collapse {
+details.code-collapse {
   margin: 1.75rem 0;
   border: 1px solid var(--global-divider-color);
   border-radius: 0.75rem;
@@ -944,7 +951,7 @@ details.aiml901-code-collapse {
     display: none;
   }
 
-  > summary.aiml901-code-collapse__summary {
+  > summary.code-collapse__summary {
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -962,7 +969,7 @@ details.aiml901-code-collapse {
     }
   }
 
-  &[open] > summary.aiml901-code-collapse__summary {
+  &[open] > summary.code-collapse__summary {
     border-bottom: 1px solid var(--global-divider-color);
 
     &::after {
@@ -970,11 +977,66 @@ details.aiml901-code-collapse {
     }
   }
 
-  .aiml901-code-collapse__body {
+  .code-collapse__body {
     padding: 1rem;
 
     pre {
       margin: 0;
+    }
+  }
+}
+
+// Shared pages header
+.shared-hero {
+  padding: 2.5rem 0 2rem;
+  margin-top: 3.5rem;
+  border-bottom: 1px solid var(--global-divider-color);
+  background: var(--global-bg-color);
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__title {
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.25;
+    color: var(--global-text-color);
+  }
+
+  &__description {
+    font-size: 1.1rem;
+    margin: 0.5rem 0 0;
+    color: var(--global-text-color-light);
+  }
+
+  &__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    margin-top: 0.3rem;
+    border-radius: 999px;
+    border: 1px solid var(--global-divider-color);
+    background: transparent;
+    color: var(--global-text-color-light);
+    cursor: pointer;
+    transition: border-color 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+
+    &:hover {
+      border-color: var(--global-theme-color);
+      color: var(--global-theme-color);
+    }
+
+    i {
+      font-size: 1rem;
+      line-height: 1;
     }
   }
 }

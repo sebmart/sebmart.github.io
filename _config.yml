@@ -208,6 +208,12 @@ defaults:
     values:
       layout: aiml901
       banner_title: AIML 901
+  - scope:
+      path: "p"
+    values:
+      layout: shared
+      sitemap: false
+      nav: false
 
 sass:
   style: compressed

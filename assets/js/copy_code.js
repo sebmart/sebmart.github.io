@@ -47,9 +47,9 @@ codeBlocks.forEach(function (codeBlock) {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  var collapsibleBlocks = document.querySelectorAll("details.aiml901-code-collapse");
+  var collapsibleBlocks = document.querySelectorAll("details.code-collapse");
   collapsibleBlocks.forEach(function (block) {
-    var summary = block.querySelector("summary.aiml901-code-collapse__summary");
+    var summary = block.querySelector("summary.code-collapse__summary");
     if (!summary) return;
 
     var showLabel = summary.getAttribute("data-show-label") || summary.textContent;

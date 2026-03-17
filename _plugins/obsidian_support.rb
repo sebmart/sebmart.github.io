@@ -29,7 +29,6 @@ module AIML901
     end
 
     def enhance_output(page)
-      return unless aiml901_page?(page)
       return unless page.output_ext == '.html'
 
       updated = wrap_long_code_blocks(page)
@@ -365,7 +364,7 @@ module AIML901
       updated = false
 
       body.css('pre').each do |pre|
-        next if pre.ancestors('details').any? { |d| d['class'].to_s.split.include?('aiml901-code-collapse') }
+        next if pre.ancestors('details').any? { |d| d['class'].to_s.split.include?('code-collapse') }
 
         code_node = pre.at('code')
         text = (code_node ? code_node.text : pre.text).to_s
@@ -386,12 +385,12 @@ module AIML901
     def promote_pre_to_collapsible(pre, line_count)
       doc = pre.document
       details = Nokogiri::XML::Node.new('details', doc)
-      classes = ['aiml901-code-collapse']
+      classes = ['code-collapse']
       details['class'] = classes.join(' ')
       details['data-line-count'] = line_count.to_s
 
       summary = Nokogiri::XML::Node.new('summary', doc)
-      summary['class'] = 'aiml901-code-collapse__summary'
+      summary['class'] = 'code-collapse__summary'
       show_label = collapse_label(line_count)
       summary['data-show-label'] = show_label
       summary['data-hide-label'] = 'Hide code'
@@ -400,7 +399,7 @@ module AIML901
       details.add_child(summary)
 
       body = Nokogiri::XML::Node.new('div', doc)
-      body['class'] = 'aiml901-code-collapse__body'
+      body['class'] = 'code-collapse__body'
       details.add_child(body)
 
       pre.replace(details)
