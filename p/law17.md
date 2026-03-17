@@ -4,7 +4,7 @@ description: "Northwestern Law School — March 17, 2026"
 show_nav: true
 ---
 
-**[Download the slides (PDF)](/p/law17-slides.pdf)** · **[sebastienmartin.info](/)**
+**[Download the slides (PDF)](/p/law17-slides.pdf)**
 
 ---
 
