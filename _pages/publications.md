@@ -4,7 +4,7 @@ permalink: /publications/
 title: publications
 description: Publications now live in the CV section below.
 nav: true
-nav_order: 2
+nav_order: 3
 redirect_target: "/cv/#publications"
 ---
 

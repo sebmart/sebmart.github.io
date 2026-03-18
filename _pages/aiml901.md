@@ -4,7 +4,7 @@ permalink: /teaching/
 title: teaching
 description: Courses, materials, and student work.
 nav: true
-nav_order: 5
+nav_order: 6
 ---
 
 I currently teach **AIML 901: AI Foundations for Managers** at Kellogg, an immersive lab-format course where MBA students go from AI outsiders to AI insiders in just five weeks. The course focuses on *actually building* with generative AI, because the best way to understand this technology is to use it. Students create their own AI agents, learn how large language models work under the hood, and develop the skills to apply AI in real business contexts.

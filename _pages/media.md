@@ -4,7 +4,7 @@ permalink: /press/
 title: press
 description: Press coverage now lives in the CV section below.
 nav: true
-nav_order: 3
+nav_order: 4
 redirect_target: "/cv/#press"
 ---
 
