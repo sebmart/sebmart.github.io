@@ -73,16 +73,6 @@
       "highlights": []
     },
     {
-      "name": "Lyft, Inc.",
-      "position": "Postdoctoral Fellow",
-      "location": "New York City, NY, USA",
-      "url": "",
-      "startDate": "2019",
-      "endDate": "2020",
-      "summary": "I worked with the Marketplace Innovation Lab to improve dispatch algorithms.",
-      "highlights": []
-    },
-    {
       "name": "UC Berkeley",
       "position": "Visiting Researcher",
       "location": "Berkeley, CA, USA",
@@ -112,6 +102,16 @@
       "startDate": "2025",
       "endDate": "2025-12",
       "summary": "I served as a strategic advisor to ESAB, working with executive leadership to develop the company's AI strategy, establish its AI steering committee, and train the workforce on leveraging AI agents for innovation and productivity.",
+      "highlights": []
+    },
+    {
+      "name": "Lyft, Inc.",
+      "position": "Postdoctoral Fellow",
+      "location": "New York City, NY, USA",
+      "url": "",
+      "startDate": "2019",
+      "endDate": "2020",
+      "summary": "I worked with the Marketplace Innovation Lab to improve dispatch algorithms.",
       "highlights": []
     },
     {
