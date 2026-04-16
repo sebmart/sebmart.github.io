@@ -30,6 +30,7 @@ module AIML901
 
     def enhance_output(page)
       return unless page.output_ext == '.html'
+      return unless aiml901_page?(page)
 
       updated = wrap_long_code_blocks(page)
       updated
