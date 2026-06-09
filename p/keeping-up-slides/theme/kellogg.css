@@ -1,0 +1,471 @@
+/* ============================================================================
+   KELLOGG SLIDE THEME  —  for reveal.js
+   Direction: "Editorial Slab + Kellogg color" on white.
+   Display: Zilla Slab (light) · Body: Inter · Code: JetBrains Mono
+   Northwestern purple titles · amber spark · slate diagrams.
+
+   HOW IT WORKS
+   - One slide = one <section>. Add a layout class to pick a layout:
+       (default)      content slide: eyebrow + title + rule + bullets
+       .title         title slide
+       .section       section divider
+       .diagram       title + an inline <svg> canvas (box & arrow)
+       .two-col       text / figure side by side
+       .code          a <pre><code> block
+       .stat          big-number results row
+       .quote         pull quote
+       .quote-wall    grid of compact quote cards
+       .image-full    edge-to-edge photo with caption
+       .image-frame   framed screenshot + caption
+       .image-duo     two framed images side by side
+   - Reusable pieces: .eyebrow (amber label), .rule (amber tick),
+     .box / .hero (diagram boxes), .u / .arr (stat units).
+   - Branding: add class="branded" to <body> to show the
+     "Northwestern · Kellogg" footer + slide numbers on content slides.
+   - Initialise reveal with width:1280, height:720, margin:0, center:false.
+   - Fonts are vendored locally (vendor/fonts), so decks run fully offline;
+     re-run scripts/vendor-fonts.mjs if the font list below changes.
+   ============================================================================ */
+
+@import url('../vendor/fonts/fonts.css');
+
+:root{
+  --ink:#2B2F36; --muted:#8A9099; --slate:#3E444E; --slate2:#565E6B;
+  --purple:#4E2A84; --purple-soft:#7657AD; --purple-wash:#F4EFFA;
+  --amber:#DD9B2E; --amber-dk:#A8731C;
+  --sage:#6E977E; --line:#E5E8EC; --wash:#F7F8FA; --paper:#FFFFFF;
+
+  --font-display:"Zilla Slab", Georgia, "Times New Roman", serif;
+  --font-body:"Inter", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:"JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --slide-left:96px; --slide-right:96px;
+  --content-top:230px; --content-bottom:90px;
+  --content-gap:48px;
+}
+
+/* ---- reveal base ---------------------------------------------------------- */
+.reveal{ font-family:var(--font-body); font-weight:300; color:var(--ink);
+         font-size:30px; -webkit-font-smoothing:antialiased; }
+.reveal .slides{ text-align:left; }
+.reveal .slides section{ box-sizing:border-box; height:720px; padding:78px 96px; }
+.reveal-viewport{ background:var(--paper); }
+.reveal section img{ border:0; box-shadow:none; margin:0; }
+.reveal a{ color:var(--purple); }
+.reveal ::selection{ background:rgba(221,155,46,.30); }
+
+/* shared type ---------------------------------------------------------------- */
+.reveal .eyebrow{ font-family:var(--font-body); font-weight:600; font-size:15px;
+   letter-spacing:.24em; text-transform:uppercase; color:var(--amber); margin-bottom:16px; }
+.reveal h1,.reveal h2,.reveal h3{ font-family:var(--font-display); color:var(--purple);
+   text-transform:none; line-height:1.05; font-weight:400; margin:0; letter-spacing:-.005em; }
+.reveal h2{ font-size:50px; }
+.reveal .rule{ width:88px; height:4px; background:var(--amber); border:0; margin:34px 0 28px; }
+.reveal .hr{ width:100%; height:1px; background:var(--line); border:0; margin:32px 0 40px; }
+
+/* default content bullets ---------------------------------------------------- */
+.reveal .slides section > ul{ list-style:none; margin:0; padding:0; }
+.reveal .slides section > ul > li{ font-family:var(--font-body); font-weight:300;
+   font-size:29px; line-height:1.5; color:var(--ink); position:relative;
+   padding-left:38px; margin:0 0 30px; max-width:1000px; }
+.reveal .slides section > ul > li::before{ content:""; position:absolute; left:0; top:.62em;
+   width:20px; height:3px; background:var(--amber); }
+.reveal li b,.reveal li strong{ font-weight:600; color:var(--ink); }
+.reveal li small{ display:block; font-size:22px; color:var(--muted); font-weight:300; margin-top:4px; }
+
+/* footer / branding ---------------------------------------------------------- */
+.reveal .foot{ position:absolute; left:96px; right:96px; bottom:34px;
+   display:flex; justify-content:space-between; font-size:14px; color:var(--muted); }
+.reveal.branded .slides section:not(.title):not(.section):not(.image-full)::after{
+   content:"Northwestern · Kellogg"; position:absolute; left:96px; bottom:36px;
+   font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--purple);
+   letter-spacing:.02em; }
+.reveal .slide-number{ background:transparent; color:var(--muted); font-family:var(--font-body); font-size:14px; right:96px; bottom:30px; }
+.reveal .slide-number a{ color:inherit; text-decoration:none; }  /* reveal wraps c/t in <a>; kill link underline */
+/* page number shown on every slide, lede slides included (user preference, 2026-05-31) */
+
+/* ---- TITLE ---------------------------------------------------------------- */
+.reveal section.title{ display:flex; flex-direction:column; justify-content:flex-start; padding-top:126px; }
+.reveal section.title h1{ font-weight:300; font-size:98px; line-height:1.0; max-width:760px; }
+.reveal section.title .sub{ font-family:var(--font-body); font-weight:300; font-size:30px;
+   color:var(--slate2); line-height:1.35; max-width:780px; }
+.reveal section.title .by{ position:absolute; left:96px; bottom:78px;
+   font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--muted);
+   line-height:1.45; }
+.reveal section.title .by b{ display:block; font-weight:600; font-size:24px; color:var(--ink); }
+.reveal section.title .by span{ color:var(--muted); font-weight:300; }
+/* optional brand lockup on the title slide; quiet top-right mark, not title ornament */
+.reveal .brandmark{ position:absolute; left:auto; right:96px; top:78px; display:block; }
+.reveal .brandmark .bar{ display:none; }
+.reveal .brandmark .nw{ font-family:var(--font-body); font-weight:600; font-size:15px;
+   letter-spacing:.08em; text-transform:uppercase; color:var(--purple); }
+.reveal .brandmark .nw span{ color:var(--line); font-weight:300; margin:0 12px; }
+
+/* ---- AUTHORS -------------------------------------------------------------- */
+.reveal section.authors .people{ position:absolute; left:96px; right:96px; top:206px;
+   display:grid; grid-template-columns:repeat(3, 1fr); gap:48px; }
+.reveal section.authors .people.two{ left:150px; right:150px; grid-template-columns:repeat(2, 1fr); gap:74px; }
+.reveal section.authors .person{ min-width:0; }
+.reveal section.authors .portrait{ width:100%; height:282px; object-fit:cover; object-position:center;
+   border-radius:8px; display:block; filter:saturate(.96) contrast(1.02);
+   box-shadow:0 14px 34px rgba(40,30,70,.13); }
+.reveal section.authors .name{ font-family:var(--font-display); font-size:34px; font-weight:400;
+   color:var(--purple); margin-top:22px; line-height:1.05; }
+.reveal section.authors .affil{ font-family:var(--font-body); font-size:20px; font-weight:300;
+   color:var(--slate2); margin-top:8px; line-height:1.25; }
+
+/* ---- SECTION DIVIDER ------------------------------------------------------ */
+.reveal section.section{ display:flex; flex-direction:column; justify-content:flex-start; padding-top:92px; }
+.reveal section.section .num{ font-family:var(--font-display); font-weight:600; font-size:26px;
+   color:var(--amber); letter-spacing:.06em; margin-bottom:20px; }
+.reveal section.section h2{ font-weight:300; font-size:84px; max-width:960px; }
+.reveal section.section .rule{ width:460px; height:1px; background:var(--line); margin:38px 0 34px; }
+.reveal section.section .sub{ font-family:var(--font-body); font-weight:300; font-size:30px;
+   color:var(--slate2); line-height:1.28; max-width:900px; }
+.reveal section.section .prompt{ display:block; color:var(--slate2); font-weight:300; max-width:860px; }
+
+/* ---- DIAGRAM -------------------------------------------------------------- */
+.reveal section.diagram .canvas{ position:absolute; left:0; right:0; top:250px;
+   display:flex; justify-content:center; }
+/* SVG helpers: use class="box" / class="hero" on <rect>, .blabel on <text>,
+   .clabel on connector labels. Arrowheads: define <marker> with these fills. */
+.reveal .blabel{ font-family:var(--font-body); font-weight:500; font-size:18px; }
+.reveal .clabel{ font-family:var(--font-body); font-weight:600; font-size:15px; }
+
+/* ---- TWO COLUMN ----------------------------------------------------------- */
+.reveal section.two-col .grid{ position:absolute; left:var(--slide-left); right:var(--slide-right);
+   top:var(--content-top); bottom:var(--content-bottom);
+   display:grid; grid-template-columns:1fr 1px 1fr; gap:var(--content-gap); }
+.reveal section.two-col .divider{ background:var(--line); }
+.reveal section.two-col .col h3{ font-family:var(--font-display); font-weight:500; font-size:26px;
+   color:var(--slate); margin:0 0 22px; }
+.reveal section.two-col .col ul{ list-style:none; margin:0; padding:0; }
+.reveal section.two-col .col li{ font-family:var(--font-body); font-weight:300; font-size:24px;
+   line-height:1.45; color:var(--ink); position:relative; padding-left:30px; margin-bottom:20px; }
+.reveal section.two-col .col li::before{ content:""; position:absolute; left:0; top:.6em; width:16px; height:3px; background:var(--amber); }
+.reveal section.two-col .fig{ display:flex; align-items:center; justify-content:center; }
+
+/* compact lists and inline two-column blocks -------------------------------- */
+.reveal .slides section > ul.compact > li{ font-size:25px; margin-bottom:18px; }
+.reveal .slides section > ul.compact ul{ list-style:none; margin:8px 0 0; padding:0; }
+.reveal .slides section > ul.compact ul li{ font-size:22px; color:var(--slate2);
+   position:relative; padding-left:26px; margin:0 0 8px; line-height:1.4; }
+.reveal .slides section > ul.compact ul li::before{ content:""; position:absolute;
+   left:0; top:.62em; width:12px; height:2px; background:var(--muted); }
+.reveal section .two-col .col ul{ list-style:none; margin:0; padding:0; }
+.reveal section .two-col .col li{ font-family:var(--font-body); font-weight:300; font-size:24px;
+   line-height:1.45; color:var(--ink); position:relative; padding-left:30px; margin:0 0 18px; }
+.reveal section .two-col .col li::before{ content:""; position:absolute; left:0; top:.6em;
+   width:16px; height:3px; background:var(--amber); }
+.reveal .arrow-note{ color:var(--purple); font-weight:600; }
+.reveal .arrow-note .ar{ color:var(--amber); margin:0 .35em; }
+
+/* chat bubbles -------------------------------------------------------------- */
+.reveal .chat{ position:absolute; left:var(--slide-left); right:var(--slide-right);
+   top:var(--content-top); bottom:54px;
+   display:flex; flex-direction:column; gap:16px; justify-content:flex-start; }
+.reveal .chat.high{ top:170px; }
+.reveal .chat.center{ justify-content:center; }
+.reveal .bubble{ max-width:78%; border-radius:18px; padding:16px 22px;
+   font-family:var(--font-body); font-weight:300; font-size:21px; line-height:1.4;
+   color:var(--ink); box-shadow:0 2px 10px rgba(40,30,70,.05); }
+.reveal .chat.sm .bubble{ font-size:18px; line-height:1.36; padding:13px 18px; }
+.reveal .chat.xs .bubble{ font-size:15.5px; line-height:1.32; padding:11px 16px; border-radius:14px; }
+.reveal .bubble .who{ font-family:var(--font-body); font-weight:600; font-size:.78em;
+   letter-spacing:.02em; margin-bottom:7px; display:flex; align-items:center; gap:8px; }
+.reveal .bubble.user{ align-self:flex-end; background:#F2F0FB; border:1px solid #E4DFF4; }
+.reveal .bubble.user .who{ color:var(--purple); }
+.reveal .bubble.ai{ align-self:flex-start; background:var(--wash); border:1px solid var(--line); }
+.reveal .bubble.ai .who{ color:var(--slate); }
+.reveal .bubble b{ font-weight:600; color:var(--ink); }
+.reveal .bubble ul{ list-style:none; margin:7px 0 0; padding:0; }
+.reveal .bubble ul li{ position:relative; padding-left:18px; margin:0 0 4px; }
+.reveal .bubble ul li::before{ content:""; position:absolute; left:0; top:.6em;
+   width:9px; height:2px; background:var(--amber); }
+.reveal .bubble ul ul{ margin:3px 0 0; }
+.reveal .bubble .mono{ font-family:var(--font-mono); font-size:.86em; }
+
+/* data tables --------------------------------------------------------------- */
+.reveal .tblwrap{ position:absolute; left:96px; right:96px; top:196px;
+   display:flex; flex-direction:column; align-items:center; }
+.reveal table.dtable{ border-collapse:collapse; font-family:var(--font-body);
+   font-weight:300; font-size:25px; color:var(--ink); }
+.reveal table.dtable.sm{ font-size:21px; }
+.reveal table.dtable th{ font-family:var(--font-body); font-weight:600; color:var(--purple);
+   padding:13px 26px; border-bottom:2px solid var(--slate); text-align:center; line-height:1.2; }
+.reveal table.dtable th small{ display:block; font-weight:400; font-size:.72em; color:var(--slate2); }
+.reveal table.dtable td{ padding:11px 26px; text-align:center; border-bottom:1px solid var(--line); }
+.reveal table.dtable td.lead{ text-align:left; font-weight:500; color:var(--slate); }
+.reveal table.dtable tr.total td{ font-weight:600; color:var(--purple);
+   border-top:2px solid var(--slate); border-bottom:0; }
+.reveal table.dtable .hot{ color:var(--amber-dk); font-weight:600; }
+.reveal .tnote{ margin-top:20px; max-width:1000px; font-size:18px; font-style:italic;
+   color:var(--muted); line-height:1.4; text-align:left; }
+.reveal .takeaway{ position:absolute; left:96px; right:96px; bottom:64px; text-align:center;
+   font-family:var(--font-body); font-weight:300; font-size:26px; color:var(--ink); line-height:1.35; }
+.reveal .takeaway b{ color:var(--purple); font-weight:600; }
+.reveal .takeaway .amber{ color:var(--amber-dk); font-weight:600; }
+
+/* evaluation grids ---------------------------------------------------------- */
+.reveal .evalgrid{ position:absolute; left:96px; right:96px; top:188px; bottom:118px;
+   display:grid; grid-template-columns:1.05fr .95fr; gap:54px; align-items:center; }
+.reveal .evalgrid .figcol{ display:flex; align-items:center; justify-content:center; }
+.reveal .pclist .lbl{ font-family:var(--font-body); font-weight:600; font-size:23px;
+   margin:0 0 12px; }
+.reveal .pclist .lbl.good{ color:#3F7A52; }
+.reveal .pclist .lbl.bad{ color:#B0473B; }
+.reveal .pclist .lbl.good::before,.reveal .pclist .lbl.bad::before{ margin-right:9px; font-weight:700; }
+.reveal .pclist .lbl.good::before{ content:"✓"; }
+.reveal .pclist .lbl.bad::before{ content:"✕"; }
+.reveal .pclist ul{ list-style:none; margin:0 0 26px; padding:0; }
+.reveal .pclist ul li{ font-family:var(--font-body); font-weight:300; font-size:21px;
+   line-height:1.4; position:relative; padding-left:24px; margin:0 0 9px; color:var(--ink); }
+.reveal .pclist ul.good li::before{ content:""; position:absolute; left:0; top:.6em;
+   width:12px; height:2px; background:#6E977E; }
+.reveal .pclist ul.bad li::before{ content:""; position:absolute; left:0; top:.6em;
+   width:12px; height:2px; background:#C77; }
+
+/* math, captions, and roadmap ---------------------------------------------- */
+.reveal .math{ position:absolute; left:96px; right:96px; top:196px; }
+.reveal .math .katex{ font-size:1.04em; }
+.reveal .mathline{ text-align:center; margin:14px 0; }
+.reveal .note{ font-family:var(--font-body); font-weight:300; font-size:23px;
+   color:var(--slate2); line-height:1.45; }
+.reveal .note b{ color:var(--ink); font-weight:600; }
+.reveal .note .mono{ font-family:var(--font-mono); font-size:.85em; color:var(--purple); }
+.reveal .diagram .canvas.high{ top:184px; }
+.reveal .figcap{ position:absolute; left:96px; right:96px; bottom:60px; text-align:center;
+   font-family:var(--font-body); font-weight:300; font-size:22px; color:var(--slate2); }
+.reveal .figcap b{ color:var(--purple); font-weight:600; }
+.reveal section.roadmap .steps{ position:absolute; left:96px; right:96px; top:215px;
+   display:flex; flex-direction:column; gap:0; }
+.reveal section.roadmap .step{ display:flex; align-items:baseline; gap:26px;
+   padding:19px 0; border-bottom:1px solid var(--line); }
+.reveal section.roadmap .step:last-child{ border-bottom:0; }
+.reveal section.roadmap .step .n{ font-family:var(--font-display); font-weight:600;
+   font-size:26px; color:var(--amber); width:42px; flex:none; }
+.reveal section.roadmap .step .t{ font-family:var(--font-display); font-weight:400;
+   font-size:34px; color:var(--purple); width:430px; flex:none; }
+.reveal section.roadmap .step .d{ font-family:var(--font-body); font-weight:300;
+   font-size:22px; color:var(--slate2); }
+
+/* ---- CODE ----------------------------------------------------------------- */
+.reveal section.code pre{ position:absolute; left:96px; right:96px; top:210px; width:auto;
+   margin:0; box-shadow:none; font-size:1em; }
+.reveal section.code pre code{ display:block; background:var(--wash); border:1px solid var(--line);
+   border-left:4px solid var(--purple); border-radius:8px; padding:30px 34px; max-height:none;
+   font-family:var(--font-mono); font-size:21px; line-height:1.62; color:#384047; }
+/* light syntax palette (highlight.js tokens) */
+.reveal .hljs-comment,.reveal .hljs-quote{ color:#9298A1; font-style:italic; }
+.reveal .hljs-keyword,.reveal .hljs-built_in,.reveal .hljs-literal{ color:#6B3FA0; font-weight:600; }
+.reveal .hljs-string,.reveal .hljs-meta-string{ color:var(--amber-dk); }
+.reveal .hljs-title,.reveal .hljs-section,.reveal .hljs-function .hljs-title{ color:#2B2F36; font-weight:600; }
+.reveal .hljs-number,.reveal .hljs-attr{ color:var(--sage); }
+.reveal .capline{ position:absolute; left:96px; bottom:50px; font-style:italic; color:var(--muted); font-size:18px; }
+
+/* ---- BIG STAT ------------------------------------------------------------- */
+.reveal section.stat .row{ position:absolute; left:96px; right:96px; top:250px; display:flex; gap:70px; }
+.reveal section.stat .item{ flex:1; }
+.reveal section.stat .tick{ width:46px; height:5px; background:var(--amber); margin-bottom:22px; }
+.reveal section.stat .big{ font-family:var(--font-display); font-weight:400; font-size:96px;
+   color:var(--purple); line-height:1; letter-spacing:-.01em; }
+.reveal section.stat .big .u{ font-size:.42em; font-weight:500; color:var(--amber); margin-left:.1em; }
+.reveal section.stat .big .arr{ font-size:.5em; color:var(--amber); margin:0 .14em; vertical-align:.2em; }
+.reveal section.stat .lab{ font-family:var(--font-body); font-weight:400; font-size:23px;
+   color:var(--slate2); margin-top:14px; line-height:1.3; }
+
+/* ---- QUOTE ---------------------------------------------------------------- */
+.reveal section.quote{ display:flex; flex-direction:column; justify-content:center; padding:0 130px; }
+.reveal section.quote .mark{ font-family:var(--font-display); font-weight:600; font-size:160px;
+   color:var(--amber); line-height:.6; height:70px; }
+.reveal section.quote blockquote{ font-family:var(--font-display); font-weight:300; font-size:54px;
+   line-height:1.22; color:var(--ink); max-width:1000px; margin:0; box-shadow:none; background:none; border:0; }
+.reveal section.quote .src{ font-family:var(--font-body); font-weight:500; font-size:22px; color:var(--purple); margin-top:36px; }
+.reveal section.quote .src span{ color:var(--muted); font-weight:400; }
+
+/* ---- QUOTE WALL ----------------------------------------------------------- */
+.reveal section.quote-wall .quote-grid,
+.reveal section.quote-wall .qgrid{
+   position:absolute; left:var(--slide-left); right:var(--slide-right);
+   top:var(--content-top); bottom:76px;
+   display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:22px;
+   align-content:start; }
+.reveal section.quote-wall .quote-card,
+.reveal section.quote-wall .qcard{
+   min-width:0; background:var(--wash); border:1px solid var(--line);
+   border-left:4px solid var(--amber); border-radius:8px; padding:22px 24px;
+   box-shadow:0 5px 18px rgba(40,30,70,.06); }
+.reveal section.quote-wall blockquote{
+   margin:0; padding:0; border:0; box-shadow:none; background:none;
+   font-family:var(--font-display); font-weight:300; font-size:28px;
+   line-height:1.22; color:var(--ink); }
+.reveal section.quote-wall .src{
+   margin-top:14px; font-family:var(--font-body); font-size:16px;
+   font-weight:600; color:var(--purple); }
+.reveal section.quote-wall .src span{ color:var(--muted); font-weight:400; }
+
+/* ---- IMAGE: FULL BLEED ---------------------------------------------------- */
+.reveal section.image-full{ padding:0; }
+.reveal section.image-full .photo{ position:absolute; inset:0; width:100%; height:100%;
+   object-fit:cover; object-position:center; }
+.reveal section.image-full .scrim{ position:absolute; left:0; right:0; bottom:0; height:300px;
+   background:linear-gradient(transparent, rgba(20,18,30,.72)); }
+.reveal section.image-full .cap2{ position:absolute; left:90px; right:90px; bottom:76px; }
+.reveal section.image-full .cap2 .eyebrow{ color:var(--amber); margin-bottom:14px; }
+.reveal section.image-full h2{ font-weight:300; font-size:68px; color:#fff; }
+.reveal section.image-full .credit{ position:absolute; right:90px; bottom:40px; color:rgba(255,255,255,.6); font-size:13px; }
+
+/* ---- IMAGE: FRAMED -------------------------------------------------------- */
+.reveal section.image-frame .win{ position:absolute; left:var(--slide-left); right:var(--slide-right);
+   top:var(--content-top); height:360px;
+   background:#fff; border:1px solid var(--line); border-radius:10px;
+   box-shadow:0 12px 34px rgba(40,30,70,.12); overflow:hidden; }
+.reveal section.image-frame .win img{ width:100%; height:100%; object-fit:cover; }
+.reveal section.image-frame.contain .win{ display:flex; align-items:center; justify-content:center; }
+.reveal section.image-frame.contain .win img,
+.reveal section.image-frame .win img.contain{ object-fit:contain; background:#fff; }
+.reveal section.image-frame .capline{ position:absolute; left:96px; bottom:54px; font-style:italic; color:var(--muted); font-size:18px; }
+
+/* ---- IMAGE: TWO FRAMES ---------------------------------------------------- */
+.reveal section.image-duo .duo,
+.reveal section.image-duo .image-duo-grid{
+   position:absolute; left:var(--slide-left); right:var(--slide-right);
+   top:var(--content-top); bottom:116px;
+   display:grid; grid-template-columns:repeat(2, minmax(0, 1fr));
+   gap:34px; align-items:stretch; }
+.reveal section.image-duo figure{ margin:0; min-width:0; display:flex; flex-direction:column; gap:14px; }
+.reveal section.image-duo .frame{
+   flex:1; min-height:0; background:#fff; border:1px solid var(--line);
+   border-radius:10px; box-shadow:0 12px 34px rgba(40,30,70,.12);
+   overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.reveal section.image-duo img{ width:100%; height:100%; object-fit:cover; }
+.reveal section.image-duo.contain img,
+.reveal section.image-duo img.contain{ object-fit:contain; background:#fff; }
+.reveal section.image-duo figcaption{
+   font-family:var(--font-body); font-weight:400; font-size:18px;
+   color:var(--slate2); line-height:1.28; text-align:center; }
+
+/* ============================================================================
+   DECK-SPECIFIC LAYOUTS  —  "Keeping Up with AI" (ANHW / HKS, Jun 9 2026)
+   Bespoke layouts for slides transformed from the April DAK "Building with AI"
+   Keynote. Signature amber outline boxes, intro grid, timeline, project wall,
+   case studies. Design lives here; content lives in deck.html.
+   ============================================================================ */
+
+/* --- signature amber statement box + grey box ----------------------------- */
+.reveal .abox{ border:2px solid var(--amber); border-radius:6px; background:#fff;
+   padding:22px 30px; font-family:var(--font-display); font-weight:300; font-style:italic;
+   font-size:30px; line-height:1.26; color:var(--ink); text-align:center;
+   display:flex; align-items:center; justify-content:center; box-sizing:border-box; }
+.reveal .gbox{ background:var(--wash); border:0; border-radius:5px; padding:16px 28px;
+   font-family:var(--font-body); font-weight:400; font-size:26px; color:var(--ink);
+   text-align:center; }
+
+/* --- scattered-statement slides (7, 11) ----------------------------------- */
+.reveal section.statements .field{ position:absolute; left:96px; right:96px; top:200px; bottom:64px;
+   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:38px; }
+.reveal section.statements .row2{ display:flex; gap:60px; width:100%; align-items:stretch; }
+.reveal section.statements .row2 .abox{ flex:1; }
+.reveal section.statements .abox.mid{ width:58%; }
+.reveal section.statements .gbox.mid{ width:42%; }
+
+/* --- live-demo slide (9) -------------------------------------------------- */
+.reveal section.demo .field{ position:absolute; inset:0;
+   display:flex; align-items:center; justify-content:center; }
+.reveal section.demo .abox{ width:64%; font-size:34px; padding:34px 44px; }
+
+/* --- QR / link slides (10) ------------------------------------------------ */
+.reveal section.qr .field{ position:absolute; left:96px; right:96px; top:188px; bottom:60px;
+   display:flex; flex-direction:column; align-items:center; gap:30px; }
+.reveal .url-pill{ background:var(--purple); color:#fff; font-family:var(--font-body); font-weight:600;
+   font-size:30px; padding:14px 36px; border-radius:8px; letter-spacing:.005em; }
+.reveal img.qr{ image-rendering:pixelated; display:block; }
+.reveal .qrcap{ font-family:var(--font-body); font-weight:400; font-size:22px; color:var(--slate2); }
+
+/* --- intro / "about me" (2) ----------------------------------------------- */
+.reveal section.intro .cols{ position:absolute; left:96px; right:96px; top:184px; bottom:46px;
+   display:grid; grid-template-columns:1fr 1fr; gap:26px 56px; align-content:start; }
+.reveal section.intro .blk{ margin-bottom:6px; }
+.reveal section.intro .lbl{ font-family:var(--font-display); font-weight:500; font-size:25px;
+   color:var(--purple); margin-bottom:12px; }
+.reveal section.intro ul{ list-style:none; margin:0; padding:0; }
+.reveal section.intro li{ font-family:var(--font-body); font-weight:300; font-size:23px;
+   line-height:1.4; color:var(--ink); position:relative; padding-left:26px; margin-bottom:7px; }
+.reveal section.intro li::before{ content:""; position:absolute; left:0; top:.6em;
+   width:14px; height:3px; background:var(--amber); }
+.reveal .logo-row{ display:flex; align-items:center; gap:30px; flex-wrap:wrap; margin-top:14px; }
+.reveal .logo-row img{ height:46px; width:auto; object-fit:contain; }
+.reveal section.intro img.photo{ width:100%; height:188px; object-fit:cover; object-position:center 30%;
+   border-radius:8px; box-shadow:0 10px 26px rgba(40,30,70,.14); margin-top:8px; }
+
+/* --- agenda (3) ----------------------------------------------------------- */
+.reveal section.agenda .wrap{ position:absolute; left:96px; right:96px; top:215px; bottom:58px;
+   display:grid; grid-template-columns:1.12fr .88fr; gap:54px; align-items:center; }
+.reveal section.agenda ul{ list-style:none; margin:0; padding:0; }
+.reveal section.agenda li{ font-family:var(--font-body); font-weight:300; font-size:28px;
+   line-height:1.4; color:var(--ink); position:relative; padding-left:32px; margin-bottom:30px; }
+.reveal section.agenda li:last-child{ margin-bottom:0; }
+.reveal section.agenda li::before{ content:""; position:absolute; left:0; top:.62em;
+   width:18px; height:3px; background:var(--amber); }
+.reveal section.agenda li span.t{ color:var(--muted); font-size:23px; }
+.reveal section.agenda img{ width:100%; object-fit:contain; }
+
+/* --- timeline (6) --------------------------------------------------------- */
+.reveal section.tl .wrap{ position:absolute; left:74px; right:74px; top:210px; }
+.reveal section.tl .years{ display:grid; grid-template-columns:repeat(5,1fr); }
+.reveal section.tl .yr{ text-align:center; font-family:var(--font-display); font-weight:400;
+   font-size:30px; color:var(--ink); }
+.reveal section.tl .line{ height:3px; background:var(--amber); position:relative; margin:18px 0 0; }
+.reveal section.tl .line::after{ content:""; position:absolute; right:-1px; top:-6px;
+   border-left:15px solid var(--amber); border-top:7.5px solid transparent; border-bottom:7.5px solid transparent; }
+.reveal section.tl .cells{ display:grid; grid-template-columns:repeat(5,1fr); margin-top:42px; gap:16px; }
+.reveal section.tl .cell{ text-align:center; padding:0 6px; }
+.reveal section.tl .cell .h{ font-family:var(--font-display); font-weight:400; font-size:25px;
+   color:var(--purple); line-height:1.15; margin-bottom:20px; min-height:62px; }
+.reveal section.tl .cell .d{ font-family:var(--font-body); font-weight:300; font-size:21px;
+   color:var(--slate2); line-height:1.34; }
+
+/* --- ESAB / "in my shoes" (13) -------------------------------------------- */
+.reveal section.esab .wrap{ position:absolute; left:96px; right:96px; top:185px; bottom:58px;
+   display:grid; grid-template-columns:.95fr 1.05fr; gap:60px; align-items:center; }
+.reveal section.esab .who img{ height:120px; width:auto; object-fit:contain; margin-bottom:26px; display:block; }
+.reveal section.esab .who p{ font-family:var(--font-body); font-weight:300; font-size:25px;
+   line-height:1.5; color:var(--ink); margin:0; }
+.reveal section.esab .who .gap{ height:18px; }
+
+/* --- five amber bars + aside (14) ----------------------------------------- */
+.reveal section.bars .wrap{ position:absolute; left:96px; right:96px; top:180px; bottom:54px;
+   display:grid; grid-template-columns:1.3fr .7fr; gap:54px; align-items:center; }
+.reveal section.bars .stack{ display:flex; flex-direction:column; gap:16px; }
+.reveal .bar{ border:2px solid var(--amber); border-radius:5px; background:#fff; padding:15px 24px;
+   font-family:var(--font-display); font-style:italic; font-weight:300; font-size:25px;
+   line-height:1.2; color:var(--ink); text-align:center; }
+.reveal section.bars .aside{ display:flex; flex-direction:column; align-items:center;
+   gap:20px; text-align:center; }
+.reveal section.bars .aside img{ height:80px; width:auto; object-fit:contain; }
+.reveal section.bars .aside .note{ font-family:var(--font-body); font-weight:300; font-size:24px;
+   color:var(--ink); line-height:1.36; }
+
+/* --- project wall (17) ---------------------------------------------------- */
+.reveal section.proj .wrap{ position:absolute; left:72px; right:72px; top:168px; bottom:48px;
+   display:grid; grid-template-columns:1fr 210px 1fr; gap:24px; align-items:center; }
+.reveal section.proj .colp{ display:flex; flex-direction:column; gap:20px; }
+.reveal .pbox{ border:2px solid var(--amber); border-radius:5px; background:#fff; padding:14px 18px;
+   font-family:var(--font-display); font-style:italic; font-weight:300; font-size:22px;
+   line-height:1.22; color:var(--ink); text-align:center; }
+.reveal section.proj .center{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+.reveal section.proj .center img{ width:188px; height:188px; image-rendering:pixelated; }
+
+/* --- case studies (18, 19) ------------------------------------------------ */
+.reveal section.case .wrap{ position:absolute; left:96px; right:96px; top:178px; bottom:54px;
+   display:grid; gap:50px; align-items:center; }
+.reveal section.case.s18 .wrap{ grid-template-columns:1.55fr .55fr; }
+.reveal section.case.s19 .wrap{ grid-template-columns:1.4fr .6fr; }
+.reveal section.case .frame{ background:#fff; border:1px solid var(--line); border-radius:8px;
+   box-shadow:0 12px 30px rgba(40,30,70,.12); overflow:hidden; }
+.reveal section.case .frame img{ width:100%; display:block; }
+.reveal section.case .cap{ font-family:var(--font-body); font-weight:300; font-size:27px;
+   color:var(--slate2); margin-top:22px; line-height:1.3; }
+.reveal section.case .strip img{ width:100%; max-height:470px; object-fit:contain; display:block; }
+.reveal section.case .qrcol{ display:flex; flex-direction:column; align-items:center; gap:12px; }
+.reveal section.case .qrcol img.qr{ width:210px; height:210px; }

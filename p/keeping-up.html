@@ -1,0 +1,648 @@
+---
+layout: none
+permalink: /p/keeping-up.html
+sitemap: false
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Keeping Up with AI · Chat with the talk's AI</title>
+<meta name="description" content="A live AI demo from Sébastien Martin's 'Keeping Up with AI' talk — chat with the AI assistant built for the session, ask anything about AI today, and get the slides.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link rel="icon" href="/assets/img/favicon.ico">
+<style>
+:root {
+  --bg: #f5f7fb;
+  --surface: #ffffff;
+  --surface-elev: #ffffff;
+  --ink: #0f172a;
+  --ink-soft: #475569;
+  --ink-faint: #64748b;
+  --accent: #2445A0;
+  --accent-deep: #1a3380;
+  --accent-soft: rgba(36, 69, 160, 0.10);
+  --mint: #0d9488;
+  --bubble-user-bg: linear-gradient(135deg, #2445A0, #1d3a8a);
+  --bubble-user-ink: #ffffff;
+  --bubble-kai-bg: #ffffff;
+  --bubble-kai-ink: #0f172a;
+  --bubble-kai-border: rgba(15, 23, 42, 0.08);
+  --rule: rgba(15, 23, 42, 0.10);
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.10);
+  --hero-grad: linear-gradient(135deg, rgba(36, 69, 160, 0.12), rgba(67, 230, 180, 0.14));
+  --chip-bg: rgba(36, 69, 160, 0.06);
+  --chip-bg-hover: rgba(36, 69, 160, 0.12);
+  --chip-border: rgba(36, 69, 160, 0.18);
+  --error: #b91c1c;
+}
+
+[data-theme="dark"] {
+  --bg: #0b1220;
+  --surface: #0f1a2f;
+  --surface-elev: #142446;
+  --ink: #e2e8f0;
+  --ink-soft: #94a3b8;
+  --ink-faint: #64748b;
+  --accent: #60a5fa;
+  --accent-deep: #3b82f6;
+  --accent-soft: rgba(96, 165, 250, 0.14);
+  --mint: #2dd4bf;
+  --bubble-user-bg: linear-gradient(135deg, #3b82f6, #2563eb);
+  --bubble-user-ink: #ffffff;
+  --bubble-kai-bg: rgba(20, 36, 70, 0.85);
+  --bubble-kai-ink: #e2e8f0;
+  --bubble-kai-border: rgba(148, 163, 184, 0.18);
+  --rule: rgba(148, 163, 184, 0.18);
+  --shadow-sm: 0 1px 2px rgba(2, 6, 23, 0.5);
+  --shadow-md: 0 4px 14px rgba(2, 6, 23, 0.55);
+  --shadow-lg: 0 12px 40px rgba(2, 6, 23, 0.65);
+  --hero-grad: linear-gradient(135deg, rgba(59, 130, 246, 0.20), rgba(45, 212, 191, 0.18));
+  --chip-bg: rgba(96, 165, 250, 0.08);
+  --chip-bg-hover: rgba(96, 165, 250, 0.18);
+  --chip-border: rgba(148, 163, 184, 0.25);
+  --error: #fca5a5;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+a { color: var(--accent); }
+a:hover { color: var(--accent-deep); }
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* Header */
+.hero {
+  margin-top: 28px;
+  padding: 28px 28px 24px;
+  border-radius: 18px;
+  background: var(--hero-grad);
+  border: 1px solid var(--rule);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.hero__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.hero__brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+.hero__brand a { color: inherit; text-decoration: none; }
+.hero__brand a:hover { color: var(--accent); }
+.hero__avatar {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2445A0, #43E6B4);
+  display: grid; place-items: center;
+  color: #fff;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 18px;
+  box-shadow: var(--shadow-sm);
+}
+.hero__theme {
+  background: transparent;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  cursor: pointer;
+  color: var(--ink-soft);
+  transition: background .15s, color .15s, border-color .15s;
+}
+.hero__theme:hover { background: var(--chip-bg-hover); color: var(--ink); }
+.hero__theme svg { width: 18px; height: 18px; }
+.hero__title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 500;
+  font-size: clamp(28px, 4vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  margin: 4px 0 8px;
+  color: var(--ink);
+}
+.hero__sub {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 15px;
+  max-width: 64ch;
+}
+.hero__sub a { font-weight: 500; }
+
+.disclaimer {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--accent-soft);
+  border-radius: 6px;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Chat area */
+.chat {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-top: 18px;
+  padding-bottom: 16px;
+  min-height: 0;
+}
+.messages {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 4px 2px 24px;
+}
+
+.msg {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  max-width: 100%;
+}
+.msg--user { flex-direction: row-reverse; }
+.msg__avatar {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: grid; place-items: center;
+  font-family: 'Fraunces', Georgia, serif;
+  font-weight: 600;
+  font-size: 14px;
+  box-shadow: var(--shadow-sm);
+}
+.msg--kai .msg__avatar {
+  background: linear-gradient(135deg, #2445A0, #43E6B4);
+  color: #fff;
+}
+.msg--user .msg__avatar {
+  background: var(--surface-elev);
+  color: var(--ink-soft);
+  border: 1px solid var(--rule);
+}
+.bubble {
+  padding: 12px 16px;
+  border-radius: 16px;
+  max-width: min(640px, calc(100% - 56px));
+  box-shadow: var(--shadow-sm);
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+.msg--user .bubble {
+  background: var(--bubble-user-bg);
+  color: var(--bubble-user-ink);
+  border-top-right-radius: 4px;
+}
+.msg--kai .bubble {
+  background: var(--bubble-kai-bg);
+  color: var(--bubble-kai-ink);
+  border: 1px solid var(--bubble-kai-border);
+  border-top-left-radius: 4px;
+}
+.bubble p { margin: 0 0 0.6em 0; }
+.bubble p:last-child { margin-bottom: 0; }
+.bubble ul, .bubble ol { margin: 0.4em 0; padding-left: 1.4em; }
+.bubble li { margin: 0.15em 0; }
+.bubble strong { font-weight: 600; }
+.bubble code {
+  background: rgba(15, 23, 42, 0.06);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.9em;
+}
+.msg--user .bubble code { background: rgba(255, 255, 255, 0.18); }
+.bubble a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+
+/* Typing indicator */
+.typing {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 0;
+}
+.typing span {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  animation: bounce 1.2s infinite;
+}
+.typing span:nth-child(2) { animation-delay: 0.15s; }
+.typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-4px); opacity: 1; }
+}
+
+/* Suggestions */
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 8px 0 4px;
+  margin-left: 44px;
+}
+.chip {
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  color: var(--ink);
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s, transform .1s, border-color .15s;
+  font-family: inherit;
+}
+.chip:hover { background: var(--chip-bg-hover); border-color: var(--accent); }
+.chip:active { transform: scale(0.98); }
+
+/* Input */
+.composer {
+  position: sticky;
+  bottom: 0;
+  background: var(--bg);
+  padding: 12px 0 16px;
+  border-top: 1px solid var(--rule);
+  margin-top: auto;
+}
+.composer__inner {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  padding: 8px 8px 8px 14px;
+  box-shadow: var(--shadow-md);
+  transition: border-color .15s, box-shadow .15s;
+}
+.composer__inner:focus-within {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-md), 0 0 0 3px var(--accent-soft);
+}
+.composer textarea {
+  flex: 1;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 8px 4px;
+  max-height: 200px;
+  min-height: 24px;
+}
+.composer textarea::placeholder { color: var(--ink-faint); }
+.send {
+  flex-shrink: 0;
+  width: 38px; height: 38px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: background .15s, transform .1s, opacity .15s;
+}
+.send:hover:not(:disabled) { background: var(--accent-deep); }
+.send:active:not(:disabled) { transform: scale(0.95); }
+.send:disabled { opacity: 0.4; cursor: not-allowed; }
+.send svg { width: 18px; height: 18px; }
+.composer__hint {
+  text-align: center;
+  margin-top: 8px;
+  color: var(--ink-faint);
+  font-size: 12px;
+}
+.composer__hint a { color: inherit; }
+
+.error {
+  background: rgba(185, 28, 28, 0.08);
+  border: 1px solid rgba(185, 28, 28, 0.25);
+  color: var(--error);
+  padding: 10px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+@media (max-width: 600px) {
+  .app { padding: 0 12px; }
+  .hero { margin-top: 16px; padding: 22px 20px 18px; border-radius: 16px; }
+  .suggestions { margin-left: 0; }
+  .bubble { max-width: 100%; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="hero">
+    <div class="hero__top">
+      <div class="hero__brand">
+        <div class="hero__avatar">K</div>
+        <div>
+          <div style="font-weight: 600; color: var(--ink); font-size: 15px;">Kai</div>
+          <div style="font-size: 12.5px;"><a href="/">Sébastien Martin</a></div>
+        </div>
+      </div>
+      <button class="hero__theme" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+        <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    </div>
+    <h1 class="hero__title">Keeping Up with AI.</h1>
+    <p class="hero__sub">
+      A live AI demo for <strong>Harvard Kennedy School &amp; ANHW alumni</strong> · June 9, 2026.<br>
+      Ask anything from today's talk — or grab the slides.
+    </p>
+  </header>
+
+  <main class="chat" id="chat">
+    <div class="messages" id="messages"></div>
+    <div class="suggestions" id="suggestions"></div>
+  </main>
+
+  <div class="composer">
+    <div class="composer__inner">
+      <textarea id="input" rows="1" placeholder="Ask about AI today, getting started, the talk, or Sébastien's work…" autocomplete="off"></textarea>
+      <button class="send" id="send" aria-label="Send" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </button>
+    </div>
+    <div class="composer__hint">Press Enter to send, Shift+Enter for a new line. Rate-limited demo built end-to-end by an AI agent for this talk.</div>
+  </div>
+</div>
+
+<script>
+const WORKER_URL = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
+  ? "http://localhost:8788/chat"
+  : "https://kellogg-kai-demo.92sebastien.workers.dev/chat";
+
+const STARTERS = [
+  "Can you send me the slides from today's talk?",
+  "I'm not technical — how do I actually start using AI?",
+  "What's the difference between ChatGPT and an AI 'agent'?",
+  "What does AIML 901 look like, and what do students build?",
+  "What does Sébastien think is changing right now in AI?"
+];
+
+const GREETING = "Hi! I'm **Kai**, the AI assistant Sébastien Martin built — live — for today's *Keeping Up with AI* talk to **Harvard Kennedy School & ANHW alumni**. Ask me anything from the session: what AI can actually do now, how to start using it yourself (no technical background needed), how Kellogg uses AI in teaching, or Sébastien's work. I can also send you the slides.";
+
+const $messages = document.getElementById("messages");
+const $suggestions = document.getElementById("suggestions");
+const $input = document.getElementById("input");
+const $send = document.getElementById("send");
+const $themeToggle = document.getElementById("theme-toggle");
+const $themeIcon = document.getElementById("theme-icon");
+
+const SUN_PATH = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
+const MOON_PATH = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  $themeIcon.innerHTML = theme === "dark" ? SUN_PATH : MOON_PATH;
+  try { localStorage.setItem("kai-keepingup-theme", theme); } catch(_) {}
+}
+const initial = (() => {
+  try { const t = localStorage.getItem("kai-keepingup-theme"); if (t) return t; } catch(_) {}
+  return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+})();
+applyTheme(initial);
+$themeToggle.addEventListener("click", () => {
+  const cur = document.documentElement.getAttribute("data-theme") === "dark" ? "light" : "dark";
+  applyTheme(cur);
+});
+
+const history = []; // {role, content}
+let streaming = false;
+
+function escapeHTML(s) {
+  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+// Minimal Markdown: paragraphs, **bold**, *italic*, `code`, links, lists.
+function renderMarkdown(text) {
+  let t = escapeHTML(text);
+  // Code spans
+  t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Bold
+  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  // Italic (avoid colliding with bold)
+  t = t.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
+  // Links [text](url)
+  t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+  // Bare URLs
+  t = t.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
+  // Bare emails
+  t = t.replace(/([\w.+-]+@[\w-]+\.[\w.-]+)/g, '<a href="mailto:$1">$1</a>');
+  // Lists: gather consecutive lines starting with "- "
+  const lines = t.split(/\n/);
+  const out = [];
+  let listBuf = null;
+  for (const line of lines) {
+    const m = line.match(/^\s*[-•]\s+(.*)$/);
+    if (m) {
+      if (!listBuf) listBuf = [];
+      listBuf.push(m[1]);
+    } else {
+      if (listBuf) { out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>"); listBuf = null; }
+      out.push(line);
+    }
+  }
+  if (listBuf) out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>");
+  // Group remaining text into paragraphs by blank lines.
+  let html = out.join("\n");
+  const blocks = html.split(/\n{2,}/);
+  return blocks.map(b => {
+    if (/^<(ul|ol|p|h\d|pre|blockquote)/.test(b.trim())) return b;
+    if (!b.trim()) return "";
+    return "<p>" + b.replace(/\n/g, "<br>") + "</p>";
+  }).join("");
+}
+
+function addMessage(role, content, opts={}) {
+  const msg = document.createElement("div");
+  msg.className = "msg msg--" + (role === "user" ? "user" : "kai");
+  msg.innerHTML = `
+    <div class="msg__avatar">${role === "user" ? "You" : "K"}</div>
+    <div class="bubble"></div>
+  `;
+  const bubble = msg.querySelector(".bubble");
+  if (opts.typing) {
+    bubble.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
+  } else {
+    bubble.innerHTML = renderMarkdown(content);
+  }
+  $messages.appendChild(msg);
+  scrollToBottom();
+  return bubble;
+}
+
+function scrollToBottom() {
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+  });
+}
+
+function showSuggestions(items) {
+  $suggestions.innerHTML = "";
+  for (const item of items) {
+    const btn = document.createElement("button");
+    btn.className = "chip";
+    btn.type = "button";
+    btn.textContent = item;
+    btn.addEventListener("click", () => {
+      $input.value = item;
+      $input.focus();
+      autoResize();
+      updateSendDisabled();
+      send();
+    });
+    $suggestions.appendChild(btn);
+  }
+}
+
+function clearSuggestions() {
+  $suggestions.innerHTML = "";
+}
+
+function autoResize() {
+  $input.style.height = "auto";
+  $input.style.height = Math.min($input.scrollHeight, 200) + "px";
+}
+
+function updateSendDisabled() {
+  $send.disabled = streaming || $input.value.trim().length === 0;
+}
+
+$input.addEventListener("input", () => { autoResize(); updateSendDisabled(); });
+$input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    if (!$send.disabled) send();
+  }
+});
+$send.addEventListener("click", send);
+
+async function send() {
+  if (streaming) return;
+  const text = $input.value.trim();
+  if (!text) return;
+  clearSuggestions();
+  $input.value = "";
+  autoResize();
+  addMessage("user", text);
+  history.push({ role: "user", content: text });
+  streaming = true;
+  updateSendDisabled();
+
+  const bubble = addMessage("assistant", "", { typing: true });
+  let acc = "";
+  let firstChunk = true;
+  try {
+    const res = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: history, mode: "keepingup" }),
+    });
+    if (!res.ok) {
+      let msg = "Sorry — I'm having trouble responding right now.";
+      try { const j = await res.json(); if (j?.error) msg = j.error; } catch(_) {}
+      if (res.status === 429) msg = "Slow down a moment — this demo is rate-limited per visitor. Try again in a few seconds.";
+      bubble.innerHTML = `<div class="error">${escapeHTML(msg)}</div>`;
+      return;
+    }
+    if (!res.body) {
+      bubble.innerHTML = `<div class="error">No response stream received.</div>`;
+      return;
+    }
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let buf = "";
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      // SSE: split by \n\n
+      let idx;
+      while ((idx = buf.indexOf("\n\n")) !== -1) {
+        const event = buf.slice(0, idx);
+        buf = buf.slice(idx + 2);
+        for (const line of event.split("\n")) {
+          if (!line.startsWith("data:")) continue;
+          const data = line.slice(5).trim();
+          if (data === "[DONE]") continue;
+          if (!data) continue;
+          try {
+            const parsed = JSON.parse(data);
+            const delta = parsed.choices?.[0]?.delta?.content;
+            if (delta) {
+              if (firstChunk) { bubble.innerHTML = ""; firstChunk = false; }
+              acc += delta;
+              bubble.innerHTML = renderMarkdown(acc);
+              scrollToBottom();
+            }
+          } catch(_) { /* ignore parse blips */ }
+        }
+      }
+    }
+    if (firstChunk) {
+      bubble.innerHTML = `<div class="error">No response from Kai. Try again.</div>`;
+    } else {
+      history.push({ role: "assistant", content: acc });
+    }
+  } catch (err) {
+    bubble.innerHTML = `<div class="error">Network error: ${escapeHTML(String(err.message || err))}</div>`;
+  } finally {
+    streaming = false;
+    updateSendDisabled();
+  }
+}
+
+// Boot
+addMessage("assistant", GREETING);
+showSuggestions(STARTERS);
+$input.focus();
+</script>
+</body>
+</html>
