@@ -1,8 +1,13 @@
 <!doctype html>
 <!-- ===========================================================================
      KEEPING UP WITH AI  —  ANHW Chicago + HKS Alumni, June 9 2026
-     Transformed from the April 25 2026 Day-at-Kellogg "Building with AI" Keynote
-     into the reveal.js Kellogg theme. Design in theme/kellogg.css; content here.
+     Reveal.js Kellogg theme. Design in theme/kellogg.css; content here.
+
+     STRUCTURE (4 sections, eyebrow = section name on every content slide):
+       Introduction · Live demos · AI at Kellogg · Q&A
+     AI-at-Kellogg slides imported from the LSE deck (2026-06 LSE Visit).
+     Flow plan: notes/2026-06-09 - Keeping Up with AI - talk flow plan.md
+     Previous DAK-verbatim adaptation kept at deck-v1-dak.html.bak.
      ======================================================================== -->
 <html lang="en">
 <head>
@@ -25,9 +30,11 @@
     <div class="by"><b>Sébastien Martin</b>Associate Professor of Operations · Northwestern Kellogg<br><span>ANHW Chicago &amp; HKS Alumni · June 9, 2026</span></div>
   </section>
 
-  <!-- 2 — INTRO --------------------------------------------------------------->
+  <!-- ======================= SECTION 1 · INTRODUCTION ======================= -->
+
+  <!-- 2 — INTRO / BIO --------------------------------------------------------->
   <section class="intro">
-    <div class="eyebrow">A quick introduction</div>
+    <div class="eyebrow">Introduction</div>
     <h2>Sébastien Martin</h2>
     <div class="cols">
       <div class="blk">
@@ -44,13 +51,13 @@
         </div>
       </div>
       <div class="blk">
-        <div class="lbl">Research — AI &amp; algorithms in Operations</div>
+        <div class="lbl">Research — AI &amp; algorithms</div>
         <div class="logo-row">
           <img src="assets/lyft.png" alt="Lyft">
           <img src="assets/boston-schools.png" alt="Boston Public Schools">
           <img src="assets/waymo.png" alt="Waymo">
         </div>
-        <ul style="margin-top:18px;">
+        <ul style="margin-top:16px;">
           <li>Advising PhD students</li>
         </ul>
       </div>
@@ -61,36 +68,63 @@
           <li>Operations Management</li>
         </ul>
       </div>
-      <div class="blk">
-        <img class="photo" src="assets/class-photo.jpg" alt="AIML 901 class">
+    </div>
+    <div class="photoband"><img src="assets/class-photo.jpg" alt="AIML 901 — AgentOps class"></div>
+  </section>
+
+  <!-- 3 — ROADMAP ------------------------------------------------------------->
+  <section class="roadmap">
+    <div class="eyebrow">Introduction</div>
+    <h2>Where we're headed today</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <div class="t">Introduction &amp; AI crash course</div>
+        <div class="d"><b>~10 min</b> &middot; who I am &middot; what my students built &middot; how AI works</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div class="t">Live demos</div>
+        <div class="d"><b>~30 min</b> &middot; computer agents &rarr; a glimpse of the future &rarr; getting started</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div class="t">AI at Kellogg</div>
+        <div class="d"><b>~10 min</b> &middot; a case study in navigating the disruption</div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <div class="t">Q&amp;A</div>
+        <div class="d"><b>~10 min</b> &middot; ask me anything</div>
       </div>
     </div>
   </section>
 
-  <!-- 3 — AGENDA -------------------------------------------------------------->
-  <section class="agenda">
-    <div class="eyebrow">Today</div>
-    <h2>Where we're headed</h2>
+  <!-- 4 — AGENTOPS / WHAT STUDENTS BUILT -------------------------------------->
+  <section class="proj">
+    <div class="eyebrow">Introduction</div>
+    <h2>AIML&nbsp;901 — what my students built in five weeks</h2>
     <div class="wrap">
-      <ul>
-        <li>Understanding the AI state of the art</li>
-        <li>Building with AI, with Claude Cowork</li>
-        <li>Navigating a technology disruption</li>
-        <li>AI at Kellogg</li>
-      </ul>
-      <div><img src="assets/robot-map.png" alt="Robot reading a map"></div>
+      <div class="colp">
+        <div class="pbox">Track medication adherence by texting patients personalized reminders</div>
+        <div class="pbox">Track competitor clinical trials to inform pharma strategy</div>
+        <div class="pbox">Answer customer questions automatically and route complex ones to experts</div>
+      </div>
+      <div class="center">
+        <img class="qr" src="assets/qr-syllabus.png" alt="QR to course and projects">
+        <div class="qrcap" style="line-height:1.3;">From zero, no coding<br>→ 193 projects</div>
+      </div>
+      <div class="colp">
+        <div class="pbox">Turn course syllabi into study plans with deadlines</div>
+        <div class="pbox">Sort and prioritize a travel agency's inbox, flagging urgent requests</div>
+        <div class="pbox">Monitor news and alert retail investors when their stocks are at risk</div>
+      </div>
     </div>
   </section>
 
-  <!-- 4 — SECTION ------------------------------------------------------------->
-  <section class="section" data-state="lede">
-    <h2>Understanding the AI state of the art</h2>
-    <hr class="rule">
-  </section>
-
-  <!-- 5 — LLM AUTOCOMPLETE ---------------------------------------------------->
+  <!-- 5 — LLM AUTOCOMPLETE (the Harvard / Northwestern joke) ------------------>
   <section class="diagram">
-    <div class="eyebrow">How LLMs work</div>
+    <div class="eyebrow">Introduction</div>
     <h2>Large Language Models: a fancy &ldquo;autocomplete&rdquo;</h2>
     <div class="canvas high">
       <svg width="1140" height="430" viewBox="0 0 1140 430">
@@ -99,7 +133,7 @@
         </defs>
         <!-- context box -->
         <rect x="20" y="26" width="450" height="66" rx="6" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
-        <text class="blabel" x="245" y="65" text-anchor="middle" fill="#2B2F36">Kellogg is the most innovative business&hellip;</text>
+        <text class="blabel" x="245" y="65" text-anchor="middle" fill="#2B2F36">The most innovative school is&hellip;</text>
         <line x1="20" y1="108" x2="470" y2="108" stroke="#4E2A84" stroke-width="1.6" marker-start="url(#ap)" marker-end="url(#ap)"/>
         <text class="clabel" x="245" y="132" text-anchor="middle" fill="#4E2A84">Context<tspan fill="#6c727b" font-weight="400">  · the text to autocomplete</tspan></text>
         <!-- arrow to LLM -->
@@ -110,19 +144,19 @@
         <text class="blabel" x="870" y="128" text-anchor="middle" fill="#2B2F36">Predicts the next word</text>
         <line x1="870" y1="142" x2="870" y2="196" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
         <!-- candidates -->
-        <rect x="800" y="206" width="150" height="48" rx="5" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
-        <text class="blabel" x="875" y="236" text-anchor="middle" fill="#2B2F36">school</text>
-        <text class="blabel" x="1058" y="236" text-anchor="middle" fill="#8A9099" font-size="16">90% likely</text>
-        <rect x="800" y="266" width="150" height="48" rx="5" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
-        <text class="blabel" x="875" y="296" text-anchor="middle" fill="#2B2F36">program</text>
-        <text class="blabel" x="1056" y="296" text-anchor="middle" fill="#8A9099" font-size="16">5% likely</text>
+        <rect x="788" y="206" width="174" height="48" rx="5" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
+        <text class="blabel" x="875" y="236" text-anchor="middle" fill="#2B2F36">Northwestern</text>
+        <text class="blabel" x="1062" y="236" text-anchor="middle" fill="#8A9099" font-size="16">21% likely</text>
+        <rect x="788" y="266" width="174" height="48" rx="5" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
+        <text class="blabel" x="875" y="296" text-anchor="middle" fill="#2B2F36">Harvard</text>
+        <text class="blabel" x="1064" y="296" text-anchor="middle" fill="#8A9099" font-size="16">20% likely</text>
         <text class="blabel" x="875" y="344" text-anchor="middle" fill="#8A9099">&hellip;</text>
-        <!-- sample arrow back to the left -->
-        <line x1="792" y1="282" x2="494" y2="282" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
-        <text class="clabel" x="643" y="262" text-anchor="middle" fill="#4E2A84">Sample <tspan fill="#6c727b" font-weight="400">the next word</tspan></text>
+        <!-- sample arrow back to the left (graciously picks "Harvard" — even though Northwestern is likelier) -->
+        <line x1="780" y1="290" x2="494" y2="272" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
+        <text class="clabel" x="640" y="252" text-anchor="middle" fill="#4E2A84">Sample <tspan fill="#6c727b" font-weight="400">the next word</tspan></text>
         <!-- new context box -->
         <rect x="20" y="252" width="468" height="60" rx="6" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
-        <text class="blabel" x="254" y="288" text-anchor="middle" fill="#2B2F36" font-size="17">Kellogg is the most innovative business school&hellip;</text>
+        <text class="blabel" x="254" y="288" text-anchor="middle" fill="#2B2F36" font-size="17">The most innovative school is Harvard&hellip;</text>
         <line x1="254" y1="328" x2="254" y2="372" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
         <text class="blabel" x="254" y="404" text-anchor="middle" fill="#4E2A84" font-weight="600">&hellip; and keep going!</text>
       </svg>
@@ -131,7 +165,7 @@
 
   <!-- 6 — TIMELINE ------------------------------------------------------------>
   <section class="tl">
-    <div class="eyebrow">The last four years</div>
+    <div class="eyebrow">Introduction</div>
     <h2>From ChatGPT to Claude Cowork</h2>
     <div class="wrap">
       <div class="years"><div class="yr">2022</div><div class="yr">2023</div><div class="yr">2024</div><div class="yr">2025</div><div class="yr">2026</div></div>
@@ -146,201 +180,121 @@
     </div>
   </section>
 
-  <!-- 7 — SO WHAT SHOULD WE DO ------------------------------------------------>
-  <section class="statements">
-    <div class="eyebrow">The technology is moving so fast</div>
-    <h2>So what should we do?</h2>
-    <div class="field">
-      <div class="row2">
-        <div class="abox">There are no AI experts&nbsp;&mdash; and everybody can become one.</div>
-        <div class="abox">There is no doubt that it will be transformative.</div>
-      </div>
-      <div class="abox mid">Use it, use it, use it.</div>
-    </div>
-  </section>
+  <!-- ======================== SECTION 2 · LIVE DEMOS ======================== -->
 
-  <!-- 8 — SECTION ------------------------------------------------------------->
+  <!-- 7 — SECTION DIVIDER ----------------------------------------------------->
   <section class="section" data-state="lede">
-    <h2>Building with AI</h2>
+    <h2>Live demos</h2>
     <hr class="rule">
+    <div class="sub">Mostly live — let me show you what AI can actually do now.</div>
   </section>
 
-  <!-- 9 — DEMO ---------------------------------------------------------------->
-  <section class="demo">
-    <div class="eyebrow">Live demo</div>
+  <!-- 8 — DEMO PART 1 · computer agents --------------------------------------->
+  <section class="statements">
+    <div class="eyebrow">Live demos · part 1</div>
+    <h2>Discovering &amp; mastering computer agents</h2>
     <div class="field">
-      <div class="abox">Demo: the unreasonable power of computer agents <span style="font-style:normal;">&nbsp;(Claude Cowork)</span></div>
+      <div class="abox mid" style="width:80%;"><span>From a chatbot that just <b>talks</b> &mdash; to an agent that <b>does the work</b>, on your files and your computer.</span></div>
+      <div class="gbox mid" style="width:60%; background:none; font-family:var(--font-display); font-style:italic; color:var(--slate2); font-size:25px;">Live: Claude Cowork &nbsp;·&nbsp; Codex</div>
     </div>
   </section>
 
-  <!-- 10 — KAI ASSISTANT ------------------------------------------------------>
+  <!-- 9 — DEMO PART 2 · a glimpse of the future (live-built assistant) --------->
   <section class="qr">
-    <div class="eyebrow">Built live</div>
-    <h2>The AI assistant I built in one minute</h2>
+    <div class="eyebrow">Live demos · part 2</div>
+    <h2>A glimpse into the future</h2>
     <div class="field">
-      <div class="url-pill">sebastienmartin.info/p/kai</div>
-      <img class="qr" src="assets/qr-kai.png" alt="QR to the Kai assistant" width="280" height="280">
-      <div class="qrcap">Scan to try it yourself</div>
+      <div style="max-width:880px; text-align:center; font-family:var(--font-body); font-weight:300; font-size:25px; color:var(--slate2); line-height:1.42;">Once AI really knows you and has access to the right tools, it can do so much on its own. Here's the example I just showed you — <b style="color:var(--ink);">built in two minutes</b>, because all the information was already there.</div>
+      <div class="url-pill">sebastienmartin.info/p/keeping-up.html</div>
+      <img class="qr" src="assets/qr-keepingup.png" alt="QR to the talk assistant" width="216" height="216">
+      <div class="qrcap">Scan to try it — it can even send you these slides</div>
     </div>
   </section>
 
-  <!-- 11 — TAKEAWAYS ---------------------------------------------------------->
-  <section class="statements">
-    <div class="eyebrow">So far</div>
-    <h2>The takeaways</h2>
-    <div class="field">
-      <div class="row2">
-        <div class="abox">AI's progress is accelerating.</div>
-        <div class="abox">AI is becoming easier and easier to use and leverage.</div>
-      </div>
-      <div class="abox mid">Success = 5% AI knowledge, 95% domain knowledge.</div>
-    </div>
+  <!-- 10 — DEMO PART 3 · getting started -------------------------------------->
+  <section>
+    <div class="eyebrow">Live demos · part 3</div>
+    <h2>Getting started</h2>
+    <ul style="margin-top:40px;">
+      <li><b>You can do this.</b> No coding required.</li>
+      <li>Pick <b>one real task</b> you do every week.</li>
+      <li>Give the AI your <b>actual files</b>, and iterate by just talking to it.</li>
+      <li><b>Build, build, build.</b></li>
+      <li>On-ramps: <b>Claude</b> (Cowork / Code) · <b>ChatGPT / Codex</b> · <b>Lovable</b> (apps, no code)</li>
+    </ul>
   </section>
 
-  <!-- 12 — SECTION ------------------------------------------------------------>
-  <section class="section" data-state="lede">
-    <h2>Navigating a technology disruption</h2>
-    <hr class="rule">
-  </section>
+  <!-- ======================= SECTION 3 · AI AT KELLOGG ====================== -->
+  <!-- Slides imported from the LSE Visit deck (2026-06 LSE Visit). ------------->
 
-  <!-- 13 — ESAB --------------------------------------------------------------->
-  <section class="esab">
-    <div class="eyebrow">A real decision</div>
-    <h2>If you were in my shoes, what would you do?</h2>
-    <div class="wrap">
-      <div class="who">
-        <img src="assets/esab.png" alt="ESAB">
-        <p>NYSE: ESAB<br>Industrial compounder (mostly welding)<br>~10,000 employees around the world<br>~$3&nbsp;billion yearly revenue</p>
-        <div class="gap"></div>
-        <p>I joined the board in January.<br>My main focus: their AI strategy.</p>
-      </div>
-      <div><div class="abox">Based on your experience and intuition, how should the company react to the AI disruption?</div></div>
-    </div>
-  </section>
-
-  <!-- 14 — GREAT TECH / IMPACT ------------------------------------------------>
-  <section class="bars">
-    <div class="eyebrow">It's never just the technology</div>
-    <h2>Great technology doesn't automatically lead to great impact</h2>
-    <div class="wrap">
-      <div class="stack">
-        <div class="bar">To leverage a technology, we need to understand it</div>
-        <div class="bar">Navigating uncertainty</div>
-        <div class="bar">What's the value created? How do we measure it?</div>
-        <div class="bar">The rest of the system matters</div>
-        <div class="bar">People matter: change management</div>
-      </div>
-      <div class="aside">
-        <img src="assets/tesla.png" alt="Tesla">
-        <div class="note">Introducing robotics in manufacturing took a long time!</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 15 — SECTION ------------------------------------------------------------>
+  <!-- 11 — SECTION DIVIDER ---------------------------------------------------->
   <section class="section" data-state="lede">
     <h2>AI at Kellogg</h2>
     <hr class="rule">
+    <div class="sub">A case study: a year of putting AI into how we teach.</div>
   </section>
 
-  <!-- 16 — KELLOGG OFFERINGS (fan-out) ---------------------------------------->
+  <!-- 12 — NAVIGATING A TECHNOLOGY DISRUPTION (fighting fire with fire) ------->
+  <section>
+    <div class="eyebrow">AI at Kellogg</div>
+    <h2>Navigating a technology disruption</h2>
+    <div class="duo">
+      <figure>
+        <img src="assets/fighting-students.png" alt="Students writing by hand, phones banned">
+        <figcaption>Damage control<span>The new technology hurts our old way of doing things, and we try to work around it.</span></figcaption>
+      </figure>
+      <figure>
+        <img src="assets/fighting-robots.png" alt="OpenAI vs Kellogg robots with flamethrowers">
+        <figcaption>Build something new<span>Or we use that same technology to do things we could never do before.</span></figcaption>
+      </figure>
+    </div>
+    <aside class="notes">When a powerful technology disrupts what we do, the first instinct is damage control: the new tool hurts our old way of working, so we try to protect it. The opportunity is the opposite &mdash; fighting fire with fire: we use that same technology to do things we never could before. Fear first, the good stuff later. AI at Kellogg is my clearest example of the good stuff.</aside>
+  </section>
+
+  <!-- 13 — AI CASES (WSJ) + live demo ----------------------------------------->
+  <section class="two-col tryit">
+    <div class="eyebrow">AI at Kellogg</div>
+    <span class="demobadge">Live demo</span>
+    <h2>Cases you can talk to</h2>
+    <div class="grid">
+      <div class="col fig">
+        <img src="assets/wsj.png" alt="The Wall Street Journal: AI Is Teaching the Next Generation of M.B.A.s the Classic Case Study">
+      </div>
+      <div class="divider"></div>
+      <div class="col fig qr">
+        <img src="assets/wsj-qr.png" alt="QR code to the WSJ article and its live AI-case demo">
+        <div class="urlnote">wsj.com/tech/ai/…the-classic-case-study</div>
+      </div>
+    </div>
+    <div class="capline">Students <b>interview the characters</b> of a real case — built by <b>NoYes&nbsp;AI</b> (Khadija Saleh), written up by the WSJ.</div>
+  </section>
+
+  <!-- 14 — THE CURVE (what I learned) ----------------------------------------->
   <section class="diagram">
-    <div class="eyebrow">Across the curriculum</div>
-    <h2>Kellogg's AI offerings</h2>
-    <div class="canvas high">
-      <svg width="1120" height="380" viewBox="0 0 1120 380">
-        <defs>
-          <marker id="ag" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9298A1"/></marker>
-        </defs>
-        <rect x="345" y="20" width="430" height="58" rx="8" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/>
-        <text class="blabel" x="560" y="55" text-anchor="middle" fill="#4E2A84" font-weight="600">AIML 901 — AI Foundations for Managers</text>
-        <!-- five fan-out arrows -->
-        <line x1="470" y1="86" x2="150" y2="232" stroke="#9298A1" stroke-width="1.8" marker-end="url(#ag)"/>
-        <line x1="510" y1="86" x2="395" y2="252" stroke="#9298A1" stroke-width="1.8" marker-end="url(#ag)"/>
-        <line x1="560" y1="86" x2="560" y2="252" stroke="#9298A1" stroke-width="1.8" marker-end="url(#ag)"/>
-        <line x1="610" y1="86" x2="725" y2="252" stroke="#9298A1" stroke-width="1.8" marker-end="url(#ag)"/>
-        <line x1="650" y1="86" x2="970" y2="232" stroke="#9298A1" stroke-width="1.8" marker-end="url(#ag)"/>
-        <text class="blabel" x="120" y="280" text-anchor="middle" fill="#2B2F36" font-size="24">Marketing</text>
-        <text class="blabel" x="385" y="300" text-anchor="middle" fill="#2B2F36" font-size="24">Finance</text>
-        <text class="blabel" x="560" y="300" text-anchor="middle" fill="#2B2F36" font-size="24">Strategy</text>
-        <text class="blabel" x="735" y="300" text-anchor="middle" fill="#2B2F36" font-size="24">Organizations</text>
-        <text class="blabel" x="990" y="280" text-anchor="middle" fill="#2B2F36" font-size="24">Operations</text>
+    <div class="eyebrow">AI at Kellogg</div>
+    <h2>My experience with AI in education</h2>
+    <div class="canvas" style="top:180px;">
+      <svg width="1040" height="392" viewBox="0 0 1040 392">
+        <defs><marker id="ax" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#3E444E"/></marker></defs>
+        <line x1="80" y1="312" x2="80" y2="30" stroke="#3E444E" stroke-width="2.2" marker-end="url(#ax)"/>
+        <line x1="80" y1="240" x2="1008" y2="240" stroke="#3E444E" stroke-width="2.2" marker-end="url(#ax)"/>
+        <text x="100" y="52" font-family="Inter" font-size="19" fill="#6c727b">AI impact</text>
+        <text x="940" y="266" font-family="Inter" font-size="19" fill="#6c727b">Time</text>
+        <line x1="300" y1="54" x2="300" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <line x1="520" y1="54" x2="520" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <line x1="740" y1="54" x2="740" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <path d="M118,240 L300,240 C335.0,240.0 368.3,316.7 405,316 C441.7,315.3 481.7,236.7 520,236 C558.3,235.3 598.0,309.7 635,312 C672.0,314.3 700.5,277.0 742,250 C783.5,223.0 840.7,184.0 884,150 C927.3,116.0 982.3,63.3 1002,46"
+              fill="none" stroke="#DD9B2E" stroke-width="3.6" stroke-linecap="round"/>
+        <text x="190" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Before AI</text>
+        <text x="410" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Damage control</text>
+        <text x="630" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">First steps</text>
+        <text x="872" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Innovation</text>
       </svg>
     </div>
+    <div class="takeaway" style="font-size:23px; bottom:66px;">After four years, the one thing that predicts success: <b>how involved you stay.</b></div>
   </section>
 
-  <!-- 17 — STUDENT PROJECTS --------------------------------------------------->
-  <section class="proj">
-    <div class="eyebrow">From zero, no coding background</div>
-    <h2>What Kellogg students built in just five weeks</h2>
-    <div class="wrap">
-      <div class="colp">
-        <div class="pbox">Track medication adherence by texting patients personalized reminders</div>
-        <div class="pbox">Track competitor clinical trials to inform pharma strategy</div>
-        <div class="pbox">Answer customer questions automatically and route complex ones to experts</div>
-      </div>
-      <div class="center">
-        <img class="qr" src="assets/qr-syllabus.png" alt="QR to course and projects">
-        <div class="qrcap">Course &amp; projects</div>
-      </div>
-      <div class="colp">
-        <div class="pbox">Turn course syllabi into study plans with deadlines</div>
-        <div class="pbox">Sort and prioritize a travel agency's inbox, flagging urgent requests</div>
-        <div class="pbox">Monitor news and alert retail investors when their stocks are at risk</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 18 — CASE STUDIES (the old way) ----------------------------------------->
-  <section class="case s18">
-    <div class="eyebrow">AI case studies</div>
-    <h2>The classic MBA case study</h2>
-    <div class="wrap">
-      <div>
-        <div class="frame"><img src="assets/hbs-uber-case.png" alt="HBS case: Innovation at Uber"></div>
-        <div class="cap">A typical MBA case study: a long PDF.</div>
-      </div>
-      <div class="strip"><img src="assets/case-pages-strip.png" alt="Many pages of a case study"></div>
-    </div>
-  </section>
-
-  <!-- 19 — CASE STUDIES (the new way) ----------------------------------------->
-  <section class="case s19">
-    <div class="eyebrow">AI case studies</div>
-    <h2>Now: a case you can talk to</h2>
-    <div class="wrap">
-      <div class="frame"><img src="assets/nyt-headline.png" alt="WSJ: AI Is Teaching the Next Generation of MBAs the Classic Case Study"></div>
-      <div class="qrcol">
-        <img class="qr" src="assets/qr-wsj.png" alt="QR to the article">
-        <div class="qrcap">Read more</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 20 — MY AI JOURNEY (impact curve) --------------------------------------->
-  <section class="diagram">
-    <div class="eyebrow">What to expect</div>
-    <h2>Every technology disruption follows a curve</h2>
-    <div class="canvas high">
-      <svg width="1120" height="430" viewBox="0 0 1120 430">
-        <defs>
-          <marker id="ax" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#3E444E"/></marker>
-        </defs>
-        <!-- axes -->
-        <line x1="120" y1="400" x2="120" y2="60" stroke="#3E444E" stroke-width="2" marker-end="url(#ax)"/>
-        <line x1="120" y1="280" x2="1060" y2="280" stroke="#3E444E" stroke-width="2" marker-end="url(#ax)"/>
-        <text class="blabel" x="150" y="92" fill="#2B2F36" font-size="24">AI impact</text>
-        <text class="blabel" x="1000" y="320" fill="#2B2F36" font-size="24">Time</text>
-        <!-- the J-curve -->
-        <path d="M120,280 C 235,280 280,340 360,344 C 425,347 455,283 500,279 C 545,275 565,352 640,366 C 770,388 870,235 1055,80"
-              fill="none" stroke="#DD9B2E" stroke-width="4"/>
-        <text class="blabel" x="300" y="250" fill="#2B2F36" font-size="22"><tspan x="300" dy="0">For any disruption, we first</tspan><tspan x="300" dy="28">experience the negative&hellip;</tspan></text>
-        <text class="blabel" x="720" y="135" fill="#2B2F36" font-size="22"><tspan x="720" dy="0">&hellip; but as we learn to leverage</tspan><tspan x="720" dy="28">the technology, the positive emerges!</tspan></text>
-      </svg>
-    </div>
-  </section>
-
-  <!-- 21 — CLOSE -------------------------------------------------------------->
+  <!-- 15 — CLOSE -------------------------------------------------------------->
   <section class="statements">
     <div class="eyebrow">One last piece of advice</div>
     <h2>Build, build, build</h2>

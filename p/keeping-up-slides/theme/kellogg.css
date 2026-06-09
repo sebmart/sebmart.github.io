@@ -245,9 +245,10 @@
 .reveal section.roadmap .step .n{ font-family:var(--font-display); font-weight:600;
    font-size:26px; color:var(--amber); width:42px; flex:none; }
 .reveal section.roadmap .step .t{ font-family:var(--font-display); font-weight:400;
-   font-size:34px; color:var(--purple); width:430px; flex:none; }
+   font-size:32px; color:var(--purple); width:472px; flex:none; line-height:1.08; }
 .reveal section.roadmap .step .d{ font-family:var(--font-body); font-weight:300;
    font-size:22px; color:var(--slate2); }
+.reveal section.roadmap .step .d b{ color:var(--amber-dk); font-weight:600; }
 
 /* ---- CODE ----------------------------------------------------------------- */
 .reveal section.code pre{ position:absolute; left:96px; right:96px; top:210px; width:auto;
@@ -382,21 +383,35 @@
 .reveal img.qr{ image-rendering:pixelated; display:block; }
 .reveal .qrcap{ font-family:var(--font-body); font-weight:400; font-size:22px; color:var(--slate2); }
 
-/* --- intro / "about me" (2) ----------------------------------------------- */
-.reveal section.intro .cols{ position:absolute; left:96px; right:96px; top:184px; bottom:46px;
-   display:grid; grid-template-columns:1fr 1fr; gap:26px 56px; align-content:start; }
-.reveal section.intro .blk{ margin-bottom:6px; }
-.reveal section.intro .lbl{ font-family:var(--font-display); font-weight:500; font-size:25px;
-   color:var(--purple); margin-bottom:12px; }
+/* --- intro / "about me" (2): 3 compact text columns on top, tall class photo below */
+.reveal section.intro .cols{ position:absolute; left:96px; right:96px; top:158px; height:214px;
+   display:grid; grid-template-columns:repeat(3,1fr); gap:0 46px; align-content:start; }
+.reveal section.intro .blk{ margin-bottom:0; }
+.reveal section.intro .lbl{ font-family:var(--font-display); font-weight:500; font-size:23px;
+   color:var(--purple); margin-bottom:10px; }
 .reveal section.intro ul{ list-style:none; margin:0; padding:0; }
-.reveal section.intro li{ font-family:var(--font-body); font-weight:300; font-size:23px;
-   line-height:1.4; color:var(--ink); position:relative; padding-left:26px; margin-bottom:7px; }
+.reveal section.intro li{ font-family:var(--font-body); font-weight:300; font-size:21px;
+   line-height:1.36; color:var(--ink); position:relative; padding-left:24px; margin-bottom:5px; }
 .reveal section.intro li::before{ content:""; position:absolute; left:0; top:.6em;
-   width:14px; height:3px; background:var(--amber); }
-.reveal .logo-row{ display:flex; align-items:center; gap:30px; flex-wrap:wrap; margin-top:14px; }
-.reveal .logo-row img{ height:46px; width:auto; object-fit:contain; }
-.reveal section.intro img.photo{ width:100%; height:188px; object-fit:cover; object-position:center 30%;
-   border-radius:8px; box-shadow:0 10px 26px rgba(40,30,70,.14); margin-top:8px; }
+   width:13px; height:3px; background:var(--amber); }
+.reveal .logo-row{ display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:12px; }
+.reveal .logo-row img{ height:38px; width:auto; object-fit:contain; }
+.reveal section.intro .photoband{ position:absolute; left:96px; right:96px; bottom:38px; height:300px;
+   border-radius:10px; overflow:hidden; box-shadow:0 10px 26px rgba(40,30,70,.14); }
+.reveal section.intro .photoband img{ width:100%; height:100%; object-fit:cover;
+   object-position:center bottom; display:block; }
+
+/* --- two-image "duo" (12 · navigating a technology disruption) ----------- */
+.reveal .duo{ position:absolute; left:96px; right:96px; top:184px; bottom:74px;
+   display:grid; grid-template-columns:1fr 1fr; gap:54px; align-items:center; }
+.reveal .duo figure{ margin:0; text-align:center; }
+.reveal .duo img{ width:100%; height:auto; max-height:344px; object-fit:contain;
+   border-radius:10px; box-shadow:0 8px 28px rgba(40,30,70,.14); }
+.reveal .duo figcaption{ font-family:var(--font-display); font-weight:500; font-size:25px;
+   color:var(--purple); margin-top:18px; }
+.reveal .duo figcaption span{ display:block; font-family:var(--font-body); font-size:18px;
+   color:var(--slate2); font-weight:300; margin-top:7px; line-height:1.36; max-width:430px;
+   margin-left:auto; margin-right:auto; }
 
 /* --- agenda (3) ----------------------------------------------------------- */
 .reveal section.agenda .wrap{ position:absolute; left:96px; right:96px; top:215px; bottom:58px;
@@ -469,3 +484,31 @@
 .reveal section.case .strip img{ width:100%; max-height:470px; object-fit:contain; display:block; }
 .reveal section.case .qrcol{ display:flex; flex-direction:column; align-items:center; gap:12px; }
 .reveal section.case .qrcol img.qr{ width:210px; height:210px; }
+
+/* --- live-demo badge ------------------------------------------------------- */
+.reveal .demobadge{ display:inline-block; font-family:var(--font-body); font-weight:600;
+   font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:#fff;
+   background:var(--amber); border-radius:999px; padding:4px 13px; }
+.reveal section.case .demobadge{ position:absolute; right:96px; top:82px; }
+
+/* === AI-AT-KELLOGG layouts imported from the LSE deck ====================== */
+/* three word-cards in one row (Kai · AI homework · AI grading) */
+.reveal .threecol{ position:absolute; left:96px; right:96px; top:200px; bottom:74px;
+   display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.reveal .tcard{ border:1px solid var(--line); border-top:3px solid var(--amber);
+   border-radius:10px; padding:24px 22px; background:#fff;
+   box-shadow:0 2px 10px rgba(40,30,70,.05); display:flex; flex-direction:column; gap:11px; }
+.reveal .tcard .demobadge{ align-self:flex-start; }
+.reveal .tcard .t{ font-family:var(--font-display); font-weight:500; font-size:25px;
+   color:var(--purple); line-height:1.1; }
+.reveal .tcard .p{ font-family:var(--font-body); font-weight:300; font-size:18px;
+   color:var(--slate2); line-height:1.4; }
+/* AI-case "try it" slide: wider headline image left, QR right */
+.reveal section.tryit .grid{ grid-template-columns:1.5fr 1px 1fr; }
+.reveal .two-col .col.fig img{ width:100%; height:auto; border:1px solid var(--line);
+   border-radius:8px; box-shadow:0 6px 26px rgba(40,30,70,.10); }
+.reveal .two-col .col.fig.qr{ flex-direction:column; gap:14px; }
+.reveal section.tryit .col.fig.qr img{ width:auto; height:auto; max-height:230px; max-width:100%;
+   border:0; border-radius:0; box-shadow:none; }
+.reveal .urlnote{ font-family:var(--font-mono); font-size:15px; color:var(--purple);
+   text-align:center; max-width:300px; line-height:1.3; }
