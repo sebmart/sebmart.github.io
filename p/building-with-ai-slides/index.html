@@ -1,0 +1,333 @@
+<!doctype html>
+<!-- ===========================================================================
+     BUILDING WITH AI  —  Kellogg Summer CIM (Orientation), June 18 2026
+     Reveal.js Kellogg theme. Design in theme/kellogg.css; content here.
+
+     RAW v1 — built independently from two sources, to be iterated:
+       · FORMAT  : June 9 ANHW-HKS "Keeping Up with AI" reveal.js deck
+       · TOPIC   : Apr 25 DAK "Building with AI" mock-class brainstorm
+                   (notes/2026-04-25 - DAK mock class Building with AI - teaching.md)
+
+     AUDIENCE  : ~170-180 incoming MBAs (1Y + Triple M), White Auditorium.
+                 Already committed — not a yield pitch. Final SIM session,
+                 right before Dean Hanifee's closing remarks. 30 min, own laptop.
+     FRAME (from May 21 prep call): inspirational / AI-frontier. Impressive live
+                 demos in the FIRST half, then step back to "what does it mean for
+                 you / what would I do if I were you," end on an empowering note.
+
+     STRUCTURE (4 sections, eyebrow = section name on every content slide):
+       Introduction · Live demos · What it means for you · Close
+     30-min budget:  ~9 intro/crash course · ~12 demos · ~6 what-it-means · ~3 close
+
+     TODO before delivery (flagged for iteration):
+       · "Glimpse of the future" QR + URL still point at the June 9 keeping-up
+         page — regenerate a CIM-specific assistant page + QR (assets/qr-cim.png).
+     ======================================================================== -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building with AI — Sébastien Martin</title>
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="theme/kellogg.css">
+</head>
+<body class="branded">
+<div class="reveal"><div class="slides">
+
+  <!-- 1 — TITLE --------------------------------------------------------------->
+  <section class="title" data-state="lede">
+    <div class="brandmark"><div class="bar"></div><div class="nw">Northwestern<span>|</span>Kellogg</div></div>
+    <h1>Building<br>with AI</h1>
+    <hr class="rule">
+    <div class="sub">There's never been a better time.</div>
+    <div class="by"><b>Sébastien Martin</b>Associate Professor of Operations · Northwestern Kellogg<br><span>Welcome to Kellogg · Summer CIM · June 18, 2026</span></div>
+    <aside class="notes">Open warm. These are your incoming students — they've chosen Kellogg, they're not deciding anymore. Signature open: "there are no AI experts — and everybody can become one. At Kellogg, we'll make sure you do." Last session before the Dean closes, so leave them energized.</aside>
+  </section>
+
+  <!-- ======================= SECTION 1 · INTRODUCTION ======================= -->
+
+  <!-- 2 — INTRO / BIO --------------------------------------------------------->
+  <section class="intro">
+    <div class="eyebrow">Introduction</div>
+    <h2>Sébastien Martin</h2>
+    <div class="cols">
+      <div class="blk">
+        <div class="lbl">Background</div>
+        <ul>
+          <li>From Paris, France</li>
+          <li>PhD from MIT</li>
+          <li>Associate Professor of Operations</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <div class="lbl">Research — AI &amp; algorithms</div>
+        <ul>
+          <li>Lyft's dispatch algorithm</li>
+          <li>Waymo Fleet Control</li>
+          <li>Boston &amp; SF school bus routing</li>
+          <li>Advising PhD students</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <div class="lbl">Teaching</div>
+        <ul>
+          <li>AI Foundations for Managers — AgentOps</li>
+          <li>Operations Management</li>
+        </ul>
+      </div>
+    </div>
+    <div class="photoband"><img src="assets/class-photo.jpg" alt="AIML 901 — AgentOps class"></div>
+    <aside class="notes">Quick. The point of the bio is legitimacy + warmth, not a CV. Land "you might take my class" — they're about to be these students.</aside>
+  </section>
+
+  <!-- 3 — ROADMAP ------------------------------------------------------------->
+  <section class="roadmap">
+    <div class="eyebrow">Introduction</div>
+    <h2>The next 30 minutes</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <div class="t">Where AI is today</div>
+        <div class="d">from chatbots to agents that do real work</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div class="t">Live demos</div>
+        <div class="d">what you can actually build now</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div class="t">Let's get building</div>
+        <div class="d">your turn &mdash; no experience needed</div>
+      </div>
+      <div class="step">
+        <div class="n">4</div>
+        <div class="t">AI at Kellogg</div>
+        <div class="d">the community and classes that have your back</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — AGENTOPS / WHAT STUDENTS BUILT -------------------------------------->
+  <section class="proj">
+    <div class="eyebrow">Introduction</div>
+    <h2>AIML&nbsp;901 — what students like you built in five weeks</h2>
+    <div class="wrap">
+      <div class="colp">
+        <div class="pbox">Track medication adherence by texting patients personalized reminders</div>
+        <div class="pbox">Track competitor clinical trials to inform pharma strategy</div>
+        <div class="pbox">Answer customer questions automatically and route complex ones to experts</div>
+      </div>
+      <div class="center">
+        <img class="qr" src="assets/qr-syllabus.png" alt="QR to course and projects">
+        <div class="qrcap" style="line-height:1.3;">From zero, no coding<br>&rarr; 193 projects</div>
+      </div>
+      <div class="colp">
+        <div class="pbox">Turn course syllabi into study plans with deadlines</div>
+        <div class="pbox">Sort and prioritize a travel agency's inbox, flagging urgent requests</div>
+        <div class="pbox">Monitor news and alert retail investors when their stocks are at risk</div>
+      </div>
+    </div>
+    <aside class="notes">Reframe for this room: these were MBAs with no coding background — soon, that's you. Sets up "you can do this" before we even get to the demos.</aside>
+  </section>
+
+  <!-- 5 — LLM AUTOCOMPLETE (the Harvard / Northwestern joke) ------------------>
+  <section class="diagram">
+    <div class="eyebrow">Introduction</div>
+    <h2>Large Language Models: a fancy &ldquo;autocomplete&rdquo;</h2>
+    <div class="canvas high">
+      <svg width="1140" height="430" viewBox="0 0 1140 430">
+        <defs>
+          <marker id="ap" markerWidth="9" markerHeight="9" refX="6.8" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#4E2A84"/></marker>
+        </defs>
+        <!-- context box -->
+        <rect x="20" y="26" width="450" height="66" rx="6" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
+        <text class="blabel" x="245" y="65" text-anchor="middle" fill="#2B2F36">The most innovative school is&hellip;</text>
+        <line x1="20" y1="108" x2="470" y2="108" stroke="#4E2A84" stroke-width="1.6" marker-start="url(#ap)" marker-end="url(#ap)"/>
+        <text class="clabel" x="245" y="132" text-anchor="middle" fill="#4E2A84">Context<tspan fill="#6c727b" font-weight="400">  · the text to autocomplete</tspan></text>
+        <!-- arrow to LLM -->
+        <line x1="490" y1="59" x2="612" y2="59" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
+        <!-- LLM box -->
+        <rect x="620" y="26" width="500" height="66" rx="6" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/>
+        <text class="blabel" x="870" y="65" text-anchor="middle" fill="#4E2A84" font-weight="600">Large Language Model</text>
+        <text class="blabel" x="870" y="128" text-anchor="middle" fill="#2B2F36">Predicts the next word</text>
+        <line x1="870" y1="142" x2="870" y2="196" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
+        <!-- candidates -->
+        <rect x="788" y="206" width="174" height="48" rx="5" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
+        <text class="blabel" x="875" y="236" text-anchor="middle" fill="#2B2F36">Northwestern</text>
+        <text class="blabel" x="1062" y="236" text-anchor="middle" fill="#8A9099" font-size="16">21% likely</text>
+        <rect x="788" y="266" width="174" height="48" rx="5" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
+        <text class="blabel" x="875" y="296" text-anchor="middle" fill="#2B2F36">Harvard</text>
+        <text class="blabel" x="1064" y="296" text-anchor="middle" fill="#8A9099" font-size="16">20% likely</text>
+        <text class="blabel" x="875" y="344" text-anchor="middle" fill="#8A9099">&hellip;</text>
+        <!-- sample arrow back to the left (graciously picks "Harvard" — even though Northwestern is likelier) -->
+        <line x1="780" y1="290" x2="494" y2="272" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
+        <text class="clabel" x="640" y="252" text-anchor="middle" fill="#4E2A84">Sample <tspan fill="#6c727b" font-weight="400">the next word</tspan></text>
+        <!-- new context box -->
+        <rect x="20" y="252" width="468" height="60" rx="6" fill="#EFEFF1" stroke="#D9D9DE" stroke-width="1"/>
+        <text class="blabel" x="254" y="288" text-anchor="middle" fill="#2B2F36" font-size="17">The most innovative school is Northwestern&hellip;</text>
+        <line x1="254" y1="328" x2="254" y2="372" stroke="#4E2A84" stroke-width="2.6" marker-end="url(#ap)"/>
+        <text class="blabel" x="254" y="404" text-anchor="middle" fill="#4E2A84" font-weight="600">&hellip; and keep going!</text>
+      </svg>
+    </div>
+    <aside class="notes">The joke: ask for the most innovative school, model says Northwestern is likeliest — but it samples, so sometimes it'll humble itself and say Harvard. Demystifies "intelligence" into prediction. Home crowd now, so flip it Northwestern-first.</aside>
+  </section>
+
+  <!-- 6 — TIMELINE ------------------------------------------------------------>
+  <section class="tl">
+    <div class="eyebrow">Introduction</div>
+    <h2>From ChatGPT to Claude Cowork — in four years</h2>
+    <div class="wrap">
+      <div class="years"><div class="yr">2022</div><div class="yr">2023</div><div class="yr">2024</div><div class="yr">2025</div><div class="yr">2026</div></div>
+      <div class="line"></div>
+      <div class="cells">
+        <div class="cell"><div class="h">ChatGPT</div><div class="d">LLMs can write and answer questions</div></div>
+        <div class="cell"><div class="h">GPT-4 &amp; the AI wave</div><div class="d">LLMs can be really smart</div></div>
+        <div class="cell"><div class="h">Agentic AI</div><div class="d">LLMs can &ldquo;reason&rdquo; and use tools</div></div>
+        <div class="cell"><div class="h">Claude Code &amp; coding agents</div><div class="d">LLMs can work independently on complex tasks</div></div>
+        <div class="cell"><div class="h">Claude Cowork &amp; computer agents</div><div class="d">LLMs can control a computer and do real work</div></div>
+      </div>
+    </div>
+    <aside class="notes">"Four AI years in three minutes." Land the turning-point line: the jump from chatbot-that-talks to agent-that-does-the-work happened in the last year — that's why right now matters, and why you're arriving at exactly the right time.</aside>
+  </section>
+
+  <!-- ======================== SECTION 2 · LIVE DEMOS ======================== -->
+
+  <!-- 7 — SECTION DIVIDER ----------------------------------------------------->
+  <section class="section" data-state="lede">
+    <h2>Live demos</h2>
+    <hr class="rule">
+    <div class="sub">Mostly live, on my laptop — let me show you what AI can actually do now.</div>
+    <aside class="notes">This is the impressive first half the prep call asked for. Switch to the live screen. Keep slides minimal from here — it's screen + voice.</aside>
+  </section>
+
+  <!-- 8 — DEMO PART 1 · computer agents --------------------------------------->
+  <section class="statements">
+    <div class="eyebrow">Live demos · part 1</div>
+    <h2>Discovering &amp; mastering computer agents</h2>
+    <div class="field">
+      <div class="abox mid" style="width:80%;"><span>From a chatbot that just <b>talks</b> &mdash; to an agent that <b>does the work</b>, on your files and your computer.</span></div>
+      <div class="gbox mid" style="width:60%; background:none; font-family:var(--font-display); font-style:italic; color:var(--slate2); font-size:25px;">Live: Claude Cowork &nbsp;·&nbsp; Codex</div>
+    </div>
+    <aside class="notes">Pick ONE impressive, real task on actual files. The wow is that it does work, not that it chats. Inoculate against "this is an ad": doesn't matter if it's Cowork, Cursor, or Codex — the bottleneck is what you tell it to do.</aside>
+  </section>
+
+  <!-- 9 — DEMO PART 2 · a glimpse of the future (live-built assistant) --------->
+  <section class="qr">
+    <div class="eyebrow">Live demos · part 2</div>
+    <h2>A glimpse into the future</h2>
+    <div class="field">
+      <div style="max-width:880px; text-align:center; font-family:var(--font-body); font-weight:300; font-size:25px; color:var(--slate2); line-height:1.42;">Once AI really knows you and has access to the right tools, it can do so much on its own. Here's the example I just showed you — <b style="color:var(--ink);">built in two minutes</b>, because all the information was already there.</div>
+      <!-- TODO: regenerate CIM-specific assistant page + QR (currently June-9 keeping-up) -->
+      <div class="url-pill">sebastienmartin.info/p/building-with-ai.html</div>
+      <img class="qr" src="assets/qr-keepingup.png" alt="QR to the talk assistant" width="216" height="216">
+      <div class="qrcap">Scan to try it — it can even send you these slides</div>
+    </div>
+    <aside class="notes">TODO: build a CIM-specific assistant page + fresh QR before the talk. This is the optional "spin up an assistant page" item — confirm with Sébastien whether we ship one for CIM.</aside>
+  </section>
+
+  <!-- ==================== SECTION 3 · WHAT IT MEANS FOR YOU ================= -->
+  <!-- The DAK-flavored turn: step back from the demos to "what would I do." --->
+
+  <!-- 10 — SECTION DIVIDER ---------------------------------------------------->
+  <section class="section" data-state="lede">
+    <h2>What it means for you</h2>
+    <hr class="rule">
+    <div class="sub">Step back from the keyboard. You didn't come to Kellogg only to learn what AI <i>can</i> do.</div>
+  </section>
+
+  <!-- 11 — CAN vs SHOULD (board-chair framing) -------------------------------->
+  <section class="statements">
+    <div class="eyebrow">What it means for you</div>
+    <h2>Not just what you <i>can</i> do — what you <i>should</i></h2>
+    <div class="field">
+      <div class="abox mid" style="width:82%;"><span>Picture yourself a few years out, in the room where the call gets made. This technology lands on your desk. <b>What's your first move? What are the trade-offs?</b></span></div>
+      <div class="gbox mid" style="width:64%; background:none; font-family:var(--font-display); font-style:italic; color:var(--slate2); font-size:24px;">I sit on the board of a large industrial company. This is the question we actually wrestle with.</div>
+    </div>
+    <aside class="notes">DAK's board-chair beat, adapted for an auditorium (rhetorical, not a live debate). The point: the hard part isn't capability, it's judgment — and that's exactly what an MBA is for. Probable landing: uncertainty, moving fast, disruption. Keep it short; don't try to run a real back-and-forth with 180 people.</aside>
+  </section>
+
+  <!-- 12 — AI AT KELLOGG · navigating a technology disruption ------------------>
+  <section>
+    <div class="eyebrow">What it means for you</div>
+    <h2>Navigating a technology disruption</h2>
+    <div class="duo">
+      <figure>
+        <img src="assets/fighting-students.png" alt="Students writing by hand, phones banned">
+        <figcaption>Damage control<span>The new technology hurts our old way of doing things, and we try to work around it.</span></figcaption>
+      </figure>
+      <figure>
+        <img src="assets/fighting-robots.png" alt="OpenAI vs Kellogg robots with flamethrowers">
+        <figcaption>Build something new<span>Or we use that same technology to do things we could never do before.</span></figcaption>
+      </figure>
+    </div>
+    <aside class="notes">My own answer to the board question — what we did at Kellogg. First instinct with a disruption is damage control: protect the old way. The opportunity is the opposite — fight fire with fire, use the same tech to do what we never could. Fear first, the good stuff later.</aside>
+  </section>
+
+  <!-- 13 — AI CASES (WSJ) — the Kellogg "good stuff" --------------------------->
+  <section class="two-col tryit">
+    <div class="eyebrow">What it means for you</div>
+    <span class="demobadge">Live demo</span>
+    <h2>Cases you can talk to</h2>
+    <div class="grid">
+      <div class="col fig">
+        <img src="assets/wsj.png" alt="The Wall Street Journal: AI Is Teaching the Next Generation of M.B.A.s the Classic Case Study">
+      </div>
+      <div class="divider"></div>
+      <div class="col fig qr">
+        <img src="assets/wsj-qr.png" alt="QR code to the WSJ article and its live AI-case demo">
+        <div class="urlnote">wsj.com/tech/ai/…the-classic-case-study</div>
+      </div>
+    </div>
+    <div class="capline">In your classes you'll <b>interview the characters</b> of a real case — built by <b>NoYes&nbsp;AI</b>, written up by the WSJ.</div>
+    <aside class="notes">Concrete, "this is waiting for you here." Optional quick live demo of an AI case if time allows — otherwise just show it. This is the empowering bridge into the close: Kellogg is already building with AI, and so will you.</aside>
+  </section>
+
+  <!-- ========================== SECTION 4 · CLOSE ========================== -->
+
+  <!-- 14 — GETTING STARTED ---------------------------------------------------->
+  <section>
+    <div class="eyebrow">One piece of advice</div>
+    <h2>How to start — today</h2>
+    <ul style="margin-top:40px;">
+      <li><b>You can do this.</b> No coding required.</li>
+      <li>Pick <b>one real task</b> you do every week.</li>
+      <li>Give the AI your <b>actual files</b>, and iterate by just talking to it.</li>
+      <li><b>Build, build, build.</b></li>
+      <li>On-ramps: <b>Claude</b> (Cowork / Code) · <b>ChatGPT / Codex</b> · <b>Lovable</b> (apps, no code)</li>
+    </ul>
+    <aside class="notes">Make it actionable before the philosophy. They're about to have time and a cohort — perfect conditions to just start.</aside>
+  </section>
+
+  <!-- 15 — CLOSE -------------------------------------------------------------->
+  <section class="statements">
+    <div class="eyebrow">Welcome to Kellogg</div>
+    <h2>Build, build, build</h2>
+    <div class="field">
+      <div class="abox mid" style="width:78%; font-size:32px; padding:34px 44px;">There are no AI experts&nbsp;&mdash; and everybody can become one. At Kellogg, we'll make sure you do.</div>
+      <div class="gbox mid" style="background:none; font-family:var(--font-display); font-style:italic; color:var(--slate2); font-size:26px;">Welcome &mdash; and use it, use it, use it. &nbsp;·&nbsp; sebastienmartin.info</div>
+    </div>
+    <aside class="notes">The DAK close, verbatim spirit. "A few years ago I didn't know much about AI; now we have all this. From outside you see the downside — the moment you start using it, you see the upside. Use it, use it, use it." Hand back to the Dean on a high.</aside>
+  </section>
+
+</div></div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+<script>
+  const deck = window.deck = new Reveal({
+    width: 1280, height: 720, margin: 0,
+    center: false, hash: true, slideNumber: 'c/t',
+    transition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+  });
+  const setLede = () => document.querySelector('.reveal')
+      .classList.toggle('lede', !!deck.getCurrentSlide().matches('.title,.section,.image-full'));
+  deck.on('ready', setLede); deck.on('slidechanged', setLede);
+  deck.initialize();
+</script>
+</body>
+</html>
