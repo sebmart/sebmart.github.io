@@ -9,5 +9,8 @@ Gemfile.lock
 assets/libs/
 node_modules/
 vendor
+# ...but DO ship the reveal.js bundle for the published slides deck (it lives in a nested vendor/):
+!/p/building-with-ai-slides/vendor/
+!/p/building-with-ai-slides/vendor/**
 .idea
 resume-builder/dist/
