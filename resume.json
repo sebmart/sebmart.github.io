@@ -266,6 +266,14 @@
   ],
   "publications": [
     {
+      "name": "Navigating the Educational Video Game Paradox",
+      "authors": "A. Jensen, S. Martin, K. Smilowitz",
+      "publisher": "Submitted to Management Science",
+      "releaseDate": "2026",
+      "url": "/assets/pdf/navigating-the-educational-video-game-paradox.pdf",
+      "summary": ""
+    },
+    {
       "name": "Let's Have a Conversation: Designing and Evaluating LLM Agents for Interactive Optimization",
       "authors": "J. Drossman, A. Jacquillat, S. Martin",
       "publisher": "Submitted to MSOM",
