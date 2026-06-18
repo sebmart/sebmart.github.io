@@ -375,13 +375,71 @@
    display:flex; align-items:center; justify-content:center; }
 .reveal section.demo .abox{ width:64%; font-size:34px; padding:34px 44px; }
 
-/* --- QR / link slides (10) ------------------------------------------------ */
-.reveal section.qr .field{ position:absolute; left:96px; right:96px; top:188px; bottom:60px;
-   display:flex; flex-direction:column; align-items:center; gap:30px; }
-.reveal .url-pill{ background:var(--purple); color:#fff; font-family:var(--font-body); font-weight:600;
-   font-size:30px; padding:14px 36px; border-radius:8px; letter-spacing:.005em; }
-.reveal img.qr{ image-rendering:pixelated; display:block; }
-.reveal .qrcap{ font-family:var(--font-body); font-weight:400; font-size:22px; color:var(--slate2); }
+/* --- QR / link slides: text LEFT, QR RIGHT (balanced; fixes the old
+       left-title / centered-body imbalance) ---------------------------------- */
+.reveal section.qr .field{ position:absolute; left:96px; right:96px; top:214px; bottom:96px;
+   display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+.reveal section.qr .qtext{ font-family:var(--font-body); font-weight:300; font-size:31px;
+   color:var(--ink); line-height:1.46; }
+.reveal section.qr .qtext b{ font-weight:600; color:var(--ink); }
+.reveal section.qr .qtext .small{ display:block; font-size:24px; color:var(--slate2);
+   line-height:1.45; margin-top:22px; }
+.reveal section.qr .qcol{ display:flex; flex-direction:column; align-items:center; gap:18px; }
+.reveal img.qr{ image-rendering:pixelated; display:block; width:236px; height:236px; }
+.reveal .url-pill, .reveal a.url-pill{ background:var(--purple); color:#fff; font-family:var(--font-body);
+   font-weight:600; font-size:19px; padding:11px 22px; border-radius:8px; letter-spacing:.004em;
+   text-align:center; overflow-wrap:anywhere; line-height:1.3; text-decoration:none;
+   display:inline-block; }
+.reveal .qrcap{ font-family:var(--font-body); font-weight:400; font-size:21px; color:var(--slate2);
+   text-align:center; max-width:300px; }
+
+/* --- single centered statement slide (uncertainty beat) ------------------- */
+.reveal section.oneliner .eyebrow{ position:absolute; left:96px; top:78px; }
+.reveal section.oneliner .field{ position:absolute; left:130px; right:130px; top:0; bottom:0;
+   display:flex; flex-direction:column; align-items:center; justify-content:center;
+   text-align:center; gap:26px; }
+.reveal section.oneliner .lead{ font-family:var(--font-display); font-weight:300; font-size:40px;
+   color:var(--ink); line-height:1.25; }
+.reveal section.oneliner .q{ font-family:var(--font-display); font-weight:300; font-size:52px;
+   color:var(--purple); line-height:1.2; }
+
+/* --- "what the class before you built" cards ------------------------------ */
+.reveal section.examples .wrap{ position:absolute; left:96px; right:96px; top:206px; bottom:92px;
+   display:flex; flex-direction:column; gap:30px; justify-content:center; }
+.reveal section.examples .row{ display:grid; grid-template-columns:1fr 1fr; gap:34px; align-items:stretch; }
+.reveal section.examples .card{ background:#fff; border:1px solid var(--line); border-radius:10px;
+   padding:26px 30px; display:flex; gap:24px; align-items:center;
+   box-shadow:0 4px 16px rgba(40,30,70,.06); }
+.reveal section.examples .card.games{ border-top:5px solid var(--amber); }
+.reveal section.examples .card.larry{ border-top:5px solid var(--purple); }
+.reveal section.examples .ctext{ font-family:var(--font-body); font-weight:300; font-size:23px;
+   color:var(--ink); line-height:1.42; }
+.reveal section.examples .ctext b{ font-weight:600; color:var(--ink); }
+.reveal section.examples .cqr{ display:flex; flex-direction:column; align-items:center; gap:7px; flex:none; }
+.reveal section.examples .cqr img{ width:116px; height:116px; image-rendering:pixelated; }
+.reveal section.examples .cqr .u{ font-family:var(--font-mono); font-size:12px; color:var(--purple);
+   text-align:center; max-width:124px; line-height:1.3; text-decoration:none; }
+.reveal section.examples .kicker{ text-align:center; font-family:var(--font-display); font-style:italic;
+   font-weight:300; font-size:26px; color:var(--slate2); }
+
+/* --- closing "thank you" slide (fully centered, intentional) -------------- */
+.reveal section.close{ display:flex; flex-direction:column; align-items:center; justify-content:center;
+   text-align:center; padding-top:120px; }
+.reveal section.close .eyebrow{ margin-bottom:18px; }
+.reveal section.close h2{ font-weight:300; font-size:80px; color:var(--purple); }
+.reveal section.close .msg{ font-family:var(--font-display); font-weight:300; font-size:33px;
+   color:var(--ink); line-height:1.3; max-width:960px; margin-top:28px; }
+.reveal section.close .msg b{ color:var(--purple); font-weight:400; }
+.reveal section.close .advice{ font-family:var(--font-body); font-weight:300; font-size:27px;
+   color:var(--slate2); margin-top:20px; }
+.reveal section.close .advice b{ color:var(--amber-dk); font-weight:600; }
+.reveal section.close .qrow{ display:inline-flex; align-items:center; gap:22px; margin-top:42px; text-align:left; }
+.reveal section.close .qrow img.qr{ width:152px; height:152px; }
+.reveal section.close .qrow .qlink{ text-align:left; }
+.reveal section.close .qrow .qlink .lab{ font-family:var(--font-body); font-weight:300; font-size:20px;
+   color:var(--slate2); line-height:1.4; }
+.reveal section.close .qrow .qlink .url{ font-family:var(--font-body); font-weight:600; font-size:20px;
+   color:var(--purple); margin-top:4px; text-decoration:none; }
 
 /* --- intro / "about me" (2): 3 compact text columns on top, tall class photo below */
 .reveal section.intro .cols{ position:absolute; left:96px; right:96px; top:226px; height:170px;
@@ -512,4 +570,4 @@
 .reveal section.tryit .col.fig.qr img{ width:auto; height:auto; max-height:230px; max-width:100%;
    border:0; border-radius:0; box-shadow:none; }
 .reveal .urlnote{ font-family:var(--font-mono); font-size:15px; color:var(--purple);
-   text-align:center; max-width:300px; line-height:1.3; }
+   text-align:center; max-width:300px; line-height:1.3; text-decoration:none; }
