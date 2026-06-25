@@ -8,7 +8,7 @@
 		{{#each resume.awards}}
 		<div class='blockHeader'>
 			<span class='title'>
-				{{#if title}}{{title}}{{/if}}
+				{{#if url}}<a href="{{url}}">{{title}}</a>{{else}}{{#if title}}{{title}}{{/if}}{{/if}}
 			</span>
 			{{#if awarder}}
 				<span class='divider'>|</span> 
