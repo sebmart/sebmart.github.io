@@ -988,10 +988,10 @@ details.code-collapse {
 
 // Shared pages header
 .shared-hero {
-  padding: 2.5rem 0 2rem;
-  margin-top: 3.5rem;
+  padding: 3rem 0 2rem;
+  margin-top: 0;
   border-bottom: 1px solid var(--global-divider-color);
-  background: var(--global-bg-color);
+  background: rgba(128, 128, 128, 0.06);
 
   &__top {
     display: flex;
