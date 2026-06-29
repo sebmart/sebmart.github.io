@@ -964,3 +964,15 @@ The full template for the three-AI version, where a person reviews the trickier 
   "tags": []
 }
 ```
+
+## 4 · Talk to Maya
+
+For the second half, we step back from building and look at a real, messy organization. Meet **Maya Chen**, who's leading the *AfterVisit AI* pilot at Proxima Health Systems — a North American distributor of medical equipment. She's convinced it's a winner. **You're the outside advisor she brought in.**
+
+Interview her: figure out what she's really trying to do, who inside the company will make or break it, and the risks her optimism is glossing over. Then we'll debrief together — *where does the human stay, who resists, and how would you know in 90 days whether it worked?*
+
+<p style="margin: 1.2rem 0;">
+  <a href="/p/maya.html" target="_blank" rel="noopener" style="display:inline-block; background:#0d9488; color:#fff; font-weight:600; padding:12px 22px; border-radius:10px; text-decoration:none;">Open the chat with Maya in full screen ↗</a>
+</p>
+
+<iframe src="/p/maya.html" title="Chat with Maya Chen" loading="lazy" style="width:100%; height:700px; border:1px solid rgba(15,31,28,0.15); border-radius:14px; box-shadow:0 4px 18px rgba(15,31,28,0.08); background:#f4f7f6;"></iframe>
