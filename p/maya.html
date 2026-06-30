@@ -392,13 +392,12 @@ a:hover { color: var(--accent-deep); }
     </div>
     <h1 class="hero__title">Talk to Maya.</h1>
     <p class="hero__sub">
-      You're the outside advisor Proxima Health Systems brought in. <strong>Maya Chen</strong> is leading the <em>AfterVisit AI</em> pilot — and she's sure it's a winner. Interview her: pull out the real story, the people who'll make or break it, and the risks she's glossing over.
+      You're the outside advisor Proxima Health Systems brought in. <strong>Maya Chen</strong> is leading the <em>AfterVisit AI</em> pilot — and she's sure it's a winner. Interview her: pull out the real story, the people who'll make or break it, and the risks she's glossing over. Introduce yourself, then dig in — you might ask what she's actually building, who's on board, where a human needs to stay, or how she'd know in 90 days whether it worked.
     </p>
   </header>
 
   <main class="chat" id="chat">
     <div class="messages" id="messages"></div>
-    <div class="suggestions" id="suggestions"></div>
   </main>
 
   <div class="composer">
@@ -417,18 +416,9 @@ const WORKER_URL = (location.hostname === "localhost" || location.hostname === "
   ? "http://localhost:8788/chat"
   : "https://kellogg-kai-demo.92sebastien.workers.dev/chat";
 
-const STARTERS = [
-  "In your own words, what are you trying to do here?",
-  "Walk me through how it'd actually work.",
-  "Is everyone at Proxima on board with this?",
-  "If it works, how would you know? What would you measure?",
-  "Who pushes back the hardest?"
-];
-
 const GREETING = "Hi — really glad you're here. I'm **Maya Chen**, I lead the *AfterVisit AI* pilot at Proxima Health Systems — we're a big North American distributor of medical equipment, and I'm trying to give our field reps the hours they lose every day to post-visit paperwork. I brought you in because I need an outside read on how to build and roll this out the right way. What should I call you? Then fire away — what do you want to know?";
 
 const $messages = document.getElementById("messages");
-const $suggestions = document.getElementById("suggestions");
 const $input = document.getElementById("input");
 const $send = document.getElementById("send");
 const $themeToggle = document.getElementById("theme-toggle");
@@ -523,28 +513,6 @@ function scrollToBottom() {
   });
 }
 
-function showSuggestions(items) {
-  $suggestions.innerHTML = "";
-  for (const item of items) {
-    const btn = document.createElement("button");
-    btn.className = "chip";
-    btn.type = "button";
-    btn.textContent = item;
-    btn.addEventListener("click", () => {
-      $input.value = item;
-      $input.focus();
-      autoResize();
-      updateSendDisabled();
-      send();
-    });
-    $suggestions.appendChild(btn);
-  }
-}
-
-function clearSuggestions() {
-  $suggestions.innerHTML = "";
-}
-
 function autoResize() {
   $input.style.height = "auto";
   $input.style.height = Math.min($input.scrollHeight, 200) + "px";
@@ -567,7 +535,6 @@ async function send() {
   if (streaming) return;
   const text = $input.value.trim();
   if (!text) return;
-  clearSuggestions();
   $input.value = "";
   autoResize();
   addMessage("user", text);
@@ -587,7 +554,7 @@ async function send() {
     if (!res.ok) {
       let msg = "Sorry — I'm having trouble responding right now.";
       try { const j = await res.json(); if (j?.error) msg = j.error; } catch(_) {}
-      if (res.status === 429) msg = "Slow down a moment — this demo is rate-limited per visitor. Try again in a few seconds.";
+      if (res.status === 429) msg = "A lot of people are chatting at once — give it a few seconds and try again.";
       bubble.innerHTML = `<div class="error">${escapeHTML(msg)}</div>`;
       return;
     }
@@ -638,9 +605,11 @@ async function send() {
   }
 }
 
-// Boot
+// Boot — show Maya's opening line and seed it into history as her first turn,
+// so when the student replies she continues the conversation instead of
+// re-introducing herself.
 addMessage("assistant", GREETING);
-showSuggestions(STARTERS);
+history.push({ role: "assistant", content: GREETING });
 $input.focus();
 </script>
 </body>
