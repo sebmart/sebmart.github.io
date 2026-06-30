@@ -66,10 +66,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.4,
       "position": [
-        -352,
-        336
+        -1232,
+        48
       ],
-      "id": "4b4c9dc5-217b-4d72-bde4-f94ded6403bd",
+      "id": "4502f514-4a6c-4b47-849e-b37dc066e09d",
       "name": "Gmail Trigger",
       "credentials": {
         "gmailOAuth2": {
@@ -91,10 +91,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        -32,
-        560
+        -912,
+        272
       ],
-      "id": "03418799-4562-4165-b9fa-4433633e969b",
+      "id": "1cf4a7c6-84db-4899-a0fb-3632c0a3ec93",
       "name": "OpenAI GPT-5-mini",
       "credentials": {
         "openAiApi": {
@@ -126,24 +126,24 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -160,
-        336
+        -1040,
+        48
       ],
-      "id": "d43ba54e-0704-45d4-b2f3-4ee38bebaa9a",
+      "id": "4fa4642c-1f6d-4d4c-b61f-45914b3329ff",
       "name": "Collect Customer Email"
     },
     {
       "parameters": {
         "schemaType": "manual",
-        "inputSchema": "{\n    \"type\": \"object\",\n    \"properties\": {\n        \"decision\": {\n            \"type\": \"string\",\n            \"enum\": [\"AI\", \"HUMAN\"]\n        },\n        \"reason\": {\n            \"type\": \"string\"\n        }\n    },\n    \"required\": [\"decision\", \"reason\"]\n}"
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"reply_email_content_html\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t}\n}"
       },
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        256,
-        560
+        -624,
+        272
       ],
-      "id": "c3a7e0a6-6d2c-44a4-9b4b-c01884addfe7",
+      "id": "9d9558e4-c9ee-4cdd-892d-0b0d4b449520",
       "name": "output format1"
     },
     {
@@ -155,10 +155,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -448,
-        80
+        -1328,
+        -208
       ],
-      "id": "efd317d5-ba48-4be2-b228-439b2f388109",
+      "id": "230b07c2-2a6c-41c8-b83b-75f4b1d99b29",
       "name": "Sticky Note"
     },
     {
@@ -171,10 +171,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        0,
-        0
+        -880,
+        -288
       ],
-      "id": "afcb64c3-022d-4120-94aa-9235792fecfa",
+      "id": "d7d795cb-2798-4990-96c7-58367e81d678",
       "name": "Sticky Note1"
     },
     {
@@ -189,10 +189,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        48,
-        336
+        -832,
+        48
       ],
-      "id": "265c68c1-91ba-4777-96e9-2ceca925a263",
+      "id": "4d694933-7af0-4c57-8714-92c52a64bf93",
       "name": "AI-response to customer"
     },
     {
@@ -205,10 +205,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        416,
-        336
+        -464,
+        48
       ],
-      "id": "e7d30df9-9cb0-48c9-a537-0ee7325065dc",
+      "id": "cf93b5dc-42ea-4529-ad1a-e072cdc2066f",
       "name": "Send email to customer",
       "webhookId": "fa9f157d-1a2c-4b6a-ba2f-c8ef7d3be7a0",
       "credentials": {
@@ -226,10 +226,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.openWeatherMapTool",
       "typeVersion": 1,
       "position": [
-        112,
-        560
+        -768,
+        272
       ],
-      "id": "8a28b36c-51aa-4c07-8ee1-cd808640f6fb",
+      "id": "71e1f572-b396-4225-8f49-b048c4228c88",
       "name": "Weather tool",
       "credentials": {
         "openWeatherMapApi": {
@@ -309,6 +309,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
   },
   "pinData": {},
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
   }
 }
