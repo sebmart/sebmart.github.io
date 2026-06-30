@@ -8,6 +8,12 @@ show_nav: true
 
 This page is your companion for the three hours we'll spend building AI agents together. Everything we copy and paste during the session lives here, in the order we'll use it — so keep it open in your browser the whole time. If you ever fall behind, this is where you catch back up.
 
+We'll do the building in our shared **n8n workspace** — open it in another tab and keep it handy:
+
+<p style="margin: 1.2rem 0;">
+  <a href="https://aiml901-martin.app.n8n.cloud/" target="_blank" rel="noopener" style="display:inline-block; background:#EA4B71; color:#fff; font-weight:600; padding:12px 22px; border-radius:10px; text-decoration:none;">Open our n8n workspace ↗</a>
+</p>
+
 ## 1 · Concierge prompt
 
 This is the system prompt for the Skyline Experiences concierge — the AI's "brain." To copy any block on this page, hover over it with your mouse and click **Copy code** at the top-right corner.
