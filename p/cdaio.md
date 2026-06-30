@@ -45,7 +45,6 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
 
 ```json
 {
-  "name": "Simple Email Agent Template",
   "nodes": [
     {
       "parameters": {
@@ -66,10 +65,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.gmailTrigger",
       "typeVersion": 1.4,
       "position": [
-        -1232,
-        48
+        -352,
+        336
       ],
-      "id": "4502f514-4a6c-4b47-849e-b37dc066e09d",
+      "id": "4b4c9dc5-217b-4d72-bde4-f94ded6403bd",
       "name": "Gmail Trigger",
       "credentials": {
         "gmailOAuth2": {
@@ -91,10 +90,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        -912,
-        272
+        -32,
+        560
       ],
-      "id": "1cf4a7c6-84db-4899-a0fb-3632c0a3ec93",
+      "id": "03418799-4562-4165-b9fa-4433633e969b",
       "name": "OpenAI GPT-5-mini",
       "credentials": {
         "openAiApi": {
@@ -126,10 +125,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -1040,
-        48
+        -160,
+        336
       ],
-      "id": "4fa4642c-1f6d-4d4c-b61f-45914b3329ff",
+      "id": "d43ba54e-0704-45d4-b2f3-4ee38bebaa9a",
       "name": "Collect Customer Email"
     },
     {
@@ -140,10 +139,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -624,
-        272
+        256,
+        560
       ],
-      "id": "9d9558e4-c9ee-4cdd-892d-0b0d4b449520",
+      "id": "c3a7e0a6-6d2c-44a4-9b4b-c01884addfe7",
       "name": "output format1"
     },
     {
@@ -155,10 +154,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1328,
-        -208
+        -448,
+        80
       ],
-      "id": "230b07c2-2a6c-41c8-b83b-75f4b1d99b29",
+      "id": "efd317d5-ba48-4be2-b228-439b2f388109",
       "name": "Sticky Note"
     },
     {
@@ -171,10 +170,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -880,
-        -288
+        0,
+        0
       ],
-      "id": "d7d795cb-2798-4990-96c7-58367e81d678",
+      "id": "afcb64c3-022d-4120-94aa-9235792fecfa",
       "name": "Sticky Note1"
     },
     {
@@ -189,10 +188,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        -832,
-        48
+        48,
+        336
       ],
-      "id": "4d694933-7af0-4c57-8714-92c52a64bf93",
+      "id": "265c68c1-91ba-4777-96e9-2ceca925a263",
       "name": "AI-response to customer"
     },
     {
@@ -205,10 +204,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.2,
       "position": [
-        -464,
-        48
+        416,
+        336
       ],
-      "id": "cf93b5dc-42ea-4529-ad1a-e072cdc2066f",
+      "id": "e7d30df9-9cb0-48c9-a537-0ee7325065dc",
       "name": "Send email to customer",
       "webhookId": "fa9f157d-1a2c-4b6a-ba2f-c8ef7d3be7a0",
       "credentials": {
@@ -226,10 +225,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "type": "n8n-nodes-base.openWeatherMapTool",
       "typeVersion": 1,
       "position": [
-        -768,
-        272
+        112,
+        560
       ],
-      "id": "71e1f572-b396-4225-8f49-b048c4228c88",
+      "id": "8a28b36c-51aa-4c07-8ee1-cd808640f6fb",
       "name": "Weather tool",
       "credentials": {
         "openWeatherMapApi": {
@@ -239,7 +238,6 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       }
     }
   ],
-  "pinData": {},
   "connections": {
     "Gmail Trigger": {
       "main": [
@@ -308,20 +306,10 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "binaryMode": "separate",
-    "availableInMCP": false
-  },
-  "versionId": "f069e321-9940-4e44-bb78-7bdf0b9bf61a",
+  "pinData": {},
   "meta": {
-    "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
-  },
-  "nodeGroups": [],
-  "id": "4YIS5QR5EyFCT7hk",
-  "tags": []
+  }
 }
 ```
 
@@ -331,7 +319,6 @@ The full template for the three-AI version, where a person reviews the trickier 
 
 ```json
 {
-  "name": "Human-in-the-loop template",
   "nodes": [
     {
       "parameters": {
@@ -789,7 +776,6 @@ The full template for the three-AI version, where a person reviews the trickier 
       }
     }
   ],
-  "pinData": {},
   "connections": {
     "Gmail Trigger": {
       "main": [
@@ -886,6 +872,17 @@ The full template for the three-AI version, where a person reviews the trickier 
         ]
       ]
     },
+    "AI drafts for Human review": {
+      "main": [
+        [
+          {
+            "node": "Ask for human reviewer approval and wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Weather tool": {
       "ai_tool": [
         [
@@ -941,17 +938,6 @@ The full template for the three-AI version, where a person reviews the trickier 
         ]
       ]
     },
-    "AI drafts for Human review": {
-      "main": [
-        [
-          {
-            "node": "Ask for human reviewer approval and wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Ask for human reviewer approval and wait": {
       "main": [
         [
@@ -964,20 +950,11 @@ The full template for the three-AI version, where a person reviews the trickier 
       ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1",
-    "binaryMode": "separate",
-    "availableInMCP": false
-  },
-  "versionId": "04678fb1-91f6-49a7-ac53-986fa9c81634",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
-  },
-  "nodeGroups": [],
-  "id": "ZBVqeGY5cfUt1dwQ",
-  "tags": []
+  }
 }
 ```
 
