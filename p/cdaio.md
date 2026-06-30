@@ -43,6 +43,7 @@ You have a weather tool that gives a five-day forecast for a city. When the weat
 
 The full workflow template we'll use to give the agent its own inbox. Copy it and paste it straight onto your n8n canvas.
 
+{% raw %}
 ```json
 {
   "nodes": [
@@ -312,11 +313,13 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
   }
 }
 ```
+{% endraw %}
 
 ## 3 · Human in the loop
 
 The full template for the three-AI version, where a person reviews the trickier emails before they go out. Copy it the same way and paste it onto a fresh canvas.
 
+{% raw %}
 ```json
 {
   "nodes": [
@@ -957,6 +960,7 @@ The full template for the three-AI version, where a person reviews the trickier 
   }
 }
 ```
+{% endraw %}
 
 ## 4 · Talk to Maya
 
