@@ -8,7 +8,54 @@ hero_link2_url: "/cdaio-slides/slides.pdf"
 hero_link2_text: "Slides (PDF) ↗"
 ---
 
-<style>.post pre { max-height: 22rem; overflow: auto; }</style>
+<style>
+.post pre { max-height: 22rem; overflow: auto; }
+.post .cdaio-next {
+  margin: 1.5rem 0;
+  padding: 1rem 1.15rem;
+  border: 1px solid rgba(15,31,28,0.12);
+  border-left: 4px solid #0d9488;
+  border-radius: 8px;
+  background: rgba(13,148,136,0.06);
+}
+.post .cdaio-next p:last-child { margin-bottom: 0; }
+.post .tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1.1rem 0 1.35rem;
+}
+.post .tool-card {
+  border: 1px solid rgba(15,31,28,0.12);
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+}
+.post .tool-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.45rem;
+  font-size: 1.05rem;
+}
+.post .tool-card p { margin-bottom: 0.75rem; }
+.post .tool-card ul { margin-bottom: 0; }
+.post .button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin: 0.8rem 0 1.2rem;
+}
+.post .agent-button {
+  display: inline-block;
+  color: #fff;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+.post .agent-button:hover { color: #fff; text-decoration: none; opacity: 0.9; }
+.post .agent-button--claude { background: #6b4f3f; }
+.post .agent-button--codex { background: #111827; }
+</style>
 
 This page is your companion for the three hours we'll spend building AI agents together. Everything we copy and paste during the session lives here, in the order we'll use it, so keep it open in your browser the whole time. If you ever fall behind, this is where you catch back up.
 
@@ -974,3 +1021,83 @@ Interview her: figure out what she's really trying to do, who inside the company
 </p>
 
 <iframe src="/p/maya.html" title="Chat with Maya Chen" loading="lazy" style="width:100%; height:700px; border:1px solid rgba(15,31,28,0.15); border-radius:14px; box-shadow:0 4px 18px rgba(15,31,28,0.08); background:#f4f7f6;"></iframe>
+
+## 5 · What Maya was meant to show
+
+Maya is optimistic on purpose. She sees the upside of AfterVisit AI before she sees the operational risk. That is exactly what happens in many AI projects: the demo works, the business case feels obvious, and the hard questions show up only when the agent touches real work.
+
+When you evaluate an AI agent, do not stop at "can it answer?" Ask four questions:
+
+1. **What work is the agent actually doing?** In Maya's case: listening to a visit, drafting notes, updating CRM, and preparing follow-up.
+2. **Where does a human stay in the loop?** Consent, CRM updates, customer promises, clinical or compliance-sensitive text, and anything that changes money or relationships.
+3. **Who has to trust it?** Sales reps, managers, IT, legal, customers, and the people whose performance will now be measured through the system.
+4. **How would we know in 90 days whether it worked?** Time saved, note quality, adoption, correction rate, customer response quality, and employee trust.
+
+<div class="cdaio-next">
+  <p><strong>The takeaway:</strong> building the agent is only one layer. The real deployment problem is the system around it: the workflow, the human review points, the incentives, and the measurement plan.</p>
+</div>
+
+## 6 · Quick start: Claude Cowork and OpenAI Codex
+
+If today made you want to keep going, start with one of these tools. They are the fastest way to move from "AI answers my question" to "AI does the work with me."
+
+<div class="tool-grid">
+  <div class="tool-card">
+    <h3>Claude Cowork</h3>
+    <p>Best for messy knowledge work on your computer: organizing files, preparing documents, summarizing research, extracting data from PDFs, and working across desktop apps.</p>
+    <ul>
+      <li>Use it when the output is a document, spreadsheet, deck, analysis, or organized folder.</li>
+      <li>Access it through the Claude desktop app. Availability depends on your Claude plan.</li>
+    </ul>
+  </div>
+  <div class="tool-card">
+    <h3>OpenAI Codex</h3>
+    <p>Best for building and changing things: small apps, scripts, automations, websites, data tools, dashboards, and technical workflows.</p>
+    <ul>
+      <li>Use the Codex desktop app or the VS Code extension if you want it to work on local files.</li>
+      <li>Use Codex web if you want it to work in the cloud on a GitHub repository.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="button-row">
+  <a class="agent-button agent-button--claude" href="https://claude.com/download" target="_blank" rel="noopener">Download Claude ↗</a>
+  <a class="agent-button agent-button--claude" href="https://www.anthropic.com/product/claude-cowork" target="_blank" rel="noopener">Claude Cowork overview ↗</a>
+  <a class="agent-button agent-button--codex" href="https://developers.openai.com/codex/quickstart" target="_blank" rel="noopener">Start with Codex ↗</a>
+  <a class="agent-button agent-button--codex" href="https://chatgpt.com/codex" target="_blank" rel="noopener">Codex web ↗</a>
+</div>
+
+### The first 20 minutes
+
+1. **Install one tool.** If you already pay for ChatGPT, start with Codex. If you already use Claude and have Cowork, start there. The exact tool matters less than starting.
+2. **Create a safe practice folder.** Put a few harmless files in it: a PDF, a spreadsheet, a short document, or a small dataset. Do not start in your whole Desktop, Downloads, or company drive.
+3. **Give it one real task.** Pick something you would otherwise postpone because it is annoying but clear.
+4. **Ask for a plan first.** Before it changes files, ask: "Give me the plan first. Then wait for my approval."
+5. **Review the result like a manager.** Do not judge the agent by whether it is magic. Judge it by whether you can steer it, catch mistakes, and make the work better.
+
+Try one of these prompts:
+
+```text
+I am new to computer agents. Look at the files in this folder and suggest three useful things you could do with them. Do not make changes yet.
+```
+
+```text
+Take this messy folder of documents and propose a clean folder structure. Explain what you would move where, then wait for my approval.
+```
+
+```text
+Build a simple one-page dashboard from this spreadsheet. Keep it local, make it easy to open, and explain every assumption you make.
+```
+
+```text
+Help me turn these notes into a polished one-page memo. Keep the tone direct and executive-friendly. Ask before deleting any content.
+```
+
+### A few safety rules
+
+- Start in a small folder, not in a sensitive drive.
+- Do not give an agent passwords, private keys, customer data, or confidential files until you understand how the tool handles access.
+- Read the plan before approving file changes or browser actions.
+- For anything customer-facing, legal, financial, medical, or HR-related, keep a real human as the final decision-maker.
+
+The skill you are practicing is not coding. It is delegation: describing the outcome, giving the agent the right context, checking its plan, and steering the work until it is useful.
