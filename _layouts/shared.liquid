@@ -22,6 +22,9 @@ layout: none
                 <i class="ti ti-sun-filled" id="light-toggle-light"></i>
               </button>
             {% endif %}
+            {% if page.hero_link_url %}
+              <a class="shared-hero__action" href="{{ page.hero_link_url }}" target="_blank" rel="noopener">{{ page.hero_link_text | default: "Open ↗" }}</a>
+            {% endif %}
           </div>
           {% if page.description %}
             <p class="shared-hero__description">{{ page.description }}</p>

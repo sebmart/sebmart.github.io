@@ -2,6 +2,8 @@
 title: "Build — AI Agents"
 description: "Senior Management Program in AI and Digital Transformation · June 30, 2026"
 show_nav: true
+hero_link_url: "/cdaio-slides/"
+hero_link_text: "Slides ↗"
 ---
 
 <style>.post pre { max-height: 22rem; overflow: auto; }</style>

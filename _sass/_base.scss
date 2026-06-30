@@ -1039,6 +1039,29 @@ details.code-collapse {
       line-height: 1;
     }
   }
+
+  &__action {
+    align-self: center;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 1.15rem;
+    border-radius: 999px;
+    background: var(--global-theme-color);
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+      color: #fff;
+      text-decoration: none;
+    }
+  }
 }
 
 .btn-group.dropdown {
