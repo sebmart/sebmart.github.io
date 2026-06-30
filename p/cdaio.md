@@ -10,7 +10,7 @@ This page is your companion for the three hours we'll spend building AI agents t
 
 ## Setup before we start
 
-Yesterday morning I sent you a short email about one quick step to get ready for our sessions. If you haven't done it yet, here it is again. It only takes two or three minutes, and it makes sure you can build your own agents with me tomorrow.
+Yesterday morning I sent you a short email about one quick step to get ready for our sessions. If you haven't done it yet, here it is again. It only takes two or three minutes, and it makes sure you can build your own agents with me today.
 
 We'll build in **n8n**, a platform many companies use to run their AI agents in production. You should have received an invitation by email from n8n: click the link, pick a name and a password, and you're in. It's completely free, and there's nothing to download. If you don't see it, check your spam folder, and let me know if it still doesn't show up.
 
