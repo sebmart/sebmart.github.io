@@ -22,8 +22,15 @@ layout: none
                 <i class="ti ti-sun-filled" id="light-toggle-light"></i>
               </button>
             {% endif %}
-            {% if page.hero_link_url %}
-              <a class="shared-hero__action" href="{{ page.hero_link_url }}" target="_blank" rel="noopener">{{ page.hero_link_text | default: "Open ↗" }}</a>
+            {% if page.hero_link_url or page.hero_link2_url %}
+              <div class="shared-hero__actions">
+                {% if page.hero_link_url %}
+                  <a class="shared-hero__action" href="{{ page.hero_link_url }}" target="_blank" rel="noopener">{{ page.hero_link_text | default: "Open ↗" }}</a>
+                {% endif %}
+                {% if page.hero_link2_url %}
+                  <a class="shared-hero__action" href="{{ page.hero_link2_url }}" target="_blank" rel="noopener">{{ page.hero_link2_text | default: "Open ↗" }}</a>
+                {% endif %}
+              </div>
             {% endif %}
           </div>
           {% if page.description %}

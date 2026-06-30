@@ -1,0 +1,928 @@
+<!doctype html>
+<!-- ===========================================================================
+     BUILD — AI AGENTS  ·  Kellogg CDAIO (Senior Mgmt Program in AI), Jun 30 2026
+     Reveal.js Kellogg theme. Design in theme/kellogg.css; content here.
+
+     AUDIENCE  : ~25 senior executives, CR 1110, solo. Two back-to-back blocks.
+     FORMAT    : hands-on build. Two screens — left = n8n (live), right = slides.
+     PLAN      : notes/2026-06-29 - CDAIO Build session - Block 1 plan.md  (Block 1)
+                 notes/2026-06-29 - CDAIO Build session - Block 2 plan.md  (Block 2)
+
+     SECTIONS (eyebrow = section title EXACTLY — see slides README):
+       Introduction · Building AI workflows with n8n (Part 1)
+       · Leveraging AI agents (Part 2) · Building with AI (Part 3)
+
+     STATUS: Finalized 2026-06-30. The full session in one deck — Part 1 (hands-on
+     build in n8n), Part 2 (leveraging AI agents + the Proxima/Maya case & debrief),
+     Part 3 (building with AI for yourself). Earlier parked drafts (the graveyard)
+     have been removed.
+     ======================================================================== -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build — AI Agents · Sébastien Martin</title>
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="theme/kellogg.css">
+</head>
+<body class="branded">
+<div class="reveal"><div class="slides">
+
+  <!-- 1 — TITLE --------------------------------------------------------------->
+  <section class="title" data-state="lede">
+    <div class="brandmark"><div class="bar"></div><div class="nw">Northwestern<span>|</span>Kellogg</div></div>
+    <h1>Building<br>AI&nbsp;Agents</h1>
+    <hr class="rule">
+    <div class="sub" style="max-width:600px;">A hands-on, AI-first session on building and managing AI agents.</div>
+    <div class="by"><b>Sébastien Martin</b>Associate Professor of Operations · Northwestern Kellogg<br><span>CDAIO · Build – AI Agents · June 30, 2026</span></div>
+    <div class="prestart">
+      <div class="lbl">Before we start</div>
+      <p>When you have a moment, please open your laptop and go to:</p>
+      <a class="link" href="https://sebastienmartin.info/p/cdaio/">sebastienmartin.info/p/cdaio</a>
+      <p>and follow the <b>&ldquo;Setup before we start&rdquo;</b> steps if you haven&rsquo;t already. Thank you!</p>
+    </div>
+    <aside class="notes">Open warm. So excited I'm missing the World Cup game with my friends for this. Congratulate the Brazilians in the room. Quick show of hands: who's used ChatGPT or Claude in the last month? Today we don't watch AI, we build it. Also point to the callout: if you haven't done the 2-minute n8n setup from the page, please do it now, we'll use it shortly. Give them a minute.</aside>
+  </section>
+
+  <!-- ======================= SECTION · INTRODUCTION ======================== -->
+
+  <!-- 2 — INTRO / BIO · AT KELLOGG  (reused from Summer CIM, exec-adapted) ----->
+  <section class="intro">
+    <div class="eyebrow">Introduction</div>
+    <h2>Sébastien Martin</h2>
+    <div class="cols">
+      <div class="blk">
+        <div class="lbl">Background</div>
+        <ul>
+          <li>From Paris, France</li>
+          <li>PhD from MIT</li>
+          <li>Associate Professor of Operations</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <div class="lbl">Research</div>
+        <ul>
+          <li>Lyft's dispatch algorithm</li>
+          <li>Waymo Fleet Control</li>
+          <li>Boston &amp; SF school-bus routing</li>
+        </ul>
+      </div>
+      <div class="blk">
+        <div class="lbl">Teaching at Kellogg</div>
+        <ul>
+          <li>AI Foundations for Managers (AgentOps)</li>
+          <li>Operations Management</li>
+        </ul>
+      </div>
+    </div>
+    <div class="photoband"><img src="assets/class-photo.jpg" alt="AI Foundations class"></div>
+    <aside class="notes">Quick — legitimacy + warmth, not a CV. The subtext: I build real AI systems and I teach leaders to do the same. I'm worth reaching out to.</aside>
+  </section>
+
+  <!-- 3 — OUTSIDE OF KELLOGG · ESAB board ------------------------------------->
+  <section class="esab">
+    <div class="eyebrow">Introduction</div>
+    <h2>Outside of Kellogg</h2>
+    <div class="wrap">
+      <div class="card">
+        <div class="logo">
+          <img src="assets/esab.png" alt="ESAB Corporation">
+          <div class="ticker">NYSE:&nbsp;ESAB</div>
+        </div>
+        <div class="desc">A global leader in <b>welding &amp; cutting equipment</b>, operating worldwide.</div>
+        <div class="stats">
+          <div><div class="v">~$2.8B</div><div class="k">Annual sales · 2025</div></div>
+          <div><div class="v">120+ yrs</div><div class="k">In business</div></div>
+        </div>
+      </div>
+      <div class="role">
+        <div class="rlbl">On its Board of Directors</div>
+        <hr class="rule">
+        <ul>
+          <li><b>Director since 2026</b>, on the Audit Committee (governance and oversight).</li>
+          <li>I also advise the company directly on its <b>AI strategy</b>.</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">The credibility beat: I don't only teach AI, I help steer it at a 120-year-old, ~$2.8B public industrial company, facing the exact questions you face. Board governance plus hands-on AI strategy. Keep it ~20 sec.</aside>
+  </section>
+
+  <!-- 4 — ROADMAP (two parts) ------------------------------------------------->
+  <section class="roadmap">
+    <div class="eyebrow">Introduction</div>
+    <h2>Our afternoon</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="n">1</div>
+        <div class="t">Hands-on agentic workflow design</div>
+        <div class="d">we build a real AI agent together in <b>n8n</b>, no experience needed</div>
+      </div>
+      <div class="step">
+        <div class="n">2</div>
+        <div class="t">Leveraging AI agents</div>
+        <div class="d">we practice the decisions behind implementing AI workflows: when is AI the right tool, and where do <b>people</b> stay in charge?</div>
+      </div>
+      <div class="step">
+        <div class="n">3</div>
+        <div class="t">AI for personal use</div>
+        <div class="d">if we have time, 20 minutes on how you can use AI for <b>yourself</b>. Huge things are happening right now.</div>
+      </div>
+    </div>
+    <aside class="notes">Keep it fast, I need the time for hands-on. Part 1 (this block) is where we get our hands dirty in n8n. Part 2 (after the break) is the frame around it: AI project vs process, where humans stay, the real implementation calls. Part 3 is a bonus if we have time, building with AI for yourself (Cowork/Codex). If we run short, Part 3 drops first.</aside>
+  </section>
+
+  <!-- =============== SECTION · BUILDING AI WORKFLOWS WITH n8n =============== -->
+
+  <!-- 5 — PART 1 DIVIDER ------------------------------------------------------->
+  <section class="section" data-state="lede">
+    <div class="num">PART 1 · UNTIL THE BREAK</div>
+    <h2>Building AI workflows with n8n</h2>
+    <hr class="rule">
+    <div class="sub">The best way to understand the technology is to use it.</div>
+    <aside class="notes">Say the framing out loud: day to day we meet AI as consumers; today we sit on the other side, in control, and by the break you'll have built a real working agent. The point of Part 1 is to feel how many decisions go into designing something good with AI. You can't just wave a hand and say "let's use AI for this." We build live in n8n; slides only punctuate.</aside>
+  </section>
+
+  <!-- 5b — WHAT IS n8n  (intro to the platform; right after the Part 1 divider) -->
+  <section>
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>What is n8n?</h2>
+    <div style="position:absolute; left:96px; right:96px; top:272px; display:flex; flex-direction:column; gap:36px; align-items:flex-start;">
+      <img src="assets/n8n.png" alt="n8n" style="height:92px; width:auto;">
+      <div style="font-family:var(--font-body); font-weight:300; font-size:28px; color:var(--ink); line-height:1.4; max-width:1000px;">
+        An automation platform. You connect blocks into <b>workflows that run on their own</b>, with little or no code.
+      </div>
+      <div style="font-family:var(--font-display); font-weight:400; font-size:31px; color:var(--purple); line-height:1.3; max-width:1000px;">
+        And one of the most widely used platforms for <b>deploying AI agents</b> in practice.
+      </div>
+    </div>
+    <aside class="notes">Quick orientation to the tool. n8n is an automation platform: you drag blocks onto a canvas and wire them into a workflow that runs on its own. It has become one of the go-to platforms for actually deploying AI agents in production, not just demos. This is what we build in for the rest of Part 1. Keep it short, I narrate.</aside>
+  </section>
+
+  <!-- 6 — THE SCENARIO · Skyline  (in-slide framed image; assets/skyline-balloons.png) -->
+  <section class="two-col">
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>Skyline Experiences</h2>
+    <div class="grid" style="grid-template-columns:0.9fr 1px 1.1fr;">
+      <div class="col">
+        <h3>Premium outdoor experiences, worldwide</h3>
+        <ul>
+          <li>Harbour sails and vineyard tours</li>
+          <li>Hot-air balloons and food tours</li>
+        </ul>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:24px; color:var(--slate2); line-height:1.45; margin:30px 0 0;">Their customers are always travelling, and the <b style="color:var(--ink)">weather always matters</b>.</p>
+        <div style="margin-top:34px; padding-top:22px; border-top:1px solid var(--line);">
+          <div style="font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:.16em; text-transform:uppercase; color:var(--amber); margin-bottom:11px;">Our goal</div>
+          <div style="font-family:var(--font-display); font-weight:400; font-size:25px; color:var(--purple); line-height:1.28;">A customer-service AI agent for customers who have already booked an experience.</div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="col fig">
+        <img src="assets/skyline-balloons.png" alt="Skyline Experiences hot-air balloon ride over a vineyard valley">
+      </div>
+    </div>
+    <aside class="notes">Our running example for all of Part 1. Skyline sells premium outdoor experiences worldwide: harbour sails, vineyard tours, hot-air balloons, food tours. Their customers are always travelling, and the weather always matters, which is exactly why an assistant helps. Bridge into the build: let's build their assistant. (After the break we switch settings, so this anchors Part 1, not the whole afternoon.)</aside>
+  </section>
+
+  <!-- 7 — WHAT IS AN AI AGENT  (Phase 1 concept; builds up via fragments) ---->
+  <section class="diagram">
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>What is an AI agent?</h2>
+    <div class="canvas" style="top:196px;">
+      <svg width="1160" height="430" viewBox="0 0 1160 430">
+        <defs>
+          <marker id="ar" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#3E444E"/></marker>
+        </defs>
+
+        <!-- BASE: user message -> LLM -> reply -->
+        <rect x="470" y="72" width="240" height="128" rx="16" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/>
+        <text x="590" y="132" text-anchor="middle" font-family="Zilla Slab" font-size="40" font-weight="500" fill="#4E2A84">LLM</text>
+        <text x="590" y="164" text-anchor="middle" font-family="Inter" font-size="16" fill="#7657AD">the model</text>
+        <rect x="8" y="192" width="290" height="64" rx="14" fill="#fff" stroke="#D7DBE0" stroke-width="1.5"/>
+        <text x="153" y="230" text-anchor="middle" font-family="Inter" font-size="21" fill="#2B2F36">User message</text>
+        <line x1="298" y1="224" x2="464" y2="172" stroke="#3E444E" stroke-width="2.4" marker-end="url(#ar)"/>
+        <rect x="872" y="94" width="280" height="84" rx="14" fill="#fff" stroke="#D7DBE0" stroke-width="1.5"/>
+        <text x="1012" y="142" text-anchor="middle" font-family="Inter" font-size="22" fill="#2B2F36">Reply to the user</text>
+        <line x1="710" y1="136" x2="866" y2="136" stroke="#3E444E" stroke-width="2.4" marker-end="url(#ar)"/>
+
+        <!-- FRAG A: conversation history -->
+        <g class="fragment">
+          <rect x="8" y="110" width="290" height="64" rx="14" fill="#fff" stroke="#D7DBE0" stroke-width="1.5"/>
+          <text x="153" y="148" text-anchor="middle" font-family="Inter" font-size="21" fill="#2B2F36">Conversation so far</text>
+          <line x1="298" y1="142" x2="464" y2="140" stroke="#3E444E" stroke-width="2.4" marker-end="url(#ar)"/>
+        </g>
+
+        <!-- FRAG B: system message -->
+        <g class="fragment">
+          <rect x="8" y="8" width="290" height="84" rx="14" fill="#fff" stroke="#D7DBE0" stroke-width="1.5"/>
+          <text x="153" y="42" text-anchor="middle" font-family="Inter" font-size="22" fill="#2B2F36">System message</text>
+          <text x="153" y="68" text-anchor="middle" font-family="Inter" font-size="15" fill="#8A9099">instructions + information</text>
+          <line x1="298" y1="50" x2="464" y2="104" stroke="#3E444E" stroke-width="2.4" marker-end="url(#ar)"/>
+        </g>
+
+        <!-- FRAG C: reasoning self-loop -->
+        <g class="fragment">
+          <path d="M 569 72 C 551 32, 629 32, 611 72" fill="none" stroke="#3E444E" stroke-width="2.2" marker-end="url(#ar)"/>
+          <text x="590" y="16" text-anchor="middle" font-family="Inter" font-size="16" font-weight="500" fill="#7657AD">reasoning</text>
+          <text x="590" y="35" text-anchor="middle" font-family="Inter" font-size="14" fill="#6c727b">talks to itself on hard tasks</text>
+        </g>
+
+        <!-- FRAG D: tool loop -->
+        <g class="fragment">
+          <rect x="470" y="300" width="240" height="80" rx="16" fill="#fff" stroke="#DD9B2E" stroke-width="2.2"/>
+          <text x="590" y="346" text-anchor="middle" font-family="Inter" font-size="22" fill="#2B2F36">Tools</text>
+          <line x1="556" y1="202" x2="556" y2="298" stroke="#3E444E" stroke-width="2.4" marker-end="url(#ar)"/>
+          <text x="540" y="238" text-anchor="end" font-family="Inter" font-size="15" fill="#6c727b">what's the weather</text>
+          <text x="540" y="258" text-anchor="end" font-family="Inter" font-size="15" fill="#6c727b">in Miami?</text>
+          <line x1="624" y1="298" x2="624" y2="202" stroke="#3E444E" stroke-width="2.4" marker-end="url(#ar)"/>
+          <text x="640" y="238" text-anchor="start" font-family="Inter" font-size="15" fill="#6c727b">tomorrow: 25°C,</text>
+          <text x="640" y="258" text-anchor="start" font-family="Inter" font-size="15" fill="#6c727b">sunny</text>
+        </g>
+      </svg>
+    </div>
+    <aside class="notes">Build it up one click at a time, narrate each step. (1) Base: an LLM is just text in, text out. A user message goes in, a reply comes out. (2) Add the conversation so far: now it remembers, that is basically ChatGPT. (3) Add a system message (instructions, plus information it should know): now you control its behavior. (4) Give it a tool: instead of replying straight away it can call the weather tool, get the forecast back, then answer for real. That loop is what makes it an agent. Sparse on purpose, I say the rest out loud.</aside>
+  </section>
+
+  <!-- 8 — WHAT YOU CONTROL  (model / instructions / tools; cards build up) --->
+  <section>
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>The ONLY three things you control</h2>
+    <div class="threecol" style="top:238px; bottom:128px;">
+      <div class="tcard fragment" style="justify-content:flex-start;">
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"/>
+            <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"/>
+          </svg>
+        </div>
+        <div class="t">The model</div>
+        <div class="p">The <b>LLM</b>, the large language model: the brain. Bigger and smarter, or cheaper and faster. Hosted by a provider, or run on your own machines. Many trade-offs.</div>
+      </div>
+      <div class="tcard fragment" style="justify-content:flex-start;">
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <path d="M14 2v6h6"/>
+            <path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>
+          </svg>
+        </div>
+        <div class="t">The instructions</div>
+        <div class="p">The system message. Information it was never trained on, and the rules you want it to follow.</div>
+      </div>
+      <div class="tcard fragment" style="justify-content:flex-start;">
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+          </svg>
+        </div>
+        <div class="t">The tools</div>
+        <div class="p">What it can reach and act on. Like you, but with your phone in your hand.</div>
+      </div>
+    </div>
+    <aside class="notes">The three knobs from the diagram. The model is the brain: bigger vs cheaper, hosted by an AI company vs run locally, many trade-offs, but I cover this fast out loud. The system message is where you personalize: the information it lacks, and more interestingly the instructions you want it to follow. The tools are what it can act on, the "you without your phone" line. Minimal text on purpose, I narrate.</aside>
+  </section>
+
+  <!-- =========== HANDS-ON 1–3 · exercises (Block 1, Part 1) ============== -->
+
+  <!-- H1 — HANDS-ON 1 · iterate the chat agent (idea menu) ---------------->
+  <section class="handson">
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>Hands-on 1 · Make it yours</h2>
+    <div class="hwrap">
+      <div class="lead">Edit the system message of the chat agent we just built, send a message, see what changes. Try a few, they get harder.</div>
+      <ul class="ideas">
+        <li><span class="lv"><i class="on"></i><i></i><i></i></span>Change the way it <b>speaks</b>: warm, playful, five-star formal, or another language.</li>
+        <li><span class="lv"><i class="on"></i><i></i><i></i></span>Give it <b>facts about Skyline</b> it can share.</li>
+        <li><span class="lv"><i class="on"></i><i class="on"></i><i></i></span>Have it <b>upsell</b> another experience when it fits.</li>
+        <li><span class="lv"><i class="on"></i><i class="on"></i><i></i></span>Tell it <b>when to use the weather tool</b>, not every time.</li>
+        <li><span class="lv"><i class="on"></i><i class="on"></i><i class="on"></i></span>Make it <b>always add a 3-day forecast</b> for any city asked.</li>
+        <li><span class="lv"><i class="on"></i><i class="on"></i><i class="on"></i></span>Swap the model: <span class="mono">gpt-5.5-mini → gpt-5.5</span>. Feel the difference.</li>
+      </ul>
+    </div>
+    <aside class="notes">Their turn, in the chat box (much faster to iterate than email). The whole point: they feel how much control the system message gives them. The dots are rough difficulty, do a few, no need to finish. I circulate. "Don't make it useless, the goal is control." The last one is the model knob, optional.</aside>
+  </section>
+
+  <!-- H2 — HANDS-ON 2 · the email agent, built together (follow along) ----->
+  <section class="handson">
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>Hands-on 2 · Give it an inbox</h2>
+    <div class="hwrap" style="top:176px; bottom:46px; gap:18px;">
+      <div class="lead"><b>You can just follow along with me, step by step.</b> Lost the thread? Pick up here:</div>
+      <ul class="checklist" style="gap:15px;">
+        <li><b>Create your workflow.</b> In n8n, open the <b>CDAIO Build Your Agent</b> project, then add one named after yourself: <span class="mono">firstname-lastname-agent2</span> (e.g. <span class="mono">johnsmith-agent2</span>).</li>
+        <li><b>Add the template.</b> On this page, copy the code under &ldquo;2 · Email agent&rdquo; and paste it onto your workflow canvas.</li>
+        <li><b>Set your email.</b> Open the Gmail Trigger node and replace <span class="mono">YOUR_EMAIL_HERE@EMAIL.COM</span> with your own address.</li>
+        <li><b>Email the agent.</b> From that same address, write to <span class="mono">aiml901sebastienmartin@gmail.com</span>, then wait a minute.</li>
+        <li><b>Run it by hand.</b> Click each box in order, waiting for the green check before the next.</li>
+        <li class="opt"><b>Go live (optional).</b> Click Publish and the agent runs on its own, checking for mail once a minute.</li>
+      </ul>
+      <div class="winline">🎉 Congratulations, you've created an agentic workflow!</div>
+    </div>
+    <aside class="notes">This is the one we do together, lockstep, because the wiring is fiddly. Everyone emails the shared agent address from their own inbox, then we run the workflow node by node so they SEE each step (manual, not Publish, which hides it). Reassure them: just follow along, you cannot fall behind.</aside>
+  </section>
+
+  <!-- H3 — HANDS-ON 3 · the full workflow (two cols: setup | what to try) -->
+  <section class="handson">
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>Hands-on 3 · The full workflow</h2>
+    <div class="h3grid">
+      <div>
+        <div class="collbl">Set it up</div>
+        <ul class="checklist" style="gap:16px;">
+          <li>Same process as the last slide, with a new workflow named after yourself: <span class="mono">firstname-lastname-agent3</span> (e.g. <span class="mono">johnsmith-agent3</span>).</li>
+          <li>This time copy <b>&ldquo;3 · Human in the loop&rdquo;</b> from the page and paste it onto the canvas.</li>
+          <li>Set your email in the <b>Gmail Trigger</b>, as before.</li>
+          <li>Email the agent, then run each box by hand, or click <b>Publish</b> so it runs automatically on each new email.</li>
+        </ul>
+        <div class="colnote">Your inbox plays <b>both parts</b>: the customer who writes in, and the reviewer who approves the tricky ones.</div>
+      </div>
+      <div>
+        <div class="collbl">Experiment with the AI instructions</div>
+        <ul class="ideas" style="grid-template-columns:1fr; gap:18px;">
+          <li><span class="lv"><i class="on"></i><i></i><i></i></span>Run the whole thing. Try to get one reply the AI sends directly, and one that goes to a human.</li>
+          <li><span class="lv"><i class="on"></i><i class="on"></i><i></i></span>Make the router <b>more cautious</b>, so more emails go to a human.</li>
+          <li><span class="lv"><i class="on"></i><i class="on"></i><i class="on"></i></span>Have the AI always add the customer's <b>local weather forecast</b> to its note for the reviewer.</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="notes">Two columns: left = setup (same as Hands-on 2, but a new workflow agent3 and the §3 "Human in the loop" code), right = what to try. I explain the router and the AI-or-human split out loud. They run it first, then experiment with the three prompts (reply, router, human draft). Do one or two, not all.</aside>
+  </section>
+
+  <!-- 8b — PART 1 WRAP · why we did this (two-handed: understand it / build it) -->
+  <section class="two-col">
+    <div class="eyebrow">Building AI workflows with n8n</div>
+    <h2>So why did we do this?</h2>
+    <div class="grid" style="grid-template-columns:1fr 1fr; gap:30px; top:188px; bottom:54px;">
+      <!-- LEFT · the real takeaway -->
+      <div class="col" style="display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:24px 30px;">
+        <div style="font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--amber-dk); margin-bottom:12px;">The real takeaway</div>
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/></svg>
+        </div>
+        <h3 style="margin:0 0 11px;">You don't have to build agents yourself</h3>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:22px; color:var(--ink); line-height:1.5; margin:0;">When a technology moves this fast, what matters is understanding <b>what it can and can't do</b>, enough to put it to work.</p>
+        <div style="margin-top:auto; padding-top:18px; border-top:1px solid var(--line);">
+          <p style="font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--slate2); line-height:1.45; margin:0;">The hard questions are <b style="color:var(--ink); font-weight:500;">business questions, not AI questions</b>. So the real move is to <b style="color:var(--ink); font-weight:500;">empower your people</b>, more than to hire an outside "AI expert."</p>
+        </div>
+      </div>
+      <!-- RIGHT · but if you're curious -->
+      <div class="col" style="display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:24px 30px;">
+        <div style="font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--purple); margin-bottom:12px;">But if you're curious</div>
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:14px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.42 10.92 12 6 2.58 10.92 12 15.84z"/><path d="M22 10.92V16"/><path d="M6 12.5V17c0 1.66 2.69 3 6 3s6-1.34 6-3v-4.5"/></svg>
+        </div>
+        <h3 style="margin:0 0 11px;">And building one is within reach</h3>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:22px; color:var(--ink); line-height:1.5; margin:0;">In my Kellogg class <b>AIML 901</b>, non-technical students build their own AI agents in <b>five weeks</b>, many now run them at work or started companies.</p>
+        <div style="margin-top:auto; padding-top:18px; border-top:1px solid var(--line); display:flex; align-items:center; gap:18px;">
+          <img src="assets/qr-showcase.png" alt="AIML 901 student showcase" style="width:84px; height:84px; flex:none;">
+          <div>
+            <div style="font-family:var(--font-body); font-weight:300; font-size:16px; color:var(--slate2); margin-bottom:3px;">See what they built:</div>
+            <a href="https://sebastienmartin.info/aiml901/showcase" style="font-family:var(--font-mono); font-weight:600; font-size:18px; color:var(--purple); text-decoration:none;">sebastienmartin.info/aiml901/showcase</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">The Part 1 wrap, said mostly out loud, the slide is just scaffolding. Why did we just spend ninety minutes building? Not to turn you into AI engineers. When a technology moves this fast, you want to be using it even if you never build an agent yourself, because the edge is understanding what it can and cannot do. And notice what actually made our workflow good or bad towards the end: how it was organised, what information it could reach, what it was allowed to do. Those are business questions, not AI questions. An outside "AI expert" or one lone technical hire, handed this cold, will usually build the wrong thing, because they do not know your business and you cannot yet tell them what good looks like. That is why the highest-leverage thing a leader can do is empower their people: give them enough understanding to see how to put AI to work. And on the other hand: if this did spark something, building is genuinely within reach, my AIML 901 students are non-technical and build real agents in five weeks, many deployed at work or spun into startups, the showcase is right there. Then send them to the break.</aside>
+  </section>
+
+  <!-- ================== SECTION · LEVERAGING AI AGENTS ===================== -->
+
+  <!-- 9 — PART 2 DIVIDER  (Block 2 content to design with Seb) --------------->
+  <section class="section" data-state="lede">
+    <div class="num">PART 2 · AFTER THE BREAK</div>
+    <h2>Leveraging AI agents</h2>
+    <hr class="rule">
+    <div class="sub">Now we practice the decisions behind putting AI to work: when is it the right tool, and where do people stay in charge?</div>
+    <aside class="notes">Block 2 spine (see Block 2 plan). Act 1 the frame: AI project vs process, "building an agent is workflow design," the Ambiguity by Cost-of-error 2x2. Act 2 the Maya/Proxima case. Act 3 (the Part 3 bonus) build with AI for yourself, Cowork/Codex live. Content slides to design together next.</aside>
+  </section>
+
+  <!-- 10 — P2.1 · RECAP "you just built this" (full-width n8n workflow screenshot) -->
+  <section>
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2>You just built this</h2>
+    <div style="position:absolute; left:96px; right:96px; top:158px; font-family:var(--font-body); font-weight:300; font-size:22px; color:var(--slate2); line-height:1.4; white-space:nowrap;">A <b style="color:var(--ink)">router</b> reads each email, then routes it to an <b style="color:var(--ink)">AI branch</b> or a <b style="color:var(--ink)">human branch</b>.</div>
+    <div style="position:absolute; left:96px; right:96px; top:202px; bottom:56px; display:flex; align-items:center; justify-content:center;">
+      <img src="assets/skyline-workflow.png" alt="The full Skyline routing workflow in n8n" style="width:100%; height:auto; max-height:100%; border:1px solid var(--line); border-radius:8px; box-shadow:0 8px 30px rgba(40,30,70,.12);">
+    </div>
+    <aside class="notes">Open with a question, not a statement: "Before I say anything, what is one thing that surprised you, or that you learned, while building this?" Take three or four answers, then stop. Land it: this is a real agentic workflow, a router that reads each email and routes it to an AI branch or a human branch, and you designed it without writing code. For the rest of this part we step back from the buttons and talk about how you actually put things like this to work.</aside>
+  </section>
+
+  <!-- 11 — P2.2 · AI PROJECT vs AI-POWERED PROCESS  (asymmetric; the 95/5 split is the point) -->
+  <section class="two-col">
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2>Two ways to put AI to work</h2>
+    <div class="grid" style="grid-template-columns:1fr 1.08fr; gap:30px; top:190px; bottom:54px;">
+      <!-- LEFT CARD · AI project -->
+      <div class="col" style="display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:26px 30px;">
+        <div style="width:56px; height:56px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="31" height="31" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            <path d="M12 7.6l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/>
+          </svg>
+        </div>
+        <h3 style="margin:0 0 12px;">An AI <i>project</i></h3>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:23px; color:var(--ink); line-height:1.5; margin:0;">Using an AI assistant (ChatGPT, Claude, Claude Code) to help <b>you</b> work, or to work for you.</p>
+        <div style="margin-top:auto; padding-top:20px; border-top:1px solid var(--line);">
+          <p style="font-family:var(--font-body); font-weight:300; font-size:21px; color:var(--slate2); line-height:1.4; margin:0;">One-off, and AI is here to <b style="color:var(--ink); font-weight:500;">augment your productivity and your capabilities</b>.</p>
+        </div>
+      </div>
+      <!-- RIGHT CARD · AI-powered process / workflow -->
+      <div class="col" style="display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:26px 30px;">
+        <div style="width:56px; height:56px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+          <svg width="31" height="31" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="8" height="8" x="3" y="3" rx="2"/>
+            <path d="M7 11v4a2 2 0 0 0 2 2h4"/>
+            <rect width="8" height="8" x="13" y="13" rx="2"/>
+          </svg>
+        </div>
+        <h3 style="margin:0 0 12px;">An AI-powered <i>process / workflow</i></h3>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:23px; color:var(--ink); line-height:1.45; margin:0;">Built to be <b>repeated</b>, and to play a <b>big role</b> in the company.</p>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--slate2); line-height:1.4; margin:9px 0 0;">Like any workflow in manufacturing or software.</p>
+        <!-- THE SURPRISE: building a workflow is 95% your domain knowledge, 5% AI -->
+        <div style="margin-top:auto; padding-top:20px; border-top:1px solid var(--line);">
+          <div style="font-family:var(--font-body); font-weight:300; font-size:19px; color:var(--slate2); margin-bottom:12px;">And here is the surprise: <b style="color:var(--ink)">most of the work is already yours.</b></div>
+          <div style="display:flex; align-items:center; gap:12px; width:95%; min-height:44px; box-sizing:border-box; border-radius:7px; background:var(--purple); padding:8px 18px;">
+            <span style="font-family:var(--font-display); font-weight:600; font-size:24px; color:#fff; flex:none;">95%</span>
+            <span style="font-family:var(--font-body); font-weight:400; font-size:15px; color:#fff; line-height:1.25;">your domain knowledge: operations, your business, how work gets organized</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:12px; margin-top:9px;">
+            <div style="width:5%; height:40px; border-radius:7px; background:var(--amber); flex:none;"></div>
+            <span style="font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--amber-dk); flex:none;">5%</span>
+            <span style="font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2); line-height:1.25;">AI: one new ingredient you fold into how you already organize work.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">Two ways to use AI. A project is using an assistant, ChatGPT or Claude or Claude Code, to help you work or to work for you, a one-off that is here to augment your productivity and your capabilities. A process or workflow is the other thing: built to be repeated, to play a big role, like any workflow in manufacturing or software. Now the surprise, and this is about that second kind, the workflow you just built: building one of these processes is about ninety-five percent your domain knowledge, how your business and your operations actually work, and only about five percent AI. AI is just one new ingredient you fold into how you already organize things. You do not need to become an AI engineer. You need the judgment you already have, plus this one new thing. (Do not re-explain what an agent is, they just built one.)</aside>
+  </section>
+
+  <!-- 12 — P2.3 · THE 2x2 · ambiguity x cost-of-error (+ human as guardrail) -->
+  <section>
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2 style="margin-bottom:4px;">AI or human?</h2>
+    <div style="font-family:var(--font-body); font-weight:300; font-size:23px; color:var(--muted); line-height:1.3;">a (<i style="color:var(--amber-dk); font-style:italic;">flawed</i>) framework</div>
+    <!-- y-axis label (plain up-arrow on top so it points UP = higher cost, toward human-in-the-loop) -->
+    <div style="position:absolute; left:92px; top:214px; bottom:104px; width:54px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;">
+      <div style="font-family:var(--font-body); font-weight:600; font-size:19px; color:var(--slate2); line-height:1;">&uarr;</div>
+      <div style="writing-mode:vertical-rl; transform:rotate(180deg); font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate2); text-align:center;">Cost of a mistake</div>
+    </div>
+    <!-- matrix -->
+    <div style="position:absolute; left:160px; right:96px; top:214px; bottom:104px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:14px;">
+      <!-- top-left: high cost, clear -->
+      <div style="border:1px solid var(--line); border-top:3px solid var(--line); border-radius:10px; background:#fff; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:20px 24px; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-family:var(--font-display); font-weight:500; font-size:25px; color:var(--slate); line-height:1.1;">Automate, with checks</div>
+        <div style="font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--slate2); line-height:1.4; margin-top:9px;">Rules do the work, you verify the output.</div>
+      </div>
+      <!-- top-right: high cost, messy -->
+      <div style="border:1px solid #EAD3A4; border-top:3px solid var(--amber); border-radius:10px; background:#FFFBF3; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:20px 24px; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-family:var(--font-display); font-weight:500; font-size:25px; color:var(--amber-dk); line-height:1.1;">Human in the loop</div>
+        <div style="font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--slate2); line-height:1.4; margin-top:9px;">AI drafts, a person decides.</div>
+        <div style="font-family:var(--font-display); font-style:italic; font-weight:300; font-size:18px; color:var(--amber-dk); line-height:1.3; margin-top:10px;">the human as guardrail, not a bottleneck</div>
+      </div>
+      <!-- bottom-left: low cost, clear -->
+      <div style="border:1px solid var(--line); border-top:3px solid var(--line); border-radius:10px; background:#fff; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:20px 24px; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-family:var(--font-display); font-weight:500; font-size:25px; color:var(--slate); line-height:1.1;">Just automate it</div>
+        <div style="font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--slate2); line-height:1.4; margin-top:9px;">Plain rules, no AI needed.</div>
+      </div>
+      <!-- bottom-right: low cost, messy -->
+      <div style="border:1px solid #D8C6EF; border-top:3px solid var(--purple); border-radius:10px; background:var(--purple-wash); box-shadow:0 2px 10px rgba(40,30,70,.05); padding:20px 24px; display:flex; flex-direction:column; justify-content:center;">
+        <div style="font-family:var(--font-display); font-weight:500; font-size:25px; color:var(--purple); line-height:1.1;">Let the AI handle it</div>
+        <div style="font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--slate2); line-height:1.4; margin-top:9px;">Let the agent run on its own.</div>
+      </div>
+    </div>
+    <!-- x-axis label -->
+    <div style="position:absolute; left:160px; right:96px; bottom:60px; text-align:center; font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:.14em; text-transform:uppercase; color:var(--slate2);">Ambiguity of the task&nbsp;&rarr;</div>
+    <aside class="notes">This is the genuinely new question, the one that did not exist a few years ago. You now have a new option in the picture: hand the messy, judgment-heavy work to AI. Two axes. Across: how ambiguous is the task. Up: how costly a mistake is. Clear and cheap, just automate it, no AI. Clear but costly, automate with checks. Messy but low stakes, let the AI run it. Messy and costly, keep a human in the loop, and design that human as a guardrail, not a bottleneck. The deeper point: you do not need to work for an AI company to reason about this. You need the intuition for what is now possible, and the only way to get it is to use the tools, like we just did. And keep in mind the lines on this chart keep moving, because the technology keeps changing, so stay flexible.</aside>
+  </section>
+
+
+  <!-- 13 — P2.4 · THE CASE · Proxima Health Systems (interactive-case setup) -->
+  <section>
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2>An interactive case</h2>
+    <div style="position:absolute; left:96px; right:96px; top:200px; bottom:48px; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1fr 1fr; gap:24px;">
+      <!-- TL: the case + NoYes.ai attribution -->
+      <div style="background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:26px; display:flex; flex-direction:column; justify-content:center; gap:20px;">
+        <img src="assets/proxima-logo.png" alt="Proxima Health Systems" style="height:54px; align-self:flex-start;">
+        <p style="font-family:var(--font-body); font-weight:300; font-size:21px; color:var(--ink); line-height:1.45; margin:0;">An <b>AI-powered interactive case</b>.</p>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <img src="assets/noyes-logo.png" alt="NoYes.ai" style="height:28px;">
+          <a href="https://noyesai.com" style="font-family:var(--font-mono); font-weight:600; font-size:20px; color:var(--purple); text-decoration:none; border-bottom:2px solid var(--purple);">noyesai.com</a>
+        </div>
+      </div>
+      <!-- TR: the pain point -->
+      <div style="background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:24px 26px;">
+        <div style="font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--amber-dk); margin-bottom:11px;">The pain point</div>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--ink); line-height:1.5; margin:0;">After every client visit, Proxima's <b>sales representatives</b> lose <b>1 to 3 hours</b> on paperwork: writing up notes, updating the CRM (the customer database), and drafting follow-up emails.</p>
+      </div>
+      <!-- BL: who is on it -->
+      <div style="background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:24px 26px;">
+        <div style="font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--amber-dk); margin-bottom:11px;">Who is on it</div>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--ink); line-height:1.5; margin:0;"><b>Maya Chen</b> leads the company's push to put AI agents to work (the <i>AfterVisit AI</i> pilot). She is sure it is a winner. Her ideas may or may not be good.</p>
+      </div>
+      <!-- BR: your role -->
+      <div style="background:#fff; border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 10px rgba(40,30,70,.05); padding:24px 26px;">
+        <div style="font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--amber-dk); margin-bottom:11px;">Your role</div>
+        <p style="font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--ink); line-height:1.5; margin:0;">You are the advisor Maya brought in. <b>Talk to her</b> and gather as much as you can, she knows a lot. Work out what <i>you</i> would do in her shoes, and how you would use AI.</p>
+      </div>
+    </div>
+    <aside class="notes">Set the case up fast, the detail is on the web page. Proxima Health Systems, a US medical-equipment distributor, has a company-wide push to put AI agents to work across sales and operations. The concrete pain: after each client visit, the sales reps lose one to three hours on paperwork (notes, the CRM, follow-up emails). Maya Chen leads that push, the AfterVisit AI pilot; she is an enthusiastic champion who tends to downplay the risks, so her plan may or may not be good. Your role: you are the advisor she brought in, talk to her, gather as much as you can, then decide what you would do and how you would use AI. This is a simplified version of a NoYes.ai interactive case. Next slide: talk to Maya.</aside>
+  </section>
+
+  <!-- 14 — P2.5 · YOUR TASK · interview Maya (interactive-case instructions) -->
+  <section>
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2>Talk to Maya</h2>
+    <!-- Maya character card, right -->
+    <div style="position:absolute; right:104px; top:158px; width:286px; display:flex; flex-direction:column; align-items:center; gap:16px;">
+      <img src="assets/proxima-logo.png" alt="Proxima Health Systems" style="height:42px;">
+      <div style="width:212px; height:212px; border-radius:50%; background:var(--purple-wash); border:1px solid #E4DBF3; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;">
+        <img src="assets/maya-chen.png" alt="Maya Chen" style="width:92%; height:auto; display:block;">
+      </div>
+      <div style="text-align:center;">
+        <div style="font-family:var(--font-display); font-weight:600; font-size:23px; color:var(--ink);">Maya Chen</div>
+        <div style="font-family:var(--font-body); font-weight:300; font-size:16px; color:var(--slate2); line-height:1.35; margin-top:4px;">Lead, <i>AfterVisit AI</i><br>Proxima Health Systems</div>
+      </div>
+    </div>
+    <!-- instructions, left -->
+    <div style="position:absolute; left:96px; top:198px; right:430px;">
+      <p style="font-family:var(--font-body); font-weight:300; font-size:22px; color:var(--ink); line-height:1.45; margin:0 0 24px;">It is an <b>interactive</b> case: you can actually talk to the people in it.</p>
+      <div style="display:flex; flex-direction:column; gap:17px;">
+        <div style="display:flex; align-items:flex-start; gap:15px;">
+          <div style="flex:none; width:30px; height:30px; border-radius:50%; background:var(--purple); color:#fff; font-family:var(--font-display); font-weight:600; font-size:16px; display:flex; align-items:center; justify-content:center;">1</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--ink); line-height:1.4;">Open the class page, then the <b>“Talk to Maya”</b> section.<br><span style="font-family:var(--font-mono); font-weight:600; font-size:18px; color:var(--purple);">sebastienmartin.info/p/cdaio</span></div>
+        </div>
+        <div style="display:flex; align-items:flex-start; gap:15px;">
+          <div style="flex:none; width:30px; height:30px; border-radius:50%; background:var(--purple); color:#fff; font-family:var(--font-display); font-weight:600; font-size:16px; display:flex; align-items:center; justify-content:center;">2</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--ink); line-height:1.4;">Interview her. <b>Ask as many questions as you can.</b></div>
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <div style="font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--amber-dk); margin-bottom:12px;">Your goal &middot; figure out</div>
+        <div style="display:flex; flex-direction:column; gap:10px; font-family:var(--font-body); font-weight:300; font-size:19px; color:var(--ink); line-height:1.4;">
+          <div style="display:flex; gap:11px;"><span style="color:var(--purple); font-weight:600;">&rsaquo;</span><span>The situation, <b>deeply</b>: what does Maya want to do?</span></div>
+          <div style="display:flex; gap:11px;"><span style="color:var(--purple); font-weight:600;">&rsaquo;</span><span>Would <i>you</i> do anything <b>differently</b>?</span></div>
+          <div style="display:flex; gap:11px;"><span style="color:var(--purple); font-weight:600;">&rsaquo;</span><span>How exactly would you <b>use AI</b>, and which <b>agent</b> is worth building?</span></div>
+          <div style="display:flex; gap:11px;"><span style="color:var(--purple); font-weight:600;">&rsaquo;</span><span>Where is the line between <b>agents and people</b>?</span></div>
+        </div>
+      </div>
+      <div style="margin-top:26px; display:inline-flex; align-items:center; gap:11px; background:var(--purple-wash); border:1px solid #E4DBF3; border-radius:10px; padding:11px 18px;">
+        <span style="font-family:var(--font-display); font-weight:600; font-size:19px; color:var(--purple);">~15 min</span>
+        <span style="font-family:var(--font-body); font-weight:300; font-size:19px; color:var(--slate);">then we debrief together.</span>
+      </div>
+    </div>
+    <aside class="notes">The activity. It is an interactive AI case, so they really talk to the character. Steps: open the class page and the Talk to Maya section, interview her, ask as many questions as possible. Goal: understand the situation deeply, what Maya wants to do, then form their own view: would they do anything differently, how exactly would they use AI, which agent is worth building, and where the line between agents and people sits. Maya is the single source: she relays everyone's point of view, but her flaw is judgment, she underrates the people problems, so push them to catch where her optimism glosses over risk. About fifteen minutes, then we debrief together: where does the human stay, who resists, and how would you know in ninety days whether it worked.</aside>
+  </section>
+
+
+  <!-- 19 — DEBRIEF · what's going on at Proxima (animated comm problem) -------->
+  <section>
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2>What&rsquo;s really going on at Proxima</h2>
+    <p style="position:absolute; left:96px; right:96px; top:170px; font-family:var(--font-body); font-weight:300; font-size:22px; color:var(--slate2); line-height:1.4; margin:0;">A communication problem between the field and headquarters, and AI is the proposed fix.</p>
+    <div style="position:absolute; left:96px; right:96px; top:212px;">
+      <svg viewBox="0 0 1088 470" style="width:100%; height:auto;" font-family="Inter">
+        <defs>
+          <marker id="cmar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#4E2A84"/></marker>
+          <marker id="cmar2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#7657AD"/></marker>
+        </defs>
+
+        <!-- BASE: the three players + field loop -->
+        <g>
+          <rect x="30" y="170" width="250" height="70" rx="13" fill="#F4EFFA" stroke="#7657AD" stroke-width="2"/>
+          <text x="155" y="200" text-anchor="middle" font-size="21" font-weight="600" fill="#2B2F36">Sales Management</text>
+          <text x="155" y="222" text-anchor="middle" font-size="14" fill="#565E6B">makes the decisions</text>
+
+          <rect x="800" y="118" width="250" height="70" rx="13" fill="#F4EFFA" stroke="#7657AD" stroke-width="2"/>
+          <text x="925" y="148" text-anchor="middle" font-size="21" font-weight="600" fill="#2B2F36">Field Reps</text>
+          <text x="925" y="170" text-anchor="middle" font-size="14" fill="#565E6B">see what&rsquo;s really happening</text>
+
+          <rect x="800" y="352" width="250" height="70" rx="13" fill="#F4EFFA" stroke="#7657AD" stroke-width="2"/>
+          <text x="925" y="394" text-anchor="middle" font-size="21" font-weight="600" fill="#2B2F36">Customers</text>
+
+          <!-- field loop -->
+          <line x1="940" y1="188" x2="940" y2="352" stroke="#3E444E" stroke-width="2.2" marker-end="url(#cmar)"/>
+          <line x1="910" y1="352" x2="910" y2="188" stroke="#3E444E" stroke-width="2.2" marker-end="url(#cmar)"/>
+          <text x="966" y="276" text-anchor="start" font-size="16" fill="#565E6B">Visit / call</text>
+        </g>
+
+        <!-- FRAG 1: directives top-down -->
+        <g class="fragment">
+          <path d="M 280 188 Q 540 78 800 140" fill="none" stroke="#3E444E" stroke-width="2.2" marker-end="url(#cmar)"/>
+          <text x="540" y="96" text-anchor="middle" font-size="16" fill="#565E6B">Directives, top-down</text>
+        </g>
+
+        <!-- FRAG 2: the CRM is supposed to carry the field back to HQ -->
+        <g class="fragment">
+          <rect x="430" y="176" width="150" height="58" rx="10" fill="#fff" stroke="#8A9099" stroke-width="1.8"/>
+          <text x="505" y="211" text-anchor="middle" font-size="19" font-weight="600" fill="#2B2F36">CRM</text>
+          <line x1="800" y1="168" x2="588" y2="200" stroke="#3E444E" stroke-width="2.2" marker-end="url(#cmar)"/>
+          <text x="690" y="150" text-anchor="middle" font-size="15" fill="#565E6B">reps log it&hellip;</text>
+          <line x1="430" y1="205" x2="288" y2="205" stroke="#3E444E" stroke-width="2.2" marker-end="url(#cmar)"/>
+        </g>
+
+        <!-- FRAG 3: but it rarely happens -> HQ flies blind -->
+        <g class="fragment">
+          <g stroke="#C0392B" stroke-width="4" stroke-linecap="round"><line x1="678" y1="170" x2="702" y2="194"/><line x1="702" y1="170" x2="678" y2="194"/></g>
+          <text x="690" y="232" text-anchor="middle" font-size="15" font-weight="600" fill="#C0392B">rarely happens</text>
+          <text x="155" y="300" text-anchor="middle" font-size="16" font-style="italic" fill="#C0392B">HQ is flying blind</text>
+        </g>
+
+        <!-- FRAG 4: AfterVisit AI closes the loop -->
+        <g class="fragment">
+          <rect x="410" y="344" width="190" height="80" rx="13" fill="#4E2A84" stroke="#4E2A84"/>
+          <!-- robot glyph -->
+          <line x1="452" y1="368" x2="452" y2="360" stroke="#fff" stroke-width="2"/><circle cx="452" cy="357" r="3" fill="#fff"/>
+          <rect x="436" y="370" width="32" height="26" rx="5" fill="#fff"/>
+          <circle cx="446" cy="383" r="3" fill="#4E2A84"/><circle cx="458" cy="383" r="3" fill="#4E2A84"/>
+          <text x="520" y="380" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">AfterVisit</text>
+          <text x="520" y="400" text-anchor="middle" font-size="15" font-weight="600" fill="#fff">AI</text>
+          <!-- captures the visit -->
+          <line x1="800" y1="388" x2="608" y2="386" stroke="#4E2A84" stroke-width="2.4" marker-end="url(#cmar)"/>
+          <text x="700" y="368" text-anchor="middle" font-size="15" fill="#4E2A84">captures every visit</text>
+          <!-- auto-fills the CRM -->
+          <line x1="505" y1="344" x2="505" y2="238" stroke="#4E2A84" stroke-width="2.4" marker-end="url(#cmar)"/>
+          <text x="525" y="296" text-anchor="start" font-size="15" fill="#4E2A84">auto-fills the CRM</text>
+        </g>
+      </svg>
+    </div>
+    <aside class="notes">Build it up one click at a time. Base: reps are in the field, they see what is really going on; management has to make the calls. (1) Directives flow top-down. (2) The CRM is how the field is supposed to flow back up so management can decide. (3) But logging is a chore for a busy rep, so it rarely happens, and HQ ends up flying blind: that is the real communication problem, and it is human, not technical. (4) AfterVisit AI captures every visit automatically and auto-fills the CRM, closing the loop. The pitch: we are not adding AI for its own sake, we are using it to fix a broken flow of information.</aside>
+  </section>
+
+  <!-- 20 — DEBRIEF · stakeholder web (you only met Maya) ---------------------->
+  <section>
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2>You only met Maya</h2>
+    <p style="position:absolute; left:96px; right:96px; top:170px; font-family:var(--font-body); font-weight:300; font-size:22px; color:var(--slate2); line-height:1.4; margin:0;">If you asked, Maya may have shared other people&rsquo;s points of view across the company.</p>
+    <div style="position:absolute; left:96px; right:96px; top:236px; bottom:42px; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:1fr 1fr; gap:22px;">
+      <!-- Maya (the one met) -->
+      <div style="display:flex; align-items:center; gap:15px; background:var(--purple-wash); border:1.5px solid var(--purple); border-radius:14px; padding:16px 20px; box-shadow:0 2px 10px rgba(40,30,70,.05);">
+        <div style="flex:none; width:66px; height:66px; border-radius:50%; background:#fff; border:1px solid #E4DBF3; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;"><img src="assets/proxima-maya.png" alt="Maya Chen" style="width:92%; height:auto;"></div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--ink);">Maya Chen</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2);">Program Lead, AfterVisit AI</div>
+          <div style="font-family:var(--font-body); font-weight:600; font-size:15px; color:var(--purple); margin-top:4px;">The one you talked to</div>
+        </div>
+      </div>
+      <!-- Dana -->
+      <div style="display:flex; align-items:center; gap:15px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 20px; box-shadow:0 2px 10px rgba(40,30,70,.05);">
+        <div style="flex:none; width:66px; height:66px; border-radius:50%; background:var(--purple-wash); border:1px solid #E4DBF3; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;"><img src="assets/proxima-dana.png" alt="Dana Morales" style="width:92%; height:auto;"></div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--ink);">Dana Morales</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2);">Senior Sales Rep</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3; margin-top:5px;">&ldquo;Don&rsquo;t surveil me&rdquo;</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3;">&ldquo;I want to stay in control&rdquo;</div>
+        </div>
+      </div>
+      <!-- Marcus -->
+      <div style="display:flex; align-items:center; gap:15px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 20px; box-shadow:0 2px 10px rgba(40,30,70,.05);">
+        <div style="flex:none; width:66px; height:66px; border-radius:50%; background:var(--purple-wash); border:1px solid #E4DBF3; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;"><img src="assets/proxima-marcus.png" alt="Marcus Green" style="width:92%; height:auto;"></div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--ink);">Marcus Green</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2);">Head of Sales</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3; margin-top:5px;">&ldquo;Can it connect me and my reps?&rdquo;</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3;">&ldquo;Will I finally see the field?&rdquo;</div>
+        </div>
+      </div>
+      <!-- Gavin -->
+      <div style="display:flex; align-items:center; gap:15px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 20px; box-shadow:0 2px 10px rgba(40,30,70,.05);">
+        <div style="flex:none; width:66px; height:66px; border-radius:50%; background:var(--purple-wash); border:1px solid #E4DBF3; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;"><img src="assets/proxima-gavin.png" alt="Gavin Holt" style="width:92%; height:auto;"></div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--ink);">Gavin Holt</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2);">Chief Financial Officer</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3; margin-top:5px;">&ldquo;Prove the ROI&rdquo;</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3;">&ldquo;What if it fails?&rdquo;</div>
+        </div>
+      </div>
+      <!-- Morgan -->
+      <div style="display:flex; align-items:center; gap:15px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 20px; box-shadow:0 2px 10px rgba(40,30,70,.05);">
+        <div style="flex:none; width:66px; height:66px; border-radius:50%; background:var(--purple-wash); border:1px solid #E4DBF3; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;"><img src="assets/proxima-morgan.png" alt="Morgan Ainsworth" style="width:92%; height:auto;"></div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--ink);">Morgan Ainsworth</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2);">Chief Executive Officer</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3; margin-top:5px;">&ldquo;Give me a board story&rdquo;</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3;">&ldquo;Just don&rsquo;t embarrass us&rdquo;</div>
+        </div>
+      </div>
+      <!-- Jordan -->
+      <div style="display:flex; align-items:center; gap:15px; background:#fff; border:1px solid var(--line); border-radius:14px; padding:16px 20px; box-shadow:0 2px 10px rgba(40,30,70,.05);">
+        <div style="flex:none; width:66px; height:66px; border-radius:50%; background:var(--purple-wash); border:1px solid #E4DBF3; overflow:hidden; display:flex; align-items:flex-end; justify-content:center;"><img src="assets/proxima-jordan.png" alt="Jordan Reeves" style="width:92%; height:auto;"></div>
+        <div>
+          <div style="font-family:var(--font-display); font-weight:600; font-size:20px; color:var(--ink);">Jordan Reeves</div>
+          <div style="font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2);">Head of IT</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3; margin-top:5px;">&ldquo;Is our data safe?&rdquo;</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-style:italic; font-size:15px; color:var(--amber-dk); line-height:1.3;">&ldquo;People use AI in secret&rdquo;</div>
+        </div>
+      </div>
+    </div>
+    <aside class="notes">The debrief opener, after they have talked to Maya. She is the champion, but if pushed she relays how others across the company see it: a rep who fears surveillance and wants control, a head of sales who cannot see his own field, a CFO who wants ROI and a way out if it fails, a CEO who needs a board story and no embarrassment, a head of IT worried about safety and staff already using AI in secret. The point: a good AI rollout is stakeholder alignment, and any one of these people can sink it.</aside>
+  </section>
+
+  <!-- 21 — DEBRIEF · the topics cloud (multi-dimensionality) ------------------>
+  <section>
+    <div class="eyebrow">Leveraging AI agents</div>
+    <h2>One agent, all of this at once</h2>
+    <div style="position:absolute; left:80px; right:80px; top:206px; bottom:48px; display:flex; flex-wrap:wrap; align-content:center; justify-content:center; gap:14px 16px;">
+      <span style="font-family:var(--font-body); font-weight:600; font-size:27px; color:var(--purple); background:var(--purple-wash); border:1.5px solid var(--purple); border-radius:12px; padding:9px 18px;">When should a human step in?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:24px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Will reps feel watched?</span>
+      <span style="font-family:var(--font-body); font-weight:600; font-size:25px; color:var(--purple); background:var(--purple-wash); border:1.5px solid var(--purple); border-radius:12px; padding:9px 18px;">Where&rsquo;s the ROI?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:21px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Who stays in control?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:23px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Shadow AI is already here</span>
+      <span style="font-family:var(--font-body); font-weight:600; font-size:24px; color:var(--purple); background:var(--purple-wash); border:1.5px solid var(--purple); border-radius:12px; padding:9px 18px;">A story for the board</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:20px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Fear of being replaced</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:24px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">What should the agent do?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:19px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Data security &amp; privacy</span>
+      <span style="font-family:var(--font-body); font-weight:600; font-size:23px; color:var(--purple); background:var(--purple-wash); border:1.5px solid var(--purple); border-radius:12px; padding:9px 18px;">What to measure in 90 days?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:22px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Fix the system, not the people</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:19px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Include users in design</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:20px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Replace the costly CRM?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:18px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Could our data leak?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:22px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Move fast, or build trust?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:19px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Give HQ real visibility</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:18px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Risk of a field revolt</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:19px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Kill switch &amp; stage gates</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:18px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Where does our data live?</span>
+      <span style="font-family:var(--font-body); font-weight:400; font-size:20px; color:var(--ink); background:#fff; border:1px solid var(--line); border-radius:12px; padding:9px 16px;">Consent to record?</span>
+    </div>
+    <aside class="notes">The payoff visual. Every box here is a real consideration the stakeholders raise, deliberately not labelled by person. People (surveillance, control, fear, trust), money (ROI, kill switches, what to measure), IT (security, shadow AI, data residency, the costly CRM), leadership (a board story, data leaks, field revolt), and operations (real signal, fix the system, what the agent should even do, where humans decide). This is a discussion slide, not a lecture: the point is the sheer dimensionality. Good prompts: which of these would you tackle first? Which would kill the project if ignored? Notice how few are actually about the AI itself.</aside>
+  </section>
+
+  <!-- ================== SECTION · BUILDING WITH AI (Part 3) ===============
+       AI for yourself: timeline, computer agents, a live demo, why-now,
+       my own path, and the close. Sourced from the Summer CIM "Building with
+       AI" deck, exec-adapted. Reuses existing theme classes (no new CSS).
+       ====================================================================== -->
+
+  <!-- 22 — PART 3 DIVIDER  (transition out of the Maya / company arc) -------->
+  <section class="section" data-state="lede">
+    <div class="num">PART 3</div>
+    <h2>Building with AI</h2>
+    <hr class="rule">
+    <div class="sub">AI can do much more for you than run workflows, almost like your own &ldquo;remote employee.&rdquo;</div>
+    <aside class="notes">Transition out of Maya and the company case. So far today we took a technology and leveraged it inside a defined workflow, the kind of repeatable process you could also staff with people. But a lot of what we actually do is not a neat, repeatable workflow. We have judgment, we have agency, we move across many different tasks in a day. So here is the question for this last part: what if AI could do that too, act less like a single tool wired into one process, and more like a general-purpose employee you can direct? That is where things are heading, and you can start using it today. Keep this part light and inspiring, it is the close.</aside>
+  </section>
+
+  <!-- 23 — TIMELINE · what happens if AI keeps getting more powerful --------->
+  <section class="tl">
+    <div class="eyebrow">Building with AI</div>
+    <h2>What happens if AI keeps getting more powerful?</h2>
+    <div class="wrap">
+      <div class="years"><div class="yr">2022</div><div class="yr">2023</div><div class="yr">2024</div><div class="yr">2025</div><div class="yr">2026</div></div>
+      <div class="line"></div>
+      <div class="cells">
+        <div class="cell"><div class="h">ChatGPT</div><div class="d">AI can write and answer questions</div></div>
+        <div class="cell"><div class="h">GPT-4 &amp; the AI wave</div><div class="d">AI can be really smart</div></div>
+        <div class="cell"><div class="h">Agentic AI</div><div class="d">AI can &ldquo;reason&rdquo; and use tools</div></div>
+        <div class="cell"><div class="h">Claude Code &amp; coding agents</div><div class="d">AI can work on its own on complex tasks</div></div>
+        <div class="cell"><div class="h">Claude Cowork &amp; computer agents</div><div class="d">AI can control a computer and do real work</div></div>
+      </div>
+    </div>
+    <aside class="notes">Four years in one slide. Each step is a real jump in what AI can do: write, then be genuinely smart, then reason and use tools, then work on its own on complex tasks, and now control a whole computer. The line keeps going up and to the right, fast. Land the question that is on the slide: if it keeps going, the end state is not a smarter chatbot, it is something that can take on open-ended work the way a capable employee would. That is the bridge into computer agents on the next slide.</aside>
+  </section>
+
+  <!-- 24 — COMPUTER AGENTS · Claude Code/Cowork vs Codex -------------------->
+  <section class="statements">
+    <div class="eyebrow">Building with AI</div>
+    <h2>Computer agents</h2>
+    <div class="field">
+      <div class="row2" style="gap:48px; align-items:stretch;">
+        <div style="flex:1; background:#141414; border-radius:10px; padding:30px 28px 26px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+          <img src="assets/claude-code.jpg" alt="Claude Code" style="height:80px; width:auto; object-fit:contain; border-radius:6px;">
+          <div style="font-family:var(--font-display); font-weight:400; font-size:25px; color:#F2F2F4; line-height:1.1; margin-top:8px;">&amp; Cowork</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-size:17px; color:#8C8C92; letter-spacing:.06em; margin-top:4px;">Anthropic</div>
+        </div>
+        <div style="flex:1; background:#fff; border:1px solid var(--line); border-radius:10px; padding:22px 28px 26px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;">
+          <img src="assets/codex.webp" alt="OpenAI Codex" style="height:108px; width:auto; object-fit:contain;">
+          <div style="font-family:var(--font-display); font-weight:500; font-size:31px; color:var(--ink); line-height:1.1;">Codex</div>
+          <div style="font-family:var(--font-body); font-weight:400; font-size:17px; color:var(--muted); letter-spacing:.06em; margin-top:2px;">OpenAI</div>
+        </div>
+      </div>
+      <div style="text-align:center; max-width:960px; font-family:var(--font-display); font-style:italic; font-weight:300; font-size:28px; color:var(--slate2); margin-top:40px; line-height:1.3;">Whichever you pick, this is the one to get into: an AI agent that works right on your own computer, the closest thing yet to a general-purpose teammate.</div>
+    </div>
+    <aside class="notes">This is the closest thing today to that general employee. A computer agent runs right on your own machine, can see your files and your screen, and actually does the work rather than just talking about it. Two main options: Claude Code and Cowork from Anthropic, and Codex from OpenAI. They are interchangeable for our purposes, so do not hear this as an ad, the point is just to get into one. Cowork is the friendlier entry point if you are not technical. Next, let me show you one live.</aside>
+  </section>
+
+  <!-- 25 — LIVE DEMO DIVIDER ------------------------------------------------>
+  <section class="section" data-state="lede">
+    <h2>Live demo</h2>
+    <hr class="rule">
+    <div class="sub">Let me show you what one of these can actually do.</div>
+    <aside class="notes">Switch to the live screen. Pick the single most impressive, low-risk thing: point a computer agent at a real, messy task (a folder of files, a spreadsheet to clean, a quick research-and-write) and let them watch it work. Narrate the loop: it plans, acts, and checks itself. Keep it short and concrete. Fallback if a tool is brittle in the room: a pre-recorded run or screenshots, same as Block 1. Do not fight a live failure in front of the room.</aside>
+  </section>
+
+  <!-- 26 — WHY START USING COMPUTER AGENTS NOW  (3 reasons, exec, simplified) -->
+  <section>
+    <div class="eyebrow">Building with AI</div>
+    <h2>Why start using computer agents now?</h2>
+    <div class="threecol">
+      <div class="tcard" style="justify-content:flex-start;">
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/>
+          </svg>
+        </div>
+        <div class="t">It builds on what you know</div>
+        <div class="p">There are no AI experts, and you can reach the frontier fast.</div>
+        <div class="p">AI magnifies the expertise you already have: call it 95% you, 5% AI.</div>
+      </div>
+      <div class="tcard" style="justify-content:flex-start;">
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="1" x2="7" y1="14" y2="14"/><line x1="9" x2="15" y1="8" y2="8"/><line x1="17" x2="23" y1="16" y2="16"/>
+          </svg>
+        </div>
+        <div class="t">It puts you in control</div>
+        <div class="p">Use it yourself and you keep your judgment, instead of outsourcing your thinking.</div>
+        <div class="p">The value sits with the leaders who understand it firsthand, not a hired specialist.</div>
+      </div>
+      <div class="tcard" style="justify-content:flex-start;">
+        <div style="width:54px; height:54px; border-radius:13px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center; margin-bottom:6px;">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="t">The timing is right</div>
+        <div class="p">I'm seeing fast adoption at the C-level.</div>
+        <div class="p">What mattered six months ago barely matters now, so no one is behind.</div>
+      </div>
+    </div>
+    <aside class="notes">Three reasons, short on purpose (first draft, will tighten with feedback). One, it builds on what you already know: there are no AI experts, and AI mostly magnifies the expertise you already have, roughly 95% you and 5% AI. Two, it puts you in control: the people who use it themselves keep their judgment and earn a real say in where it goes, and the value of AI expertise sits with the leaders who understand it firsthand, not with a specialist you hire. Three, timing: I am seeing fast adoption at the C-level right now, and the field moves so fast that what mattered six months ago barely matters today, so no one is truly behind.</aside>
+  </section>
+
+  <!-- 27 — MY OWN PATH · the curve (imported verbatim from Summer CIM) ------>
+  <section class="diagram">
+    <div class="eyebrow">Building with AI</div>
+    <h2>My own path with AI</h2>
+    <div class="canvas" style="top:180px;">
+      <svg width="1040" height="392" viewBox="0 0 1040 392">
+        <defs><marker id="ax3" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#3E444E"/></marker></defs>
+        <line x1="80" y1="312" x2="80" y2="30" stroke="#3E444E" stroke-width="2.2" marker-end="url(#ax3)"/>
+        <line x1="80" y1="240" x2="1008" y2="240" stroke="#3E444E" stroke-width="2.2" marker-end="url(#ax3)"/>
+        <text x="100" y="52" font-family="Inter" font-size="19" fill="#6c727b">AI impact</text>
+        <text x="940" y="266" font-family="Inter" font-size="19" fill="#6c727b">Time</text>
+        <line x1="300" y1="54" x2="300" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <line x1="520" y1="54" x2="520" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <line x1="740" y1="54" x2="740" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <path d="M118,240 L300,240 C335.0,240.0 368.3,316.7 405,316 C441.7,315.3 481.7,236.7 520,236 C558.3,235.3 598.0,309.7 635,312 C672.0,314.3 700.5,277.0 742,250 C783.5,223.0 840.7,184.0 884,150 C927.3,116.0 982.3,63.3 1002,46"
+              fill="none" stroke="#DD9B2E" stroke-width="3.6" stroke-linecap="round"/>
+        <text x="190" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Before AI</text>
+        <text x="410" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Damage control</text>
+        <text x="630" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">First steps</text>
+        <text x="872" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Innovation</text>
+      </svg>
+    </div>
+    <div class="takeaway" style="font-size:23px; bottom:66px;">What happened when I tried to use AI to change the way I teach.</div>
+    <aside class="notes">My own path, honest version. I went from knowing very little to all of this. The curve is the real shape of it: a dip first, the damage-control phase where the old way stopped working and the new way was not paying off yet, and then the climb to genuinely doing things I could not do before. The message for them: trust yourself, do not wait for permission, and expect the dip, the upside is on the other side. Any leader changing how their organization works will feel this same curve.</aside>
+  </section>
+
+  <!-- 28 — CLOSE · build, build, build  +  stay in touch ------------------->
+  <section class="close">
+    <div class="eyebrow">Building with AI</div>
+    <h2>Thank you!</h2>
+    <div class="msg" style="max-width:840px; margin-left:auto; margin-right:auto; text-wrap:balance;">There are no AI experts. Which is just another way of saying that <b>everyone can become one</b>.</div>
+    <div class="advice">So here's my one piece of advice: <b>build, build, build.</b></div>
+    <!-- stay in touch · LinkedIn / website / email -->
+    <div style="display:flex; align-items:center; justify-content:center; gap:38px; margin-top:42px; flex-wrap:wrap;">
+      <div style="display:flex; align-items:center; gap:11px;">
+        <span style="width:40px; height:40px; border-radius:10px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </span>
+        <span style="font-family:var(--font-body); font-weight:500; font-size:19px; color:var(--ink);">sebastienmartin.info</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:11px;">
+        <span style="width:40px; height:40px; border-radius:10px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center;">
+          <svg width="21" height="21" viewBox="0 0 24 24" fill="#4E2A84"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+        </span>
+        <span style="font-family:var(--font-body); font-weight:500; font-size:19px; color:var(--ink);">linkedin.com/in/sebmart</span>
+      </div>
+      <div style="display:flex; align-items:center; gap:11px;">
+        <span style="width:40px; height:40px; border-radius:10px; background:var(--purple-wash); display:flex; align-items:center; justify-content:center;">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4E2A84" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        </span>
+        <span style="font-family:var(--font-body); font-weight:500; font-size:19px; color:var(--ink);">sebastien.martin@kellogg.northwestern.edu</span>
+      </div>
+    </div>
+    <div style="margin-top:24px; font-family:var(--font-body); font-weight:300; font-style:italic; font-size:18px; color:var(--muted);">I'll keep the slides and course materials online for a couple of months, in case you'd like to revisit anything.</div>
+    <aside class="notes">Warm close. Land the line: there are no AI experts, which is just another way of saying everyone can become one, and my one piece of advice is build, build, build. Then the practical sign-off: please stay in touch, here is my site, LinkedIn, and email, and I will keep the slides and the course materials online for a couple of months so you can revisit anything from today. Send them out on a high.</aside>
+  </section>
+
+</div></div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+<script>
+  const deck = window.deck = new Reveal({
+    width: 1280, height: 720, margin: 0,
+    center: false, hash: true, slideNumber: 'c/t',
+    transition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+  });
+  const setLede = () => document.querySelector('.reveal')
+      .classList.toggle('lede', !!deck.getCurrentSlide().matches('.title,.section,.image-full'));
+  deck.on('ready', setLede); deck.on('slidechanged', setLede);
+  deck.initialize();
+</script>
+</body>
+</html>

@@ -4,6 +4,8 @@ description: "Senior Management Program in AI and Digital Transformation · June
 show_nav: true
 hero_link_url: "/cdaio-slides/"
 hero_link_text: "Slides ↗"
+hero_link2_url: "/cdaio-slides/slides.pdf"
+hero_link2_text: "Slides (PDF) ↗"
 ---
 
 <style>.post pre { max-height: 22rem; overflow: auto; }</style>
@@ -24,7 +26,7 @@ Once your account is set, open our workspace below and make sure you can log in.
 
 ## 1 · Concierge prompt
 
-This is the system prompt for the Skyline Experiences concierge — the AI's "brain." To copy any block on this page, hover over it with your mouse and click **Copy code** at the top-right corner.
+This is the system prompt for the Skyline Experiences concierge. To copy any block on this page, hover over it with your mouse and click **Copy code** at the top-right corner.
 
 ```text
 WHO YOU ARE
@@ -162,7 +164,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
     {
       "parameters": {
         "content": "## To use the agent\n\n- send an email from _your_ email address (the same you entered before) to `aiml901sebastienmartin@gmail.com`, which is the agent address and wait a minute for the email to land.\n- Then either activate each step manually to explore the agent during class, or click on \"Publish\" at the top to automate it.\n- wait for the agent reply in your mail box (it can take 1-2min)",
-        "height": 240,
+        "height": 320,
         "width": 480,
         "color": 4
       },
@@ -312,7 +314,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "77361e6a-42fd-4cab-ad3e-cf675ecbd445",
+  "versionId": "f069e321-9940-4e44-bb78-7bdf0b9bf61a",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"
@@ -464,7 +466,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 3.1,
       "position": [
-        -624,
+        -592,
         -352
       ],
       "id": "d0f6ebfc-5911-410a-8e2c-6e9b1dc941f3",
@@ -539,7 +541,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
-        -432,
+        -384,
         -160
       ],
       "id": "d78e77c9-a881-4e51-ae58-0ac3fabe7e96",
@@ -558,7 +560,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "typeVersion": 3.1,
       "position": [
         112,
-        -160
+        -208
       ],
       "id": "41f04a7a-644d-4399-941d-94f3fa6f3d45",
       "name": "AI drafts for Human review"
@@ -621,8 +623,8 @@ The full template for the three-AI version, where a person reviews the trickier 
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.3,
       "position": [
-        32,
-        48
+        64,
+        32
       ],
       "id": "38b6bbdd-31ae-4841-9838-4a57f18b2322",
       "name": "OpenAI GPT-5-mini1",
@@ -636,7 +638,7 @@ The full template for the three-AI version, where a person reviews the trickier 
     {
       "parameters": {
         "operation": "5DayForecast",
-        "cityName": "={{ $fromAI('City', ``, 'string') }}"
+        "cityName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('City', ``, 'string') }}"
       },
       "type": "n8n-nodes-base.openWeatherMapTool",
       "typeVersion": 1,
@@ -676,7 +678,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "type": "n8n-nodes-base.stickyNote",
       "typeVersion": 1,
       "position": [
-        -1104,
+        -1120,
         -576
       ],
       "id": "34157400-c820-47fe-9b98-8b7ea8836fe3",
@@ -731,6 +733,22 @@ The full template for the three-AI version, where a person reviews the trickier 
     },
     {
       "parameters": {
+        "content": "## To use the agent\n\n- send an email from _your_ email address (the same you entered before) to `aiml901sebastienmartin@gmail.com`, which is the agent address\n- wait for the agent reply in your mail box (it can take 1-2min)",
+        "height": 240,
+        "width": 480,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -608,
+        -768
+      ],
+      "id": "f6209a83-d1b0-4dbc-bbf7-df5a32b708cc",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
         "operation": "sendAndWait",
         "sendTo": "={{ $('Gmail Trigger').first().json.from.value[0].address }}",
         "subject": "Customer email needs your review!",
@@ -761,7 +779,7 @@ The full template for the three-AI version, where a person reviews the trickier 
         -160
       ],
       "id": "96bad417-dece-4e54-955d-21b4bbfed247",
-      "name": "Ask for human reviewer approval and aait",
+      "name": "Ask for human reviewer approval and wait",
       "webhookId": "c3eaf389-00cc-49d2-b31b-3c80876b03b9",
       "credentials": {
         "gmailOAuth2": {
@@ -769,22 +787,6 @@ The full template for the three-AI version, where a person reviews the trickier 
           "name": "CDAIO Gmail"
         }
       }
-    },
-    {
-      "parameters": {
-        "content": "## To use the agent\n\n- send an email from _your_ email address (the same you entered before) to `aiml901sebastienmartin@gmail.com`, which is the agent address\n- wait for the agent reply in your mail box (it can take 1-2min)",
-        "height": 240,
-        "width": 480,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "typeVersion": 1,
-      "position": [
-        -656,
-        -720
-      ],
-      "id": "f6209a83-d1b0-4dbc-bbf7-df5a32b708cc",
-      "name": "Sticky Note1"
     }
   ],
   "pinData": {},
@@ -943,14 +945,14 @@ The full template for the three-AI version, where a person reviews the trickier 
       "main": [
         [
           {
-            "node": "Ask for human reviewer approval and aait",
+            "node": "Ask for human reviewer approval and wait",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Ask for human reviewer approval and aait": {
+    "Ask for human reviewer approval and wait": {
       "main": [
         [
           {
@@ -968,7 +970,7 @@ The full template for the three-AI version, where a person reviews the trickier 
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "acb31358-9ab3-40b4-824f-9ab35f95d9e2",
+  "versionId": "04678fb1-91f6-49a7-ac53-986fa9c81634",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "dc2f41b0f3697394e32470f5727b760961a15df0a6ed2f8c99e372996569754a"

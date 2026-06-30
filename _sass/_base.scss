@@ -1040,6 +1040,15 @@ details.code-collapse {
     }
   }
 
+  &__actions {
+    align-self: center;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem;
+    flex-shrink: 0;
+  }
+
   &__action {
     align-self: center;
     flex-shrink: 0;
