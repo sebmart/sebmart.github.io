@@ -6,9 +6,15 @@ show_nav: true
 
 <style>.post pre { max-height: 22rem; overflow: auto; }</style>
 
-This page is your companion for the three hours we'll spend building AI agents together. Everything we copy and paste during the session lives here, in the order we'll use it — so keep it open in your browser the whole time. If you ever fall behind, this is where you catch back up.
+This page is your companion for the three hours we'll spend building AI agents together. Everything we copy and paste during the session lives here, in the order we'll use it, so keep it open in your browser the whole time. If you ever fall behind, this is where you catch back up.
 
-We'll do the building in our shared **n8n workspace** — open it in another tab and keep it handy:
+## Setup before we start
+
+Yesterday morning I sent you a short email about one quick step to get ready for our sessions. If you haven't done it yet, here it is again. It only takes two or three minutes, and it makes sure you can build your own agents with me tomorrow.
+
+We'll build in **n8n**, a platform many companies use to run their AI agents in production. You should have received an invitation by email from n8n: click the link, pick a name and a password, and you're in. It's completely free, and there's nothing to download. If you don't see it, check your spam folder, and let me know if it still doesn't show up.
+
+Once your account is set, open our workspace below and make sure you can log in. Keep this tab handy, we'll use it for the whole session:
 
 <p style="margin: 1.2rem 0;">
   <a href="https://aiml901-martin.app.n8n.cloud/" target="_blank" rel="noopener" style="display:inline-block; background:#EA4B71; color:#fff; font-weight:600; padding:12px 22px; border-radius:10px; text-decoration:none;">Open our n8n workspace ↗</a>
