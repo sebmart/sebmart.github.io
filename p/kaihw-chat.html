@@ -247,6 +247,10 @@ a:hover { color: var(--accent-deep); }
   color: var(--ink-soft);
 }
 .bubble blockquote:first-child { margin-top: 0; }
+.bubble h4, .bubble h5 { font-weight: 600; line-height: 1.3; color: var(--ink); }
+.bubble h4 { font-size: 1.05em; margin: 0.75em 0 0.35em; }
+.bubble h5 { font-size: 0.98em; margin: 0.65em 0 0.3em; }
+.bubble h4:first-child, .bubble h5:first-child { margin-top: 0; }
 .bubble strong { font-weight: 600; }
 .bubble code {
   background: rgba(15, 23, 42, 0.06);
@@ -468,7 +472,7 @@ function escapeHTML(s) {
   return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
-// Minimal Markdown: paragraphs, **bold**, *italic*, `code`, links, lists.
+// Minimal Markdown: paragraphs, headings, **bold**, *italic*, `code`, links, lists, quotes.
 function renderMarkdown(text) {
   let t = escapeHTML(text);
   // Code spans
@@ -483,8 +487,10 @@ function renderMarkdown(text) {
   t = t.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
   // Bare emails
   t = t.replace(/([\w.+-]+@[\w-]+\.[\w.-]+)/g, '<a href="mailto:$1">$1</a>');
-  // Blocks: gather consecutive "> " lines into a blockquote and "- " lines
-  // into a list. Quote lines start with "&gt;" because escapeHTML ran first.
+  // Blocks: headings (#/##/###), blockquotes ("> "), and lists ("- ").
+  // Heading "#" and quote "&gt;" survive escapeHTML, so we match on the
+  // escaped text. Headings are pushed isolated by blank lines so surrounding
+  // text still groups into its own paragraph.
   const lines = t.split(/\n/);
   const out = [];
   let listBuf = null;
@@ -492,9 +498,15 @@ function renderMarkdown(text) {
   const flushList = () => { if (listBuf) { out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>"); listBuf = null; } };
   const flushQuote = () => { if (quoteBuf) { out.push("<blockquote>" + quoteBuf.join("<br>") + "</blockquote>"); quoteBuf = null; } };
   for (const line of lines) {
+    const h = line.match(/^(#{1,6})\s+(.*\S)\s*$/);
     const q = line.match(/^\s*&gt;\s?(.*)$/);
     const m = line.match(/^\s*[-•]\s+(.*)$/);
-    if (q) {
+    if (h) {
+      flushList();
+      flushQuote();
+      const tag = h[1].length <= 2 ? "h4" : "h5";
+      out.push("", "<" + tag + ">" + h[2] + "</" + tag + ">", "");
+    } else if (q) {
       flushList();
       if (!quoteBuf) quoteBuf = [];
       quoteBuf.push(q[1]);
