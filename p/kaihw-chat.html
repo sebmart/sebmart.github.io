@@ -240,6 +240,13 @@ a:hover { color: var(--accent-deep); }
 .bubble p:last-child { margin-bottom: 0; }
 .bubble ul, .bubble ol { margin: 0.4em 0; padding-left: 1.4em; }
 .bubble li { margin: 0.15em 0; }
+.bubble blockquote {
+  margin: 0.5em 0;
+  padding: 2px 0 2px 12px;
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+}
+.bubble blockquote:first-child { margin-top: 0; }
 .bubble strong { font-weight: 600; }
 .bubble code {
   background: rgba(15, 23, 42, 0.06);
@@ -476,21 +483,33 @@ function renderMarkdown(text) {
   t = t.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
   // Bare emails
   t = t.replace(/([\w.+-]+@[\w-]+\.[\w.-]+)/g, '<a href="mailto:$1">$1</a>');
-  // Lists: gather consecutive lines starting with "- "
+  // Blocks: gather consecutive "> " lines into a blockquote and "- " lines
+  // into a list. Quote lines start with "&gt;" because escapeHTML ran first.
   const lines = t.split(/\n/);
   const out = [];
   let listBuf = null;
+  let quoteBuf = null;
+  const flushList = () => { if (listBuf) { out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>"); listBuf = null; } };
+  const flushQuote = () => { if (quoteBuf) { out.push("<blockquote>" + quoteBuf.join("<br>") + "</blockquote>"); quoteBuf = null; } };
   for (const line of lines) {
+    const q = line.match(/^\s*&gt;\s?(.*)$/);
     const m = line.match(/^\s*[-•]\s+(.*)$/);
-    if (m) {
+    if (q) {
+      flushList();
+      if (!quoteBuf) quoteBuf = [];
+      quoteBuf.push(q[1]);
+    } else if (m) {
+      flushQuote();
       if (!listBuf) listBuf = [];
       listBuf.push(m[1]);
     } else {
-      if (listBuf) { out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>"); listBuf = null; }
+      flushList();
+      flushQuote();
       out.push(line);
     }
   }
-  if (listBuf) out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>");
+  flushList();
+  flushQuote();
   // Group remaining text into paragraphs by blank lines.
   let html = out.join("\n");
   const blocks = html.split(/\n{2,}/);
