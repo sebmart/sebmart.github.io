@@ -1,6 +1,6 @@
 ---
-title: "AI in Teaching Lab"
-description: "AI in Education Workshop · Kellogg School of Management · July 9, 2026"
+title: "AI in Education Workshop"
+description: "Kellogg School of Management · July 9–10, 2026"
 show_nav: true
 hero_link_url: "/teaching-lab-slides/"
 hero_link_text: "Slides ↗"
@@ -9,7 +9,7 @@ hero_link2_text: "Slides (PDF) ↗"
 permalink: /p/kaihw.html
 ---
 
-Your companion page for the session. The slides are linked at the top; below is one thing worth trying yourself.
+Your companion page for the AI in Teaching Lab session. The slides are linked at the top; below is one thing worth trying yourself.
 
 ## Try a real Kai homework
 

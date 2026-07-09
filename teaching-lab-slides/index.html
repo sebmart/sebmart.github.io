@@ -140,10 +140,13 @@
       color:var(--purple); line-height:1.15; }
     .reveal .aginfo .it .d{ font-family:var(--font-body); font-weight:300; font-size:17px;
       color:var(--slate2); line-height:1.38; margin-top:5px; }
-    .reveal .aginfo .it.qrit{ display:flex; gap:16px; align-items:center; }
-    .reveal .aginfo .it.qrit img{ width:86px; height:86px; flex:none; }
-    .reveal .aginfo .it.qrit .u{ font-family:var(--font-mono); font-size:13.5px; color:var(--purple);
-      margin-top:6px; }
+    /* slides & materials QR on the lab title slide */
+    .reveal section.title .titleqr{ position:absolute; right:110px; bottom:104px; text-align:center; }
+    .reveal section.title .titleqr img{ width:118px; height:118px; }
+    .reveal section.title .titleqr .t{ font-family:var(--font-body); font-weight:600; font-size:14px;
+      letter-spacing:.03em; text-transform:uppercase; color:var(--muted); margin-top:10px; }
+    .reveal section.title .titleqr .u{ font-family:var(--font-mono); font-size:13.5px; color:var(--purple);
+      margin-top:5px; }
     /* thank-you: big word left, QRs right */
     .reveal section.thanks .left{ position:absolute; left:96px; top:298px; }
     .reveal section.thanks .big{ font-family:var(--font-display); font-weight:300; font-size:98px;
@@ -186,9 +189,6 @@
           <div class="d">The Barn Steakhouse &middot; 1016 Church St, Evanston (entrance in the rear alley).</div></div>
         <div class="it"><div class="t">Tomorrow</div>
           <div class="d">Breakfast from 8:30 AM &middot; sessions 9:00&ndash;12:30 &middot; lunch &amp; farewell, done by 1:00 PM.</div></div>
-        <div class="it qrit"><img src="assets/qr-kaihw.png" alt="QR code to the slides and supporting material">
-          <div><div class="t">Slides &amp; materials</div>
-          <div class="u">sebastienmartin.info/p/kaihw.html</div></div></div>
       </div>
     </div>
   </section>
@@ -233,6 +233,9 @@
     <hr class="rule">
     <div class="sub" style="max-width:720px;">A live tour of AI in my teaching, and of the computer agents that build it.</div>
     <div class="by"><b>Sébastien Martin</b>Associate Professor of Operations · Northwestern Kellogg<br><span>AI in Education Workshop · July 9, 2026 · 3:30&ndash;5:00 PM</span></div>
+    <div class="titleqr"><img src="assets/qr-kaihw.png" alt="QR code to the slides and supporting material">
+      <div class="t">Slides &amp; materials</div>
+      <div class="u">sebastienmartin.info/p/kaihw.html</div></div>
   </section>
 
   <!-- 04 · disruption framing -->
