@@ -9,7 +9,7 @@ hero_link2_text: "Slides (PDF) ↗"
 permalink: /p/kaihw.html
 ---
 
-Your companion page for the AI in Teaching Lab session. The slides are linked at the top; below is one thing worth trying yourself.
+Your companion page for the AI in Teaching Lab session. The slides are linked above; below is one thing worth trying yourself.
 
 ## Try a real Kai homework
 
