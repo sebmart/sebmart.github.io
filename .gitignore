@@ -14,5 +14,7 @@ vendor
 !/p/building-with-ai-slides/vendor/**
 !/cdaio-slides/vendor/
 !/cdaio-slides/vendor/**
+!/teaching-lab-slides/vendor/
+!/teaching-lab-slides/vendor/**
 .idea
 resume-builder/dist/
