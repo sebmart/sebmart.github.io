@@ -7,6 +7,8 @@ nav: true
 nav_order: 2
 ---
 
+{% assign bios = site.data.resume.bios %}
+
 <style>
 .bio-section {
   margin-bottom: 2.5rem;
@@ -48,7 +50,9 @@ nav_order: 2
 <div class="bio-section">
   <h2>Short bio</h2>
   <div class="bio-text" id="short-bio">
-    <p>S&eacute;bastien Martin is an Associate Professor of Operations at the Kellogg School of Management, Northwestern University. He also serves on the Board of Directors of ESAB Corporation (NYSE: ESAB) and co-founded NoYes.ai, an AI education startup. His research focuses on the interface of algorithms and operations management, with applications to online platforms and public sector operations. He helped design Lyft's dispatch algorithm and optimize school transportation systems for Boston and San Francisco. His work has been recognized with two Franz Edelman Awards and the Dantzig Dissertation Award. He holds an M.Sc. from Ecole Polytechnique and a Ph.D. from MIT.</p>
+    {% for paragraph in bios.short %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
     <button class="copy-btn" onclick="copyBio('short-bio', this)">Copy</button>
   </div>
 </div>
@@ -56,8 +60,9 @@ nav_order: 2
 <div class="bio-section">
   <h2>Long bio</h2>
   <div class="bio-text" id="long-bio">
-    <p>S&eacute;bastien Martin is an Associate Professor of Operations at the Kellogg School of Management, Northwestern University. He received his M.Sc. in applied mathematics from Ecole Polytechnique (France) and his Ph.D. in operations research from MIT. He also serves on the Board of Directors of ESAB Corporation (NYSE: ESAB), where he focuses on AI strategy and innovation, and co-founded NoYes.ai, an AI education startup.</p>
-    <p>His research is at the interface of algorithms and operations management, with applications to online service platforms and public sector operations. He helped design Lyft's dispatch algorithm and optimize the school transportation systems of Boston and San Francisco. He also created Kellogg's AI Teaching Assistant and Kellogg's first AI-powered case studies. His work has been recognized with two Franz Edelman Awards, the George Dantzig Dissertation Award, and the Poets &amp; Quants Best 40 Under 40 MBA Professors list. At Kellogg, he teaches AI Foundations for Managers.</p>
+    {% for paragraph in bios.long %}
+      <p>{{ paragraph }}</p>
+    {% endfor %}
     <button class="copy-btn" onclick="copyBio('long-bio', this)">Copy</button>
   </div>
 </div>

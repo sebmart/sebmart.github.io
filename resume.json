@@ -1,6 +1,6 @@
 {
   "basics": {
-    "lastUpdated": "2026-03",
+    "lastUpdated": "2026-07",
     "name": "Sébastien Martin",
     "label": "Associate Professor",
     "image": "",
@@ -31,6 +31,16 @@
         "username": "",
         "url": "https://github.com/sebmart"
       }
+    ]
+  },
+  "bios": {
+    "short": [
+      "Sébastien Martin is an Associate Professor of Operations at Northwestern University’s Kellogg School of Management. He studies how algorithms and AI interact with people and organizations. He helped design Lyft’s dispatch algorithm, redesign Boston’s school transportation system, and change school schedules in San Francisco. He was named a Franz Edelman Award laureate twice and received the George B. Dantzig Dissertation Award. At Kellogg, he created AI Foundations for Managers, a new MBA elective in which students learn to build and work with AI agents. He also created Kellogg’s first AI teaching assistant and its first AI-powered case studies. In 2026, graduating MBA students voted him Kellogg’s David Besanko Outstanding Professor of the Year. He serves on the Board of Directors of ESAB Corporation (NYSE: ESAB) and co-founded NoYes AI, an AI education startup."
+    ],
+    "long": [
+      "Sébastien Martin is an Associate Professor of Operations at Northwestern University’s Kellogg School of Management. His research examines how algorithms and AI interact with people and organizations, with applications to online platforms, transportation, and public services. He helped design Lyft’s dispatch algorithm, redesign Boston’s school transportation system, and change school schedules in San Francisco. These projects save tens of millions of dollars each year and benefit millions of people. He was named a Franz Edelman Award laureate twice and received the George B. Dantzig Dissertation Award.",
+      "At Kellogg, Sébastien created and teaches AI Foundations for Managers, a new MBA elective in which students learn to build and work with AI agents. He also created Kai, Kellogg’s first AI teaching assistant, and pioneered interactive AI case studies in which students learn by talking with AI characters. In 2026, graduating MBA students voted him Kellogg’s David Besanko Outstanding Professor of the Year. He was also named one of Poets & Quants’ Best 40 Under 40 MBA Professors in 2025.",
+      "Beyond Kellogg, Sébastien serves on the Board of Directors of ESAB Corporation (NYSE: ESAB), where he helps shape the company’s AI strategy. He also co-founded NoYes AI, an AI education startup. He holds an M.Sc. in applied mathematics from École Polytechnique and a Ph.D. in operations research from MIT."
     ]
   },
   "academic_appointments": [
