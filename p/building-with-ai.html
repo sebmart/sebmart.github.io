@@ -9,8 +9,8 @@ sitemap: false
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Building with AI · Chat with the talk's AI</title>
-<meta name="description" content="A live AI demo from Sébastien Martin's 'Building with AI' talk welcoming incoming Kellogg students — chat with the AI assistant built for the session, ask anything about AI today, how to start building, and get the slides.">
+<title>Building with AI · Your AI starting point</title>
+<meta name="description" content="Your AI starting point, from Sébastien Martin's 'Building with AI' keynote welcoming the incoming Kellogg class. Tell Kai where you are coming from and what you care about; it helps you find one real thing to build with AI and how to start this week. It can also send you the slides.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
@@ -392,9 +392,10 @@ a:hover { color: var(--accent-deep); }
     </div>
     <h1 class="hero__title">Building with AI.</h1>
     <p class="hero__sub">
-      A live AI demo welcoming the <strong>incoming Kellogg class</strong> · Summer CIM · June 18, 2026.<br>
-      Ask anything from today's talk, how to start building — or grab the slides.
+      Your AI starting point · Welcome to the <strong>incoming Kellogg class</strong> · Culture's Main · August 20, 2026.<br>
+      Tell Kai where you are coming from. It helps you find <strong>one real thing to build with AI</strong>, and how to start this week.
     </p>
+    <div class="disclaimer">Describe yourself in a sentence, no uploads. Nothing you type is stored.</div>
   </header>
 
   <main class="chat" id="chat">
@@ -404,12 +405,12 @@ a:hover { color: var(--accent-deep); }
 
   <div class="composer">
     <div class="composer__inner">
-      <textarea id="input" rows="1" placeholder="Ask about today's talk, getting started with AI, AIML 901, or what students built…" autocomplete="off"></textarea>
+      <textarea id="input" rows="1" placeholder="Your answer, or ask for the slides…" autocomplete="off"></textarea>
       <button class="send" id="send" aria-label="Send" disabled>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </button>
     </div>
-    <div class="composer__hint">Press Enter to send, Shift+Enter for a new line. Rate-limited demo built end-to-end by an AI agent for this talk.</div>
+    <div class="composer__hint">Enter to send, Shift+Enter for a new line. Rate-limited demo, built by a coding agent from one conversation.</div>
   </div>
 </div>
 
@@ -419,14 +420,14 @@ const WORKER_URL = (location.hostname === "localhost" || location.hostname === "
   : "https://kellogg-kai-demo.92sebastien.workers.dev/chat";
 
 const STARTERS = [
-  "Can you send me the slides from today's talk?",
-  "I've never coded — how do I actually start with AI?",
-  "What's a 'computer agent,' and which one should I try first?",
-  "What is AIML 901 and what do students build?",
-  "What did students just like me actually make?"
+  "I'm not technical at all. Is this really for me?",
+  "Can you send me the slides?",
+  "What did last year's students build?",
+  "Which coding agent should I install, and how?",
+  "How were you built?"
 ];
 
-const GREETING = "Hi! I'm **Kai**, the AI assistant Sébastien Martin built — live — for today's *Building with AI* talk welcoming you to Kellogg. Ask me anything from the session: what AI can actually do now, how to start building yourself (no coding needed), what AIML 901 and AI at Kellogg look like, or what students just like you have built. I can also send you the slides.";
+const GREETING = "Hi! I'm **Kai**, the assistant Sébastien Martin built for today's *Building with AI* talk. I have one job: help you find **one real thing to build with AI**, and a way to start this week.\n\nTo do that well I need to know you a little. In a sentence or two: **what did you do before Kellogg**, and **what is one thing in that world that annoyed you**, or that you wish worked better?\n\n(Just describe, no uploads. Nothing here is stored. And if you only want the slides or have a question about the talk, ask away.)";
 
 const $messages = document.getElementById("messages");
 const $suggestions = document.getElementById("suggestions");
@@ -453,7 +454,7 @@ $themeToggle.addEventListener("click", () => {
   applyTheme(cur);
 });
 
-const history = []; // {role, content}
+const history = [{ role: "assistant", content: GREETING }]; // {role, content}; the greeting is sent so the model knows what it already asked
 let streaming = false;
 
 function escapeHTML(s) {
