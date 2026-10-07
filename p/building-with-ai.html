@@ -10,7 +10,7 @@ sitemap: false
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Building with AI · Your AI starting point</title>
-<meta name="description" content="Your AI starting point, from Sébastien Martin's 'Building with AI' keynote welcoming the incoming Kellogg class. Tell Kai where you are coming from and what you care about; it helps you find one real thing to build with AI and how to start this week. It can also send you the slides.">
+<meta name="description" content="Your AI starting point, from Sébastien Martin's 'Building with AI' webinar for the Kellogg Leadership Circle. Tell Kai what you do and what you care about; it helps you find one real thing to build with AI and how to start this week.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
@@ -386,9 +386,8 @@ a:hover { color: var(--accent-deep); }
     <div class="hero__top">
       <div>
         <h1 class="hero__title">Building with AI</h1>
-        <p class="hero__sub">CIM · August 20, 2026</p>
+        <p class="hero__sub">Kellogg Leadership Circle · October 7, 2026</p>
       </div>
-      <a class="hero__slides" href="building-with-ai-slides/" target="_blank" rel="noopener">Slides</a>
       <button class="hero__theme" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
         <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       </button>
@@ -419,12 +418,12 @@ const WORKER_URL = (location.hostname === "localhost" || location.hostname === "
 const STARTERS = [
   "I'm not technical at all. Is this really for me?",
   "Can you send me the slides?",
-  "What did last year's students build?",
-  "Which coding agent should I install, and how?",
+  "What should my company be doing about AI?",
+  "Which tool should I install, and how do I start?",
   "How were you built?"
 ];
 
-const GREETING = "Hi! I'm **Kai**, the assistant Sébastien Martin built for today's *Building with AI* talk. I have one job: help you find **one real thing to build with AI**, and a way to start this week.\n\nTo do that well I need to know you a little. In a sentence or two: **what did you do before Kellogg**, and **what is one thing in that world that annoyed you**, or that you wish worked better?\n\n(And if you only want the slides or have a question about the talk, just ask.)";
+const GREETING = "Hi! I'm **Kai**, the assistant Sébastien Martin built for today's *Building with AI* talk. I have one job: help you find **one real thing to build with AI**, and a way to start this week.\n\nTo do that well I need to know you a little. In a sentence or two: **what do you do**, at work or outside it, and **what is one thing in that world that takes too much of your time**, or that you wish worked better?\n\n(And if you only want the slides or have a question about the talk, just ask.)";
 
 const $messages = document.getElementById("messages");
 const $suggestions = document.getElementById("suggestions");
