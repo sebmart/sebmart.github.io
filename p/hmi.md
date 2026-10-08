@@ -15,56 +15,16 @@ show_nav: true
   background: rgba(13,148,136,0.06);
 }
 .post .cdaio-next p:last-child { margin-bottom: 0; }
-.post .tool-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1rem;
-  margin: 1.1rem 0 1.35rem;
-}
-.post .tool-card {
-  border: 1px solid rgba(15,31,28,0.12);
-  border-radius: 8px;
-  padding: 1rem;
-  background: #fff;
-}
-.post .tool-card h3 {
-  margin-top: 0;
-  margin-bottom: 0.45rem;
-  font-size: 1.05rem;
-}
-.post .tool-card p { margin-bottom: 0.75rem; }
-.post .tool-card ul { margin-bottom: 0; }
-.post .button-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  margin: 0.8rem 0 1.2rem;
-}
-.post .agent-button {
-  display: inline-block;
-  color: #fff;
-  font-weight: 600;
-  padding: 10px 16px;
-  border-radius: 8px;
-  text-decoration: none;
-}
-.post .agent-button:hover { color: #fff; text-decoration: none; opacity: 0.9; }
-.post .agent-button--claude { background: #6b4f3f; }
-.post .agent-button--codex { background: #111827; }
 </style>
 
 This page is your companion for the three hours we'll spend building AI agents together. Everything we copy and paste during the session lives here, in the order we'll use it, so keep it open in your browser the whole time. If you ever fall behind, this is where you catch back up.
 
-## Setup before we start
+## Our n8n workspace
 
-Your advance assignment for this session was one quick step: accept your n8n invitation and log in once. If you haven't done it yet, do it now. It only takes two or three minutes, and it makes sure you can build your own agents with me today. No computer, or stuck? Pair with your neighbor for now, that works perfectly well.
-
-We'll build in **n8n**, a platform many companies use to run their AI agents in production. You should have received an invitation by email **from n8n** (not from me): click the link, pick a name and a password, and you're in. It's completely free, and there's nothing to download. If you don't see it, check your spam folder, and tell me if it still doesn't show up: I can give you a personal link on the spot.
-
-Once your account is set, open our workspace below and make sure you can log in. Keep this tab handy, we'll use it for the whole session:
+You already accepted your n8n invitation, thank you! Open our workspace and log in. Keep the tab open, we'll use it all morning. (Can't get in? Pair with a neighbor and I'll send you a personal link at the break.)
 
 <p style="margin: 1.2rem 0;">
-  <a href="https://aiml901-martin.app.n8n.cloud/" target="_blank" rel="noopener" style="display:inline-block; background:#EA4B71; color:#fff; font-weight:600; padding:12px 22px; border-radius:10px; text-decoration:none;">Open our n8n workspace ↗</a>
+  <a href="https://aiml901-martin.app.n8n.cloud/projects/imPsFxwyrjldDsy6/workflows" target="_blank" rel="noopener" style="display:inline-block; background:#EA4B71; color:#fff; font-weight:600; padding:12px 22px; border-radius:10px; text-decoration:none;">Open our n8n workspace ↗</a>
 </p>
 
 ## 1 · Concierge prompt
@@ -117,7 +77,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "credentials": {
         "gmailOAuth2": {
           "id": "UwWZPeiiMkSypGTt",
-          "name": "CDAIO Gmail"
+          "name": "HMI Gmail"
         }
       }
     },
@@ -126,7 +86,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": "gpt-5-mini"
+          "value": "gpt-6-luna"
         },
         "builtInTools": {},
         "options": {}
@@ -138,11 +98,11 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
         272
       ],
       "id": "1cf4a7c6-84db-4899-a0fb-3632c0a3ec93",
-      "name": "OpenAI GPT-5-mini",
+      "name": "OpenAI gpt-6-luna",
       "credentials": {
         "openAiApi": {
           "id": "kfUvMwXQo7ZO5WoA",
-          "name": "CDAIO OpenAI Key"
+          "name": "HMI OpenAI Key"
         }
       }
     },
@@ -191,7 +151,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
     },
     {
       "parameters": {
-        "content": "## To get started\nClick on the \"Gmail\" node below. Then, towards the bottom in \"sender\", replace YOUR_EMAIL_HERE@EMAIL.COM with your email address",
+        "content": "## To get started\nOpen \"Gmail\" node below (double-click on it). Then, towards the bottom in \"sender\", replace YOUR_EMAIL_HERE@EMAIL.COM with your email address",
         "height": 240,
         "width": 288
       },
@@ -257,7 +217,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "credentials": {
         "gmailOAuth2": {
           "id": "UwWZPeiiMkSypGTt",
-          "name": "CDAIO Gmail"
+          "name": "HMI Gmail"
         }
       }
     },
@@ -277,7 +237,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
       "credentials": {
         "openWeatherMapApi": {
           "id": "VYgQBqAIn87uZHDs",
-          "name": "OpenWeather CDAIO key"
+          "name": "OpenWeather HMI key"
         }
       }
     }
@@ -294,7 +254,7 @@ The full workflow template we'll use to give the agent its own inbox. Copy it an
         ]
       ]
     },
-    "OpenAI GPT-5-mini": {
+    "OpenAI gpt-6-luna": {
       "ai_languageModel": [
         [
           {
@@ -394,7 +354,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "credentials": {
         "gmailOAuth2": {
           "id": "UwWZPeiiMkSypGTt",
-          "name": "CDAIO Gmail"
+          "name": "HMI Gmail"
         }
       }
     },
@@ -403,7 +363,7 @@ The full template for the three-AI version, where a person reviews the trickier 
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": "gpt-5-mini"
+          "value": "gpt-6-luna"
         },
         "builtInTools": {},
         "options": {}
@@ -415,11 +375,11 @@ The full template for the three-AI version, where a person reviews the trickier 
         -160
       ],
       "id": "21dca449-43f4-4321-b3fd-8a2f0f8d216a",
-      "name": "OpenAI GPT-5-mini",
+      "name": "OpenAI gpt-6-luna",
       "credentials": {
         "openAiApi": {
           "id": "kfUvMwXQo7ZO5WoA",
-          "name": "CDAIO OpenAI Key"
+          "name": "HMI OpenAI Key"
         }
       }
     },
@@ -615,7 +575,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "credentials": {
         "openWeatherMapApi": {
           "id": "VYgQBqAIn87uZHDs",
-          "name": "OpenWeather CDAIO key"
+          "name": "OpenWeather HMI key"
         }
       }
     },
@@ -624,7 +584,7 @@ The full template for the three-AI version, where a person reviews the trickier 
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": "gpt-5-mini"
+          "value": "gpt-6-luna"
         },
         "builtInTools": {},
         "options": {}
@@ -636,11 +596,11 @@ The full template for the three-AI version, where a person reviews the trickier 
         -384
       ],
       "id": "d31155bf-accd-45ca-96c0-070104a898fa",
-      "name": "OpenAI GPT-5-mini2",
+      "name": "OpenAI gpt-6-luna2",
       "credentials": {
         "openAiApi": {
           "id": "kfUvMwXQo7ZO5WoA",
-          "name": "CDAIO OpenAI Key"
+          "name": "HMI OpenAI Key"
         }
       }
     },
@@ -649,7 +609,7 @@ The full template for the three-AI version, where a person reviews the trickier 
         "model": {
           "__rl": true,
           "mode": "list",
-          "value": "gpt-5-mini"
+          "value": "gpt-6-luna"
         },
         "builtInTools": {},
         "options": {}
@@ -661,11 +621,11 @@ The full template for the three-AI version, where a person reviews the trickier 
         32
       ],
       "id": "38b6bbdd-31ae-4841-9838-4a57f18b2322",
-      "name": "OpenAI GPT-5-mini1",
+      "name": "OpenAI gpt-6-luna1",
       "credentials": {
         "openAiApi": {
           "id": "kfUvMwXQo7ZO5WoA",
-          "name": "CDAIO OpenAI Key"
+          "name": "HMI OpenAI Key"
         }
       }
     },
@@ -685,7 +645,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "credentials": {
         "openWeatherMapApi": {
           "id": "VYgQBqAIn87uZHDs",
-          "name": "OpenWeather CDAIO key"
+          "name": "OpenWeather HMI key"
         }
       }
     },
@@ -705,7 +665,7 @@ The full template for the three-AI version, where a person reviews the trickier 
     },
     {
       "parameters": {
-        "content": "## To get started\nClick on the \"Gmail\" node below. Then, towards the bottom in \"sender\", replace YOUR_EMAIL_HERE@EMAIL.COM with your email address",
+        "content": "## To get started\nOpen \"Gmail\" node below (double-click on it). Then, towards the bottom in \"sender\", replace YOUR_EMAIL_HERE@EMAIL.COM with your email address",
         "height": 208,
         "width": 288
       },
@@ -737,7 +697,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "credentials": {
         "gmailOAuth2": {
           "id": "UwWZPeiiMkSypGTt",
-          "name": "CDAIO Gmail"
+          "name": "HMI Gmail"
         }
       }
     },
@@ -761,7 +721,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "credentials": {
         "gmailOAuth2": {
           "id": "UwWZPeiiMkSypGTt",
-          "name": "CDAIO Gmail"
+          "name": "HMI Gmail"
         }
       }
     },
@@ -818,7 +778,7 @@ The full template for the three-AI version, where a person reviews the trickier 
       "credentials": {
         "gmailOAuth2": {
           "id": "UwWZPeiiMkSypGTt",
-          "name": "CDAIO Gmail"
+          "name": "HMI Gmail"
         }
       }
     }
@@ -835,7 +795,7 @@ The full template for the three-AI version, where a person reviews the trickier 
         ]
       ]
     },
-    "OpenAI GPT-5-mini": {
+    "OpenAI gpt-6-luna": {
       "ai_languageModel": [
         [
           {
@@ -941,7 +901,7 @@ The full template for the three-AI version, where a person reviews the trickier 
         ]
       ]
     },
-    "OpenAI GPT-5-mini2": {
+    "OpenAI gpt-6-luna2": {
       "ai_languageModel": [
         [
           {
@@ -952,7 +912,7 @@ The full template for the three-AI version, where a person reviews the trickier 
         ]
       ]
     },
-    "OpenAI GPT-5-mini1": {
+    "OpenAI gpt-6-luna1": {
       "ai_languageModel": [
         [
           {
@@ -1017,68 +977,3 @@ Interview her: figure out what she's really trying to do, who inside the company
 </p>
 
 <iframe src="/p/maya.html" title="Chat with Maya Chen" loading="lazy" style="width:100%; height:700px; border:1px solid rgba(15,31,28,0.15); border-radius:14px; box-shadow:0 4px 18px rgba(15,31,28,0.08); background:#f4f7f6;"></iframe>
-
-## 5 · Quick start: Claude Cowork and OpenAI Codex
-
-If today made you want to keep going, start with one of these tools. They are the fastest way to move from "AI answers my question" to "AI does the work with me."
-
-<div class="tool-grid">
-  <div class="tool-card">
-    <h3>Claude Cowork</h3>
-    <p>Best for messy knowledge work on your computer: organizing files, preparing documents, summarizing research, extracting data from PDFs, and working across desktop apps.</p>
-    <ul>
-      <li>Use it when the output is a document, spreadsheet, deck, analysis, or organized folder.</li>
-      <li>Access it through the Claude desktop app. Availability depends on your Claude plan.</li>
-    </ul>
-  </div>
-  <div class="tool-card">
-    <h3>OpenAI Codex</h3>
-    <p>Best for building and changing things: small apps, scripts, automations, websites, data tools, dashboards, and technical workflows.</p>
-    <ul>
-      <li>Use the Codex desktop app or the VS Code extension if you want it to work on local files.</li>
-      <li>Use Codex web if you want it to work in the cloud on a GitHub repository.</li>
-    </ul>
-  </div>
-</div>
-
-<div class="button-row">
-  <a class="agent-button agent-button--claude" href="https://claude.com/download" target="_blank" rel="noopener">Download Claude ↗</a>
-  <a class="agent-button agent-button--claude" href="https://www.anthropic.com/product/claude-cowork" target="_blank" rel="noopener">Claude Cowork overview ↗</a>
-  <a class="agent-button agent-button--codex" href="https://developers.openai.com/codex/quickstart" target="_blank" rel="noopener">Start with Codex ↗</a>
-  <a class="agent-button agent-button--codex" href="https://chatgpt.com/codex" target="_blank" rel="noopener">Codex web ↗</a>
-</div>
-
-### The first 20 minutes
-
-1. **Install one tool.** If you already pay for ChatGPT, start with Codex. If you already use Claude and have Cowork, start there. The exact tool matters less than starting.
-2. **Create a safe practice folder.** Put a few harmless files in it: a PDF, a spreadsheet, a short document, or a small dataset. Do not start in your whole Desktop, Downloads, or company drive.
-3. **Give it one real task.** Pick something you would otherwise postpone because it is annoying but clear.
-4. **Ask for a plan first.** Before it changes files, ask: "Give me the plan first. Then wait for my approval."
-5. **Review the result like a manager.** Do not judge the agent by whether it is magic. Judge it by whether you can steer it, catch mistakes, and make the work better.
-
-Try one of these prompts:
-
-```text
-I am new to computer agents. Look at the files in this folder and suggest three useful things you could do with them. Do not make changes yet.
-```
-
-```text
-Take this messy folder of documents and propose a clean folder structure. Explain what you would move where, then wait for my approval.
-```
-
-```text
-Build a simple one-page dashboard from this spreadsheet. Keep it local, make it easy to open, and explain every assumption you make.
-```
-
-```text
-Help me turn these notes into a polished one-page memo. Keep the tone direct and executive-friendly. Ask before deleting any content.
-```
-
-### A few safety rules
-
-- Start in a small folder, not in a sensitive drive.
-- Do not give an agent passwords, private keys, customer data, or confidential files until you understand how the tool handles access.
-- Read the plan before approving file changes or browser actions.
-- For anything customer-facing, legal, financial, medical, or HR-related, keep a real human as the final decision-maker.
-
-The skill you are practicing is not coding. It is delegation: describing the outcome, giving the agent the right context, checking its plan, and steering the work until it is useful.
