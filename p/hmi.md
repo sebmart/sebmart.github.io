@@ -2,6 +2,8 @@
 title: "Hands-on: Leveraging AI Agents"
 description: "Mastering the Human-AI Partnership · October 8, 2026"
 show_nav: true
+hero_link_url: "/hmi-slides/"
+hero_link_text: "Open slides ↗"
 ---
 
 <style>
