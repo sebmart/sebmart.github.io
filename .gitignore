@@ -22,3 +22,5 @@ vendor
 resume-builder/dist/
 !/consortium-fall-slides/vendor/
 !/consortium-fall-slides/vendor/**
+!/hmi-slides/vendor/
+!/hmi-slides/vendor/**
