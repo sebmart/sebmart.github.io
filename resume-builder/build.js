@@ -55,9 +55,31 @@ function registerHelpers() {
   });
 }
 
+const publicationGroups = [
+  { status: 'published', title: 'Published or accepted' },
+  { status: 'under_review', title: 'In the peer-review process' },
+  { status: 'working_paper', title: 'Working papers' },
+];
+
+function groupPublications(publications) {
+  const known = new Set(publicationGroups.map((group) => group.status));
+  const unknown = publications.filter((paper) => !known.has(paper.status));
+  if (unknown.length) {
+    throw new Error(`Publications with missing or unknown status: ${unknown.map((paper) => paper.name).join('; ')}`);
+  }
+  return publicationGroups
+    .map((group) => ({
+      title: group.title,
+      items: publications.filter((paper) => paper.status === group.status),
+    }))
+    .filter((group) => group.items.length);
+}
+
 function loadResume() {
   const raw = fs.readFileSync(resumePath, 'utf8');
-  return JSON.parse(raw);
+  const resume = JSON.parse(raw);
+  resume.publicationGroups = groupPublications(resume.publications || []);
+  return resume;
 }
 
 function renderHtml(resume) {

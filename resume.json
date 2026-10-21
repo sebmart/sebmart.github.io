@@ -1,6 +1,6 @@
 {
   "basics": {
-    "lastUpdated": "2026-09",
+    "lastUpdated": "2026-10",
     "name": "Sébastien Martin",
     "label": "Associate Professor",
     "image": "",
@@ -292,89 +292,19 @@
   ],
   "publications": [
     {
-      "name": "Navigating the Educational Video Game Paradox",
-      "authors": "A. Jensen, S. Martin, K. Smilowitz",
-      "publisher": "Submitted to Management Science",
-      "releaseDate": "2026",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6900123",
-      "summary": ""
-    },
-    {
-      "name": "Let's Have a Conversation: Designing and Evaluating LLM Agents for Interactive Optimization",
-      "authors": "J. Drossman, A. Jacquillat, S. Martin",
-      "publisher": "Major revision, MSOM",
-      "releaseDate": "2026",
-      "url": "https://arxiv.org/abs/2604.02666",
-      "summary": ""
-    },
-    {
-      "name": "The Value of a Little Flexibility in Stable Matching",
-      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
-      "publisher": "Working Paper",
-      "releaseDate": "2026",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6208698",
-      "summary": "Accepted in EC 2026."
-    },
-    {
-      "name": "AI homework increases student satisfaction: A field experiment at the Kellogg School of Management",
-      "authors":"R. Bray, S. Martin",
-      "publisher": "Major revision, INFORMS Transactions on Education",
-      "releaseDate": "2026",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5627650",
-      "summary" : ""
-    },
-    {
-      "name": "Human-AI Interactions and Societal Pitfalls",
-      "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Major revision, MSOM",
-      "releaseDate": "2025",
-      "url": "https://arxiv.org/abs/2309.10448",
-      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
-    },
-    {
-      "name": "Value of Sharing in Routing-Scheduling Operations",
-      "authors": "A. Jacquillat, S. Martin, K. Zhang",
-      "publisher": "Major revision, Management Science",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289",
-      "summary": ""
-    },
-    {
-      "name": "Two-Sided Flexibility in Platforms",
-      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
-      "publisher": "Major revision, Operations Research",
-      "releaseDate": "2026",
-      "url": "https://arxiv.org/abs/2404.04709",
-      "summary": "MIT ORC Best Student Paper Award, 2024"
-    },
-    {
       "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
       "authors": "A. Delarue, Z. Lian, S. Martin",
       "publisher": "Management Science",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076",
-      "summary": "Accepted in EC 2024, semi-finalist if the 2024 Wagner Prize."
-    },
-    {
-      "name": "The Trap of Complexity in Experimentation",
-      "authors": "Y. Huang, S. Martin, Z. Qin",
-      "publisher": "Working Paper",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5126086",
-      "summary": ""
-    },
-    {
-      "name": "Labor Cost Free-Riding in the Gig Economy",
-      "authors": "Z. Lian, S. Martin, G. van Ryzin",
-      "publisher": "Major revision, Management Science",
+      "status": "published",
       "releaseDate": "2026",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888",
-      "summary": "INFORMS RMP (Revenue Management and Pricing) Student Paper Award Finalist, 2021"
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4324076",
+      "summary": "Accepted in EC 2024, semi-finalist of the 2024 Wagner Prize."
     },
     {
-      "name": "Trading Flexibility for adoption: Dynamic versus static walking in ridesharing",
+      "name": "Trading Flexibility for Adoption: From Dynamic to Static Walking in Ride-Sharing",
       "authors": "J. Yan, S. Martin, S. Taylor",
       "publisher": "Management Science",
+      "status": "published",
       "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3984476",
       "summary": ""
@@ -383,62 +313,34 @@
       "name": "Detours in Shared Rides",
       "authors": "I. Lobel, S. Martin",
       "publisher": "Management Science",
+      "status": "published",
       "releaseDate": "2025",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3711072",
       "summary": ""
     },
     {
-      "name": "Dual-sourcing of capacity",
-      "authors": "S. Chopra, S. Martin, P. Mishra, K. Smilowitz",
-      "publisher": "Working Paper",
-      "releaseDate": "2025",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4322824",
-      "summary": ""
-    },
-    {
-      "name": "Relative Monte Carlo for Reinforcement Learning",
-      "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
-      "publisher": "Submitted to Management Science",
-      "releaseDate": "2026",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
-      "summary": ""
-    },
-    {
-      "name": "Employees versus Contractors: An Operational Perspective.",
+      "name": "Employees versus Contractors: An Operational Perspective",
       "authors": "I. Lobel, S. Martin, H. Song",
-      "publisher": "Manufacturing & Service Operations Management (Frontiers in Operations) ",
+      "publisher": "Manufacturing & Service Operations Management (Frontiers in Operations)",
+      "status": "published",
       "releaseDate": "2024",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3878215",
       "summary": ""
     },
     {
-      "name": "Autonomous Vehicles in Ride-Hailing and the Threat of Spatial Inequalities",
-      "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Working Paper",
-      "releaseDate": "2024",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4332493",
-      "summary": ""
-    },
-    {
-      "name": "A Better Match for Everyone: Reinforcement Learning at Lyft",
+      "name": "A Better Match for Drivers and Riders: Reinforcement Learning at Lyft",
       "authors": "S. Martin and 10+ Lyft collaborators",
       "publisher": "INFORMS Journal on Applied Analytics",
+      "status": "published",
       "releaseDate": "2024",
       "url": "https://pubsonline.informs.org/doi/full/10.1287/inte.2023.0083",
       "summary": "2023 Franz Edelman Award Laureate"
     },
     {
-      "name": "Supply Prioritization in Hybrid Marketplaces",
-      "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Working Paper",
-      "releaseDate": "2023",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4119096",
-      "summary": ""
-    },
-    {
       "name": "Real-Time Rideshare Driver Supply Values using Online Reinforcement Learning",
-      "authors": "B.Han, H. Lee, S. Martin",
+      "authors": "B. Han, H. Lee, S. Martin",
       "publisher": "KDD 2022 (Machine Learning Conference)",
+      "status": "published",
       "releaseDate": "2022",
       "url": "https://dl.acm.org/doi/10.1145/3534678.3539141",
       "summary": ""
@@ -447,6 +349,7 @@
       "name": "Solving the ride-sharing productivity paradox: Priority dispatch and optimal priority sets",
       "authors": "V. Krishnan, R. Iglesias, S. Martin, V. Pattabhiraman, S. Wang, G. van Ryzin",
       "publisher": "INFORMS Journal on Applied Analytics",
+      "status": "published",
       "releaseDate": "2022",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4018653",
       "summary": "Daniel H. Wagner Prize Finalist, 2022"
@@ -455,6 +358,7 @@
       "name": "Bus Routing Optimization Helps Boston Public Schools Design Better Policies",
       "authors": "D. Bertsimas, A. Delarue, W. Eger, J. Hanlon, S. Martin",
       "publisher": "INFORMS Journal on Applied Analytics",
+      "status": "published",
       "releaseDate": "2020",
       "url": "https://pubsonline.informs.org/doi/abs/10.1287/inte.2019.1015?journalCode=ijaa",
       "summary": "2019 Franz Edelman Award Laureate"
@@ -463,22 +367,16 @@
       "name": "Optimizing schools’ start time and bus routes",
       "authors": "D. Bertsimas, A. Delarue, S. Martin",
       "publisher": "Proceedings of the National Academy of Science",
+      "status": "published",
       "releaseDate": "2019",
       "url": "https://www.pnas.org/doi/full/10.1073/pnas.1811462116",
-      "summary": "Featured in the Wall Street Journal and the Boston Globe. MIT ORC Best Student Paper Award, 2018. Doing Good with Good OR INFORMS award, Second Place, 2019. "
-    },
-    {
-      "name": "The Price of Interpretability",
-      "authors": "D. Bertsimas, A. Delarue, P. Jaillet, S. Martin",
-      "publisher": "arXiv",
-      "releaseDate": "2020",
-      "url": "https://arxiv.org/abs/1907.03419",
-      "summary": ""
+      "summary": "Featured in the Wall Street Journal and the Boston Globe. MIT ORC Best Student Paper Award, 2018. Doing Good with Good OR INFORMS award, Second Place, 2019."
     },
     {
       "name": "Travel Time Estimation in the Age of Big Data",
       "authors": "D. Bertsimas, A. Delarue, P. Jaillet, S. Martin",
       "publisher": "Operations Research",
+      "status": "published",
       "releaseDate": "2019",
       "url": "https://pubsonline.informs.org/doi/abs/10.1287/opre.2018.1784",
       "summary": ""
@@ -487,16 +385,144 @@
       "name": "Online Vehicle Routing: The Edge of Optimization in Large-Scale Applications",
       "authors": "D. Bertsimas, P. Jaillet, S. Martin",
       "publisher": "Operations Research",
+      "status": "published",
       "releaseDate": "2019",
       "url": "https://pubsonline.informs.org/doi/abs/10.1287/opre.2018.1763",
       "summary": "Best Presentation (2018 LIDS conference)"
     },
     {
       "name": "Creating complex congestion patterns via multi-objective optimal freeway traffic control with application to cyber-security",
-      "authors": "J. Reilly, M. Payer, A. Bayen",
-      "publisher": "Transportation Research Part B",
+      "authors": "J. Reilly, S. Martin, M. Payer, A. Bayen",
+      "publisher": "Transportation Research Part B: Methodological",
+      "status": "published",
       "releaseDate": "2016",
       "url": "https://www.sciencedirect.com/science/article/abs/pii/S0191261516303307",
+      "summary": ""
+    },
+    {
+      "name": "Navigating the Educational Video Game Paradox",
+      "authors": "A. Jensen, S. Martin, K. Smilowitz",
+      "publisher": "Major revision, Management Science",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6900123",
+      "summary": ""
+    },
+    {
+      "name": "Let's Have a Conversation: Designing and Evaluating LLM Agents for Interactive Optimization",
+      "authors": "J. Drossman, A. Jacquillat, S. Martin",
+      "publisher": "Major revision, Manufacturing & Service Operations Management",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://arxiv.org/abs/2604.02666",
+      "summary": ""
+    },
+    {
+      "name": "The Value of a Little Flexibility in Stable Matching",
+      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
+      "publisher": "First submission under review, Operations Research",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6208698",
+      "summary": "Accepted in EC 2026."
+    },
+    {
+      "name": "AI homework increases student satisfaction: A field experiment at the Kellogg School of Management",
+      "authors": "R. Bray, S. Martin",
+      "publisher": "Resubmission under review (major revision), INFORMS Transactions on Education",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5627650",
+      "summary": ""
+    },
+    {
+      "name": "Two-Sided Flexibility in Platforms",
+      "authors": "D. Freund, S. Martin, J. (K.) Zhao",
+      "publisher": "Resubmission under review (major revision), Operations Research",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://arxiv.org/abs/2404.04709",
+      "summary": "MIT ORC Best Student Paper Award, 2024"
+    },
+    {
+      "name": "Labor Cost Free-Riding in the Gig Economy",
+      "authors": "Z. Lian, S. Martin, G. van Ryzin",
+      "publisher": "Minor revision, Management Science",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888",
+      "summary": "INFORMS RMP (Revenue Management and Pricing) Student Paper Award Finalist, 2021"
+    },
+    {
+      "name": "Relative Monte Carlo for Reinforcement Learning",
+      "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
+      "publisher": "Reject and resubmit, Management Science",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
+      "summary": ""
+    },
+    {
+      "name": "Human-AI Interactions and Societal Pitfalls",
+      "authors": "F. Castro, J. Gao, S. Martin",
+      "publisher": "Major revision, Manufacturing & Service Operations Management",
+      "status": "under_review",
+      "releaseDate": "2025",
+      "url": "https://arxiv.org/abs/2309.10448",
+      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
+    },
+    {
+      "name": "Value of Sharing in Routing-Scheduling Operations",
+      "authors": "A. Jacquillat, S. Martin, K. Zhang",
+      "publisher": "Major revision, Management Science",
+      "status": "under_review",
+      "releaseDate": "2025",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4723289",
+      "summary": ""
+    },
+    {
+      "name": "The Trap of Complexity in Experimentation",
+      "authors": "Y. Huang, S. Martin, Z. Qin",
+      "publisher": "Working Paper",
+      "status": "working_paper",
+      "releaseDate": "2025",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5126086",
+      "summary": ""
+    },
+    {
+      "name": "Dual-sourcing of capacity",
+      "authors": "S. Chopra, S. Martin, P. Mishra, K. Smilowitz",
+      "publisher": "Working Paper",
+      "status": "working_paper",
+      "releaseDate": "2025",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4322824",
+      "summary": ""
+    },
+    {
+      "name": "Autonomous Vehicles in Ride-Hailing and the Threat of Spatial Inequalities",
+      "authors": "F. Castro, J. Gao, S. Martin",
+      "publisher": "Working Paper",
+      "status": "working_paper",
+      "releaseDate": "2024",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4332493",
+      "summary": ""
+    },
+    {
+      "name": "Supply Prioritization in Hybrid Marketplaces",
+      "authors": "F. Castro, J. Gao, S. Martin",
+      "publisher": "Working Paper",
+      "status": "working_paper",
+      "releaseDate": "2023",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4119096",
+      "summary": ""
+    },
+    {
+      "name": "The Price of Interpretability",
+      "authors": "D. Bertsimas, A. Delarue, P. Jaillet, S. Martin",
+      "publisher": "Working Paper",
+      "status": "working_paper",
+      "releaseDate": "2020",
+      "url": "https://arxiv.org/abs/1907.03419",
       "summary": ""
     }
   ],

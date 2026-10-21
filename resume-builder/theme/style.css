@@ -30,6 +30,12 @@ a {
     text-decoration: underline;
 }
 
+#publications .publicationGroup {
+    font-weight: bold;
+    font-variant: small-caps;
+    margin: 12px 0 4px;
+}
+
 #resume {
     margin: 0 auto;
     max-width: 700px;

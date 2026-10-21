@@ -6,10 +6,12 @@
 	</div>
 	<div class='sectionContent'>
 		<em>Only publicly available papers, in decreasing order of latest update. The current publication status is highlighted in <strong>bold</strong>.</em>
-		{{#each resume.publications}}
+		{{#each resume.publicationGroups}}
+		<div class='publicationGroup'>{{title}}</div>
+		{{#each items}}
 		<div class='blockHeader'>
 			<span>
-				[{{subtract ../resume.publications.length @index}}] <a href="{{url}}">{{name}}</a> <span class='divider'>|</span> {{#if authors}}{{authors}}{{/if}}
+				[{{subtract ../items.length @index}}] <a href="{{url}}">{{name}}</a> <span class='divider'>|</span> {{#if authors}}{{authors}}{{/if}}
 				<br/><strong>{{#if publisher}}{{publisher}}{{/if}}</strong>
 			</span>
 			{{#if releaseDate}}
@@ -22,6 +24,7 @@
 			{{#if summary}}	{{summary}} {{/if}}
 		</em>
 		{{#unless @last}}<div class='separator'></div>{{/unless}}
+		{{/each}}
 		{{/each}}
 	</div>
 </div>
