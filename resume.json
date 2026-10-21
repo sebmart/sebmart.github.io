@@ -529,6 +529,62 @@
   "press": [
     {
       "year": "2026",
+      "outlet": "Bloomberg",
+      "title": "How AI Is Changing Business School Case Studies and MBA Education",
+      "url": "https://www.bloomberg.com/news/articles/2026-09-22/how-ai-is-changing-business-school-case-studies-and-mba-education",
+      "notes": "Interview on my AI case studies and how AI is changing the business school case method."
+    },
+    {
+      "year": "2026",
+      "outlet": "Kellogg Insight",
+      "title": "Education and Entertainment—Not a Zero-Sum Game",
+      "url": "https://insight.kellogg.northwestern.edu/article/education-and-entertainment-not-a-zero-sum-game",
+      "notes": "Coverage of our research with Alexander Jensen and Karen Smilowitz on educational content in the PowerZ video game."
+    },
+    {
+      "year": "2026",
+      "outlet": "Kellogg Magazine",
+      "title": "The architects of what’s next",
+      "url": "https://www.kellogg.northwestern.edu/magazine/features/summer-2026/architects-whats-next",
+      "notes": "Feature on AI in Kellogg teaching, including Kai, my AI cases, and AI Foundations for Managers."
+    },
+    {
+      "year": "2026",
+      "outlet": "KQED",
+      "title": "Podcast: An Optimist’s Take on AI and the Future of Learning (Life, Automated)",
+      "url": "https://www.kqed.org/news/12094640/an-optimists-take-on-ai-and-the-future-of-learning-with-sebastien-martin",
+      "notes": "Interview on AI in the classroom for the Ryan Institute on Complexity's podcast, distributed by KQED."
+    },
+    {
+      "year": "2026",
+      "outlet": "RealClearEducation",
+      "title": "Teens Need Sleep. Schools Can Afford to Give It to Them.",
+      "url": "https://www.realcleareducation.com/articles/2026/08/12/teens_need_sleep_schools_can_afford_to_give_it_to_them_1200076.html",
+      "notes": "Op-ed co-authored with Arthur Delarue and Zhen Lian on affordable later school start times."
+    },
+    {
+      "year": "2026",
+      "outlet": "Poets & Quants",
+      "title": "Michael Olenick: Rebuilding The Role Play",
+      "url": "https://poetsandquants.com/2026/08/03/michael-olenick-rebuilding-the-role-play/",
+      "notes": "Interview on AI cases, AI in teaching, and our randomized trial of AI in higher education."
+    },
+    {
+      "year": "2026",
+      "outlet": "Kellogg News",
+      "title": "The best way to learn about agentic AI? Just build",
+      "url": "https://www.kellogg.northwestern.edu/news/blog/2026/07/08/ai-newsletter-martin/",
+      "notes": "My essay for the first issue of Kellogg Insight's Leadership+AI newsletter."
+    },
+    {
+      "year": "2026",
+      "outlet": "Kellogg News",
+      "title": "The future is in the hands of Kellogg’s Class of 2026",
+      "url": "https://www.kellogg.northwestern.edu/news/blog/2026/06/16/convocation-lead-through-uncertainty/",
+      "notes": "Coverage of my faculty address at Convocation as the 2026 Professor of the Year."
+    },
+    {
+      "year": "2026",
       "outlet": "Spotify",
       "title": "Podcast: AI & Fintech — Fintech Frontlines by FinTech @ Kellogg",
       "url": "https://open.spotify.com/episode/26oaZPRIRKjRs6kdSalMew",
