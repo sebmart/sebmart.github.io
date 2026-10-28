@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kellogg AI Community Mixer — October 29, 2026</title>
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="theme/kellogg.css">
+  <style>
+    /* ---- deck-specific: centered statement slides (arrival, thank you) ---- */
+    .reveal section.center .field{ position:absolute; left:110px; right:110px; top:0; bottom:40px;
+       display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
+    .reveal section.center h1{ font-weight:300; font-size:62px; line-height:1.05; }
+    .reveal section.center .rule{ margin:28px auto 26px; }
+    .reveal section.center .purpose{ font-family:var(--font-display); font-weight:300; font-size:32px;
+       color:var(--ink); line-height:1.3; max-width:1000px; }
+    .reveal section.center .purpose b{ font-weight:500; color:var(--purple); }
+    .reveal .steps{ display:flex; gap:28px; margin-top:34px; text-align:left; }
+    .reveal .steps .s{ flex:1; max-width:440px; border:1px solid var(--line); border-top:3px solid var(--amber);
+       border-radius:10px; padding:18px 22px; font-size:22px; line-height:1.35; color:var(--ink); }
+    .reveal .steps .s .k{ font-family:var(--font-body); font-weight:600; font-size:15px; letter-spacing:.2em;
+       text-transform:uppercase; color:var(--amber-dk); display:block; margin-bottom:6px; }
+    .reveal .facts{ display:flex; gap:48px; margin-top:34px; font-size:21px; color:var(--slate2); }
+    .reveal .facts b{ font-weight:600; color:var(--amber-dk); margin-right:8px; }
+    .reveal section.center .after{ font-size:24px; color:var(--slate2); margin-top:30px; }
+
+    /* ---- deck-specific: title slide with purpose + agenda ---- */
+    .reveal section.title.agenda{ padding-top:108px; }
+    .reveal section.title.agenda h1{ font-size:76px; max-width:1000px; }
+    .reveal section.title.agenda .rule{ margin:26px 0 22px; }
+    .reveal section.title.agenda .sub{ font-size:26px; max-width:1000px; }
+    .reveal section.title.agenda .thanks{ font-size:22px; color:var(--purple); font-weight:500; margin-top:14px; }
+    .reveal .timeline{ position:absolute; left:96px; right:96px; bottom:92px;
+       display:grid; grid-template-columns:1fr 1fr 1.5fr 1fr 1fr; gap:18px; }
+    .reveal .timeline .step{ border-top:3px solid var(--line); padding-top:14px; }
+    .reveal .timeline .step.hot{ border-top-color:var(--amber); }
+    .reveal .timeline .tm{ font-weight:600; font-size:17px; letter-spacing:.06em; color:var(--amber-dk); }
+    .reveal .timeline .what{ font-family:var(--font-display); font-weight:400; font-size:25px;
+       color:var(--purple); line-height:1.15; margin-top:6px; }
+    .reveal .timeline .det{ font-size:17px; color:var(--slate2); line-height:1.35; margin-top:6px; }
+
+    /* ---- deck-specific: speaker slides (name left, portrait right) ---- */
+    .reveal section.speaker .who{ position:absolute; left:96px; top:260px; width:600px; }
+    .reveal section.speaker .who .name{ font-family:var(--font-display); font-weight:300; font-size:68px;
+       color:var(--purple); line-height:1.05; }
+    .reveal section.speaker .who .rule{ margin:28px 0 22px; }
+    .reveal section.speaker .who .role{ font-size:26px; color:var(--slate2); line-height:1.35; }
+    .reveal section.speaker .pic{ position:absolute; right:150px; top:150px; width:360px; height:450px;
+       border-radius:10px; overflow:hidden; box-shadow:0 14px 34px rgba(40,30,70,.13); }
+    .reveal section.speaker .pic img{ width:100%; height:100%; object-fit:cover; object-position:50% 30%; display:block; }
+    .reveal .ph{ width:100%; height:100%; background:var(--purple-wash); display:flex; align-items:center;
+       justify-content:center; font-family:var(--font-display); font-size:76px; font-weight:300; color:var(--purple-soft); }
+    .reveal section.speaker .trio{ position:absolute; left:96px; right:96px; top:210px;
+       display:grid; grid-template-columns:repeat(3,1fr); gap:56px; }
+    .reveal section.speaker .trio .pic3{ height:330px; border-radius:10px; overflow:hidden;
+       box-shadow:0 14px 34px rgba(40,30,70,.10); }
+    .reveal section.speaker .trio .pic3 img{ width:100%; height:100%; object-fit:cover; object-position:50% 25%; }
+    .reveal section.speaker .trio .name{ font-family:var(--font-display); font-size:32px; color:var(--purple); margin-top:18px; line-height:1.1; }
+    .reveal section.speaker .trio .role{ font-size:19px; color:var(--slate2); margin-top:6px; line-height:1.3; }
+
+    /* ---- deck-specific: brainstorming intro ---- */
+    .reveal section.brain .lede{ font-family:var(--font-display); font-weight:300; font-size:32px; color:var(--amber-dk); margin-top:10px; }
+
+    /* ---- deck-specific: question slides — identical geometry on every slide ---- */
+    .reveal section.question .n{ position:absolute; left:0; right:0; top:120px; text-align:center;
+       font-weight:600; font-size:17px; letter-spacing:.24em; text-transform:uppercase; color:var(--amber); }
+    .reveal section.question h2{ position:absolute; left:0; right:0; top:156px; text-align:center;
+       font-weight:300; font-size:66px; white-space:nowrap; }
+    .reveal section.question .rule{ position:absolute; left:50%; top:262px; margin:0 0 0 -44px; }
+    .reveal section.question .why{ position:absolute; left:110px; right:110px; top:300px; text-align:center;
+       font-size:24px; color:var(--muted); line-height:1.45; }
+    .reveal section.question .ask{ position:absolute; left:130px; right:130px; top:420px; text-align:center;
+       font-family:var(--font-display); font-weight:300; font-size:34px; color:var(--ink); line-height:1.35; }
+    .reveal section.question .eg{ position:absolute; left:130px; right:130px; top:560px; text-align:center;
+       font-size:20px; color:var(--muted); }
+  </style>
+</head>
+<body class="branded">
+<div class="reveal"><div class="slides">
+
+  <!-- 1. ARRIVAL — on screen while people come in (12:15–12:25) -->
+  <section class="center">
+    <div class="field">
+      <h1>Welcome to the<br>Kellogg AI Community Mixer!</h1>
+      <hr class="rule">
+      <div class="purpose">For the next hour, students, staff and faculty who care about AI will <b>meet each other</b> and <b>brainstorm together</b> to help shape Kellogg's AI future.</div>
+      <div class="steps">
+        <div class="s"><span class="k">Right now</span>Go to the area that matches your ticket color.</div>
+        <div class="s"><span class="k">Then</span>Introduce yourself to people you don't know yet. They'll be your brainstorming group!</div>
+      </div>
+      <div class="facts">
+        <div><b>12:25</b>We start</div>
+        <div>Snacks and drinks are in the room</div>
+        <div><b>1:15</b>Lunch</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. TITLE + PURPOSE + AGENDA — Sébastien's welcome (about 2 min) -->
+  <section class="title agenda" data-state="lede">
+    <div class="brandmark"><div class="bar"></div><div class="nw">Northwestern<span>|</span>Kellogg</div></div>
+    <h1>Kellogg AI Community Mixer</h1>
+    <hr class="rule">
+    <div class="sub">Kellogg is moving fast with AI, and we want to move even faster. We believe the best way is to break our usual silos and rely on our whole community.</div>
+    <div class="thanks">Thank you for being here!</div>
+    <div class="timeline">
+      <div class="step"><div class="tm">12:15</div><div class="what">Meet</div><div class="det">Find your group for the hour</div></div>
+      <div class="step hot"><div class="tm">12:25</div><div class="what">Welcome</div><div class="det">Students, staff, faculty and alumni</div></div>
+      <div class="step"><div class="tm">12:40</div><div class="what">Community brainstorming</div><div class="det">Three questions to think about at your table, 10 minutes each</div></div>
+      <div class="step"><div class="tm">1:10</div><div class="what">Wrap-up</div></div>
+      <div class="step"><div class="tm">1:15</div><div class="what">Lunch</div><div class="det">Served on the way out</div></div>
+    </div>
+  </section>
+
+  <!-- 3. STUDENTS (photos and titles requested Oct 28) -->
+  <section class="speaker">
+    <div class="eyebrow">Welcome</div>
+    <h2>Representing the students</h2>
+    <div class="trio">
+      <div><div class="pic3"><div class="ph">NS</div></div><div class="name">Nathan Salomon</div><div class="role">&nbsp;</div></div>
+      <div><div class="pic3"><div class="ph">KS</div></div><div class="name">Kamakshi Sethi</div><div class="role">&nbsp;</div></div>
+      <div><div class="pic3"><div class="ph">MS</div></div><div class="name">Maike Wile dos Santos</div><div class="role">&nbsp;</div></div>
+    </div>
+  </section>
+
+  <!-- 4. STAFF -->
+  <section class="speaker">
+    <div class="eyebrow">Welcome</div>
+    <h2>Representing the staff</h2>
+    <div class="who">
+      <div class="name">Greg Hanifee</div>
+      <hr class="rule">
+      <div class="role">Associate Dean, Degree Operations</div>
+    </div>
+    <div class="pic"><img src="assets/greg-hanifee.jpg" alt="Greg Hanifee"></div>
+  </section>
+
+  <!-- 5. FACULTY -->
+  <section class="speaker">
+    <div class="eyebrow">Welcome</div>
+    <h2>Representing the faculty</h2>
+    <div class="who">
+      <div class="name">Ryan Hill</div>
+      <hr class="rule">
+      <div class="role">Associate Professor of Strategy</div>
+    </div>
+    <div class="pic"><img src="assets/ryan-hill.jpg" alt="Ryan Hill"></div>
+  </section>
+
+  <!-- 6. ALUMNI (photo from LinkedIn, supplied by Sébastien) -->
+  <section class="speaker">
+    <div class="eyebrow">Welcome</div>
+    <h2>Representing the alumni</h2>
+    <div class="who">
+      <div class="name">Dave Sack</div>
+      <hr class="rule">
+      <div class="role">Associate Dean, Alumni Relations and Development</div>
+    </div>
+    <div class="pic"><img src="assets/dave-sack.jpg" alt="Dave Sack" style="object-position:50% 50%"></div>
+  </section>
+
+  <!-- 7. BRAINSTORMING TIME -->
+  <section class="brain">
+    <div class="eyebrow">Community brainstorming</div>
+    <h2>Brainstorming time</h2>
+    <div class="lede">Let's fill these whiteboards together!</div>
+    <hr class="hr">
+    <ul>
+      <li><b>Talk with your table:</b> students, staff and faculty you may not know yet.</li>
+      <li><b>Three questions</b>, about 10 minutes each.</li>
+      <li><b>One idea per sticky note</b>, as many as you can. There are no bad ideas!</li>
+      <li><b>We'll share the outcome</b> with the whole community, so we can move faster together.</li>
+    </ul>
+  </section>
+
+  <!-- 8–10. QUESTIONS — same geometry on all three -->
+  <section class="question">
+    <div class="n">Question 1 of 3</div>
+    <h2>Where are we now?</h2>
+    <hr class="rule">
+    <div class="why">So much is happening with AI across Kellogg, but it often stays within one group.<br>Great work can go unnoticed, even by the school. Let's put it all on the table.</div>
+    <div class="ask">What's happening with AI around you that others should know about? What has changed recently, and how do you feel about it?</div>
+  </section>
+
+  <section class="question">
+    <div class="n">Question 2 of 3</div>
+    <h2>Where should we be now?</h2>
+    <hr class="rule">
+    <div class="why">This is your chance to suggest what would help most today.<br>Not everything can happen at once, so what would make the biggest difference?</div>
+    <div class="ask">What do you wish existed at Kellogg right now? What would unlock you, your team or your classmates?</div>
+    <div class="eg">Think outside the box, and across boundaries.</div>
+  </section>
+
+  <section class="question">
+    <div class="n">Question 3 of 3</div>
+    <h2>Where do we want to go, together?</h2>
+    <hr class="rule">
+    <div class="why">AI is moving fast, so beyond today's needs, we also need to look further ahead.<br>Imagine you're in Kellogg's shoes.</div>
+    <div class="ask">What would you prioritize? How should we handle this transition so that it benefits our whole community?</div>
+  </section>
+
+  <!-- 11. THANK YOU -->
+  <section class="center">
+    <div class="field">
+      <h1>Thank you!</h1>
+      <hr class="rule">
+      <div class="purpose">Thank you for helping shape Kellogg's AI future. We'll gather every sticky note and <b>share what comes out of it</b> with the whole community.</div>
+      <div class="after">Lunch is ready outside.</div>
+    </div>
+  </section>
+
+</div></div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+<script>
+  const deck = window.deck = new Reveal({
+    width: 1280, height: 720, margin: 0,
+    center: false, hash: true, slideNumber: 'c/t',
+    transition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+  });
+  const setLede = () => document.querySelector('.reveal')
+      .classList.toggle('lede', !!deck.getCurrentSlide().matches('.title,.section,.image-full'));
+  deck.on('ready', setLede); deck.on('slidechanged', setLede);
+  deck.initialize();
+</script>
+</body>
+</html>

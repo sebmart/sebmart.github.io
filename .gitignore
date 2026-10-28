@@ -24,3 +24,5 @@ resume-builder/dist/
 !/consortium-fall-slides/vendor/**
 !/hmi-slides/vendor/
 !/hmi-slides/vendor/**
+!/ai-mixer-2026-slides/vendor/
+!/ai-mixer-2026-slides/vendor/**
