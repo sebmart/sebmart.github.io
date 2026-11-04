@@ -1,0 +1,91 @@
+:root {
+  --bg: #f3efe7; --paper: #fffdf9; --ink: #23201b; --muted: #6d665c; --line: #d9d1c3; --grid: #e4dccf;
+  --accent: #4e2a84;
+  --sticky: #fbe68c; --sticky-now: #c4e6b8; --pt: #26221c; --pt-ink: #fff; --s-ink: #26221c; --s-muted: #5d554a;
+  --shadow: 0 6px 24px rgba(35, 32, 27, 0.10); --s-shadow: 0 1px 2px rgba(0,0,0,.12), 0 6px 14px rgba(35,32,27,.10);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17161a; --paper: #201e24; --ink: #efeae2; --muted: #a59d92; --line: #3a3741; --grid: #2a2830;
+    --accent: #b59ae0; --sticky: #e3cf78; --sticky-now: #a9cd9d; --pt: #efeae2; --pt-ink: #17161a;
+    --shadow: 0 6px 24px rgba(0,0,0,.4); --s-shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 14px rgba(0,0,0,.35);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17161a; --paper: #201e24; --ink: #efeae2; --muted: #a59d92; --line: #3a3741; --grid: #2a2830;
+  --accent: #b59ae0; --sticky: #e3cf78; --sticky-now: #a9cd9d; --pt: #efeae2; --pt-ink: #17161a;
+  --shadow: 0 6px 24px rgba(0,0,0,.4); --s-shadow: 0 1px 2px rgba(0,0,0,.5), 0 6px 14px rgba(0,0,0,.35);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body[data-view="should"] { height: 100vh; min-height: 720px; }
+body { background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column;
+  font: 15px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif; }
+button { font: inherit; color: inherit; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.top { display: flex; align-items: center; gap: 16px; padding: 12px 16px 10px; }
+.btn { flex: none; display: inline-flex; align-items: center; height: 38px; padding: 0 14px; border-radius: 10px; text-decoration: none;
+  font-weight: 600; color: var(--ink); background: var(--paper); box-shadow: 0 2px 10px rgba(0,0,0,.08); }
+.top h1 { margin: 0; font-size: 20px; line-height: 1.2; letter-spacing: -0.01em; }
+.top p { margin: 2px 0 0; color: var(--muted); font-size: 13.5px; }
+
+/* ---------- shared sticker ---------- */
+.sticker { border: 0; text-align: left; cursor: pointer; background: var(--sticky); color: var(--s-ink); border-radius: 2px;
+  box-shadow: var(--s-shadow); transform: rotate(var(--r, 0deg)); transition: transform .12s, box-shadow .12s; }
+.sticker:hover, .sticker:focus-visible, .sticker.on { transform: rotate(0deg) scale(1.05); z-index: 5;
+  box-shadow: 0 2px 4px rgba(0,0,0,.14), 0 14px 28px rgba(35,32,27,.18); }
+.badge { position: absolute; top: -8px; right: -8px; min-width: 1.75em; height: 1.75em; padding: 0 .45em; border-radius: 99px;
+  display: flex; align-items: center; justify-content: center; background: #26221c; color: #fff; font-weight: 700;
+  font-size: .82em; font-variant-numeric: tabular-nums; }
+
+/* ---------- what we should do: one 2D plot ---------- */
+.plot-wrap { flex: 1; min-height: 0; overflow: auto; padding: 0 12px 12px; display: flex; flex-direction: column; }
+.plot { position: relative; flex: 1; width: 100%; min-width: 960px; min-height: 640px;
+  background: var(--paper); border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; }
+/* stickers stay hidden until the first layout has placed them (no flash in the top-left corner) */
+.plot:not(.ready) > .sticker, .plot:not(.ready) > .pt { visibility: hidden; }
+.plot.ready > .sticker, .plot.ready > .pt { animation: appear .25s ease-out; }
+@keyframes appear { from { opacity: 0; } }
+.plot svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.plot svg .grid { stroke: var(--grid); stroke-width: 1; }
+.plot svg .axis { stroke: var(--line); stroke-width: 1.5; }
+.plot svg text { fill: var(--muted); font-size: 12px; }
+.plot svg .tick { fill: var(--ink); font-weight: 600; font-size: 12.5px; }
+.plot svg .title { fill: var(--ink); font-weight: 600; font-size: 13px; }
+.plot .sticker { position: absolute; z-index: 2; padding: .55em .7em .6em; line-height: 1.28; }
+.plot .sticker .s { display: block; }
+.sticker .s b { font-weight: 700; }
+.pt { position: absolute; z-index: 3; width: 24px; height: 24px; margin: -12px 0 0 -12px; padding: 0; border: 2px solid var(--paper);
+  border-radius: 50%; background: var(--pt); color: var(--pt-ink); font-size: 11px; font-weight: 700; font-variant-numeric: tabular-nums;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.pt.on { background: var(--accent); color: var(--pt-ink); transform: scale(1.15); }
+
+/* ---------- what we are already doing: a wall ---------- */
+.wall { flex: 1; display: flex; flex-wrap: wrap; align-content: center; justify-content: center; gap: 34px 30px;
+  padding: 26px 24px 48px; max-width: 1400px; margin: 0 auto; }
+.wall .sticker { position: relative; display: flex; flex-direction: column; padding: 1.1em 1.1em 1.2em; background: var(--sticky-now); }
+.wall .sticker .s { margin-right: 1.4em; line-height: 1.35; }
+
+/* ---------- detail drawer ---------- */
+.drawer { position: fixed; top: 12px; right: 12px; bottom: 12px; width: min(460px, calc(100vw - 24px)); z-index: 30;
+  background: var(--paper); border-radius: 14px; box-shadow: 0 10px 40px rgba(0,0,0,.25); overflow: auto; }
+.close { position: sticky; top: 10px; float: right; margin: 10px 10px 0 0; width: 34px; height: 34px; border-radius: 50%;
+  border: 0; background: var(--bg); cursor: pointer; font-size: 21px; line-height: 1; z-index: 1; }
+.drawer-body { padding: 22px 26px 28px; }
+.drawer .meta { margin: 0 0 6px; color: var(--muted); font-size: 13px; }
+.drawer h2 { margin: 0 40px 12px 0; font-size: 23px; line-height: 1.2; letter-spacing: -0.01em; }
+.drawer p { margin: 0 0 12px; font-size: 15.5px; line-height: 1.55; }
+
+@media (prefers-reduced-motion: reduce) { .sticker { transition: none; } .plot.ready > .sticker, .plot.ready > .pt { animation: none; } }
+@media (max-width: 700px) {
+  .top { flex-wrap: wrap; gap: 8px 12px; }
+  .top h1 { font-size: 18px; }
+  .plot-wrap { padding: 0 0 8px; }
+  .plot { border-radius: 0; }
+  .wall { gap: 26px; padding: 18px 16px 40px; }
+}

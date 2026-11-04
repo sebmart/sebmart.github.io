@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mixer Idea Map</title>
+<meta name="description" content="Explore the sticky notes from the Kellogg AI Community Mixer, October 29, 2026.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<canvas id="map" aria-label="Map of sticky notes grouped by theme"></canvas>
+
+<header class="bar">
+  <div class="title">
+    <h1>Kellogg AI Community Mixer</h1>
+    <p id="subtitle">Ideas from October 29, 2026</p>
+  </div>
+  <div class="controls">
+    <label class="search"><span class="sr">Search notes</span>
+      <input id="q" type="search" placeholder="Search notes…" autocomplete="off">
+      <span id="qcount" class="qcount"></span>
+    </label>
+    <nav class="links">
+      <a class="textlink" href="doing.html"><span class="lg">Synthesis: what we are already doing</span><span class="sm">Already doing</span></a>
+      <a class="textlink" href="should.html"><span class="lg">Synthesis: what we should do</span><span class="sm">Should do</span></a>
+    </nav>
+  </div>
+</header>
+
+<div class="zoom" role="group" aria-label="Zoom">
+  <button id="zin" aria-label="Zoom in">+</button>
+  <button id="zout" aria-label="Zoom out">−</button>
+  <button id="zfit" aria-label="Fit everything">⤢</button>
+</div>
+
+<aside id="panel" class="panel" hidden>
+  <button id="close" class="close" aria-label="Close">×</button>
+  <div class="panel-body">
+    <img id="p-img" alt="">
+    <div id="p-theme" class="chip"></div>
+    <blockquote id="p-text"></blockquote>
+    <h3>Closest ideas</h3>
+    <div id="p-sim" class="sim"></div>
+  </div>
+</aside>
+
+<div id="hint" class="hint">Scroll or pinch to zoom · drag to move · click a note</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

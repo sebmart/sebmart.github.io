@@ -204,6 +204,10 @@ defaults:
     values:
       sitemap: false
   - scope:
+      path: "ai-mixer-ideas"
+    values:
+      sitemap: false
+  - scope:
       path: "aiml901"
     values:
       layout: aiml901
@@ -224,7 +228,7 @@ sass:
 # -----------------------------------------------------------------------------
 
 jekyll-minifier:
-  exclude: ["robots.txt", "assets/js/search/*.js"]
+  exclude: ["robots.txt", "assets/js/search/*.js", "ai-mixer-ideas/*"]
   uglifier_args:
     harmony: true
 
