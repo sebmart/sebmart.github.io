@@ -26,3 +26,5 @@ resume-builder/dist/
 !/hmi-slides/vendor/**
 !/ai-mixer-2026-slides/vendor/
 !/ai-mixer-2026-slides/vendor/**
+!/informs-2026-slides/vendor/
+!/informs-2026-slides/vendor/**

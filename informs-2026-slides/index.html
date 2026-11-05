@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interpretable Feature Discovery</title>
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="theme/kellogg.css">
+  <style>
+    /* --- deck-local helpers --------------------------------------------- */
+    .essay{ position:absolute; width:150px; height:196px; background:#fff; border:1.6px solid var(--slate);
+            border-radius:5px; box-shadow:0 10px 26px rgba(40,30,70,.10); padding:16px 14px; box-sizing:border-box; }
+    .essay .ttl{ font-family:var(--font-body); font-weight:600; font-size:13px; color:var(--slate); margin-bottom:10px; }
+    .essay .ln{ height:5px; background:#E1E4E9; border-radius:3px; margin:0 0 9px; }
+    .rubric{ border-collapse:collapse; font-family:var(--font-body); }
+    .rubric th{ font-weight:600; font-size:17px; color:var(--purple); padding:8px 14px; text-align:center;
+                border-bottom:2px solid var(--purple); }
+    .rubric th.row{ text-align:left; color:var(--slate2); font-weight:400; border-bottom:none; }
+    .rubric td{ font-size:20px; color:var(--ink); padding:8px 14px; text-align:center; border-bottom:1px solid var(--line); }
+    .rubric td.row{ text-align:left; font-size:17px; color:var(--slate2); }
+    .rubric td.dots{ color:var(--muted); }
+    .plbl{ font-family:var(--font-display); font-weight:500; font-size:25px; color:var(--slate); }
+    .pc{ font-family:var(--font-body); font-weight:300; font-size:21px; line-height:1.35; color:var(--ink); margin:0 0 9px; padding-left:28px; position:relative; }
+    .pc::before{ position:absolute; left:0; top:0; font-weight:600; }
+    .pc.pro::before{ content:"+"; color:var(--sage); }
+    .pc.con::before{ content:"–"; color:#B5523B; }
+    .defrow{ display:grid; grid-template-columns:150px 1fr; gap:0 26px; margin-bottom:26px; align-items:baseline; }
+    .defrow .k{ font-family:var(--font-display); font-weight:500; font-size:26px; color:var(--purple); }
+    .defrow .v{ font-family:var(--font-body); font-weight:300; font-size:22px; line-height:1.45; color:var(--ink); }
+    .defrow .v small{ display:block; font-size:17px; color:var(--slate2); margin-top:4px; }
+    .person img{ width:100%; height:330px; object-fit:cover; object-position:center top; border-radius:8px; display:block;
+                 filter:saturate(.96) contrast(1.02); box-shadow:0 14px 34px rgba(40,30,70,.13); background:var(--wash); }
+    .person .nm{ font-family:var(--font-display); font-size:34px; font-weight:400; color:var(--purple); margin-top:20px; line-height:1.05; }
+    .person .af{ font-family:var(--font-body); font-size:19px; font-weight:300; color:var(--slate2); margin-top:7px; }
+    .fcard{ border:1px solid var(--line); border-left:4px solid var(--purple); border-radius:6px; padding:18px 24px 16px; background:#fff; box-shadow:0 10px 26px rgba(40,30,70,.07); }
+    .fcard .fk{ font-family:var(--font-body); font-weight:600; font-size:13px; letter-spacing:.12em; text-transform:uppercase; color:var(--amber-dk); margin-top:12px; }
+    .fcard .fk:first-child{ margin-top:0; }
+    .fcard .fname{ font-family:var(--font-display); font-size:30px; color:var(--purple); margin-top:2px; }
+    .fcard .fdesc{ font-family:var(--font-body); font-weight:300; font-size:19px; line-height:1.4; color:var(--ink); margin-top:4px; }
+    .fcard .fscores{ display:flex; gap:22px; font-family:var(--font-body); font-size:18px; color:var(--slate2); margin-top:6px; }
+    .fcard .fscores b{ color:var(--ink); font-weight:600; margin-left:4px; }
+    .fnote{ font-family:var(--font-body); font-weight:300; font-size:17px; color:var(--slate2); margin-top:16px; line-height:1.4; }
+    .goal{ display:flex; gap:14px; align-items:baseline; font-family:var(--font-body); font-weight:300; font-size:21px; line-height:1.4; color:var(--ink); }
+    .goal b{ font-weight:600; color:var(--purple); }
+    .goal .gn{ flex:none; width:30px; height:30px; border-radius:50%; background:var(--purple-wash); color:var(--purple); font-weight:600; font-size:17px; display:inline-flex; align-items:center; justify-content:center; position:relative; top:-2px; }
+    .popcmp{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:16px 0 0 44px; }
+    .popcmp .ph{ font-family:var(--font-display); font-weight:500; font-size:20px; color:var(--slate); border-bottom:2px solid var(--line); padding-bottom:5px; margin-bottom:8px; }
+    .popcmp .pf{ font-family:var(--font-body); font-size:17px; color:var(--ink); background:var(--wash); border-radius:4px; padding:4px 10px; margin-bottom:6px; display:inline-block; margin-right:4px; }
+    .popcap{ font-family:var(--font-display); font-style:italic; font-size:19px; color:var(--slate2); margin:8px 0 0 44px; }
+    .appgrid{ position:absolute; left:96px; right:96px; top:206px; display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+    .appgrid.six{ grid-template-columns:repeat(6,1fr); }
+    .appgrid.six .app{ grid-column:span 2; }
+    .appgrid.six .app:nth-child(4){ grid-column:2 / span 2; }
+    .app{ border:1px solid var(--line); border-top:3px solid var(--amber); border-radius:6px; height:104px; display:flex; align-items:center; justify-content:center; text-align:center; padding:0 22px;
+          font-family:var(--font-display); font-weight:500; font-size:26px; line-height:1.2; color:var(--purple); background:#fff; }
+    .flow{ position:absolute; left:96px; right:96px; top:490px; display:flex; align-items:center; justify-content:center; gap:22px; background:var(--wash); border-radius:6px; padding:18px 0; }
+    .flow .fb{ font-family:var(--font-display); font-weight:500; font-size:24px; color:var(--slate); text-align:center; }
+    .flow .fb small{ display:block; font-family:var(--font-body); font-weight:300; font-size:15px; color:var(--slate2); margin-top:3px; }
+    .flow .fa{ font-size:28px; color:var(--amber); }
+    .appr{ position:absolute; left:96px; right:96px; top:180px; display:grid; grid-template-columns:repeat(3,1fr); gap:0 34px; }
+    .appr .pic{ display:block; margin:8px 0 16px; }
+    .appr .cap{ font-family:var(--font-display); font-style:italic; font-size:17px; line-height:1.3; color:var(--slate2); min-height:46px; margin-bottom:12px; }
+    .appr .pc{ font-size:18px; margin-bottom:5px; }
+    .mathbox{ font-size:21px; margin:0; } .mathbox .katex-display{ margin:.5em 0; }
+    .mnote{ font-family:var(--font-body); font-weight:300; font-size:17px; color:var(--slate2); }
+    .insight{ position:absolute; left:96px; right:96px; display:flex; align-items:center; gap:16px; }
+    .insight .pair{ text-align:center; } .insight .pl{ font-family:var(--font-body); font-weight:600; font-size:14px; color:var(--slate); }
+    .insight .arr{ color:var(--amber); font-size:26px; }
+    .insight .llm{ border:1.8px solid var(--purple); background:var(--purple-wash); border-radius:6px; padding:12px 18px; font-family:var(--font-body); font-weight:600; font-size:18px; color:var(--purple); }
+    .insight .bubble{ flex:1; border:1.6px solid var(--slate); border-radius:6px; padding:12px 18px; font-family:var(--font-display); font-style:italic; font-size:21px; line-height:1.3; color:var(--ink); background:#fff; }
+    .insight .tags{ width:150px; display:flex; flex-direction:column; gap:6px; }
+    .insight .tags span{ font-family:var(--font-body); font-weight:600; font-size:16px; color:var(--amber-dk); border:1.6px solid var(--amber); border-radius:14px; padding:3px 12px; text-align:center; }
+    .cluster{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+    .cluster .chips{ flex:1; display:flex; flex-wrap:wrap; gap:6px; }
+    .cluster .chips span{ font-family:var(--font-display); font-style:italic; font-size:17px; color:var(--slate2); background:var(--wash); border-radius:4px; padding:4px 10px; }
+    .cluster .carr{ color:var(--amber); font-size:24px; }
+    .cluster .fbox{ width:120px; text-align:center; border:1.6px solid var(--slate); border-radius:6px; padding:8px 0; font-family:var(--font-body); font-weight:500; font-size:17px; color:var(--slate); background:#fff; }
+    .tree{ position:absolute; left:96px; top:220px; width:660px; height:330px; }
+    .tree .node{ position:absolute; box-sizing:border-box; text-align:center; border:1.8px solid var(--purple); background:var(--purple-wash); color:var(--purple); border-radius:6px; padding:10px 8px; font-family:var(--font-body); font-weight:600; font-size:18px; line-height:1.3; }
+    .tree .node.out{ border:1.6px solid var(--slate); background:#fff; color:var(--slate); font-weight:500; padding:12px 8px; }
+    .tree .node.sm{ font-size:16px; padding:8px; }
+    .tree .plab{ position:absolute; font-size:17px; color:var(--amber-dk); background:#fff; padding:0 4px; }
+    .defl{ font-family:var(--font-body); font-weight:300; font-size:18px; line-height:1.35; color:var(--ink); margin-bottom:18px; }
+    .defl .k{ display:block; font-size:20px; color:var(--purple); margin-bottom:2px; }
+    .tcard .pnum{ font-family:var(--font-display); font-weight:300; font-size:54px; color:var(--amber); line-height:1; margin-bottom:10px; }
+    .thm{ margin-top:26px; border:1.6px solid var(--purple); border-left-width:5px; border-radius:6px; padding:18px 26px; font-family:var(--font-body); font-weight:300; font-size:21px; line-height:1.45; color:var(--ink); }
+    .thm .tl{ font-family:var(--font-display); font-weight:500; font-size:23px; color:var(--purple); margin-bottom:6px; }
+    .rtab{ border-collapse:collapse; font-family:var(--font-body); font-size:18px; color:var(--ink); width:100%; }
+    .rtab th{ font-weight:600; font-size:15px; color:var(--slate2); text-align:center; padding:8px 10px; border-bottom:2px solid var(--slate); line-height:1.2; vertical-align:bottom; }
+    .rtab th.l, .rtab td.l{ text-align:left; }
+    .rtab td{ padding:9px 10px; text-align:center; border-bottom:1px solid var(--line); font-weight:300; }
+    .rtab td small{ display:block; font-size:13.5px; line-height:1.3; margin-top:5px; letter-spacing:.01em; color:var(--muted); }
+    .rtab tr.ours td{ background:var(--purple-wash); color:var(--purple); font-weight:600; }
+    .rtab th.hcol{ color:var(--amber-dk); }
+    .rtab td.hcol{ font-weight:600; }
+    .rtab .amb{ color:var(--amber-dk); font-weight:700; }
+    .tk3{ position:absolute; left:96px; right:96px; top:200px; display:grid; grid-template-columns:repeat(3,1fr); gap:22px; }
+    .tk3 .tcard{ min-height:300px; justify-content:flex-start; }
+    .tk3 .tcard .t{ font-size:27px; line-height:1.25; }
+    .tk3 .tcard .ffp{ font-family:var(--font-body); font-weight:300; font-size:21px; line-height:1.4; color:var(--ink); }
+    .cmv{ display:flex; flex-direction:column; gap:7px; }
+    .cmv span{ font-family:var(--font-body); font-size:18px; padding:5px 12px; border-radius:4px; border-left:4px solid var(--sage); background:var(--wash); color:var(--ink); }
+    .cmv span.neg{ border-left-color:#B5523B; }
+  </style>
+</head>
+<body class="branded">
+<div class="reveal"><div class="slides">
+
+  <!-- 1 — TITLE ----------------------------------------------------------->
+  <section class="title" data-state="lede">
+    <div class="brandmark"><div class="bar"></div><div class="nw">Northwestern<span>|</span>Kellogg</div></div>
+    <h1 style="font-size:74px; max-width:1100px;">Interpretable Feature Discovery<br>from Unstructured Data</h1>
+    <hr class="rule">
+    <div class="sub" style="max-width:900px;">Application: using LLMs to grade and evaluate at scale</div>
+    <div class="by"><b>Sébastien Martin</b>with Baptiste Arnaudo &amp; Amine Bennouna<br><span>INFORMS Annual Meeting · November 3, 2026</span></div>
+  </section>
+
+  <!-- 2 — CO-AUTHORS ------------------------------------------------------>
+  <section>
+    <h2>Collaborators</h2>
+    <div style="position:absolute; left:50%; transform:translateX(-50%); top:190px; width:760px; display:grid; grid-template-columns:1fr 1fr; gap:60px;">
+      <div class="person">
+        <img src="assets/photo-baptiste-arnaudo.jpg" alt="Baptiste Arnaudo">
+        <div class="nm">Baptiste Arnaudo</div>
+        <div class="af">Stanford ICME · École Polytechnique</div>
+      </div>
+      <div class="person">
+        <img src="assets/photo-amine-bennouna.jpg" alt="Amine Bennouna">
+        <div class="nm">Amine Bennouna</div>
+        <div class="af">Northwestern Kellogg</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER: Motivation -->
+  <section class="section" data-state="lede">
+    <h2>Motivation</h2>
+    <hr class="rule">
+    <div class="eyebrow">Interpretable Feature Discovery from Unstructured Data</div>
+  </section>
+
+  <!-- 3 — RUNNING EXAMPLE: GRADING ---------------------------------------->
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2>Imagine grading 200 essays</h2>
+    <!-- left: the pile -->
+    <div style="position:absolute; left:110px; top:230px; width:300px; height:300px;">
+      <div class="essay" style="left:0; top:24px; transform:rotate(-6deg);"><div class="ttl">Essay 1</div><div class="ln"></div><div class="ln" style="width:85%"></div><div class="ln"></div><div class="ln" style="width:70%"></div><div class="ln"></div><div class="ln" style="width:90%"></div></div>
+      <div class="essay" style="left:62px; top:8px; transform:rotate(2deg);"><div class="ttl">Essay 2</div><div class="ln"></div><div class="ln" style="width:75%"></div><div class="ln"></div><div class="ln"></div><div class="ln" style="width:60%"></div><div class="ln"></div></div>
+      <div class="essay" style="left:124px; top:30px; transform:rotate(7deg);"><div class="ttl">Essay 3</div><div class="ln" style="width:92%"></div><div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln"></div><div class="ln" style="width:66%"></div><div class="ln"></div></div>
+      <div style="position:absolute; left:0; right:0; top:262px; text-align:center; font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--slate2);">…and 197 more</div>
+    </div>
+    <!-- arrow -->
+    <svg style="position:absolute; left:440px; top:340px;" width="110" height="40" viewBox="0 0 110 40">
+      <defs><marker id="amG" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#DD9B2E"/></marker></defs>
+      <line x1="4" y1="20" x2="100" y2="20" stroke="#DD9B2E" stroke-width="2.6" marker-end="url(#amG)"/>
+    </svg>
+    <!-- right: what we want -->
+    <div style="position:absolute; left:580px; top:214px; width:610px;">
+      <table class="rubric">
+        <tr>
+          <th class="row"></th>
+          <th class="fragment" data-fragment-index="1">Argument</th>
+          <th class="fragment" data-fragment-index="1">Evidence</th>
+          <th class="fragment" data-fragment-index="1">Clarity</th>
+          <th class="fragment" data-fragment-index="1">Grammar</th>
+        </tr>
+        <tr><td class="row">Essay 1</td><td class="fragment" data-fragment-index="2">4</td><td class="fragment" data-fragment-index="2">2</td><td class="fragment" data-fragment-index="2">5</td><td class="fragment" data-fragment-index="2">3</td></tr>
+        <tr><td class="row">Essay 2</td><td class="fragment" data-fragment-index="2">2</td><td class="fragment" data-fragment-index="2">4</td><td class="fragment" data-fragment-index="2">3</td><td class="fragment" data-fragment-index="2">5</td></tr>
+        <tr><td class="row">Essay 3</td><td class="fragment" data-fragment-index="2">5</td><td class="fragment" data-fragment-index="2">3</td><td class="fragment" data-fragment-index="2">4</td><td class="fragment" data-fragment-index="2">4</td></tr>
+        <tr><td class="row">…</td><td class="dots fragment" data-fragment-index="2">…</td><td class="dots fragment" data-fragment-index="2">…</td><td class="dots fragment" data-fragment-index="2">…</td><td class="dots fragment" data-fragment-index="2">…</td></tr>
+      </table>
+      <div style="margin-top:26px; font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--slate2); line-height:1.5;">
+        <span class="fragment" data-fragment-index="1"><b style="color:var(--purple); font-weight:600;">A rubric:</b> the features that matter.</span><br>
+        <span class="fragment" data-fragment-index="2"><b style="color:var(--purple); font-weight:600;">Grades:</b> a score for every essay on every feature.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — WHAT WE WANT: FEATURES + SCORES, AND GOALS ----------------------->
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2>What we want</h2>
+    <!-- left: anatomy of a feature -->
+    <div style="position:absolute; left:96px; top:206px; width:500px;">
+      <div class="plbl" style="margin-bottom:14px;">A list of features <span style="font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--slate2);">e.g., the columns of the table before</span></div>
+      <div class="fcard">
+        <div class="fk">Name</div>
+        <div class="fname">Use of evidence</div>
+        <div class="fk">Description</div>
+        <div class="fdesc">Supports claims with concrete examples, data or sources, rather than generic statements.</div>
+        <div class="fk fragment" data-fragment-index="1">Scores</div>
+        <div class="fscores fragment" data-fragment-index="1">
+          <span>Essay 1 <b>2</b></span><span>Essay 2 <b>4</b></span><span>Essay 3 <b>3</b></span><span style="color:var(--muted);">…</span>
+        </div>
+      </div>
+      <div class="fnote">Enough for a human, or an AI, to understand what it means <i>in this context</i>, and to score it.</div>
+    </div>
+    <!-- right: goals -->
+    <div class="fragment" data-fragment-index="2" style="position:absolute; left:660px; right:96px; top:206px;">
+      <div class="plbl" style="margin-bottom:14px;">Goals</div>
+      <div class="goal"><span class="gn">1</span><div><b>Relevant</b> to the population: features that differentiate the items as much as possible.</div></div>
+      <div class="popcmp">
+        <div><div class="ph">Secondary school</div><div class="pf">Grammar</div><div class="pf">Coherence</div><div class="pf">Writing quality</div></div>
+        <div><div class="ph">MBA</div><div class="pf">Argument</div><div class="pf">Evidence</div><div class="pf">Originality</div></div>
+      </div>
+      <div class="popcap">Same essay prompt, very different features.</div>
+      <div class="goal fragment" data-fragment-index="3" style="margin-top:26px;"><span class="gn">2</span><div>A way to generate <b>scores</b>, given each feature&rsquo;s name and description, that is as <b>unbiased and fair</b> as possible.</div></div>
+    </div>
+  </section>
+
+  <!-- 5 — GENERALIZATION: THIS PROBLEM IS EVERYWHERE ------------------------>
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2 style="font-size:46px;">More generally: feature discovery on unstructured data</h2>
+    <div class="appgrid six">
+      <div class="app">Grading</div>
+      <div class="app">Hiring</div>
+      <div class="app">Evaluating research papers</div>
+      <div class="app">Machine learning on unstructured data</div>
+      <div class="app">Post-hoc interpretability</div>
+    </div>
+    <div class="flow">
+      <span class="fb">Unstructured data<small>text, images…</small></span>
+      <span class="fa">→</span>
+      <span class="fb">Interpretable features<small>name + description</small></span>
+      <span class="fa">→</span>
+      <span class="fb">Scores<small>every item, every feature</small></span>
+    </div>
+  </section>
+  <!-- 6 — PROBLEM DEFINITION --------------------------------------------->
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2>Feature discovery, more precisely</h2>
+    <hr class="hr">
+    <div style="position:absolute; left:96px; right:96px; top:232px;">
+      <div class="defrow"><div class="k">Given</div><div class="v">$n$ unstructured items $x_1, \dots, x_n$<small>essays, cover letters, Reddit posts…</small></div></div>
+      <div class="defrow fragment"><div class="k">Find</div><div class="v">$K$ features, each a name and a plain-language description<br>and a score matrix $S \in \mathbb{R}^{n \times K}$, where $S_{ik}$ = score of item $i$ on feature $k$</div></div>
+      <div class="defrow fragment"><div class="k">Such that</div><div class="v">features are <b>interpretable</b>, <b>relevant</b> (they distinguish the items), <b>non-redundant</b>,<br>and scores are <b>reliable</b> (reproducible, free of evaluator bias)</div></div>
+      <div class="defrow fragment"><div class="k" style="color:var(--amber-dk);">Sometimes</div><div class="v">there is a well-defined objective<small>e.g., features fed to a prediction model: out-of-sample accuracy</small></div></div>
+    </div>
+  </section>
+
+  <!-- 7 — SIMPLE APPROACHES (visual: by hand / one-shot LLM / hybrid) ------>
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2>How could we do this?</h2>
+    <svg width="0" height="0" style="position:absolute;">
+      <defs>
+        <symbol id="doc" viewBox="0 0 36 46">
+          <path d="M1,1 H25 L35,11 V45 H1 Z" fill="#fff" stroke="#3E444E" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M25,1 V11 H35" fill="none" stroke="#3E444E" stroke-width="1.4" stroke-linejoin="round"/>
+          <line x1="7" y1="19" x2="29" y2="19" stroke="#C9CDD4" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="7" y1="26" x2="29" y2="26" stroke="#C9CDD4" stroke-width="2.4" stroke-linecap="round"/>
+          <line x1="7" y1="33" x2="24" y2="33" stroke="#C9CDD4" stroke-width="2.4" stroke-linecap="round"/>
+        </symbol>
+        <marker id="amA" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#DD9B2E"/></marker>
+        <marker id="grA" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#9298A1"/></marker>
+      </defs>
+    </svg>
+    <div class="appr">
+      <!-- BY HAND -->
+      <div>
+        <div class="plbl">By hand</div>
+        <svg class="pic" width="340" height="280" viewBox="0 0 340 280">
+          <g transform="translate(34,0) scale(0.8)">
+          <path d="M14,34 H300 C334,34 334,100 300,100 H40 C6,100 6,166 40,166 H318" fill="none" stroke="#DD9B2E" stroke-width="2.6" stroke-linecap="round" marker-end="url(#amA)"/>
+          <use href="#doc" x="40"  y="11" width="36" height="46"/><use href="#doc" x="113" y="11" width="36" height="46"/><use href="#doc" x="186" y="11" width="36" height="46"/><use href="#doc" x="259" y="11" width="36" height="46"/>
+          <use href="#doc" x="40"  y="77" width="36" height="46"/><use href="#doc" x="113" y="77" width="36" height="46"/><use href="#doc" x="186" y="77" width="36" height="46"/><use href="#doc" x="259" y="77" width="36" height="46"/>
+          <use href="#doc" x="40"  y="143" width="36" height="46"/><use href="#doc" x="113" y="143" width="36" height="46"/><use href="#doc" x="186" y="143" width="36" height="46"/><use href="#doc" x="259" y="143" width="36" height="46"/>
+          </g>
+          <g stroke="#DD9B2E" stroke-width="2.2" fill="none">
+            <path d="M170,172 C170,190 55,184 55,202" marker-end="url(#amA)"/>
+            <line x1="170" y1="172" x2="170" y2="202" marker-end="url(#amA)"/>
+            <path d="M170,172 C170,190 285,184 285,202" marker-end="url(#amA)"/>
+          </g>
+          <rect x="2"   y="208" width="106" height="48" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="55" y="237" text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E">Features</text>
+          <rect x="117" y="208" width="106" height="48" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="170" y="228" text-anchor="middle" font-family="Inter" font-weight="500" font-size="13" fill="#3E444E">Scoring</text><text x="170" y="245" text-anchor="middle" font-family="Inter" font-weight="500" font-size="13" fill="#3E444E">methodology</text>
+          <rect x="232" y="208" width="106" height="48" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="285" y="237" text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E">Scores</text>
+        </svg>
+        <div class="pc pro">Expert judgment</div>
+        <div class="pc con">Biased</div>
+        <div class="pc con">Not reproducible</div>
+        <div class="pc con">Doesn't scale</div>
+      </div>
+      <!-- ONE-SHOT LLM -->
+      <div class="fragment">
+        <div class="plbl">One-shot LLM</div>
+        <svg class="pic" width="340" height="280" viewBox="0 -30 340 280">
+          <g stroke="#DD9B2E" stroke-width="1.8" fill="none" opacity=".85">
+            <path d="M58,42 C86,42 80,110 104,110"/><path d="M58,110 H104"/><path d="M58,178 C86,178 80,110 104,110"/>
+            <path d="M30,42 C80,60 80,110 104,110"/><path d="M30,178 C80,160 80,110 104,110"/>
+          </g>
+          <use href="#doc" x="4"  y="16" width="26" height="33"/><use href="#doc" x="34" y="24" width="26" height="33"/>
+          <use href="#doc" x="4"  y="84" width="26" height="33"/><use href="#doc" x="34" y="94" width="26" height="33"/>
+          <use href="#doc" x="4"  y="152" width="26" height="33"/><use href="#doc" x="34" y="162" width="26" height="33"/>
+          <rect x="104" y="84" width="64" height="52" rx="6" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/>
+          <text x="136" y="116" text-anchor="middle" font-family="Inter" font-weight="600" font-size="15" fill="#4E2A84">LLM</text>
+          <g stroke="#DD9B2E" stroke-width="2.2" fill="none">
+            <path d="M170,104 C190,90 192,40 208,40" marker-end="url(#amA)"/>
+            <line x1="170" y1="110" x2="208" y2="110" marker-end="url(#amA)"/>
+            <path d="M170,116 C190,130 192,180 208,180" marker-end="url(#amA)"/>
+          </g>
+          <rect x="214" y="20"  width="124" height="40" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="276" y="45" text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E">Features</text>
+          <rect x="214" y="88"  width="124" height="44" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="276" y="107" text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E">Scoring</text><text x="276" y="124" text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E">methodology</text>
+          <rect x="214" y="160" width="124" height="40" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="276" y="185" text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E">Scores</text>
+        </svg>
+        <div class="pc pro">Automated, reproducible</div>
+        <div class="pc con">Biased</div>
+        <div class="pc con">Doesn't scale (context limit)</div>
+        <div class="pc con">Quality issues</div>
+      </div>
+      <!-- HYBRID -->
+      <div class="fragment">
+        <div class="plbl">Hybrid</div>
+        <svg class="pic" width="340" height="280" viewBox="0 0 340 280">
+          <use href="#doc" x="4" y="36" width="22" height="28"/><use href="#doc" x="16" y="46" width="22" height="28"/><use href="#doc" x="28" y="56" width="22" height="28"/>
+          <line x1="54" y1="62" x2="72" y2="62" stroke="#DD9B2E" stroke-width="2.2" marker-end="url(#amA)"/>
+          <rect x="78" y="36" width="86" height="52" rx="6" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/>
+          <g text-anchor="middle" font-family="Inter" font-weight="600" font-size="14" fill="#4E2A84"><text x="121" y="58">Human</text><text x="121" y="76">or LLM</text></g>
+          <g stroke="#DD9B2E" stroke-width="2.2" fill="none">
+            <path d="M166,54 C178,54 178,37 188,37" marker-end="url(#amA)"/>
+            <path d="M166,70 C178,70 178,83 188,83" marker-end="url(#amA)"/>
+          </g>
+          <rect x="194" y="20" width="144" height="34" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="266" y="42" text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E">Features</text>
+          <rect x="194" y="66" width="144" height="34" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="266" y="88" text-anchor="middle" font-family="Inter" font-weight="500" font-size="13" fill="#3E444E">Scoring methodology</text>
+          <path d="M266,102 V118 H105 V134" fill="none" stroke="#9298A1" stroke-width="1.8" stroke-dasharray="2 5" stroke-linecap="round" marker-end="url(#grA)"/>
+          <text x="10" y="197" font-family="Zilla Slab" font-style="italic" font-size="14" fill="#565E6B" text-anchor="middle" transform="rotate(-90 10 197)">pointwise</text>
+          <use href="#doc" x="24" y="141" width="22" height="28"/><use href="#doc" x="24" y="183" width="22" height="28"/><use href="#doc" x="24" y="225" width="22" height="28"/>
+          <g stroke="#DD9B2E" stroke-width="2" fill="none">
+            <line x1="50" y1="155" x2="68" y2="155" marker-end="url(#amA)"/><line x1="50" y1="197" x2="68" y2="197" marker-end="url(#amA)"/><line x1="50" y1="239" x2="68" y2="239" marker-end="url(#amA)"/>
+            <line x1="138" y1="155" x2="172" y2="155" marker-end="url(#amA)"/><line x1="138" y1="197" x2="172" y2="197" marker-end="url(#amA)"/><line x1="138" y1="239" x2="172" y2="239" marker-end="url(#amA)"/>
+          </g>
+          <rect x="74" y="140" width="62" height="30" rx="5" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/><rect x="74" y="182" width="62" height="30" rx="5" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/><rect x="74" y="224" width="62" height="30" rx="5" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.8"/>
+          <g text-anchor="middle" font-family="Inter" font-weight="600" font-size="13" fill="#4E2A84"><text x="105" y="160">LLM</text><text x="105" y="202">LLM</text><text x="105" y="244">LLM</text></g>
+          <rect x="178" y="140" width="160" height="30" rx="5" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><rect x="178" y="182" width="160" height="30" rx="5" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><rect x="178" y="224" width="160" height="30" rx="5" fill="#fff" stroke="#3E444E" stroke-width="1.6"/>
+          <g text-anchor="middle" font-family="Inter" font-weight="500" font-size="14" fill="#3E444E"><text x="258" y="160">Scores (4, 2, 5)</text><text x="258" y="202">Scores (2, 4, 3)</text><text x="258" y="244">Scores (5, 3, 4)</text></g>
+        </svg>
+        <div class="pc pro">Scales, reproducible</div>
+        <div class="pc con">Quality issues</div>
+        <div class="pc con">Still potentially strong LLM bias</div>
+      </div>
+    </div>
+  </section>
+  <!-- 8 — VANILLA BRADLEY–TERRY I: WHICH ESSAY IS BETTER? ----------------->
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2>Another angle: comparative evaluation</h2>
+    <div style="position:absolute; left:96px; right:96px; top:186px; font-family:var(--font-body); font-weight:300; font-size:21px; line-height:1.4; color:var(--slate2);">Suppose we are given one feature to score, e.g. <b style="color:var(--purple); font-weight:600;">Use of evidence</b>.</div>
+    <svg style="position:absolute; left:96px; top:236px;" width="630" height="396" viewBox="0 0 700 440">
+      <g class="fragment" data-fragment-index="2" stroke="#EBCB94" stroke-width="2">
+        <line x1="60" y1="70" x2="250" y2="40"/><line x1="60" y1="70" x2="130" y2="240"/><line x1="250" y1="40" x2="450" y2="90"/>
+        <line x1="450" y1="90" x2="640" y2="60"/><line x1="450" y1="90" x2="340" y2="210"/>
+        <line x1="640" y1="60" x2="580" y2="260"/><line x1="130" y1="240" x2="340" y2="210"/>
+        <line x1="340" y1="210" x2="580" y2="260"/><line x1="340" y1="210" x2="470" y2="380"/><line x1="250" y1="380" x2="470" y2="380"/>
+        <line x1="580" y1="260" x2="470" y2="380"/><line x1="60" y1="70" x2="340" y2="210"/>
+      <line x1="450" y1="90" x2="580" y2="260"/><line x1="130" y1="240" x2="250" y2="380"/></g>
+      <g class="fragment" data-fragment-index="1" stroke="#DD9B2E" stroke-width="3.4"><line x1="250" y1="40" x2="340" y2="210"/></g>
+      <g>
+        <use href="#doc" x="42"  y="47"  width="36" height="46"/><use href="#doc" x="232" y="17" width="36" height="46"/>
+        <use href="#doc" x="432" y="67"  width="36" height="46"/><use href="#doc" x="622" y="37" width="36" height="46"/>
+        <use href="#doc" x="112" y="217" width="36" height="46"/><use href="#doc" x="322" y="187" width="36" height="46"/>
+        <use href="#doc" x="562" y="237" width="36" height="46"/><use href="#doc" x="232" y="357" width="36" height="46"/>
+        <use href="#doc" x="452" y="357" width="36" height="46"/>
+      </g>
+      <g font-family="Inter" font-weight="600" font-size="16" fill="#3E444E" text-anchor="middle">
+        <text x="28" y="76">A</text><text x="218" y="46">B</text><text x="418" y="96">C</text><text x="676" y="66">D</text>
+        <text x="98" y="246">E</text><text x="376" y="216">F</text><text x="616" y="266">G</text><text x="218" y="386">H</text><text x="506" y="386">I</text>
+      </g>
+      <g class="fragment" data-fragment-index="1" font-family="Inter" font-weight="600" font-size="14" text-anchor="middle">
+        <rect x="266" y="112" width="58" height="26" rx="13" fill="#fff" stroke="#DD9B2E" stroke-width="1.6"/><text x="295" y="130" fill="#A8731C">B ≻ F</text>
+      </g>
+    </svg>
+    <div class="fragment" data-fragment-index="1" style="position:absolute; left:800px; right:96px; top:226px; text-align:center;">
+      <div style="font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--slate2); margin-bottom:10px;">For each edge, ask the LLM:</div>
+      <div style="text-align:left; border:1.6px solid var(--slate); border-radius:6px; padding:14px 18px; font-family:var(--font-body); font-weight:300; font-size:16px; line-height:1.4; color:var(--ink); background:#fff;">
+        Your goal is to evaluate which of two essays does better on the feature <b style="font-weight:600;">&ldquo;Use of evidence&rdquo;</b>.
+        <div style="margin:10px 0 8px; font-style:italic; color:var(--muted);">[detailed description of the feature]</div>
+        <div style="height:5px; background:#E1E4E9; border-radius:3px; margin:6px 0;"></div><div style="height:5px; background:#E1E4E9; border-radius:3px; margin:6px 0;"></div><div style="height:5px; background:#E1E4E9; border-radius:3px; margin:6px 0; width:70%;"></div>
+        <div style="margin:10px 0; color:var(--muted);">Essay B: [&hellip;] &nbsp; Essay F: [&hellip;]</div>
+        <b style="font-weight:600;">Which essay makes better use of evidence, B or F?</b>
+      </div>
+      <div style="color:var(--amber); font-size:26px; line-height:1.25;">↓</div>
+      <div style="display:inline-block; border:1.8px solid var(--purple); background:var(--purple-wash); border-radius:6px; padding:8px 34px; font-family:var(--font-body); font-weight:600; font-size:20px; color:var(--purple);">LLM</div>
+      <div style="color:var(--amber); font-size:26px; line-height:1.25;">↓</div>
+      <div style="font-family:var(--font-display); font-size:32px; color:var(--amber-dk);">&ldquo;B&rdquo;</div>
+    </div>
+  </section>
+
+  <!-- 9 — VANILLA BRADLEY–TERRY II: FROM COMPARISONS TO SCORES -------------->
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2>How do we derive scores from comparisons?</h2>
+    <div style="position:absolute; left:96px; right:96px; top:186px; border-left:4px solid var(--amber); background:var(--wash); border-radius:4px; padding:12px 20px; font-family:var(--font-body); font-weight:300; font-size:20px; color:var(--ink); line-height:1.45;">Like <b style="font-weight:600;">Elo ratings</b> in chess: one rating per player, from many games against different opponents. The canonical model: <b style="font-weight:600; color:var(--purple);">Bradley&ndash;Terry</b>.</div>
+    <div class="fragment" style="position:absolute; left:96px; top:304px; width:560px;">
+      <div class="plbl">Model</div>
+      <div class="mathbox">$$\mathbb{P}(i \text{ beats } j) = \sigma(s_i - s_j) = \frac{1}{1 + e^{-(s_i - s_j)}}$$</div>
+      <div class="mnote">$s_i$: latent score of item $i$</div>
+      <div class="plbl" style="margin-top:14px;">Estimation: maximum likelihood</div>
+      <div class="mathbox">$$\hat{s} \in \arg\max_{s} \sum_{\text{comparisons } i \succ j} \log \sigma(s_i - s_j)$$</div>
+    </div>
+    <div class="fragment" style="position:absolute; left:700px; right:96px; top:304px;">
+      <div class="plbl">Estimated scores</div>
+      <svg width="484" height="196" viewBox="0 0 484 196" style="display:block; margin-top:4px;">
+        <defs>
+          <marker id="axA" markerWidth="8" markerHeight="8" refX="6.5" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#3E444E"/></marker>
+          <symbol id="docL" viewBox="0 0 36 46">
+            <path d="M1,1 H25 L35,11 V45 H1 Z" fill="#fff" stroke="#3E444E" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M25,1 V11 H35" fill="none" stroke="#3E444E" stroke-width="1.4" stroke-linejoin="round"/>
+          </symbol>
+        </defs>
+        <line x1="8" y1="112" x2="476" y2="112" stroke="#3E444E" stroke-width="1.6" marker-end="url(#axA)"/>
+        <g><use href="#docL" x="15" y="54" width="34" height="44"/><use href="#docL" x="65" y="54" width="34" height="44"/><use href="#docL" x="113" y="54" width="34" height="44"/><use href="#docL" x="171" y="54" width="34" height="44"/><use href="#docL" x="219" y="54" width="34" height="44"/><use href="#docL" x="269" y="54" width="34" height="44"/><use href="#docL" x="321" y="54" width="34" height="44"/><use href="#docL" x="371" y="54" width="34" height="44"/><use href="#docL" x="423" y="54" width="34" height="44"/></g>
+        <g font-family="Inter" font-weight="600" font-size="17" fill="#4E2A84" text-anchor="middle"><text x="32" y="85">H</text><text x="82" y="85">A</text><text x="130" y="85">C</text><text x="188" y="85">I</text><text x="236" y="85">D</text><text x="286" y="85">G</text><text x="338" y="85">F</text><text x="388" y="85">E</text><text x="440" y="85">B</text></g>
+        <g stroke="#3E444E" stroke-width="1.4"><line x1="32" y1="104" x2="32" y2="120"/><line x1="82" y1="104" x2="82" y2="120"/><line x1="130" y1="104" x2="130" y2="120"/><line x1="188" y1="104" x2="188" y2="120"/><line x1="236" y1="104" x2="236" y2="120"/><line x1="286" y1="104" x2="286" y2="120"/><line x1="338" y1="104" x2="338" y2="120"/><line x1="388" y1="104" x2="388" y2="120"/><line x1="440" y1="104" x2="440" y2="120"/></g>
+        <g fill="#2B2F36" text-anchor="middle"><text x="32" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">H</tspan></text><text x="82" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">A</tspan></text><text x="130" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">C</tspan></text><text x="188" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">I</tspan></text><text x="236" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">D</tspan></text><text x="286" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">G</tspan></text><text x="338" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">F</tspan></text><text x="388" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">E</tspan></text><text x="440" y="148"><tspan font-family="KaTeX_Math, serif" font-style="italic" font-size="21">s</tspan><tspan font-size="13" dy="5">B</tspan></text></g>
+        <g font-family="Inter" font-size="14" fill="#8A9099"><text x="8" y="186">worse</text><text x="476" y="186" text-anchor="end">better</text></g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- 9b — ADVANTAGES OF BRADLEY–TERRY ------------------------------------>
+  <section>
+    <div class="eyebrow">Motivation</div>
+    <h2>Advantages of Bradley&ndash;Terry</h2>
+    <div style="position:absolute; left:96px; top:222px; width:440px; text-align:center;">
+      <svg width="440" height="277" viewBox="0 0 700 440">
+        <g stroke="#D5D9DE" stroke-width="4"><line x1="60" y1="70" x2="250" y2="40"/><line x1="60" y1="70" x2="130" y2="240"/><line x1="250" y1="40" x2="450" y2="90"/><line x1="450" y1="90" x2="640" y2="60"/><line x1="640" y1="60" x2="580" y2="260"/><line x1="130" y1="240" x2="250" y2="380"/><line x1="250" y1="380" x2="470" y2="380"/><line x1="580" y1="260" x2="470" y2="380"/></g>
+        <g stroke="#DD9B2E" stroke-width="6"><line x1="60" y1="70" x2="340" y2="210"/><line x1="250" y1="40" x2="340" y2="210"/><line x1="450" y1="90" x2="340" y2="210"/><line x1="130" y1="240" x2="340" y2="210"/><line x1="580" y1="260" x2="340" y2="210"/><line x1="470" y1="380" x2="340" y2="210"/></g>
+        <circle cx="340" cy="210" r="44" fill="#FCEFD9" stroke="#DD9B2E" stroke-width="4"/><text x="300" y="306" text-anchor="middle" font-family="Inter" font-weight="700" font-size="44" fill="#A8731C">F</text>
+        <use href="#doc" x="42" y="47" width="36" height="46"/><use href="#doc" x="232" y="17" width="36" height="46"/><use href="#doc" x="432" y="67" width="36" height="46"/><use href="#doc" x="622" y="37" width="36" height="46"/><use href="#doc" x="112" y="217" width="36" height="46"/><use href="#doc" x="322" y="187" width="36" height="46"/><use href="#doc" x="562" y="237" width="36" height="46"/><use href="#doc" x="232" y="357" width="36" height="46"/><use href="#doc" x="452" y="357" width="36" height="46"/>
+      <g font-family="Inter" font-weight="600" font-size="24" fill="#8A9099" text-anchor="middle"><text x="14" y="78">A</text><text x="204" y="48">B</text><text x="404" y="98">C</text><text x="688" y="68">D</text><text x="84" y="248">E</text><text x="628" y="268">G</text><text x="204" y="388">H</text><text x="518" y="388">I</text></g></svg>
+      <div style="font-family:var(--font-body); font-weight:300; font-size:18px; color:var(--slate2); margin-top:10px;">Item F appears in 6 comparisons.</div>
+    </div>
+    <div style="position:absolute; left:600px; right:96px; top:222px;">
+      <div style="font-family:var(--font-display); font-weight:500; font-size:30px; color:var(--purple);">Many comparisons per item</div>
+      <div style="font-family:var(--font-body); font-weight:300; font-size:19px; color:var(--slate2); margin:4px 0 22px;">As a consequence, we can:</div>
+      <div class="goal" style="margin-bottom:22px;"><span class="gn">1</span><div><b>Tolerate noise.</b> It is a statistical model: errors in individual LLM answers average out.</div></div>
+      <div class="goal"><span class="gn">2</span><div><b>Correct biases.</b> E.g. position bias: the LLM tends to favor the item shown first. Add one parameter $\beta$:
+        <div class="mathbox" style="margin-top:6px;">$$\mathbb{P}(i \text{ beats } j \mid i \text{ shown first}) = \sigma(s_i - s_j + \beta)$$</div>
+        <div class="mnote">$\beta$ is estimated by maximum likelihood, together with the scores.</div></div></div>
+    </div>
+  </section>
+
+  <!-- 9c — QUESTION: FROM SCORING TO DISCOVERY ------------------------------->
+  <section class="oneliner">
+    <div class="eyebrow">Motivation</div>
+    <div class="field">
+      <div class="q">How do we use the comparison idea to &ldquo;discover&rdquo; features, not only score them?</div>
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER: Our approach &amp; theory -->
+  <section class="section" data-state="lede">
+    <h2>Our approach &amp; theory</h2>
+    <hr class="rule">
+    <div class="eyebrow">Interpretable Feature Discovery from Unstructured Data</div>
+  </section>
+
+  <!-- 10b — STEP 0: DATA + COMPARISON BUDGET -------------------------------->
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>Step 0: a dataset and a comparison budget</h2>
+    <div style="position:absolute; left:96px; top:236px; width:580px;">
+      <div class="defrow"><div class="k">Data</div><div class="v">$n$ items of unstructured data<small>e.g. $n = 200$ essays</small></div></div>
+      <div class="defrow"><div class="k">Budget</div><div class="v">Each item is compared about $d$ times, so about $dn/2$ LLM calls<small>e.g. $d = 10$: 1,000 calls. More comparisons, more accuracy.</small></div></div>
+    </div>
+    <div style="position:absolute; left:700px; top:226px;">
+      <svg width="484" height="304" viewBox="0 0 700 440">
+      <g stroke="#C9CDD4" stroke-width="1.8">
+        <line x1="60" y1="70" x2="250" y2="40"/><line x1="60" y1="70" x2="130" y2="240"/><line x1="250" y1="40" x2="450" y2="90"/>
+        <line x1="450" y1="90" x2="640" y2="60"/><line x1="450" y1="90" x2="340" y2="210"/>
+        <line x1="640" y1="60" x2="580" y2="260"/><line x1="130" y1="240" x2="340" y2="210"/>
+        <line x1="340" y1="210" x2="580" y2="260"/><line x1="340" y1="210" x2="470" y2="380"/><line x1="250" y1="380" x2="470" y2="380"/>
+        <line x1="580" y1="260" x2="470" y2="380"/><line x1="60" y1="70" x2="340" y2="210"/>
+      </g>
+      <g stroke="#C9CDD4" stroke-width="1.8">
+        <line x1="250" y1="40" x2="340" y2="210"/><line x1="450" y1="90" x2="580" y2="260"/><line x1="130" y1="240" x2="250" y2="380"/>
+      </g>
+      <g>
+        <use href="#doc" x="42"  y="47"  width="36" height="46"/><use href="#doc" x="232" y="17" width="36" height="46"/>
+        <use href="#doc" x="432" y="67"  width="36" height="46"/><use href="#doc" x="622" y="37" width="36" height="46"/>
+        <use href="#doc" x="112" y="217" width="36" height="46"/><use href="#doc" x="322" y="187" width="36" height="46"/>
+        <use href="#doc" x="562" y="237" width="36" height="46"/><use href="#doc" x="232" y="357" width="36" height="46"/>
+        <use href="#doc" x="452" y="357" width="36" height="46"/>
+      </g>
+      <g font-family="Inter" font-weight="600" font-size="16" fill="#3E444E" text-anchor="middle">
+        <text x="28" y="76">A</text><text x="218" y="46">B</text><text x="418" y="96">C</text><text x="676" y="66">D</text>
+        <text x="98" y="246">E</text><text x="376" y="216">F</text><text x="616" y="266">G</text><text x="218" y="386">H</text><text x="506" y="386">I</text>
+      </g>
+      
+    </svg>
+      <div style="text-align:center; font-family:var(--font-body); font-weight:300; font-size:16px; color:var(--muted);">random comparison graph</div>
+    </div>
+  </section>
+
+  <!-- 11 — STEP 1: ASK HOW TWO ESSAYS DIFFER -------------------------------->
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>Step 1: ask the LLM how two essays differ</h2>
+    <svg style="position:absolute; left:96px; top:226px;" width="220" height="250" viewBox="0 0 220 250">
+      <g stroke="#C9CDD4" stroke-width="1.6"><line x1="30" y1="40" x2="120" y2="20"/><line x1="30" y1="40" x2="60" y2="140"/><line x1="120" y1="20" x2="190" y2="90"/><line x1="60" y1="140" x2="190" y2="90"/><line x1="60" y1="140" x2="150" y2="210"/><line x1="190" y1="90" x2="150" y2="210"/></g>
+      <line x1="30" y1="40" x2="190" y2="90" stroke="#DD9B2E" stroke-width="2.6"/>
+      <g><use href="#doc" x="16" y="22" width="28" height="36"/><use href="#doc" x="106" y="2" width="28" height="36"/><use href="#doc" x="176" y="72" width="28" height="36"/><use href="#doc" x="46" y="122" width="28" height="36"/><use href="#doc" x="136" y="192" width="28" height="36"/></g>
+      <g font-family="Inter" font-weight="600" font-size="13" fill="#3E444E"><text x="6" y="70">A</text><text x="204" y="122">B</text></g>
+      <text x="110" y="246" text-anchor="middle" font-family="Inter" font-size="14" fill="#8A9099">comparison graph</text>
+    </svg>
+    <div style="position:absolute; left:322px; top:300px; color:var(--amber); font-size:28px; line-height:1;">&rarr;</div>
+    <div style="position:absolute; left:360px; top:222px; width:330px; border:1.8px solid var(--purple); border-radius:6px; padding:14px 18px; background:#fff; box-shadow:0 10px 26px rgba(40,30,70,.08); font-family:var(--font-body); font-weight:300; font-size:17px; line-height:1.4; color:var(--ink); box-sizing:border-box;">
+      <div>Two essays by MBA students in an operations class, that we will need to grade: <span style="color:var(--muted);">[A]</span>, <span style="color:var(--muted);">[B]</span>.</div>
+      <div style="margin-top:8px; font-weight:600; color:var(--purple);">Find grading criteria on which they meaningfully differ. <span style="font-weight:300; color:var(--muted);">[&hellip;]</span></div>
+      <div style="margin-top:8px;">For each criterion: a name, a short description, and which essay is stronger.</div>
+    </div>
+    <div style="position:absolute; left:360px; width:330px; top:466px; text-align:center; font-family:var(--font-body); font-size:14px; color:#8A9099;">(simplified prompt)</div>
+    <div style="position:absolute; left:700px; top:300px; color:var(--amber); font-size:28px; line-height:1;">&rarr;</div>
+    <div style="position:absolute; left:738px; top:293px; border:1.8px solid var(--purple); background:var(--purple-wash); border-radius:6px; padding:8px 16px; font-family:var(--font-body); font-weight:600; font-size:18px; color:var(--purple);">LLM</div>
+    <div style="position:absolute; left:812px; top:300px; color:var(--amber); font-size:28px; line-height:1;">&rarr;</div>
+    <div style="position:absolute; left:850px; right:96px; top:242px; border:1.6px solid var(--slate); border-radius:6px; padding:10px 16px; background:#fff; font-family:var(--font-body); font-size:16px; line-height:1.3; color:var(--ink);">
+      <div style="display:flex; justify-content:space-between; padding:5px 0;"><span>Clear, engaging prose</span><b style="color:var(--amber-dk);">A</b></div>
+      <div style="display:flex; justify-content:space-between; padding:5px 0;"><span>Backs claims with statistics</span><b style="color:var(--amber-dk);">B</b></div>
+      <div style="display:flex; justify-content:space-between; padding:5px 0;"><span>Strong, focused thesis</span><b style="color:var(--amber-dk);">A</b></div>
+      <div style="color:var(--muted);">&hellip;</div>
+    </div>
+    <div class="fragment" style="position:absolute; left:96px; right:96px; top:530px; display:grid; grid-template-columns:1.5fr 1fr 0.9fr; gap:28px; border-top:2px solid var(--amber); padding-top:14px;">
+      <div class="goal" style="font-size:18px;"><span class="gn">1</span><div><b>Comparisons surface differences:</b> the features found are those that differentiate the items, which is our goal.</div></div>
+      <div class="goal" style="font-size:18px;"><span class="gn">2</span><div><b>Small context:</b> each call sees only two essays.</div></div>
+      <div class="goal" style="font-size:18px;"><span class="gn">3</span><div><b>Highly parallelizable.</b></div></div>
+    </div>
+  </section>
+
+  <!-- 12 — STEP 2: GROUP INTO SHARED FEATURES ------------------------------->
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>Step 2: group into K shared features</h2>
+    <div style="position:absolute; left:96px; top:262px; width:560px;">
+      <div class="plbl" style="margin-bottom:16px;">Raw phrases, from many pairs</div>
+      <div class="cluster"><div class="chips"><span>clear, engaging prose</span><span>readable</span><span>well-written</span></div><div class="carr">→</div><div class="fbox">Clarity</div></div>
+      <div class="cluster"><div class="chips"><span>backs claims with statistics</span><span>cites sources</span></div><div class="carr">→</div><div class="fbox">Evidence</div></div>
+      <div class="cluster"><div class="chips"><span>strong, focused thesis</span><span>convincing reasoning</span></div><div class="carr">→</div><div class="fbox">Argument</div></div>
+      <div class="mnote" style="margin-top:6px;">Grouping done by an LLM, or by clustering in an embedding space.</div>
+    </div>
+    <div class="fragment" style="position:absolute; left:720px; right:96px; top:262px;">
+      <div class="plbl" style="margin-bottom:12px;">Verdicts <span style="font-family:var(--font-body); font-weight:300; font-size:17px; color:var(--slate2);">pairs &times; $K$ features</span></div>
+      <table class="rubric">
+        <tr><th class="row">Pair</th><th>Clarity</th><th>Evidence</th><th>Argument</th></tr>
+        <tr><td class="row">A vs B</td><td>A</td><td>B</td><td>A</td></tr>
+        <tr><td class="row">A vs E</td><td class="dots">·</td><td>E</td><td class="dots">·</td></tr>
+        <tr><td class="row">C vs D</td><td class="dots">·</td><td class="dots">·</td><td>C</td></tr>
+        <tr><td class="row">…</td><td class="dots">…</td><td class="dots">…</td><td class="dots">…</td></tr>
+      </table>
+      <div class="mnote" style="margin-top:14px;">· = not cited. Silence is also data.</div>
+    </div>
+  </section>
+
+  <!-- 13 — MODEL: THE LLM'S TWO DECISIONS ---------------------------------->
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>A model of the LLM&rsquo;s two decisions</h2>
+    <svg style="position:absolute; left:96px; top:250px;" width="344" height="280" viewBox="-2 0 344 280">
+      <g fill="none" stroke="#9AA0A8" stroke-width="1.5">
+        <path d="M120,140 C150,140 150,60 180,60"/><path d="M120,140 C150,140 150,200 180,200"/>
+      </g>
+      <rect x="0" y="112" width="120" height="56" rx="6" fill="#F4EFFA" stroke="#4E2A84" stroke-width="1.6"/><text x="60.0" y="145.0" text-anchor="middle" font-family="Inter" font-weight="600" font-size="15" fill="#4E2A84">Items i, j</text>
+      <text x="60" y="190" text-anchor="middle" font-family="Inter" font-size="14" fill="#4E2A84">feature k</text>
+      <rect x="180" y="40" width="80" height="40" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="220.0" y="65.0" text-anchor="middle" font-family="Inter" font-weight="500" font-size="15" fill="#3E444E">Not cited</text><rect x="180" y="180" width="80" height="40" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="220.0" y="205.0" text-anchor="middle" font-family="Inter" font-weight="500" font-size="15" fill="#3E444E">Cited</text>
+      
+      <circle cx="150" cy="100" r="12" fill="#DD9B2E"/><text x="150" y="105" text-anchor="middle" font-family="Inter" font-weight="700" font-size="14" fill="#fff">1</text>
+      <g class="fragment" data-fragment-index="1">
+        <g fill="none" stroke="#9AA0A8" stroke-width="1.5"><path d="M260,200 C280,200 280,160 290,160"/><path d="M260,200 C280,200 280,240 290,240"/></g>
+        <rect x="290" y="142" width="50" height="36" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="315.0" y="165.0" text-anchor="middle" font-family="Inter" font-weight="500" font-size="15" fill="#3E444E">i</text><rect x="290" y="222" width="50" height="36" rx="6" fill="#fff" stroke="#3E444E" stroke-width="1.6"/><text x="315.0" y="245.0" text-anchor="middle" font-family="Inter" font-weight="500" font-size="15" fill="#3E444E">j</text>
+        <circle cx="276" cy="200" r="12" fill="#DD9B2E"/><text x="276" y="205" text-anchor="middle" font-family="Inter" font-weight="700" font-size="14" fill="#fff">2</text>
+        <text x="315" y="134" text-anchor="middle" font-family="Inter" font-size="12" fill="#8A9099">stronger</text>
+      </g>
+    </svg>
+    <div style="position:absolute; left:486px; top:206px; bottom:110px; border-left:1.5px solid var(--line);"></div>
+    <div style="position:absolute; left:526px; right:96px; top:206px;">
+      <div style="margin-bottom:56px;">
+        <div style="display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:500; font-size:24px; color:var(--purple);"><span style="flex:none; width:26px; height:26px; border-radius:50%; background:var(--amber); color:#fff; font-family:var(--font-body); font-weight:700; font-size:15px; display:inline-flex; align-items:center; justify-content:center;">1</span>Does the LLM cite feature $k$ when comparing $i$ and $j$?</div>
+        <div class="mathbox" style="font-size:23px; margin:6px 0 2px;">$$\mathbb{P}(\text{cite } k \mid i, j) = \sigma\big(\,|S_{ik} - S_{jk}| + \gamma_k\,\big)$$</div>
+        <div class="defl" style="margin:0 0 0 38px;">$S_{ik}$: intrinsic score of item $i$ on feature $k$ (unknown)<br>$\gamma_k$: <b style="font-weight:600; color:var(--purple);">citation bias</b></div>
+      </div>
+      <div class="fragment" data-fragment-index="1" style="margin-bottom:56px;">
+        <div style="display:flex; align-items:center; gap:12px; font-family:var(--font-display); font-weight:500; font-size:24px; color:var(--purple);"><span style="flex:none; width:26px; height:26px; border-radius:50%; background:var(--amber); color:#fff; font-family:var(--font-body); font-weight:700; font-size:15px; display:inline-flex; align-items:center; justify-content:center;">2</span>If $k$ is cited, which item is stronger?</div>
+        <div class="mathbox" style="font-size:23px; margin:6px 0 2px;">$$\mathbb{P}(i \text{ stronger on } k \mid i, j,\ k \text{ cited}) = \sigma\big(\,S_{ik} - S_{jk} + \beta\,\big)$$</div>
+        <div class="defl" style="margin:0 0 0 38px;">$\beta$: <b style="font-weight:600; color:var(--purple);">position bias</b> ($i$ shown first)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13b — STEP 3: ESTIMATION BY MAXIMUM LIKELIHOOD -------------------------->
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>Step 3: estimate by maximum likelihood</h2>
+    <div style="position:absolute; left:96px; right:96px; top:200px;">
+      <div class="mnote" style="font-size:18px;">Combining both decisions, we get our LLM choice model. Verdict $T_{ijk} \in \{+1, -1, 0\}$ ($i$ stronger, $j$ stronger, not cited):</div>
+      <div class="mathbox" style="font-size:19px; color:var(--slate2);">$$\begin{aligned}
+        \mathbb{P}(T_{ijk} = +1) &= \sigma\big(|S_{ik} - S_{jk}| + \gamma_k\big)\;\sigma\big(S_{ik} - S_{jk} + \beta\big)\\
+        \mathbb{P}(T_{ijk} = -1) &= \sigma\big(|S_{ik} - S_{jk}| + \gamma_k\big)\;\big(1 - \sigma(S_{ik} - S_{jk} + \beta)\big)\\
+        \mathbb{P}(T_{ijk} = 0) &= 1 - \sigma\big(|S_{ik} - S_{jk}| + \gamma_k\big)
+      \end{aligned}$$</div>
+    </div>
+    <div style="position:absolute; left:96px; right:96px; top:440px; border:1.8px solid var(--purple); border-radius:8px; background:var(--purple-wash); padding:10px 24px;">
+      <div class="mathbox" style="font-size:28px;">$$(\hat S, \hat\gamma, \hat\beta) \in \arg\max_{S,\,\gamma,\,\beta} \;\sum_{\text{pairs } (i,j)} \;\sum_{k=1}^{K} \log \mathbb{P}\big(T_{ijk}\big) \;-\; \frac{\lambda}{2}\,\|S\|_F^2$$</div>
+    </div>
+  </section>
+
+  <!-- 14 — STEP 4: DROP FEATURES WITHOUT ENOUGH STATISTICAL POWER ------------------>
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>Step 4: drop unreliable features</h2>
+    <svg style="position:absolute; left:96px; top:214px;" width="500" height="274" viewBox="0 0 620 340">
+      <g font-family="Inter" font-size="17" fill="#2B2F36"><text x="0" y="46">Clarity</text><text x="0" y="112">Evidence</text><text x="0" y="178">Argument</text></g>
+      <g font-family="Inter" font-size="17" fill="#B4B9C0"><text x="0" y="244">Use of humor</text><text x="0" y="310">Formatting</text></g>
+      <g stroke="#E5E8EC" stroke-width="1.4"><line x1="150" y1="40" x2="610" y2="40"/><line x1="150" y1="106" x2="610" y2="106"/><line x1="150" y1="172" x2="610" y2="172"/><line x1="150" y1="238" x2="610" y2="238"/><line x1="150" y1="304" x2="610" y2="304"/></g>
+      <!-- reliable: tight, spread out -->
+      <g stroke="#4E2A84" stroke-width="2.2" fill="#4E2A84">
+        <line x1="180" y1="40" x2="214" y2="40"/><circle cx="197" cy="40" r="5"/><line x1="290" y1="40" x2="326" y2="40"/><circle cx="308" cy="40" r="5"/><line x1="402" y1="40" x2="436" y2="40"/><circle cx="419" cy="40" r="5"/><line x1="530" y1="40" x2="566" y2="40"/><circle cx="548" cy="40" r="5"/>
+        <line x1="210" y1="106" x2="246" y2="106"/><circle cx="228" cy="106" r="5"/><line x1="330" y1="106" x2="364" y2="106"/><circle cx="347" cy="106" r="5"/><line x1="440" y1="106" x2="476" y2="106"/><circle cx="458" cy="106" r="5"/><line x1="560" y1="106" x2="596" y2="106"/><circle cx="578" cy="106" r="5"/>
+        <line x1="170" y1="172" x2="206" y2="172"/><circle cx="188" cy="172" r="5"/><line x1="262" y1="172" x2="298" y2="172"/><circle cx="280" cy="172" r="5"/><line x1="380" y1="172" x2="416" y2="172"/><circle cx="398" cy="172" r="5"/><line x1="500" y1="172" x2="536" y2="172"/><circle cx="518" cy="172" r="5"/>
+      </g>
+      <!-- unreliable: wide, overlapping -->
+      <g stroke="#B4B9C0" stroke-width="2.2" fill="#B4B9C0">
+        <line x1="190" y1="232" x2="520" y2="232"/><circle cx="350" cy="232" r="5"/><line x1="240" y1="244" x2="590" y2="244"/><circle cx="410" cy="244" r="5"/>
+        <line x1="160" y1="298" x2="480" y2="298"/><circle cx="320" cy="298" r="5"/><line x1="230" y1="310" x2="560" y2="310"/><circle cx="395" cy="310" r="5"/>
+      </g>
+      <g font-family="Inter" font-size="13" fill="#8A9099"><text x="150" y="16">item scores, with confidence intervals</text></g>
+    </svg>
+    <div style="position:absolute; left:96px; top:490px; font-family:var(--font-body); font-size:16px; color:#B5523B;">✕ dropped</div>
+    <div style="position:absolute; left:96px; top:524px; width:500px; font-family:var(--font-body); font-size:15px; line-height:1.4; color:var(--muted);">Every score has a confidence interval (asymptotic normality of the MLE). More comparisons, narrower intervals.</div>
+    <div style="position:absolute; left:640px; right:96px; top:214px;">
+      <div class="plbl">Reliability of feature $k$</div>
+      <div class="mathbox" style="margin:6px 0 10px;">$$\rho_k = \frac{\widehat{\mathrm{Var}}(\hat S_{\cdot k}) - \nu_k}{\widehat{\mathrm{Var}}(\hat S_{\cdot k})}$$</div>
+      <div class="defl" style="margin-bottom:8px;">$\widehat{\mathrm{Var}}(\hat S_{\cdot k})$: spread of the scores across items (the dots).</div>
+      <div class="defl" style="margin-bottom:18px;">$\nu_k = \frac{1}{n}\sum_i \mathrm{Var}(\hat S_{ik})$: mean estimation variance (error bars).</div>
+      <div class="defl" style="margin-bottom:0;"><b style="font-weight:600; color:var(--purple);">Drop feature $k$</b> if $\rho_k &lt; \rho_{\min}$ (fixed in advance), then refit.</div>
+    </div>
+  </section>
+
+  <!-- 15 — SCORING NEW ITEMS ------------------------------------------------>
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>Scoring new items on the same scale</h2>
+    <svg style="position:absolute; left:96px; top:204px;" width="704" height="380" viewBox="0 0 1000 540">
+      <rect x="4" y="4" width="752" height="520" rx="22" fill="#F6F7F9" stroke="#C9CDD4" stroke-width="1.6" stroke-dasharray="6 6"/>
+      <text x="30" y="506" font-family="Inter" font-weight="600" font-size="20" fill="#4E2A84">Existing items: scores fixed</text>
+      <g stroke="#C9CDD4" stroke-width="1.8"><line x1="100" y1="110" x2="290" y2="80"/><line x1="100" y1="110" x2="170" y2="280"/><line x1="290" y1="80" x2="490" y2="130"/><line x1="490" y1="130" x2="680" y2="100"/><line x1="490" y1="130" x2="380" y2="250"/><line x1="680" y1="100" x2="620" y2="300"/><line x1="170" y1="280" x2="380" y2="250"/><line x1="380" y1="250" x2="620" y2="300"/><line x1="380" y1="250" x2="510" y2="420"/><line x1="290" y1="420" x2="510" y2="420"/><line x1="620" y1="300" x2="510" y2="420"/><line x1="100" y1="110" x2="380" y2="250"/><line x1="290" y1="80" x2="380" y2="250"/><line x1="490" y1="130" x2="620" y2="300"/><line x1="170" y1="280" x2="290" y2="420"/></g>
+      <g class="fragment" data-fragment-index="1" stroke="#DD9B2E" stroke-width="3" fill="none"><line x1="900" y1="250" x2="490" y2="130"/><line x1="900" y1="250" x2="680" y2="100"/><line x1="900" y1="250" x2="620" y2="300"/><line x1="900" y1="250" x2="510" y2="420"/></g>
+      <g><use href="#doc" x="82" y="87" width="36" height="46"/><use href="#doc" x="272" y="57" width="36" height="46"/><use href="#doc" x="472" y="107" width="36" height="46"/><use href="#doc" x="662" y="77" width="36" height="46"/><use href="#doc" x="152" y="257" width="36" height="46"/><use href="#doc" x="362" y="227" width="36" height="46"/><use href="#doc" x="602" y="277" width="36" height="46"/><use href="#doc" x="272" y="397" width="36" height="46"/><use href="#doc" x="492" y="397" width="36" height="46"/></g>
+      <g font-family="Inter" font-weight="600" font-size="17" fill="#3E444E" text-anchor="middle"><text x="68" y="116">A</text><text x="258" y="86">B</text><text x="458" y="136">C</text><text x="716" y="106">D</text><text x="138" y="286">E</text><text x="416" y="256">F</text><text x="656" y="306">G</text><text x="258" y="426">H</text><text x="546" y="426">I</text></g>
+      <g font-family="Inter" font-weight="600" font-size="16" fill="#4E2A84" text-anchor="middle"><rect x="73" y="136" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="100" y="154">0.8</text><rect x="263" y="106" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="290" y="124">1.4</text><rect x="463" y="156" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="490" y="174">−0.3</text><rect x="653" y="126" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="680" y="144">0.5</text><rect x="143" y="306" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="170" y="324">−1.1</text><rect x="353" y="276" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="380" y="294">0.2</text><rect x="593" y="326" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="620" y="344">1.0</text><rect x="263" y="446" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="290" y="464">−0.7</text><rect x="483" y="446" width="54" height="24" rx="12" fill="#FFFFFF" stroke="#4E2A84" stroke-width="1.6"/><text x="510" y="464">−0.4</text></g>
+      <g class="fragment" data-fragment-index="1">
+      <g transform="translate(873,216)"><path d="M1,1 H39 L53,15 V67 H1 Z" fill="#FFF7EA" stroke="#DD9B2E" stroke-width="2.4"/><path d="M39,1 V15 H53" fill="none" stroke="#DD9B2E" stroke-width="2"/><g stroke="#E8C489" stroke-width="2.2"><line x1="10" y1="30" x2="44" y2="30"/><line x1="10" y1="40" x2="44" y2="40"/><line x1="10" y1="50" x2="34" y2="50"/></g></g>
+      <text x="900" y="200" font-family="Inter" font-weight="600" font-size="20" fill="#A8731C" text-anchor="middle">new item</text>
+      <rect x="873" y="294" width="54" height="26" rx="13" fill="#DD9B2E"/><text x="900" y="313" font-family="Inter" font-weight="700" font-size="18" fill="#FFFFFF" text-anchor="middle">?</text>
+      </g>
+    </svg>
+    <div class="fragment" data-fragment-index="2" style="position:absolute; left:840px; right:96px; top:236px; display:flex; flex-direction:column; gap:30px;">
+      <div class="goal"><span class="gn">1</span><div><b>Fix the scores</b> of the existing items: they define the scoring methodology.</div></div>
+      <div class="goal"><span class="gn">2</span><div>Compare the new item with <b>a few existing items</b>, on each feature.</div></div>
+      <div class="goal"><span class="gn">3</span><div>Estimate <b>only the new item&rsquo;s scores</b>: same features, same scale.</div></div>
+    </div>
+  </section>
+
+  <!-- 16 — THREE PILLARS --------------------------------------------------->
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>Recap: advantages of this approach</h2>
+    <div class="tk3" style="top:250px;">
+      <div class="tcard" style="min-height:200px;"><div class="pnum">1</div><div class="t">Leverages the strengths of LLMs.</div></div>
+      <div class="tcard" style="min-height:200px;"><div class="pnum">2</div><div class="t">Can control for some forms of LLM bias.</div></div>
+      <div class="tcard" style="min-height:200px;"><div class="pnum">3</div><div class="t">Statistics: we know how confident we are.</div></div>
+    </div>
+  </section>
+
+  <!-- 17 — THEORY ---------------------------------------------------------->
+  <section>
+    <div class="eyebrow">Our approach &amp; theory</div>
+    <h2>The estimator is well behaved</h2>
+    <hr class="hr">
+    <div style="position:absolute; left:96px; right:96px; top:232px;">
+      <div class="pc con" style="font-size:21px;">Not a standard problem: the likelihood is non-convex, and the number of parameters grows with the number of items $n$.</div>
+      <div class="thm">
+        <div class="tl">Theorem (informal)</div>
+        <div>One feature; every pair compared at least once and a bounded number of times. With high probability, the likelihood has a local maximizer $\hat{s}$, unique near the truth, such that</div>
+        <div style="text-align:center; margin:12px 0 4px;">$\displaystyle \|\hat{s} - s^*\|_\infty \;\le\; C\sqrt{\frac{\log n}{n}}$</div>
+        <div style="font-size:18px; color:var(--slate2);">Every item&rsquo;s score is consistent at once; the bias parameters $\gamma, \beta$ converge at the same rate.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION DIVIDER: Empirical results -->
+  <section class="section" data-state="lede">
+    <h2>Empirical results</h2>
+    <hr class="rule">
+    <div class="eyebrow">Interpretable Feature Discovery from Unstructured Data</div>
+  </section>
+
+  <!-- 18a — SYNTHETIC DATA ------------------------------------------------->
+  <section>
+    <div class="eyebrow">Empirical results</div>
+    <h2>Synthetic data: cover letters with planted features</h2>
+    <div style="position:absolute; left:96px; top:206px; width:560px;">
+      <img src="assets/cover-letter-template.png" alt="Cover-letter template from the paper (Figure 12)" style="width:560px; display:block; border:1px solid var(--line); border-radius:4px;">
+      <div class="mnote" style="font-size:14px; margin-top:8px; color:var(--muted);">One of 10 letter templates (from the paper). Each slot is filled according to the letter&rsquo;s planted features.</div>
+    </div>
+    <div style="position:absolute; left:700px; right:96px; top:300px;">
+      <div class="defrow"><div class="k" style="width:150px;">Items</div><div class="v">200 cover letters</div></div>
+      <div class="defrow"><div class="k" style="width:150px;">Planted</div><div class="v">16 features relevant to the job</div></div>
+      <div class="mnote" style="margin-top:14px; font-size:19px; line-height:1.4;">Ground truth known: we can check <b style="font-weight:600; color:var(--purple);">which features each method recovers</b>.</div>
+    </div>
+  </section>
+
+  <!-- 18b — SYNTHETIC RESULTS ---------------------------------------------->
+  <section>
+    <div class="eyebrow">Empirical results</div>
+    <h2>Synthetic data: we recover all 16 planted features</h2>
+    <div style="position:absolute; left:96px; right:96px; top:196px;">
+      <table class="rtab">
+        <tr><th class="l" style="width:330px;">Method</th><th>Cost<br>(USD)</th><th>Features<br>found</th><th class="hcol">Planted features<br>tracked</th><th>&hellip; and<br>named right</th><th>Features tied to<br>one planted feature</th><th>Leakage<br>(lower is better)</th></tr>
+        <tr class="ours"><td class="l">Ours</td><td>3.45</td><td>21</td><td class="hcol">16 / 16</td><td>16 / 16</td><td>16 / 21</td><td>0.090</td></tr>
+        <tr><td class="l">Single LLM<small>GPT-5.4 reads all letters, proposes features</small></td><td>0.26</td><td>21</td><td class="hcol">13 / 16</td><td>13 / 16</td><td>13 / 21</td><td>0.109</td></tr>
+        <tr><td class="l">Single LLM, many scorers<small>same, scores averaged over several calls</small></td><td class="amb">3.42</td><td>21</td><td class="hcol amb">13 / 16</td><td>13 / 16</td><td>14 / 21</td><td>0.118</td></tr>
+        <tr><td class="l">Many LLMs<small>each reads a subset; features merged</small></td><td>2.35</td><td>23</td><td class="hcol">12 / 16</td><td>11 / 16</td><td>11 / 23</td><td>0.110</td></tr>
+        <tr><td class="l">Many LLMs, many scorers</td><td>3.27</td><td>23</td><td class="hcol">12 / 16</td><td>11 / 16</td><td>11 / 23</td><td>0.113</td></tr>
+      </table>
+      <div class="mnote" style="font-size:13.5px; margin-top:10px; color:var(--muted); line-height:1.4;">Tracked: a discovered feature&rsquo;s scores correlate with the planted feature. Named right: that feature&rsquo;s name also matches it. Leakage: correlation with the other planted features. Cost: batch-API prices.</div>
+    </div>
+    <div class="gbox" style="position:absolute; left:96px; right:96px; top:584px; font-size:20px; padding:12px 24px;">Same cost, more scorers, still 13: the misses are a <b>discovery</b> failure, not a scoring failure.</div>
+  </section>
+
+  <!-- 19a — CHANGEMYVIEW DATA ---------------------------------------------->
+  <section>
+    <div class="eyebrow">Empirical results</div>
+    <h2>Real data: which arguments change minds?</h2>
+    <div style="position:absolute; left:96px; top:226px; width:700px; font-family:var(--font-body); font-size:16px; line-height:1.4; color:var(--ink);">
+      <div style="border:1.6px solid #C9CDD4; background:#F6F7F9; border-radius:10px; padding:12px 18px;">
+        <div style="font-size:13px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); margin-bottom:4px;">Reddit r/ChangeMyView &middot; original post</div>
+        <div style="font-weight:600;">CMV: Remote work is better than office work for most knowledge workers.</div>
+        <div style="font-weight:300; color:var(--slate2);">No commute, fewer interruptions, more focus [&hellip;] I just don&rsquo;t see what the office adds.</div>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:14px 0 0 32px; position:relative;">
+        <div style="border:2px solid var(--purple); border-radius:10px; padding:10px 14px; background:#fff;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;"><span style="font-weight:600; color:var(--purple);">Reply A</span><span style="background:var(--purple); color:#fff; font-weight:700; font-size:13px; border-radius:999px; padding:2px 10px;">&Delta; awarded</span></div>
+          <div style="font-weight:300;">Think about junior employees. In my first job, I learned most of what I know by overhearing senior colleagues [&hellip;]</div>
+        </div>
+        <div style="border:1.6px solid #C9CDD4; border-radius:10px; padding:10px 14px; background:#fff;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;"><span style="font-weight:600; color:var(--slate);">Reply B</span><span style="color:var(--muted); font-size:13px;">no &Delta;</span></div>
+          <div style="font-weight:300;">That&rsquo;s just wrong. Offices exist for a reason, and most people who want remote work [&hellip;]</div>
+        </div>
+      </div>
+      <div style="margin:14px 0 0 32px; text-align:center; font-family:var(--font-display); font-weight:500; font-size:22px; color:var(--amber-dk);">Which reply changed the original poster&rsquo;s mind?</div>
+      <div style="margin-top:14px; font-size:14px; color:var(--muted);">Illustrative example, shortened. Data: 1,200 pairs of replies (Tan et al., 2016).</div>
+    </div>
+    <div style="position:absolute; left:850px; right:96px; top:300px; font-family:var(--font-display); font-weight:400; font-size:30px; line-height:1.3; color:var(--purple);">Which characteristics of a reply can predict the original poster&rsquo;s decision?</div>
+  </section>
+
+  <!-- 19 — RESULTS 2: CHANGEMYVIEW ----------------------------------------->
+  <section>
+    <div class="eyebrow">Empirical results</div>
+    <h2>Real data: interpretable and predictive</h2>
+    <div style="position:absolute; left:96px; top:222px; width:430px;">
+      <div class="plbl" style="margin-bottom:12px;">Discovered features (examples)</div>
+      <div class="cmv"><span class="pos">Concrete illustration</span><span class="pos">Analogical reasoning</span><span class="pos">Qualified rebuttal</span><span class="pos">Concessionary rebuttal</span><span class="pos">Structural explanation</span><span class="neg">Confrontational tone</span></div>
+    </div>
+    <svg style="position:absolute; left:580px; top:222px;" width="604" height="380" viewBox="0 0 604 380">
+      <text x="0" y="16" font-family="Zilla Slab" font-weight="500" font-size="23" fill="#3E444E">Held-out accuracy</text>
+      <g font-family="Inter" font-size="15" fill="#3E444E" text-anchor="end">
+        <text x="250" y="58">Hand-engineered (3,205 features)</text>
+        <text x="250" y="96" font-weight="600" fill="#4E2A84">Ours (29 features)</text>
+        <text x="250" y="134" font-weight="600" fill="#4E2A84">Ours, reliable only (16)</text>
+        <text x="250" y="172">Embeddings (3,072 dims)</text>
+        <text x="250" y="210">One-shot LLM features (42)</text>
+        <text x="250" y="248">Reply length</text>
+        <text x="250" y="286">LLM predicts directly</text>
+      </g>
+      <!-- scale: 50% at x=262, 65% at x=592 -> 22px per point -->
+      <g>
+        <rect x="262" y="44" width="275.0" height="20" rx="2" fill="#9298A1"/>
+        <rect x="262" y="82" width="252.6" height="20" rx="2" fill="#4E2A84"/>
+        <rect x="262" y="120" width="242.6" height="20" rx="2" fill="#4E2A84"/>
+        <rect x="262" y="158" width="232.6" height="20" rx="2" fill="#9298A1"/>
+        <rect x="262" y="196" width="197.6" height="20" rx="2" fill="#9298A1"/>
+        <rect x="262" y="234" width="185.0" height="20" rx="2" fill="#C9CDD4"/>
+        <rect x="262" y="272" width="138.8" height="20" rx="2" fill="#C9CDD4"/>
+      </g>
+      <g font-family="Inter" font-weight="600" font-size="14" fill="#2B2F36">
+        <text x="543" y="59">63.8%</text><text x="520" y="97">62.6%</text><text x="510" y="135">62.1%</text><text x="500" y="173">61.6%</text><text x="465" y="211">59.9%</text><text x="453" y="249">59.3%</text><text x="406" y="287">56.9%</text>
+      </g>
+      <line x1="262" y1="34" x2="262" y2="300" stroke="#3E444E" stroke-width="1.4"/>
+      <text x="262" y="322" text-anchor="middle" font-family="Inter" font-size="13" fill="#8A9099">50% (chance)</text>
+      <text x="0" y="350" font-family="Inter" font-size="14" fill="#8A9099">Hand-engineered: Tan et al. (2016), &#8220;Winning arguments,&#8221; WWW.</text><text x="0" y="370" font-family="Inter" font-size="14" fill="#8A9099">Ours: held-out replies scored pointwise by an LLM on the discovered features.</text>
+    </svg>
+  </section>
+
+  <!-- 19c — ANECDOTAL: MBA PITCHES --------------------------------------->
+  <section>
+    <div class="eyebrow">Empirical results</div>
+    <h2>Anecdotal evidence</h2>
+    <img src="assets/aiml901-vignette.png" alt="AIML 901 AgentOps course" style="position:absolute; left:96px; top:220px; width:560px; border-radius:8px; box-shadow:0 8px 24px rgba(40,30,70,.10);">
+    <div style="position:absolute; left:710px; right:96px; top:300px; font-family:var(--font-display); font-weight:400; font-size:32px; line-height:1.3; color:var(--purple);">I used this approach to help grade my MBA students&rsquo; project pitches.</div>
+  </section>
+
+  <!-- 20 — FOOD FOR THOUGHT -------------------------------------------------->
+  <section>
+    <h2>Food for thought</h2>
+    <div class="tk3" style="top:220px;">
+      <div class="tcard" style="min-height:280px;"><div class="pnum">1</div><div class="t">LLMs &times; statistics</div><div class="ffp">Structure and guarantees for tasks that were previously completely unstructured.</div></div>
+      <div class="tcard" style="min-height:280px;"><div class="pnum">2</div><div class="t">Choice models &times; LLMs</div><div class="ffp">In my opinion, a hugely promising direction.</div></div>
+      <div class="tcard" style="min-height:280px;"><div class="pnum">3</div><div class="t">Automated feature discovery</div><div class="ffp">We only scratched the surface: it could be a huge thing.</div></div>
+    </div>
+  </section>
+
+  <!-- 21 — THANK YOU ------------------------------------------------------->
+  <section class="oneliner">
+    <div class="field">
+      <div class="q">Thank you</div>
+      <div class="lead" style="font-size:26px; color:var(--slate2);">Baptiste Arnaudo · Amine Bennouna · Sébastien Martin</div>
+      <img src="assets/qr-arxiv.svg" alt="QR code to the arXiv paper" style="width:170px; height:170px; margin:30px auto 0; display:block;">
+      <div style="font-family:var(--font-body); font-size:20px; color:var(--purple); margin-top:14px;">arxiv.org/abs/2610.38082</div>
+    </div>
+  </section>
+
+  <!-- BACKUP — AUDITING AN LLM JUDGE (Appendix A) --------------------------->
+  <section>
+    <div class="eyebrow">Backup</div>
+    <h2>Auditing an LLM judge, on real essays</h2>
+    <hr class="hr">
+    <ul>
+      <li>The judge picks the better essay <b>and justifies it</b> with features.<small>$\mathbb{P}(i \text{ wins}) = \sigma\big(\sum_k \Delta_k + \beta\big)$: the overall score decomposes into named features.</small></li>
+      <li>Two essay corpora with human grades (ELLIPSE, ASAP 2.0), four LLM judges.</li>
+      <li>Judges <b>agree on which</b> features matter, <b>not on how much</b>.</li>
+      <li>Fitted totals track human grades.<small>Spearman 0.89–0.92 (ELLIPSE), 0.77–0.86 (ASAP 2.0).</small></li>
+    </ul>
+  </section>
+
+</div></div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+<script src="vendor/katex/katex.min.js"></script>
+<script src="vendor/katex/contrib/auto-render.min.js"></script>
+<script>
+  renderMathInElement(document.querySelector('.slides'), {
+    delimiters: [{left:'$$', right:'$$', display:true}, {left:'$', right:'$', display:false}],
+    throwOnError: false
+  });
+  const deck = window.deck = new Reveal({
+    width: 1280, height: 720, margin: 0,
+    center: false, hash: true, slideNumber: 'c/t',
+    transition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+  });
+  const setLede = () => document.querySelector('.reveal')
+      .classList.toggle('lede', !!deck.getCurrentSlide().matches('.title,.section,.image-full'));
+  deck.on('ready', setLede); deck.on('slidechanged', setLede);
+  deck.initialize();
+</script>
+</body>
+</html>
