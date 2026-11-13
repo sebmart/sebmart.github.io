@@ -9,8 +9,8 @@ sitemap: false
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>Building with AI · Your AI starting point</title>
-<meta name="description" content="Your AI starting point, from Sébastien Martin's 'Building with AI' webinar for the Kellogg Leadership Circle. Tell Kai what you do and what you care about; it helps you find one real thing to build with AI and how to start this week.">
+<title>Building with AI · Kellogg Preview Day</title>
+<meta name="description" content="Building with AI: Sébastien Martin's masterclass for the Kellogg Preview Days, November 2026. A short summary and the slides.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600&display=swap" rel="stylesheet">
@@ -378,6 +378,11 @@ a:hover { color: var(--accent-deep); }
   .suggestions { margin-left: 0; }
   .bubble { max-width: 100%; }
 }
+.summary { margin: 22px 6px 6px; font-size: 17px; line-height: 1.65; color: var(--ink); }
+.summary p { margin: 0 0 18px; }
+.cta { display: inline-flex; align-items: center; gap: 8px; padding: 13px 22px; border-radius: 999px; background: var(--accent); color: #fff; font-weight: 600; font-size: 16px; text-decoration: none; box-shadow: var(--shadow-md); }
+.cta:hover { background: var(--accent-deep); color: #fff; }
+.summary .hint { margin-top: 12px; font-size: 14px; color: var(--ink-faint); }
 </style>
 </head>
 <body>
@@ -386,7 +391,7 @@ a:hover { color: var(--accent-deep); }
     <div class="hero__top">
       <div>
         <h1 class="hero__title">Building with AI</h1>
-        <p class="hero__sub">Kellogg Leadership Circle · October 7, 2026</p>
+        <p class="hero__sub">Sébastien Martin · Kellogg Preview Days · November 2026</p>
       </div>
       <a class="hero__slides" href="building-with-ai-slides/" target="_blank" rel="noopener">Slides</a>
       <button class="hero__theme" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
@@ -395,44 +400,16 @@ a:hover { color: var(--accent-deep); }
     </div>
   </header>
 
-  <main class="chat" id="chat">
-    <div class="messages" id="messages"></div>
-    <div class="suggestions" id="suggestions"></div>
-  </main>
-
-  <div class="composer">
-    <div class="composer__inner">
-      <textarea id="input" rows="1" placeholder="Your answer, or ask for the slides…" autocomplete="off"></textarea>
-      <button class="send" id="send" aria-label="Send" disabled>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-      </button>
-    </div>
-    <div class="composer__hint">Enter to send, Shift+Enter for a new line. Rate-limited demo, built by a coding agent from one conversation.</div>
-  </div>
+  <section class="summary">
+    <p>AI is moving faster than any technology most of us have seen. In four years it went from autocompleting sentences to answering questions, using tools, doing real work on its own, and now remembering what it learns about you. In this Kellogg Preview Day masterclass, Sébastien Martin showed live what today&rsquo;s AI tools can actually do, what Kellogg is doing with AI in the classroom and around it, and why this is a great moment to start an MBA, with practical advice to get started yourself.</p>
+    <a class="cta" href="building-with-ai-slides/" target="_blank" rel="noopener">Open the slides &rarr;</a>
+    <div class="hint">Use the arrow keys to move through the slides.</div>
+  </section>
 </div>
 
 <script>
-const WORKER_URL = (location.hostname === "localhost" || location.hostname === "127.0.0.1")
-  ? "http://localhost:8788/chat"
-  : "https://kellogg-kai-demo.noyesai.workers.dev/chat";
-
-const STARTERS = [
-  "I'm not technical at all. Is this really for me?",
-  "Can you send me the slides?",
-  "What should my company be doing about AI?",
-  "Which tool should I install, and how do I start?",
-  "How were you built?"
-];
-
-const GREETING = "Hi! I'm **Kai**, the assistant Sébastien Martin built for today's *Building with AI* talk. I have one job: help you find **one real thing to build with AI**, and a way to start this week.\n\nTo do that well I need to know you a little. In a sentence or two: **what do you do**, at work or outside it, and **what is one thing in that world that takes too much of your time**, or that you wish worked better?\n\n(And if you only want the slides or have a question about the talk, just ask.)";
-
-const $messages = document.getElementById("messages");
-const $suggestions = document.getElementById("suggestions");
-const $input = document.getElementById("input");
-const $send = document.getElementById("send");
 const $themeToggle = document.getElementById("theme-toggle");
 const $themeIcon = document.getElementById("theme-icon");
-
 const SUN_PATH = '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>';
 const MOON_PATH = '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>';
 
@@ -451,196 +428,6 @@ $themeToggle.addEventListener("click", () => {
   applyTheme(cur);
 });
 
-const history = [{ role: "assistant", content: GREETING }]; // {role, content}; the greeting is sent so the model knows what it already asked
-let streaming = false;
-
-function escapeHTML(s) {
-  return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-}
-
-// Minimal Markdown: paragraphs, **bold**, *italic*, `code`, links, lists.
-function renderMarkdown(text) {
-  let t = escapeHTML(text);
-  // Code spans
-  t = t.replace(/`([^`]+)`/g, '<code>$1</code>');
-  // Bold
-  t = t.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-  // Italic (avoid colliding with bold)
-  t = t.replace(/(^|[^*])\*([^*\n]+)\*(?!\*)/g, '$1<em>$2</em>');
-  // Links [text](url)
-  t = t.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
-  // Bare URLs
-  t = t.replace(/(^|[\s(])(https?:\/\/[^\s<)]+)/g, '$1<a href="$2" target="_blank" rel="noopener">$2</a>');
-  // Bare emails
-  t = t.replace(/([\w.+-]+@[\w-]+\.[\w.-]+)/g, '<a href="mailto:$1">$1</a>');
-  // Lists: gather consecutive lines starting with "- "
-  const lines = t.split(/\n/);
-  const out = [];
-  let listBuf = null;
-  for (const line of lines) {
-    const m = line.match(/^\s*[-•]\s+(.*)$/);
-    if (m) {
-      if (!listBuf) listBuf = [];
-      listBuf.push(m[1]);
-    } else {
-      if (listBuf) { out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>"); listBuf = null; }
-      out.push(line);
-    }
-  }
-  if (listBuf) out.push("<ul>" + listBuf.map(li => "<li>" + li + "</li>").join("") + "</ul>");
-  // Group remaining text into paragraphs by blank lines.
-  let html = out.join("\n");
-  const blocks = html.split(/\n{2,}/);
-  return blocks.map(b => {
-    if (/^<(ul|ol|p|h\d|pre|blockquote)/.test(b.trim())) return b;
-    if (!b.trim()) return "";
-    return "<p>" + b.replace(/\n/g, "<br>") + "</p>";
-  }).join("");
-}
-
-function addMessage(role, content, opts={}) {
-  const msg = document.createElement("div");
-  msg.className = "msg msg--" + (role === "user" ? "user" : "kai");
-  msg.innerHTML = `
-    <div class="msg__avatar">${role === "user" ? "You" : "K"}</div>
-    <div class="bubble"></div>
-  `;
-  const bubble = msg.querySelector(".bubble");
-  if (opts.typing) {
-    bubble.innerHTML = '<div class="typing"><span></span><span></span><span></span></div>';
-  } else {
-    bubble.innerHTML = renderMarkdown(content);
-  }
-  $messages.appendChild(msg);
-  scrollToBottom();
-  return bubble;
-}
-
-function scrollToBottom() {
-  requestAnimationFrame(() => {
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-  });
-}
-
-function showSuggestions(items) {
-  $suggestions.innerHTML = "";
-  for (const item of items) {
-    const btn = document.createElement("button");
-    btn.className = "chip";
-    btn.type = "button";
-    btn.textContent = item;
-    btn.addEventListener("click", () => {
-      $input.value = item;
-      $input.focus();
-      autoResize();
-      updateSendDisabled();
-      send();
-    });
-    $suggestions.appendChild(btn);
-  }
-}
-
-function clearSuggestions() {
-  $suggestions.innerHTML = "";
-}
-
-function autoResize() {
-  $input.style.height = "auto";
-  $input.style.height = Math.min($input.scrollHeight, 200) + "px";
-}
-
-function updateSendDisabled() {
-  $send.disabled = streaming || $input.value.trim().length === 0;
-}
-
-$input.addEventListener("input", () => { autoResize(); updateSendDisabled(); });
-$input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter" && !e.shiftKey) {
-    e.preventDefault();
-    if (!$send.disabled) send();
-  }
-});
-$send.addEventListener("click", send);
-
-async function send() {
-  if (streaming) return;
-  const text = $input.value.trim();
-  if (!text) return;
-  clearSuggestions();
-  $input.value = "";
-  autoResize();
-  addMessage("user", text);
-  history.push({ role: "user", content: text });
-  streaming = true;
-  updateSendDisabled();
-
-  const bubble = addMessage("assistant", "", { typing: true });
-  let acc = "";
-  let firstChunk = true;
-  try {
-    const res = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ messages: history, mode: "cim" }),
-    });
-    if (!res.ok) {
-      let msg = "Sorry — I'm having trouble responding right now.";
-      try { const j = await res.json(); if (j?.error) msg = j.error; } catch(_) {}
-      if (res.status === 429) msg = "Slow down a moment — this demo is rate-limited per visitor. Try again in a few seconds.";
-      bubble.innerHTML = `<div class="error">${escapeHTML(msg)}</div>`;
-      return;
-    }
-    if (!res.body) {
-      bubble.innerHTML = `<div class="error">No response stream received.</div>`;
-      return;
-    }
-    const reader = res.body.getReader();
-    const decoder = new TextDecoder();
-    let buf = "";
-    while (true) {
-      const { value, done } = await reader.read();
-      if (done) break;
-      buf += decoder.decode(value, { stream: true });
-      // SSE: split by \n\n
-      let idx;
-      while ((idx = buf.indexOf("\n\n")) !== -1) {
-        const event = buf.slice(0, idx);
-        buf = buf.slice(idx + 2);
-        for (const line of event.split("\n")) {
-          if (!line.startsWith("data:")) continue;
-          const data = line.slice(5).trim();
-          if (data === "[DONE]") continue;
-          if (!data) continue;
-          try {
-            const parsed = JSON.parse(data);
-            const delta = parsed.choices?.[0]?.delta?.content;
-            if (delta) {
-              if (firstChunk) { bubble.innerHTML = ""; firstChunk = false; }
-              acc += delta;
-              bubble.innerHTML = renderMarkdown(acc);
-              scrollToBottom();
-            }
-          } catch(_) { /* ignore parse blips */ }
-        }
-      }
-    }
-    if (firstChunk) {
-      bubble.innerHTML = `<div class="error">No response from Kai. Try again.</div>`;
-    } else {
-      history.push({ role: "assistant", content: acc });
-    }
-  } catch (err) {
-    bubble.innerHTML = `<div class="error">Network error: ${escapeHTML(String(err.message || err))}</div>`;
-  } finally {
-    streaming = false;
-    updateSendDisabled();
-  }
-}
-
-// Boot
-addMessage("assistant", GREETING);
-showSuggestions(STARTERS);
-$input.focus();
 </script>
 </body>
 </html>
