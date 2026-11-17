@@ -4,6 +4,10 @@ description: "Sébastien Martin · Chicago Booth · November 16, 2026"
 show_nav: true
 permalink: /p/booth.html
 sitemap: false
+hero_link_url: "/p/booth-slides/"
+hero_link_text: "Slides ↗"
+hero_link2_url: "/p/booth-slides/slides.pdf"
+hero_link2_text: "Slides (PDF) ↗"
 ---
 
 The companion page for my talk at Chicago Booth: everything I showed live, so you can try it yourself.
@@ -26,7 +30,7 @@ The companion page for my talk at Chicago Booth: everything I showed live, so yo
 
 ## The research
 
-- **Instructor-designed AI improves learning in a randomized trial across 19 universities.** Available on arXiv today.
+- **Instructor-designed AI improves learning in a randomized trial across 19 universities.** Jun Li, Robert Bray, Sébastien Martin, Nils Van den Steen, Andrew Wu and colleagues at 19 universities. [Read it on arXiv](https://arxiv.org/abs/2611.19099).
 
 ## More
 

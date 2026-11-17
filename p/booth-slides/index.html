@@ -1,0 +1,975 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teaching with AI · Chicago Booth · Sébastien Martin</title>
+  <link rel="stylesheet" href="vendor/reveal/reset.css">
+  <link rel="stylesheet" href="vendor/reveal/reveal.css">
+  <link rel="stylesheet" href="theme/kellogg.css">
+  <style>
+    /* ---- deck-local layouts. The theme is the Preview Day copy; these come from the decks named in each comment ---- */
+    /* title: room for the long subtitle */
+    .reveal section.title .sub{ max-width:900px; }
+
+    /* two illustrations: keep the frame tight around each picture */
+    .reveal .duo img{ width:auto; max-width:100%; }
+
+    /* LAB: figures in a two-col cell, QR cell, try-it slide */
+    .reveal .two-col .col.fig img{ width:100%; height:auto; border:1px solid var(--line);
+      border-radius:8px; box-shadow:0 6px 26px rgba(40,30,70,.10); }
+    .reveal section.tryit .grid{ grid-template-columns:1.5fr 1px 1fr; }
+    .reveal .two-col .col.fig.qr{ flex-direction:column; gap:14px; }
+    .reveal section.tryit .col.fig.qr img,
+    .reveal .two-col .col.fig.qr img{ width:auto; height:auto; max-height:206px; max-width:100%;
+      border:0; border-radius:0; box-shadow:none; }
+    .reveal .urlnote{ font-family:var(--font-mono); font-size:15px; color:var(--purple);
+      text-align:center; max-width:300px; line-height:1.3; }
+    .reveal section.two-col .bbg{ display:block; margin-top:14px; font-size:15px; color:var(--purple); text-align:center; }
+
+    /* CBS: stacked "first page + pages behind" (traditional case) */
+    .reveal .pagestack{ position:relative; width:430px; margin:0 auto; z-index:0; }
+    .reveal .pagestack::before,.reveal .pagestack::after{ content:""; position:absolute; inset:0;
+      background:#fff; border:1px solid var(--line); border-radius:6px; }
+    .reveal .pagestack::before{ transform:translate(20px,20px); z-index:1; box-shadow:0 12px 28px rgba(40,30,70,.10); }
+    .reveal .pagestack::after{ transform:translate(10px,10px); z-index:2; }
+    .reveal .two-col .col.fig .pagestack img{ position:relative; z-index:3; display:block; width:100%; height:auto;
+      border:1px solid var(--line); border-radius:6px; box-shadow:0 12px 30px rgba(40,30,70,.16); }
+
+    /* LAB / CBS: word-cards (3 x 2) */
+    .reveal .exgrid{ position:absolute; left:96px; right:96px; top:200px; bottom:60px;
+      display:grid; grid-template-columns:repeat(3,1fr); grid-auto-rows:1fr; gap:18px; }
+    .reveal .exgrid.withline{ bottom:126px; }
+    .reveal .excard{ border:1px solid var(--line); border-top:3px solid var(--amber);
+      border-radius:10px; padding:18px 20px; background:#fff;
+      box-shadow:0 2px 10px rgba(40,30,70,.05); display:flex; flex-direction:column; gap:9px; }
+    .reveal .excard .t{ font-family:var(--font-display); font-weight:500; font-size:23px;
+      color:var(--purple); line-height:1.08; }
+    .reveal .excard .p{ font-family:var(--font-body); font-weight:300; font-size:16.5px;
+      color:var(--slate2); line-height:1.34; }
+    /* LAB: demo-menu cloud */
+    .reveal .menucloud{ position:absolute; left:100px; right:100px; top:200px; bottom:110px;
+      display:flex; flex-wrap:wrap; align-content:center; justify-content:center; gap:46px 62px; }
+    .reveal .menucloud .m{ font-family:var(--font-display); font-weight:400; font-size:33px;
+      color:var(--purple); line-height:1.1; white-space:nowrap; }
+    /* LAB: keep the takeaway clear of the diagram canvas */
+    .reveal section.diagram .takeaway{ font-size:23px; bottom:66px; }
+
+  
+    /* ACORD: the two questions */
+    .reveal section.twoq .row{ position:absolute; left:var(--slide-left); right:var(--slide-right); top:280px; bottom:190px;
+      display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+    /* restyled Nov 15: the theme's card (wash, thin line, amber top strip), as in big3 / big4 */
+    .reveal section.twoq .q{ position:relative; background:var(--wash); border:1px solid var(--line); border-radius:14px;
+      display:flex; align-items:center; justify-content:center;
+      font-family:var(--font-display); font-weight:400; font-size:44px; color:var(--purple); }
+    .reveal section.twoq .q:before{ content:""; position:absolute; left:30px; right:30px; top:0; height:5px; background:var(--amber); border-radius:0 0 4px 4px; }
+    .reveal section.twoq .q b{ font-weight:600; color:var(--purple); }
+
+    /* RICE "For today": what the talk covers, what it only mentions, and the philosophy line */
+    .reveal section.today .wrap{ position:absolute; left:var(--slide-left); right:var(--slide-right); top:192px; bottom:62px;
+      display:flex; flex-direction:column; gap:24px; }
+    /* restyled Nov 15: no outline frames, no dark boxes; a small amber label, then the theme's cards */
+    .reveal section.today .grp{ display:flex; align-items:stretch; gap:28px; }
+    .reveal section.today .grp .lab{ width:150px; flex:none; align-self:center; font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:.16em;
+      text-transform:uppercase; color:var(--amber-dk); line-height:1.5; }
+    .reveal section.today .grp .boxes{ flex:1; display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+    .reveal section.today .grp .boxes.one{ grid-template-columns:1fr; }
+    .reveal section.today .b{ position:relative; background:var(--wash); border:1px solid var(--line); border-radius:14px; padding:30px 18px; text-align:center;
+      font-family:var(--font-display); font-weight:500; font-size:30px; line-height:1.15; color:var(--purple); }
+    .reveal section.today .b:before{ content:""; position:absolute; left:24px; right:24px; top:0; height:5px; background:var(--amber); border-radius:0 0 4px 4px; }
+    .reveal section.today .also{ display:flex; align-items:center; gap:22px; padding:0 24px; }
+    .reveal section.today .also .lab{ width:150px; flex:none; font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--muted); line-height:1.35; }
+    .reveal section.today .also .boxes{ flex:1; display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; }
+    .reveal section.today .also .b{ background:var(--wash); color:var(--slate2); font-size:22px; padding:14px 10px; }
+    .reveal section.today .philo{ margin-top:auto; background:#FBF3E2; border-radius:10px; padding:14px 22px; text-align:center;
+      font-family:var(--font-display); font-style:italic; font-size:24px; color:var(--ink); }
+    .reveal section.today .philo b{ font-style:normal; font-weight:600; color:var(--amber-dk); }
+
+    .reveal section.today .grp .boxes.three{ grid-template-columns:1fr 1fr 1fr; }
+    .reveal section.today .grp .boxes.three .b{ font-size:29px; padding:52px 12px 48px; }
+    .reveal section.today .grp .boxes.four{ grid-template-columns:repeat(4,1fr); gap:20px; }
+    .reveal section.today .grp .boxes.four .b{ font-size:27px; padding:52px 10px 48px; }
+    .reveal section.today .grp .boxes.one .b{ padding:40px 12px 36px; }
+    .reveal section.today .wrap{ justify-content:center; gap:40px; top:210px; bottom:100px; }
+
+    /* how I relate to AI: three cards with bullets, a fourth appears on click */
+    .reveal section.relate .cards{ position:absolute; left:var(--slide-left); right:var(--slide-right); top:200px; bottom:116px;
+      display:grid; grid-template-columns:1.12fr 1.06fr 1fr; gap:20px; }
+    .reveal section.relate .card{ background:var(--wash); border:1px solid var(--line); border-radius:14px; padding:30px 20px 20px; position:relative;
+      display:flex; flex-direction:column; }
+    .reveal section.relate .card:before{ content:""; position:absolute; left:22px; right:22px; top:0; height:5px; background:var(--amber); border-radius:0 0 4px 4px; }
+    .reveal section.relate .card .t{ font-family:var(--font-display); font-size:31px; font-weight:500; color:var(--purple); line-height:1.1; margin-bottom:18px; }
+    .reveal section.relate .card ul{ list-style:none; margin:0; padding:0; }
+    .reveal section.relate .card li{ position:relative; padding-left:20px; margin:0 0 14px; font-size:21.5px; line-height:1.28; color:var(--ink); }
+    .reveal section.relate .card li:before{ content:""; position:absolute; left:0; top:.62em; width:10px; height:3px; background:var(--amber); }
+    .reveal section.relate .card.life img{ width:100%; height:176px; object-fit:cover; border-radius:8px; margin:0 0 14px; }
+    .reveal section.relate .card.life .d{ font-size:18px; line-height:1.32; color:var(--slate2); }
+
+    /* four topics: the theme's big4 layout; only the top moves down for the two-line title */
+    .reveal section.big4.twoline .grid4{ top:268px; bottom:84px; }
+
+    /* LAB: plaque photo in a two-col, vertical mini-flow (PitchKai) */
+    .reveal .two-col .col.fig img.tall{ max-height:380px; max-width:100%; width:auto; margin:0 auto; }
+    .reveal section.two-col.early .grid{ grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr); }
+    .reveal section.two-col.early .col{ min-width:0; }
+    .reveal .vflow{ display:flex; flex-direction:column; align-items:center; gap:8px; margin-top:14px; }
+    .reveal .vflow .vbox{ background:var(--slate); color:#fff; border-radius:5px; padding:13px 24px;
+      font-family:var(--font-body); font-weight:400; font-size:19px; text-align:center; line-height:1.3; }
+    .reveal .vflow .varr{ color:var(--amber); font-size:20px; line-height:1; }
+    .reveal .vquote{ font-family:var(--font-display); font-style:italic; font-weight:300; font-size:22px;
+      color:var(--slate2); text-align:center; margin-top:30px; line-height:1.4; }
+
+    /* CBS: 2x2 quote grid (student testimonies) */
+    .reveal .qgrid{ position:absolute; left:96px; right:96px; top:198px; bottom:58px;
+      display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:22px; }
+    .reveal .qcard{ border:1px solid var(--line); border-left:3px solid var(--amber);
+      border-radius:10px; padding:18px 26px; background:#fff; display:flex; align-items:center;
+      font-family:var(--font-body); font-weight:300; font-size:19px; line-height:1.46; color:var(--ink);
+      box-shadow:0 2px 10px rgba(40,30,70,.05); }
+    .reveal .qcard .q{ width:100%; }
+    .reveal .qcard b{ font-weight:600; color:var(--purple); }
+
+    /* RICE "Some thoughts": six thoughts around one word */
+    /* restyled Nov 15: the theme's cloud layout; the middle holds one word instead of a QR */
+    .reveal section.cloud.thoughts .wrap{ grid-template-columns:1fr 330px 1fr; column-gap:34px; }
+    .reveal section.cloud.thoughts .col{ gap:54px; }
+    .reveal section.cloud.thoughts .mid .word{ font-family:var(--font-display); font-weight:500; font-size:50px; color:var(--purple); line-height:1; }
+    .reveal section.cloud.thoughts .mid .rule{ margin:0; }
+
+
+    .reveal section.oneliner .q b{ font-weight:500; }
+
+    /* ---- Nov 16 additions ---- */
+    /* Kai: picture left, three lines right (theme two-col) */
+    .reveal .two-col .col.fig img.kai{ width:auto; max-width:100%; max-height:380px; border:0; box-shadow:none; border-radius:0; }
+    /* the case characters: theme hands tiles, with portraits */
+    .reveal section.hands.chars .tiles{ top:262px; height:290px; }
+    .reveal section.hands.chars .tile img{ height:136px; width:auto; border-radius:50%; }
+    .reveal section.hands.chars .tile .n{ font-size:27px; }
+    .reveal section.hands.chars .tile .s{ font-size:14px; }
+    /* press: Bloomberg card inside the theme image-duo frame */
+    .reveal section.image-duo .frame.article{ flex-direction:column; align-items:flex-start; justify-content:center; padding:34px 40px; gap:18px; }
+    .reveal .article .pub{ font-family:var(--font-body); font-weight:700; font-size:30px; color:#000; letter-spacing:-.01em; }
+    .reveal .article .pub span{ font-weight:400; color:var(--slate2); font-size:20px; margin-left:10px; }
+    .reveal .article .hl{ font-family:var(--font-body); font-weight:700; font-size:38px; line-height:1.12; color:#000; }
+    .reveal .article .dt{ font-size:16px; color:var(--muted); }
+    /* what is changing: logo cloud (left two thirds) + the genie (right third) */
+    .reveal section.changing .wrap{ position:absolute; left:var(--slide-left); right:var(--slide-right); top:200px; bottom:76px; display:flex; gap:40px; }
+    .reveal section.changing .logos{ flex:2; display:grid; grid-template-columns:repeat(5,1fr); grid-auto-rows:1fr; gap:16px; }
+    .reveal section.changing .lg{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; text-align:center;
+      background:var(--paper); border:1px solid var(--line); border-radius:14px; padding:12px 6px; }
+    .reveal section.changing .lg img{ height:58px; width:auto; max-width:100%; object-fit:contain; border-radius:6px; }
+    .reveal section.changing .lg .n{ font-family:var(--font-display); font-weight:500; font-size:21px; color:var(--purple); line-height:1.1; }
+    .reveal section.changing .lg .s{ font-size:12px; color:var(--muted); letter-spacing:.04em; text-transform:uppercase; font-weight:600; }
+    .reveal section.changing .genie{ flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; gap:18px;
+      border-left:1px solid var(--line); padding-left:36px; }
+    .reveal section.changing .genie .big{ font-size:120px; line-height:1; }
+    .reveal section.changing .genie .line{ font-family:var(--font-display); font-weight:300; font-size:30px; color:var(--ink); line-height:1.3; }
+    .reveal section.changing .genie .line b{ font-weight:500; color:var(--purple); }
+    /* why I am optimistic: six theme cards, 3 x 2 */
+    .reveal section.six .grid6{ position:absolute; left:var(--slide-left); right:var(--slide-right); top:var(--content-top); bottom:var(--content-bottom);
+      display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:1fr 1fr; gap:26px; }
+    .reveal section.six .card{ position:relative; background:var(--wash); border:1px solid var(--line); border-radius:14px; display:flex; align-items:center; justify-content:center;
+      text-align:center; padding:20px 24px; font-family:var(--font-display); font-size:29px; color:var(--purple); line-height:1.22; }
+    .reveal section.six .card:before{ content:""; position:absolute; left:30px; right:30px; top:0; height:5px; background:var(--amber); border-radius:0 0 4px 4px; }
+    /* Teaching AI: AgentOps course (from the ACORD deck) and the n8n workflow */
+    .reveal section.steps4.pillars .row{ top:250px; bottom:250px; }
+    .reveal section.steps4.pillars .st .t{ font-size:29px; }
+    .reveal section.steps4 .facts{ position:absolute; left:var(--slide-left); right:var(--slide-right); top:198px; text-align:center;
+      font-size:20px; color:var(--slate2); letter-spacing:.02em; }
+    .reveal section.steps4 .abox.project{ position:absolute; left:var(--slide-left); right:var(--slide-right); bottom:110px; height:96px; }
+    .reveal section.flowimg .imgwrap{ position:absolute; left:110px; right:110px; top:200px; bottom:140px; display:flex; align-items:center; justify-content:center; }
+    .reveal section.flowimg .imgwrap img{ max-width:100%; max-height:100%; border:1px solid var(--line); border-radius:12px; }
+  </style>
+  <style id="rct-css">
+    /* ===================== AI RCT part: every rule is prefixed rct- ===================== */
+    .reveal .rct-field{ position:absolute; left:96px; right:96px; top:204px; bottom:74px; }
+    .reveal .rct-note{ font-size:17px; color:var(--muted); line-height:1.4; }
+    .reveal .rct-lbl{ font-family:var(--font-body); font-weight:600; font-size:14px; letter-spacing:.16em; text-transform:uppercase; color:var(--amber-dk); }
+    /* restyled Nov 15: every RCT card uses the theme's two card styles.
+       plain = big3/big4 card (wash, thin line, amber top strip); highlighted = steps4 .st.hi (purple wash, purple outline) */
+    .reveal .rct-card, .reveal .rct-yn > div{ position:relative; background:var(--wash); border:1px solid var(--line); border-radius:14px; }
+    .reveal .rct-card:before, .reveal .rct-yn > div:before{ content:""; position:absolute; left:30px; right:30px; top:0; height:5px; background:var(--amber); border-radius:0 0 4px 4px; }
+    .reveal .rct-card.rct-hi, .reveal .rct-yn > div.rct-yes{ background:var(--purple-wash); border:2.5px solid var(--purple); }
+    .reveal .rct-card.rct-hi:before, .reveal .rct-yn > div.rct-yes:before{ display:none; }
+
+    /* R02 the worry: two cards */
+    .reveal .rct-two{ display:grid; grid-template-columns:1fr 1fr; gap:44px; height:100%; align-items:stretch; }
+    .reveal .rct-card{ padding:36px 38px 30px; display:flex; flex-direction:column; }
+    .reveal .rct-card .rct-lbl{ margin-bottom:20px; }
+    .reveal .rct-card .rct-say{ font-family:var(--font-display); font-weight:400; font-size:34px; line-height:1.25; color:var(--ink); }
+    .reveal .rct-card .rct-say b{ font-weight:500; color:var(--purple); }
+    .reveal .rct-card .rct-out{ margin-top:auto; display:flex; align-items:center; gap:14px; font-family:var(--font-display); font-size:30px; font-weight:500; color:var(--purple); }
+    .reveal .rct-card .rct-out .rct-arrow{ color:var(--amber); font-size:32px; }
+    .reveal .rct-card .rct-cite{ margin-top:12px; font-size:17px; color:var(--muted); line-height:1.4; }
+
+    /* R03 the treatment */
+    .reveal .rct-lede{ font-family:var(--font-body); font-weight:300; font-size:29px; line-height:1.4; color:var(--ink); max-width:1000px; }
+    .reveal .rct-lede b{ font-weight:600; color:var(--purple); }
+    .reveal .rct-yn{ display:grid; grid-template-columns:1fr 1fr; gap:36px; margin-top:40px; }
+    .reveal .rct-yn > div{ padding:30px 32px 30px; }
+    .reveal .rct-yn .rct-lbl{ margin-bottom:12px; }
+    .reveal .rct-yn p{ margin:0; font-size:26px; line-height:1.35; color:var(--ink); }
+    /* the theme's grey companion box (.gbox) */
+    .reveal .rct-strip{ position:absolute; left:0; right:0; bottom:0; background:var(--wash); border-radius:5px; padding:16px 28px;
+      font-size:24px; font-weight:400; line-height:1.3; color:var(--ink); text-align:center; }
+    .reveal .rct-strip b{ font-weight:600; color:var(--purple); }
+
+    /* R04 the consortium: enrollment bars (paper Fig. 1a) + four numbers */
+    .reveal .rct-cons{ display:grid; grid-template-columns:1fr 250px; gap:44px; height:100%; }
+    .reveal .rct-bars{ display:grid; grid-template-columns:1fr 1fr; column-gap:40px; align-content:start; }
+    .reveal .rct-bars .rct-col{ display:flex; flex-direction:column; gap:7px; }
+    .reveal .rct-bar{ display:grid; grid-template-columns:150px 1fr; align-items:center; gap:10px; height:34px; font-size:19px; color:var(--ink); }
+    .reveal .rct-bar .rct-name{ text-align:right; white-space:nowrap; }
+    .reveal .rct-bar .rct-track{ display:flex; align-items:center; gap:8px; }
+    .reveal .rct-bar i{ display:block; height:19px; background:var(--purple-soft); border-radius:2px; }
+    .reveal .rct-bar.rct-me i{ background:var(--amber); }
+    .reveal .rct-bar.rct-me .rct-name{ font-weight:600; }
+    .reveal .rct-bar em{ font-style:normal; font-size:15px; color:var(--slate2); }
+    .reveal .rct-barcap{ grid-column:1 / -1; margin-top:14px; }
+    .reveal .rct-nums{ display:flex; flex-direction:column; justify-content:flex-start; gap:17px; border-left:1px solid var(--line); padding-left:38px; }
+    .reveal .rct-nums .rct-n{ font-family:var(--font-display); font-weight:400; font-size:56px; line-height:1; color:var(--purple); }
+    .reveal .rct-nums .rct-l{ font-size:19px; color:var(--slate2); margin-top:4px; line-height:1.25; }
+    .reveal .rct-nums .rct-l small{ display:block; font-size:15px; color:var(--muted); margin-top:2px; }
+
+    /* R05 the process: four steps */
+    .reveal .rct-elig{ font-size:23px; color:var(--slate2); line-height:1.35; }
+    .reveal .rct-elig b{ font-weight:500; color:var(--ink); }
+    .reveal .rct-steps{ position:absolute; left:0; right:0; top:74px; bottom:6px; display:grid; grid-template-columns:repeat(4, 1fr); gap:30px; }
+    .reveal .rct-step{ position:relative; background:var(--wash); border:1px solid var(--line); border-radius:14px; padding:28px 24px 20px; }
+    .reveal .rct-step.rct-key{ background:var(--purple-wash); border:1.5px solid var(--purple-soft); }
+    .reveal .rct-step .rct-when{ font-weight:600; font-size:13px; letter-spacing:.16em; text-transform:uppercase; color:var(--amber-dk); }
+    .reveal .rct-step .rct-t{ font-family:var(--font-display); font-weight:400; font-size:31px; color:var(--purple); margin:14px 0 22px; white-space:nowrap; line-height:1.05; }
+    .reveal .rct-step p{ margin:0 0 16px; font-size:22px; line-height:1.36; color:var(--ink); }
+    .reveal .rct-step p b{ font-weight:600; }
+    .reveal .rct-step:not(:last-child)::after{ content:"\2192"; position:absolute; right:-25px; top:50%; transform:translateY(-50%);
+      color:var(--amber); font-size:22px; }
+
+    /* R06 the design: a grid of terms */
+    .reveal .rct-design{ display:grid; grid-template-columns:230px 1fr 1fr 1fr; column-gap:22px; row-gap:22px; align-items:stretch; margin-top:6px; }
+    .reveal .rct-design .rct-h{ font-weight:600; font-size:14px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); text-align:center; padding-bottom:2px; }
+    .reveal .rct-design .rct-h small{ display:block; font-weight:400; font-size:15px; letter-spacing:0; text-transform:none; color:var(--muted); margin-top:4px; }
+    .reveal .rct-design .rct-h.rct-now{ color:var(--amber-dk); }
+    .reveal .rct-design .rct-row{ font-family:var(--font-display); font-size:30px; color:var(--purple); line-height:1.1; align-self:center; }
+    .reveal .rct-design .rct-row small{ display:block; font-family:var(--font-body); font-size:17px; color:var(--slate2); margin-top:6px; }
+    .reveal .rct-cell{ height:98px; border-radius:14px; display:flex; align-items:center; justify-content:center; text-align:center;
+      font-size:22px; line-height:1.25; border:1px solid var(--line); background:#fff; color:var(--slate2); }
+    .reveal .rct-cell.rct-ai{ background:var(--purple-wash); border:2.5px solid var(--purple); color:var(--purple);
+      font-family:var(--font-display); font-weight:500; font-size:26px; }
+    .reveal .rct-cell.rct-ai2{ background:var(--purple-wash); border:1px solid var(--line); color:var(--purple);
+      font-family:var(--font-display); font-weight:400; font-size:26px; }
+    .reveal .rct-cell.rct-past{ background:var(--wash); }
+    .reveal .rct-cell.rct-wait{ border:1.5px dashed var(--slate2); color:var(--ink); }
+    .reveal .rct-did{ position:absolute; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; gap:16px;
+      background:var(--wash); border-radius:5px; padding:16px 20px; font-size:22px; color:var(--ink); }
+    .reveal .rct-did .rct-eq{ font-family:var(--font-display); font-weight:500; font-size:28px; color:var(--purple); }
+    .reveal .rct-did .rct-br{ border:1px solid var(--purple); border-radius:8px; padding:7px 14px; background:#fff; }
+    .reveal .rct-did .rct-br.rct-c{ border-color:var(--slate2); border-style:dashed; }
+    .reveal .rct-did .rct-op{ font-family:var(--font-display); font-size:30px; color:var(--amber-dk); }
+
+    /* R07 taxonomy: seven functions (paper Fig. 2) */
+    .reveal .rct-tax{ display:flex; flex-direction:column; gap:0; }
+    .reveal .rct-trow{ display:grid; grid-template-columns:246px 372px 44px 1fr; align-items:center; column-gap:16px; height:56px; border-bottom:1px solid var(--line); }
+    .reveal .rct-trow:first-child{ border-top:1px solid var(--line); }
+    .reveal .rct-trow .rct-fn{ font-family:var(--font-display); font-size:26px; color:var(--purple); line-height:1.05; }
+    .reveal .rct-sq{ display:flex; gap:3px; }
+    .reveal .rct-sq i{ width:9.4px; height:22px; border-radius:1.5px; background:var(--line); display:block; }
+    .reveal .rct-sq i.on{ background:var(--purple-soft); }
+    .reveal .rct-trow .rct-ct{ font-weight:600; font-size:22px; color:var(--ink); text-align:right; }
+    .reveal .rct-trow .rct-ex{ font-size:18px; line-height:1.28; color:var(--slate2); padding-left:8px; }
+    .reveal .rct-taxcap{ margin-top:16px; display:flex; justify-content:space-between; }
+
+    /* R08 measurement + sample */
+    .reveal .rct-meas{ display:grid; grid-template-columns:440px 1fr; gap:60px; height:100%; }
+    .reveal .rct-meas h3{ font-size:34px; font-weight:500; line-height:1.1; margin-bottom:26px; }
+    .reveal .rct-list{ list-style:none; margin:0; padding:0; }
+    .reveal .rct-list li{ position:relative; padding-left:30px; margin:0 0 18px; font-size:24px; line-height:1.35; color:var(--ink); }
+    .reveal .rct-list li::before{ content:""; position:absolute; left:0; top:.62em; width:16px; height:3px; background:var(--amber); }
+    .reveal .rct-list li b{ font-weight:600; }
+    .reveal .rct-sample{ border-left:1px solid var(--line); padding-left:50px; }
+    .reveal .rct-sample .rct-lbl{ margin-bottom:16px; }
+    .reveal .rct-grid67{ display:grid; grid-template-columns:repeat(17, 24px); gap:5px; margin-bottom:24px; }
+    .reveal .rct-grid67 i{ width:24px; height:24px; border-radius:3px; display:block; background:var(--purple); }
+    .reveal .rct-grid67 i.a{ background:var(--amber); }
+    .reveal .rct-grid67 i.g{ background:#C3C8D0; }
+    .reveal .rct-leg{ display:grid; grid-template-columns:22px 1fr; column-gap:12px; row-gap:12px; font-size:20px; line-height:1.3; color:var(--ink); align-items:start; }
+    .reveal .rct-leg i{ width:18px; height:18px; border-radius:3px; margin-top:4px; display:block; background:var(--purple); }
+    .reveal .rct-leg i.a{ background:var(--amber); }
+    .reveal .rct-leg i.g{ background:#C3C8D0; }
+    .reveal .rct-leg b{ font-weight:600; }
+    .reveal .rct-leg small{ display:block; font-size:16px; color:var(--slate2); }
+
+    /* R09 main result */
+    .reveal .rct-res{ display:grid; grid-template-columns:430px 1fr; gap:36px; height:100%; align-items:start; }
+    .reveal .rct-big{ font-family:var(--font-display); font-weight:400; font-size:120px; line-height:.95; color:var(--purple); margin-top:6px; }
+    .reveal .rct-big:before{ content:""; display:block; width:46px; height:5px; background:var(--amber); margin-bottom:24px; }
+    .reveal .rct-unit{ font-family:var(--font-display); font-size:30px; line-height:1.18; color:var(--ink); margin-top:12px; }
+    .reveal .rct-fine{ font-size:21px; color:var(--slate2); line-height:1.5; margin-top:20px; }
+    .reveal .rct-fine b{ font-weight:600; color:var(--ink); }
+    .reveal .rct-plot svg{ display:block; width:100%; height:auto; }
+    .reveal .rct-plot text{ font-family:var(--font-body); }
+    .reveal .rct-null{ font-family:var(--font-display); font-size:26px; color:var(--slate2); line-height:1.25; margin-top:24px; border-top:1px solid var(--line); padding-top:20px; }
+
+    /* R10 how large: number line */
+    .reveal .rct-line svg{ display:block; width:100%; height:auto; margin-top:26px; }
+    .reveal .rct-line text{ font-family:var(--font-body); }
+    .reveal .rct-pair{ position:absolute; left:0; right:0; bottom:0; display:grid; grid-template-columns:1fr 1fr; gap:30px; }
+    .reveal .rct-pair > div{ background:var(--wash); border-radius:5px; padding:16px 24px; font-size:21px; line-height:1.35; color:var(--ink); }
+    .reveal .rct-pair b{ font-weight:600; color:var(--purple); }
+
+    /* R11 voices */
+    .reveal .rct-voices{ display:grid; grid-template-columns:1fr 1fr; gap:64px; height:100%; }
+    .reveal .rct-voices h3{ font-size:34px; font-weight:500; }
+    .reveal .rct-voices .rct-sub{ font-size:17px; color:var(--muted); margin:6px 0 20px; }
+    .reveal .rct-vb{ display:grid; grid-template-columns:58px 120px 1fr; align-items:center; column-gap:14px; height:44px; font-size:21px; color:var(--ink); }
+    .reveal .rct-vb b{ font-weight:600; text-align:right; }
+    .reveal .rct-vb .rct-vt{ height:15px; background:var(--line); border-radius:2px; overflow:hidden; }
+    .reveal .rct-vb .rct-vt i{ display:block; height:100%; background:var(--purple-soft); }
+    .reveal .rct-q{ margin-top:30px; border-left:3px solid var(--amber); padding:4px 0 4px 18px; font-family:var(--font-display); font-style:italic;
+      font-size:24px; line-height:1.32; color:var(--ink); }
+    .reveal .rct-q span{ display:block; font-family:var(--font-body); font-style:normal; font-size:15px; color:var(--muted); margin-top:8px; }
+
+    /* R12 takeaway + paper */
+    .reveal .rct-close{ display:grid; grid-template-columns:1fr 372px; gap:60px; height:100%; }
+    .reveal .rct-close .rct-lede{ font-size:29px; }
+    .reveal .rct-open{ margin-top:36px; }
+    .reveal .rct-open .rct-lbl{ margin-bottom:14px; }
+    .reveal .rct-papercard{ border:1px solid var(--line); border-radius:14px; padding:26px 26px 24px; background:#fff; box-shadow:0 12px 34px rgba(40,30,70,.10);
+      display:flex; flex-direction:column; align-items:center; text-align:center; align-self:start; }
+    .reveal .rct-papercard .rct-pt{ font-family:var(--font-display); font-size:24px; line-height:1.2; color:var(--purple); }
+    .reveal .rct-papercard .rct-pa{ font-size:16px; color:var(--slate2); margin-top:10px; line-height:1.4; }
+    .reveal .rct-qr{ width:190px; height:190px; margin-top:20px; display:flex; align-items:center; justify-content:center; text-align:center; }
+    .reveal .rct-qr img{ width:100%; height:100%; display:block; }
+    .reveal .rct-qr.rct-todo{ border:3px dashed #B4231F; border-radius:10px; color:#B4231F; font-weight:600; font-size:15px; line-height:1.35; padding:12px; box-sizing:border-box; }
+
+    /* backup: a paper figure, framed */
+    .reveal .rct-fig{ position:absolute; left:96px; right:96px; top:176px; bottom:66px; display:flex; align-items:center; justify-content:center; }
+    .reveal .rct-fig img{ max-width:100%; max-height:100%; display:block; }
+    .reveal .rct-tag{ position:absolute; right:96px; top:74px; background:var(--wash); border:1px solid var(--line); color:var(--slate2); font-weight:600; font-size:13px; letter-spacing:.16em;
+      text-transform:uppercase; border-radius:99px; padding:5px 14px; }
+      /* ---- Nov 16 restructure ---- */
+    .reveal section.section.rct-divider{ padding-top:84px; }
+    .reveal section.section.rct-divider h2{ font-size:58px; max-width:1088px; line-height:1.12; }
+    .reveal section.section.rct-divider .rule{ margin:30px 0 26px; }
+    .reveal .rct-auth-main{ font-size:24px; font-weight:400; color:var(--ink); margin-bottom:12px; }
+    .reveal .rct-auth-all{ font-size:20px; font-weight:400; line-height:1.45; color:var(--ink); max-width:1088px; }
+    .reveal .rct-avail{ position:absolute; left:96px; bottom:56px; font-size:20px; font-weight:500; color:var(--amber-dk); }
+    .reveal .rct-flow{ position:absolute; left:96px; right:96px; top:200px; bottom:60px; }
+    .reveal .rct-frow{ position:absolute; left:0; right:0; top:0; height:250px; display:grid; grid-template-columns:1fr 30px 1fr 30px 1fr 30px 1.15fr 30px 1fr 30px 1.1fr 30px 1fr; align-items:stretch; }
+    .reveal .rct-frow > div{ margin:0 !important; width:auto !important; max-width:none !important; }
+    .reveal .rct-frow .st{ flex:1 1 0; min-width:0; box-sizing:border-box; background:var(--wash); border:1px solid var(--line); border-radius:12px; padding:22px 10px 14px; text-align:center; display:flex; flex-direction:column; gap:10px; }
+    .reveal .rct-frow .st .t{ font-family:var(--font-display); font-size:27px; color:var(--purple); line-height:1.1; }
+    .reveal .rct-frow .st .d{ font-size:16px; color:var(--slate2); line-height:1.32; }
+    .reveal .rct-frow .st.hi{ background:var(--purple-wash); border:2px solid var(--purple); }
+    .reveal .rct-frow .ar{ align-self:center; text-align:center; font-size:24px; color:var(--amber); }
+    .reveal .rct-frow .arm{ font-size:15px; line-height:1.25; border-radius:8px; padding:6px 4px; color:var(--ink); }
+    .reveal .rct-frow .arm.tr{ background:#fff; border:1.5px solid var(--purple); color:var(--purple); font-weight:600; }
+    .reveal .rct-frow .arm.co{ background:#fff; border:1.5px dashed var(--muted); }
+    .reveal .rct-band{ position:absolute; left:0; right:0; top:278px; box-sizing:border-box; background:var(--wash); border:1px solid var(--line); border-top:3px solid var(--amber); border-radius:12px; padding:18px 24px; display:flex; flex-direction:column; gap:8px; font-size:21px; line-height:1.35; color:var(--ink); }
+    .reveal .rct-band b{ font-weight:600; color:var(--purple); }
+    .reveal .rct-loop{ position:absolute; left:0; right:0; top:410px; font-size:18px; color:var(--slate2); text-align:center; }
+    .reveal .rct-cons2{ display:grid; grid-template-columns:1fr 190px; gap:44px; height:100%; }
+    .reveal .rct-figbox{ display:flex; align-items:center; justify-content:flex-start; min-height:0; }
+    .reveal .rct-figbox img{ max-width:100%; max-height:430px; display:block; }
+    .reveal .rct-h3b{ margin-top:34px; }
+    .reveal .rct-res2{ display:flex; flex-direction:column; align-items:center; gap:26px; height:100%; }
+    .reveal .rct-res2 img{ width:100%; max-width:1088px; display:block; }
+    .reveal .rct-restxt{ align-self:stretch; font-size:24px; line-height:1.35; color:var(--ink); border-left:3px solid var(--amber); padding-left:18px; }
+    .reveal .rct-restxt b{ color:var(--purple); font-weight:600; }
+    .reveal .rct-restxt small{ display:block; font-size:17px; color:var(--slate2); margin-top:6px; }
+    .reveal .rct-close1{ display:flex; flex-direction:column; gap:40px; max-width:900px; }
+    .reveal .rct-close1 .rct-lede{ font-size:32px; }
+  
+  </style>
+</head>
+<body class="branded">
+<div class="reveal"><div class="slides">
+
+  
+    <section class="title" data-state="lede">
+    <div class="brandmark"><div class="bar"></div><div class="nw">Northwestern<span>|</span>Kellogg</div></div>
+    <h1>Teaching with AI</h1>
+    <hr class="rule">
+    <div class="sub">My experience leveraging AI for teaching in the last three years &amp; RCT results across 19 universities</div>
+    <div class="by"><b>Sébastien Martin</b>Associate Professor of Operations · Northwestern Kellogg<br><span>Chicago Booth · November 16, 2026</span></div>
+  </section>
+
+    <section class="relate">
+    <div class="eyebrow">Introduction</div>
+    <h2>How I relate to AI</h2>
+    <div class="cards">
+      <div class="card"><div class="t">Research</div>
+        <ul><li>Reinforcement learning</li><li>AI &amp; optimization</li><li>Robotaxis (Waymo)</li><li>AI in education</li><li>Long-term AI memory</li></ul></div>
+      <div class="card"><div class="t">Teaching</div>
+        <ul><li>AI Foundations for Managers</li><li>Leveraging AI in education at Kellogg</li></ul></div>
+      <div class="card"><div class="t">Industry</div>
+        <ul><li>Board member, NYSE:&nbsp;ESAB, focusing on AI strategy</li></ul></div>
+    </div>
+  </section>
+
+    <section class="twoq">
+    <div class="eyebrow">Introduction</div>
+    <h2>Key questions for AI in education</h2>
+    <div class="row">
+      <div class="q"><span><b>What</b> should we teach?</span></div>
+      <div class="q"><span><b>How</b> should we teach?</span></div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">Introduction</div>
+    <h2>Damage control, or fighting fire with fire?</h2>
+    <div class="duo">
+      <figure>
+        <img src="assets/fighting-students.png" alt="Students writing by hand, phones banned">
+        <figcaption>Damage control<span>The new technology hurts our old way of doing things, and we try to work around it.</span></figcaption>
+      </figure>
+      <figure>
+        <img src="assets/fighting-robots.png" alt="OpenAI vs Kellogg robots with flamethrowers">
+        <figcaption>Build something new<span>Or we use that same technology to do things we could never do before.</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+    <section class="today">
+    <div class="eyebrow">Introduction</div>
+    <h2>For today</h2>
+    <div class="wrap">
+      <div class="grp">
+        <div class="lab">Part 1<br>Showcase</div>
+        <div class="boxes four"><div class="b">Teaching with an&nbsp;AI&nbsp;TA</div><div class="b">AI case studies</div><div class="b">Instructor empowerment</div><div class="b">Teaching AI</div></div>
+      </div>
+      <div class="grp">
+        <div class="lab">Part 2<br>Research</div>
+        <div class="boxes one"><div class="b">Does it work? A large experiment</div></div>
+      </div>
+    </div>
+  </section>
+
+  
+    <section class="section" data-state="lede">
+    <h2>Teaching with an AI TA</h2>
+    <hr class="rule">
+  </section>
+
+    <section class="two-col">
+    <div class="eyebrow">Teaching with an AI TA</div>
+    <div class="badges"><span class="demobadge">Live demo</span></div>
+    <h2>Kai, Kellogg&rsquo;s AI teaching assistant</h2>
+    <div class="grid">
+      <div class="col fig"><img class="kai" src="assets/kai.png" alt="Kai, a friendly robot with a K on its chest"></div>
+      <div class="divider"></div>
+      <div class="col">
+        <h3>Our teaching assistant</h3>
+        <ul>
+          <li>For students&rsquo; questions about the course</li>
+          <li>For interactive homework</li>
+          <li>In my classes since 2024</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+    <section class="big4">
+    <div class="eyebrow">Teaching with an AI TA</div>
+    <h2>Some thoughts</h2>
+    <div class="grid4">
+      <div class="card">The right incentive systems</div>
+      <div class="card">The instructor in control</div>
+      <div class="card">The contract with your students</div>
+      <div class="card">Creativity</div>
+    </div>
+  </section>
+
+    <section class="diagram">
+    <div class="eyebrow">Teaching with an AI TA</div>
+    <div class="badges"><span class="demobadge">Live demo</span></div>
+    <h2>AI evaluation and grading</h2>
+    <div class="canvas" style="top:200px;">
+      <svg width="1000" height="360" viewBox="0 0 1000 360">
+        <defs><marker id="lp" markerWidth="11" markerHeight="11" refX="8" refY="5.5" orient="auto"><path d="M0,0 L11,5.5 L0,11 z" fill="#DD9B2E"/></marker></defs>
+        <path d="M 250 112 C 360 20, 640 20, 750 112" fill="none" stroke="#DD9B2E" stroke-width="4" stroke-linecap="round" marker-end="url(#lp)"/>
+        <path d="M 750 248 C 640 340, 360 340, 250 248" fill="none" stroke="#DD9B2E" stroke-width="4" stroke-linecap="round" marker-end="url(#lp)"/>
+        <rect x="20" y="120" width="420" height="120" rx="14" fill="#FFFFFF" stroke="#3E444E" stroke-width="2"/>
+        <text x="230" y="192" text-anchor="middle" font-family="Zilla Slab" font-size="36" fill="#4E2A84">Personalized homework</text>
+        <rect x="560" y="120" width="420" height="120" rx="14" fill="#F4EFFA" stroke="#4E2A84" stroke-width="2"/>
+        <text x="770" y="192" text-anchor="middle" font-family="Zilla Slab" font-size="36" fill="#4E2A84">AI evaluation</text>
+      </svg>
+    </div>
+  </section>
+
+    <section class="diagram">
+    <div class="eyebrow">Teaching with an AI TA</div>
+    <h2>How to grade with AI?</h2>
+    <div class="canvas" style="top:186px;">
+      <svg width="1060" height="380" viewBox="0 0 1060 380">
+        <defs><marker id="gx2" markerUnits="userSpaceOnUse" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 z" fill="#DD9B2E"/></marker></defs>
+        <text x="0" y="68" font-family="Zilla Slab" font-size="28" fill="#4E2A84">Idea 1</text>
+        <rect x="120" y="14" width="210" height="44" rx="10" fill="#F7F8FA" stroke="#C9CED6" stroke-width="1.5"/><text x="225.0" y="42.0" text-anchor="middle" font-family="Inter" font-size="18" fill="#3E444E">Homework</text>
+        <rect x="120" y="74" width="210" height="44" rx="10" fill="#F7F8FA" stroke="#C9CED6" stroke-width="1.5"/><text x="225.0" y="102.0" text-anchor="middle" font-family="Inter" font-size="18" fill="#3E444E">Grading rubric</text>
+        <line x1="330" y1="36" x2="452" y2="58" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/><line x1="330" y1="96" x2="452" y2="74" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/>
+        <rect x="460" y="44" width="130" height="44" rx="10" fill="#F4EFFA" stroke="#4E2A84" stroke-width="2"/><text x="525.0" y="72.0" text-anchor="middle" font-family="Inter" font-size="18" fill="#4E2A84" font-weight="600">LLM</text>
+        <line x1="590" y1="66" x2="712" y2="66" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/>
+        <rect x="720" y="44" width="220" height="44" rx="10" fill="#F7F8FA" stroke="#C9CED6" stroke-width="1.5"/><text x="830.0" y="72.0" text-anchor="middle" font-family="Inter" font-size="18" fill="#3E444E">Grade and feedback</text>
+        <text x="830" y="114" text-anchor="middle" font-family="Inter" font-size="16" font-style="italic" fill="#8A9099">noisy, biased, hard to trust</text>
+        <line x1="0" y1="152" x2="1060" y2="152" stroke="#E5E8EC" stroke-width="1"/>
+        <text x="0" y="272" font-family="Zilla Slab" font-size="28" fill="#4E2A84">Idea 2</text>
+        <rect x="120" y="180" width="210" height="44" rx="10" fill="#F7F8FA" stroke="#C9CED6" stroke-width="1.5"/><text x="225.0" y="208.0" text-anchor="middle" font-family="Inter" font-size="17" fill="#3E444E">Homework of student A</text>
+        <rect x="120" y="240" width="210" height="44" rx="10" fill="#F7F8FA" stroke="#C9CED6" stroke-width="1.5"/><text x="225.0" y="268.0" text-anchor="middle" font-family="Inter" font-size="17" fill="#3E444E">Homework of student B</text>
+        <rect x="120" y="300" width="210" height="44" rx="10" fill="#F7F8FA" stroke="#C9CED6" stroke-width="1.5"/><text x="225.0" y="328.0" text-anchor="middle" font-family="Inter" font-size="17" fill="#3E444E">Evaluation criteria</text>
+        <line x1="330" y1="202" x2="452" y2="252" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/><line x1="330" y1="262" x2="452" y2="262" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/><line x1="330" y1="322" x2="452" y2="272" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/>
+        <rect x="460" y="240" width="130" height="44" rx="10" fill="#F4EFFA" stroke="#4E2A84" stroke-width="2"/><text x="525.0" y="268.0" text-anchor="middle" font-family="Inter" font-size="18" fill="#4E2A84" font-weight="600">LLM</text>
+        <line x1="590" y1="262" x2="712" y2="262" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/>
+        <rect x="720" y="240" width="280" height="44" rx="10" fill="#F7F8FA" stroke="#C9CED6" stroke-width="1.5"/><text x="860.0" y="268.0" text-anchor="middle" font-family="Inter" font-size="17" fill="#3E444E">Which one is better, and why?</text>
+        <line x1="860" y1="284" x2="860" y2="308" stroke="#DD9B2E" stroke-width="2.5" marker-end="url(#gx2)"/>
+        <rect x="720" y="314" width="280" height="58" rx="10" fill="#F4EFFA" stroke="#4E2A84" stroke-width="2"/><text x="860.0" y="338.0" text-anchor="middle" font-family="Inter" font-size="17" fill="#4E2A84">Grades rebuilt from many</text><text x="860.0" y="360.0" text-anchor="middle" font-family="Inter" font-size="17" fill="#4E2A84">comparisons</text>
+      </svg>
+    </div>
+    <div class="foot" style="display:block; left:130px; right:130px; bottom:58px; font-size:20px; line-height:1.4; color:var(--slate); text-align:center;">Arnaudo, Bennouna &amp; Martin. <i>Interpretable Feature Discovery from Unstructured Data Using LLMs and Statistical Choice Models</i>. Under review at ICLR 2027. arXiv 2610.38082.</div>
+  </section>
+
+  
+    <section class="section" data-state="lede">
+    <h2>AI case studies</h2>
+    <hr class="rule">
+  </section>
+
+    <section class="two-col">
+    <div class="eyebrow">AI case studies</div>
+    <h2>Traditional cases, in the age of AI</h2>
+    <div class="grid">
+      <div class="col">
+        <h3>One document for everyone</h3>
+        <ul>
+          <li>Static, the same for every student.</li>
+          <li>Hard to adapt: identical information for every student and every professor.</li>
+          <li>Hard to resist just asking ChatGPT to read it for you.</li>
+          <li>Richer cases with software or simulations are a costly, heavy lift.</li>
+        </ul>
+      </div>
+      <div class="divider"></div>
+      <div class="col fig">
+        <div class="pagestack"><img src="assets/uber-case-cover.png" alt="First page of a Harvard Business School case, with more pages stacked behind"></div>
+      </div>
+    </div>
+  </section>
+
+    <section class="oneliner">
+    <div class="eyebrow">AI case studies</div>
+    <div class="field">
+      <div class="q">What if students could <b>interact with the characters</b> of the case?</div>
+      <div class="lead" style="font-size:28px; color:var(--slate2);">An immersive, adaptive simulation, powered by AI, instead of a static PDF.</div>
+    </div>
+  </section>
+
+    <section class="hands chars">
+    <div class="eyebrow">AI case studies</div>
+    <div class="badges"><span class="demobadge">Live demo</span></div>
+    <h2>Transportation Crisis at the Boston Metro School District</h2>
+    <div class="tiles five">
+      <div class="tile"><img src="assets/bmsd-superintendent.jpg" alt="Portrait icon"><div class="n">Superintendent</div></div>
+      <div class="tile"><img src="assets/bmsd-cfo.jpg" alt="Portrait icon"><div class="n">CFO</div></div>
+      <div class="tile"><img src="assets/bmsd-coo.jpg" alt="Portrait icon"><div class="n">COO</div></div>
+      <div class="tile"><img src="assets/bmsd-principal.jpg" alt="Portrait icon"><div class="n">Principal</div></div>
+      <div class="tile"><img src="assets/bmsd-driver.jpg" alt="Portrait icon"><div class="n">Bus driver</div></div>
+    </div>
+    <div class="figcap">My final Operations case, on NoYes&nbsp;AI: <b>students interview five characters</b>.</div>
+  </section>
+
+    <section class="image-frame contain">
+    <div class="eyebrow">AI case studies</div>
+    <h2>Students want more AI cases</h2>
+    <div class="win"><img src="assets/survey-cases-labeled.png" alt="Survey: would courses benefit from AI cases? 1 = absolutely not, 5 = absolutely. 72.3% answered 5"></div>
+    <div class="capline">Kellogg end-of-course survey, 94 responses. <b>72%</b> gave the top rating; none gave the lowest.</div>
+  </section>
+
+    <section>
+    <div class="eyebrow">AI case studies</div>
+    <h2>Student testimonies</h2>
+    <div class="qgrid">
+      <div class="qcard"><div class="q">&ldquo;It felt more realistic. I worked in <b>consulting</b> before, and it really felt like the first days of a project, interviewing clients, gathering insights. It was <b>more engaging</b> too.&rdquo;</div></div>
+      <div class="qcard"><div class="q">&ldquo;The AI case gave me the taste of real projects where I need to <b>structure my thinking</b> and apply what I learned to <b>ask useful questions</b>.&rdquo;</div></div>
+      <div class="qcard"><div class="q">&ldquo;I liked that it incorporated the real-life element of <b>conflicting perspectives and priorities</b>, and that it was based on a real case (Boston public schools).&rdquo;</div></div>
+      <div class="qcard"><div class="q">&ldquo;<b>Accessible anytime</b>, and easy to talk to.&rdquo;</div></div>
+    </div>
+  </section>
+
+    <section class="image-duo contain">
+    <div class="eyebrow">AI case studies</div>
+    <h2>Want to try it yourself?</h2>
+    <div class="duo">
+      <figure>
+        <div class="frame"><img src="assets/wsj.png" alt="The Wall Street Journal: AI Is Teaching the Next Generation of M.B.A.s the Classic Case Study"></div>
+        <figcaption>The Wall Street Journal, November 2025</figcaption>
+      </figure>
+      <figure>
+        <div class="frame article">
+          <div class="pub">Bloomberg<span>Businessweek</span></div>
+          <div class="hl">AI Is Changing the Business School Case Study</div>
+        </div>
+        <figcaption>Bloomberg, September 22, 2026</figcaption>
+      </figure>
+    </div>
+    <div class="capline">The WSJ article links to a <b>live AI case</b> anyone can open. Both links are on the page at the end.</div>
+  </section>
+
+  
+    <section class="changing">
+    <div class="eyebrow">Instructor empowerment</div>
+    <div class="badges"><span class="demobadge">Live demo</span></div>
+    <h2>What&rsquo;s changing with the latest AI technologies</h2>
+    <div class="wrap">
+      <div class="logos">
+        <div class="lg"><img src="assets/logo-chatgpt.png" alt="ChatGPT"><div class="n">ChatGPT</div><div class="s">OpenAI</div></div>
+        <div class="lg"><img src="assets/logo-claude.png" alt="Claude"><div class="n">Claude</div><div class="s">Anthropic</div></div>
+        <div class="lg"><img src="assets/logo-gemini.png" alt="Gemini"><div class="n">Gemini</div><div class="s">Google</div></div>
+        <div class="lg"><img src="assets/claude-code.jpg" alt="Claude Code and Cowork"><div class="n">Claude Code &amp; Cowork</div><div class="s">Anthropic</div></div>
+        <div class="lg"><img src="assets/codex.webp" alt="Codex and Work"><div class="n">Codex &amp; Work</div><div class="s">OpenAI</div></div>
+        <div class="lg"><img src="assets/logo-openclaw.png" alt="OpenClaw"><div class="n">OpenClaw</div><div class="s">Open source</div></div>
+        <div class="lg"><img src="assets/logo-hermes.png" alt="Hermes"><div class="n">Hermes</div><div class="s">Nous Research</div></div>
+        <div class="lg"><img src="assets/logo-muse.png" alt="Muse"><div class="n">Muse</div><div class="s">Meta</div></div>
+        <div class="lg"><img src="assets/logo-dots.png" alt="Dots"><div class="n">Dots</div><div class="s">OpenAI</div></div>
+        <div class="lg"><img src="assets/logo-instinct.png" alt="Instinct"><div class="n">Instinct</div><div class="s">Startup</div></div>
+      </div>
+      <div class="genie">
+        <div class="big">&#x1F9DE;</div>
+        <div class="line">At this point, think about AI as <b>a genie</b>.</div>
+      </div>
+    </div>
+  </section>
+
+  
+    <section class="six">
+    <div class="eyebrow">What I learned</div>
+    <h2>Why I&rsquo;m optimistic about AI in education</h2>
+    <div class="grid6">
+      <div class="card"><span>&ldquo;Fighting fire with fire&rdquo;</span></div>
+      <div class="card"><span>More work from the <i>human</i> staff!</span></div>
+      <div class="card"><span>Increasing my ability to connect with students</span></div>
+      <div class="card"><span>The benefits of personalization</span></div>
+      <div class="card"><span>5% AI expertise, 95% instructor expertise</span></div>
+      <div class="card"><span>The instructor&rsquo;s imagination is the limit!</span></div>
+    </div>
+  </section>
+
+    <section class="diagram">
+    <div class="eyebrow">What I learned</div>
+    <h2>My experience with AI</h2>
+    <div class="canvas" style="top:180px;">
+      <svg width="1040" height="392" viewBox="0 0 1040 392">
+        <defs><marker id="ax" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto"><path d="M0,0 L9,4.5 L0,9 z" fill="#3E444E"/></marker></defs>
+        <line x1="80" y1="312" x2="80" y2="30" stroke="#3E444E" stroke-width="2.2" marker-end="url(#ax)"/>
+        <line x1="80" y1="240" x2="1008" y2="240" stroke="#3E444E" stroke-width="2.2" marker-end="url(#ax)"/>
+        <text x="100" y="52" font-family="Inter" font-size="19" fill="#6c727b">AI impact</text>
+        <text x="940" y="266" font-family="Inter" font-size="19" fill="#6c727b">Time</text>
+        <line x1="300" y1="54" x2="300" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <line x1="520" y1="54" x2="520" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <line x1="740" y1="54" x2="740" y2="312" stroke="#E5E8EC" stroke-width="1.5"/>
+        <path d="M118,240 L300,240 C335.0,240.0 368.3,316.7 405,316 C441.7,315.3 481.7,236.7 520,236 C558.3,235.3 598.0,309.7 635,312 C672.0,314.3 700.5,277.0 742,250 C783.5,223.0 840.7,184.0 884,150 C927.3,116.0 982.3,63.3 1002,46"
+              fill="none" stroke="#DD9B2E" stroke-width="3.6" stroke-linecap="round"/>
+        <text x="190" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Before AI</text>
+        <text x="410" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Damage control</text>
+        <text x="630" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">First steps</text>
+        <text x="872" y="356" text-anchor="middle" font-family="Inter" font-size="19" fill="#6c727b">Innovation</text>
+      </svg>
+    </div>
+    <div class="takeaway">Four years in, the one thing that predicts success: <b>how involved the instructor is.</b></div>
+  </section>
+
+  
+  <section class="section" data-state="lede">
+    <h2>Teaching AI</h2>
+    <hr class="rule">
+  </section>
+
+  <section class="steps4 pillars">
+    <div class="eyebrow">Teaching AI</div>
+    <h2>AI Foundations for Managers: AgentOps</h2>
+    <div class="facts">MBA elective · five weeks · no prerequisites</div>
+    <div class="row">
+      <div class="st"><div class="t">Build from day one</div></div><div class="ar">&rarr;</div>
+      <div class="st"><div class="t">How generative AI works</div></div><div class="ar">&rarr;</div>
+      <div class="st"><div class="t">Agents and the frontier</div></div><div class="ar">&rarr;</div>
+      <div class="st hi"><div class="t">AgentOps</div><div class="d">Evaluate, deploy, manage change</div></div>
+    </div>
+    <div class="abox project"><span><b>Project:</b> an AI agent for a business problem you know</span></div>
+  </section>
+
+  <section class="flowimg">
+    <div class="eyebrow">Teaching AI</div>
+    <h2>An AI workflow is an operations problem</h2>
+    <div class="imgwrap"><img src="assets/n8n-workflow.png" alt="An n8n workflow answering customer emails: an AI decides whether to escalate, then either replies directly or drafts a reply for human approval"></div>
+    <div class="figcap">Who decides, who reviews, and how do we know it works?</div>
+  </section>
+
+      <section class="section rct-divider" data-state="lede">
+    <h2>Instructor-designed AI improves learning in a randomized trial across 19 universities</h2>
+    <hr class="rule">
+    <div class="rct-auth-main">with Jun Li, Robert Bray, Nils Van den Steen and Andrew Wu</div>
+    <div class="rct-auth-all">and Xiao Ni, Arielle Anderer, Ekaterina Astashkina, Volodymyr O. Babich, Jean-Paul Baldwin, Hamsa Bastani, Christian Blanco, Oguzhan Celebi, Christopher Chen, Shi Chen, Benjamin Collier, Yao Cui, Pnina Feldman, Blair Flicker, Brian Han, Yichun Hu, Daniela Hurtado-Lange, Jane Jiang, Zhaohui Jiang, Ismail Kirci, Murat K&ouml;ksalan, Zhen Lian, Hongyan Liang, Mengshi Lu, Lesley Meng, Ken Moon, Mi Kyong Newsom, Minje Park, Chris Parker, Anyan Qi, Meng Qi, Debjit Roy, Neha Sharma, Alp Sungu, Tom Tan, Necati Tereyagoglu, Hanu Tyagi, Sriram Venkataraman, Guihua Wang, Yixin Wang, Owen Wu, Zonghao Yang, Qiuping Yu, Sophie Yu, Jingwei Zhang, Wenchang Zhang and Ruihao Zhu</div>
+    <div class="rct-avail"><a href="https://arxiv.org/abs/2611.19099" target="_blank" rel="noopener" style="color:inherit; text-decoration:none;">arXiv:2611.19099</a> &middot; Submitted to <i>Nature</i></div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>What do we know about AI in education?</h2>
+    <div class="rct-field">
+      <div class="rct-two">
+        <div class="rct-card rct-grey">
+          <div class="rct-lbl">Earlier trials</div>
+          <div class="rct-say">Students receive a generic chatbot, or one AI tool designed centrally.</div>
+          <div class="rct-out"><span class="rct-arrow">&rarr;</span> Students learned less</div>
+          <div class="rct-cite">Bastani et al. 2025 · Fan et al. 2025 · Liu et al. 2026</div>
+        </div>
+        <div class="rct-card rct-hi fragment">
+          <div class="rct-lbl">Our question</div>
+          <div class="rct-say">What if <b>each instructor designs the AI</b> for their own class?</div>
+          <div class="rct-out"><span class="rct-arrow">&rarr;</span> Does learning improve?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>Our overall design</h2>
+    <div class="rct-flow">
+      <div class="rct-frow">
+        <div class="st"><div class="t">Join</div><div class="d">Recruited by a lead at each university</div></div><div class="ar">&rarr;</div>
+        <div class="st"><div class="t">IRB</div><div class="d">Ethics approval at every university</div></div><div class="ar">&rarr;</div>
+        <div class="st"><div class="t">AI plan</div><div class="d">Plus three measures: learning, engagement, satisfaction</div></div><div class="ar">&rarr;</div>
+        <div class="st hi"><div class="t">Randomize</div><div class="d">Within groups of similar classes</div></div><div class="ar">&rarr;</div>
+        <div class="st"><div class="t">Teach</div><div class="arm tr">Treatment:<br>AI now</div><div class="arm co">Control:<br>AI next time</div></div><div class="ar">&rarr;</div>
+        <div class="st"><div class="t">Measure</div><div class="d">Exams, engagement, course evaluations</div></div><div class="ar">&rarr;</div>
+        <div class="st"><div class="t">Listen</div><div class="d">Student surveys, instructor interviews</div></div>
+      </div>
+      <div class="rct-band"><div class="rct-lbl">For everyone, all along</div><div><b>Training and tools:</b> regular Zoom meetings &middot; a yearly in-person workshop &middot; Faculty Twin, an AI platform co-developed with Google</div></div>
+      <div class="rct-loop">&#8635;&nbsp; Rolling entry: a new cohort each term, spring 2025 to spring 2026</div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>What is randomized: when the class starts</h2>
+    <div class="rct-field">
+      <div class="rct-design">
+        <div></div>
+        <div class="rct-h">Earlier terms<small>same course, same instructor</small></div>
+        <div class="rct-h rct-now fragment" data-fragment-index="1">Experimental term<small>randomized</small></div>
+        <div class="rct-h fragment" data-fragment-index="2">Next time taught<small>every control instructor implemented</small></div>
+
+        <div class="rct-row">Treatment class<small>starts now</small></div>
+        <div class="rct-cell rct-past">No AI from the instructor</div>
+        <div class="rct-cell rct-ai fragment" data-fragment-index="1">The instructor&rsquo;s AI</div>
+        <div class="rct-cell rct-ai2 fragment" data-fragment-index="2">AI continues</div>
+
+        <div class="rct-row">Control class<small>waits one term</small></div>
+        <div class="rct-cell rct-past">No AI from the instructor</div>
+        <div class="rct-cell rct-wait fragment" data-fragment-index="1">Taught as before</div>
+        <div class="rct-cell rct-ai fragment" data-fragment-index="2">The instructor&rsquo;s AI</div>
+      </div>
+      <div class="rct-did fragment" data-fragment-index="3">
+        <span class="rct-eq">Effect</span> <span class="rct-op">=</span>
+        <span class="rct-br">treatment: this term vs. its own past</span>
+        <span class="rct-op">&minus;</span>
+        <span class="rct-br rct-c">control: this term vs. its own past</span>
+      </div>
+    </div>
+  </section>
+
+    <section class="oneliner">
+    <div class="eyebrow">The AI RCT</div>
+    <div class="field">
+      <div class="q">A unique treatment: <b>each instructor designs the AI</b> for their own class</div>
+      <div class="lead" style="font-size:28px; color:var(--slate2);">Not one tool handed to every student. Training and tools are provided to all.</div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>The consortium: 19 universities, 55 classes</h2>
+    <div class="rct-field">
+      <div class="rct-cons2">
+        <div class="rct-figbox"><img src="assets/rct-fig-participation.png" alt="Paper Fig. 1a: the 19 participating universities, the semesters each took part in, class-terms and enrollment"></div>
+        <div class="rct-nums">
+          <div><div class="rct-n">19</div><div class="rct-l">universities</div></div>
+          <div><div class="rct-n">42</div><div class="rct-l">instructors</div></div>
+          <div><div class="rct-n">55</div><div class="rct-l">classes<small>one course, one instructor</small></div></div>
+          <div><div class="rct-n">7,200</div><div class="rct-l">student enrollments</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>What instructors built: 33 tools, 7 functions</h2>
+    <div class="rct-field" style="top:176px">
+      <div class="rct-tax" id="rct-tax">
+        <div class="rct-trow"><div class="rct-fn">Course navigation</div><div class="rct-sq" data-n="25"></div><div class="rct-ct">25</div><div class="rct-ex">A concierge for the syllabus, deadlines and course policies</div></div>
+        <div class="rct-trow"><div class="rct-fn">Socratic coaching</div><div class="rct-sq" data-n="19"></div><div class="rct-ct">19</div><div class="rct-ex">A practice-problem tutor that withholds the final answer</div></div>
+        <div class="rct-trow"><div class="rct-fn">Study tutoring</div><div class="rct-sq" data-n="18"></div><div class="rct-ct">18</div><div class="rct-ex">A practice-exam generator with new real-world scenarios</div></div>
+        <div class="rct-trow"><div class="rct-fn">Stakeholder role-play</div><div class="rct-sq" data-n="8"></div><div class="rct-ct">8</div><div class="rct-ex">A skeptical investment analyst who challenges the student&rsquo;s model</div></div>
+        <div class="rct-trow"><div class="rct-fn">Simulation</div><div class="rct-sq" data-n="8"></div><div class="rct-ct">8</div><div class="rct-ex">A negotiation game against an AI counterpart</div></div>
+        <div class="rct-trow"><div class="rct-fn">Reflection</div><div class="rct-sq" data-n="6"></div><div class="rct-ct">6</div><div class="rct-ex">A career mentor that ties the course to each student&rsquo;s goals</div></div>
+        <div class="rct-trow"><div class="rct-fn">AI literacy</div><div class="rct-sq" data-n="5"></div><div class="rct-ct">5</div><div class="rct-ex">An error hunt: compare the agent&rsquo;s work with your own reasoning</div></div>
+      </div>
+      <div class="rct-taxcap rct-note"><span>One square = one of the 30 treated classes using AI for this function.</span><span>The average class combines 3.0 functions.</span></div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>Who is in the analysis</h2>
+    <div class="rct-field">
+      <div class="rct-meas">
+        <div>
+          <h3>To join</h3>
+          <ul class="rct-list">
+            <li>Has <b>taught the course before</b></li>
+            <li>Has <b>not built AI into it yet</b></li>
+            <li>No other major change planned</li>
+          </ul>
+          <h3 class="rct-h3b">Not pre-registered</h3>
+          <ul class="rct-list">
+            <li>The AI-proof exam filter</li>
+            <li>The class-level analysis</li>
+            <li>OLS: the pre-registered estimators give the same answer</li>
+          </ul>
+        </div>
+        <div class="rct-sample">
+          <div class="rct-lbl">67 class-terms in the trial</div>
+          <div class="rct-grid67" id="rct-grid67"></div>
+          <div class="rct-leg">
+            <i></i><div><b>44 in the learning analysis</b><small>4,768 student enrollments</small></div>
+            <i class="a"></i><div><b>10 dropped: the exam was not AI-proof</b><small>only proctored, in-person exams count</small></div>
+            <i class="g"></i><div><b>13 dropped for other reasons</b><small>course or assessment changed (6), instructor changed (4), no AI implemented (2), not randomized by mistake (1)</small></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>Learning went up by 0.32 standard deviations</h2>
+    <div class="rct-field">
+      <div class="rct-res2">
+        <img src="assets/rct-fig-main-effects.png" alt="Paper Fig. 3: effects on learning, engagement and satisfaction, at the student level and at the class level">
+        <div class="rct-restxt">A <b>statistically significant increase in exam scores</b>, on proctored, in-person exams.<small>Student level: the students who agreed to share their data. Class level: every enrolled student, from class averages.</small></div>
+      </div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>What students and instructors told us</h2>
+    <div class="rct-field">
+      <div class="rct-voices">
+        <div>
+          <h3>Students</h3>
+          <div class="rct-sub">What they liked about the AI · 1,414 open answers</div>
+          <div class="rct-vb"><b>49%</b><span class="rct-vt"><i style="width:49.2%"></i></span><span>Practice and exam preparation</span></div>
+          <div class="rct-vb"><b>33%</b><span class="rct-vt"><i style="width:33%"></i></span><span>Help understanding</span></div>
+          <div class="rct-vb"><b>23%</b><span class="rct-vt"><i style="width:23.2%"></i></span><span>Tailored to the course</span></div>
+          <div class="rct-q">&ldquo;It allowed me to have endless problems.&rdquo;<span>A student, end-of-course survey</span></div>
+        </div>
+        <div>
+          <h3>Instructors</h3>
+          <div class="rct-sub">What happened in the classroom · 25 interviews</div>
+          <div class="rct-vb"><b>76%</b><span class="rct-vt"><i style="width:76%"></i></span><span>Useful in practice</span></div>
+          <div class="rct-vb"><b>52%</b><span class="rct-vt"><i style="width:52%"></i></span><span>Uneven use across students</span></div>
+          <div class="rct-vb"><b>36%</b><span class="rct-vt"><i style="width:36%"></i></span><span>Prompts needed tuning</span></div>
+          <div class="rct-q">&ldquo;Students don&rsquo;t use it unless you give bonus points or tie it to a particular class requirement.&rdquo;<span>Professor 3</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <h2>Takeaway: put the instructor in charge</h2>
+    <div class="rct-field">
+      <div class="rct-close1">
+        <div class="rct-lede">AI improved learning when <b>each instructor designed it</b> for their own classroom.</div>
+        <div class="rct-open">
+          <div class="rct-lbl">What we cannot say yet</div>
+          <ul class="rct-list">
+            <li>Whether it holds beyond applied STEM</li>
+            <li>Whether the gain lasts</li>
+            <li>Which designs work best</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section class="oneliner">
+    <div class="eyebrow">The AI RCT</div>
+    <div class="field">
+      <div class="q">We are growing. <b>Join us!</b></div>
+      <div class="lead" style="font-size:30px; color:var(--slate2);">Send me an email if you want to take part: <b style="color:var(--purple); font-weight:500;">sebastien.martin@kellogg.northwestern.edu</b></div>
+    </div>
+  </section>
+
+    <section class="close">
+    <h2>Thank you</h2>
+    <div class="qrow">
+      <img class="qr" src="assets/qr-booth.png" alt="QR code to the companion page of this talk" width="152" height="152">
+      <div class="qlink">
+        <div class="lab">The slides, Kai, and all the links:</div>
+        <a class="url" href="https://sebastienmartin.info/p/booth.html" target="_blank" rel="noopener">sebastienmartin.info/p/booth.html</a>
+      </div>
+    </div>
+  </section>
+
+  
+      <section>
+    <div class="eyebrow">The AI RCT</div>
+    <div class="rct-tag">Backup</div>
+    <h2>All specifications</h2>
+    <div class="rct-fig"><img src="assets/rct-fig-robustness.png" alt="Extended Data Fig. 2: estimates across twelve specifications, contemporaneous and lagged"></div>
+  </section>
+
+    <section>
+    <div class="eyebrow">The AI RCT</div>
+    <div class="rct-tag">Backup</div>
+    <h2>Sample flowchart</h2>
+    <div class="rct-fig"><img src="assets/rct-fig-flowchart.png" alt="Extended Data Fig. 1: from 67 class-terms to the analysis samples, with exclusions by reason"></div>
+  </section>
+
+</div></div>
+
+<script src="vendor/reveal/reveal.js"></script>
+<script src="vendor/reveal/plugin/highlight/highlight.js"></script>
+<script src="vendor/reveal/plugin/notes/notes.js"></script>
+<script src="vendor/reveal/plugin/markdown/markdown.js"></script>
+<script id="rct-js">
+  // AI RCT part: fill the square rows (taxonomy: 30 classes per row; sample: 67 class-terms). Copy this block with the slides.
+  document.querySelectorAll('.rct-sq[data-n]').forEach(el => {
+    const n = +el.dataset.n;
+    el.innerHTML = Array.from({length: 30}, (_, i) => `<i${i < n ? ' class="on"' : ''}></i>`).join('');
+  });
+  (() => {
+    const g = document.getElementById('rct-grid67'); if (!g) return;
+    // 44 kept, 10 not AI-proof, 13 other exclusions (ED Fig. 1)
+    g.innerHTML = Array.from({length: 67}, (_, i) => `<i${i < 44 ? '' : i < 54 ? ' class="a"' : ' class="g"'}></i>`).join('');
+  })();
+</script>
+<script>
+  const deck = window.deck = new Reveal({
+    width: 1280, height: 720, margin: 0,
+    center: false, hash: true, slideNumber: 'c/t',
+    transition: 'fade',
+    plugins: [ RevealHighlight, RevealNotes, RevealMarkdown ]
+  });
+  // hide the page number on "lede" slides (title / section / full-bleed image / thanks)
+  const setLede = () => document.querySelector('.reveal')
+      .classList.toggle('lede', !!deck.getCurrentSlide().matches('.title,.section,.image-full,.thanks'));
+  deck.on('ready', setLede); deck.on('slidechanged', setLede);
+  deck.initialize();
+</script>
+</body>
+</html>
