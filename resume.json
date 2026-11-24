@@ -1,6 +1,6 @@
 {
   "basics": {
-    "lastUpdated": "2026-10",
+    "lastUpdated": "2026-11",
     "name": "Sébastien Martin",
     "label": "Associate Professor",
     "image": "",
@@ -56,7 +56,7 @@
     },
     {
       "name": "Operations Research",
-      "position": "Associate Editor, Transportation Area",
+      "position": "Associate Editor, Transportation Area; Markets, Platforms, and Revenue Management Area",
       "url": "https://pubsonline.informs.org/journal/opre",
       "startDate": "2027-01",
       "endDate": "Current",
@@ -177,6 +177,12 @@
       "url": "https://www.youtube.com/watch?v=BkKlGF1OQaA"
     },
     {
+      "title": "Transportation Science Meritorious Service Award",
+      "date": "2026",
+      "awarder": "INFORMS, Transportation Science Journal",
+      "summary": "For \"exceptional service as an Associate Editor\" of the journal Transportation Science."
+    },
+    {
       "title": "INFORMS Journal on Computing Meritorious Reviewer Award",
       "date": "2026",
       "awarder": "INFORMS",
@@ -292,6 +298,15 @@
   ],
   "publications": [
     {
+      "name": "Labor Cost Free-Riding in the Gig Economy",
+      "authors": "Z. Lian, S. Martin, G. van Ryzin",
+      "publisher": "Management Science",
+      "status": "published",
+      "releaseDate": "2026",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888",
+      "summary": "INFORMS RMP (Revenue Management and Pricing) Student Paper Award Finalist, 2021"
+    },
+    {
       "name": "Algorithmic Precision and Human Decision: A Study of Interactive Optimization for School Schedules",
       "authors": "A. Delarue, Z. Lian, S. Martin",
       "publisher": "Management Science",
@@ -400,6 +415,33 @@
       "summary": ""
     },
     {
+      "name": "Instructor-designed AI improves learning in a randomized trial across 19 universities",
+      "authors": "J. Li, R. Bray, S. Martin, N. Van den Steen, A. Wu, X. Ni, and 46 co-authors",
+      "publisher": "First submission sent to reviewers, Nature",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://arxiv.org/abs/2611.19099",
+      "summary": ""
+    },
+    {
+      "name": "Human-AI Interactions and Societal Pitfalls",
+      "authors": "F. Castro, J. Gao, S. Martin",
+      "publisher": "Resubmission under review (major revision), Manufacturing & Service Operations Management",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://arxiv.org/abs/2309.10448",
+      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
+    },
+    {
+      "name": "Interpretable Feature Discovery from Unstructured Data Using LLMs and Statistical Choice Models",
+      "authors": "B. Arnaudo, A. Bennouna, S. Martin",
+      "publisher": "First submission under review, ICLR 2027 (Machine Learning Conference)",
+      "status": "under_review",
+      "releaseDate": "2026",
+      "url": "https://arxiv.org/abs/2610.38082",
+      "summary": ""
+    },
+    {
       "name": "Navigating the Educational Video Game Paradox",
       "authors": "A. Jensen, S. Martin, K. Smilowitz",
       "publisher": "Major revision, Management Science",
@@ -445,15 +487,6 @@
       "summary": "MIT ORC Best Student Paper Award, 2024"
     },
     {
-      "name": "Labor Cost Free-Riding in the Gig Economy",
-      "authors": "Z. Lian, S. Martin, G. van Ryzin",
-      "publisher": "Minor revision, Management Science",
-      "status": "under_review",
-      "releaseDate": "2026",
-      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3775888",
-      "summary": "INFORMS RMP (Revenue Management and Pricing) Student Paper Award Finalist, 2021"
-    },
-    {
       "name": "Relative Monte Carlo for Reinforcement Learning",
       "authors": "A. Bazerghi, S. Martin, G. van Ryzin",
       "publisher": "Reject and resubmit, Management Science",
@@ -461,15 +494,6 @@
       "releaseDate": "2026",
       "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4857358",
       "summary": ""
-    },
-    {
-      "name": "Human-AI Interactions and Societal Pitfalls",
-      "authors": "F. Castro, J. Gao, S. Martin",
-      "publisher": "Major revision, Manufacturing & Service Operations Management",
-      "status": "under_review",
-      "releaseDate": "2025",
-      "url": "https://arxiv.org/abs/2309.10448",
-      "summary": "Accepted in EC 2024. Featured in the Wall Street Journal & MIT Technology Review."
     },
     {
       "name": "Value of Sharing in Routing-Scheduling Operations",
@@ -527,6 +551,13 @@
     }
   ],
   "press": [
+    {
+      "year": "2026",
+      "outlet": "Bloomberg",
+      "title": "Want to Run an ‘AI-Native’ Company? Business Schools Have a Class for That",
+      "url": "https://www.bloomberg.com/news/articles/2026-11-23/how-business-schools-are-preparing-mbas-for-the-ai-era",
+      "notes": "Quoted on why teaching AI means working with the latest tools as the technology changes rapidly."
+    },
     {
       "year": "2026",
       "outlet": "Bloomberg",
